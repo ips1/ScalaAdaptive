@@ -18,7 +18,11 @@ object SortTest {
   def bubbleSort(data: List[Int]): List[Int] = ???
   import functionadaptors._
   val sort = selectionSort _ or quickSort _ or bubbleSort _ by (_.size) using Measurement.RunTime
-  //val sort2 = (selectionSort _).or(quickSort).or(bubbleSort).by(_.size).using(Measurement.RunTime)
+  val sort2 = (selectionSort _).or(quickSort _).or(bubbleSort _).by(_.size).using(Measurement.RunTime)
+  // Doesn't compile:
+  // val sort3 = selectionSort _ or quickSort or bubbleSort by (_.size) using Measurement.RunTime
+  // val sort4 = (selectionSort _).or(quickSort).or(bubbleSort).by(_.size).using(Measurement.RunTime)
+
   val chain = (selectionSort _).andThen(quickSort).andThen(bubbleSort)
 
   def run[T, R](fun: T => R) = ???
