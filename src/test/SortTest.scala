@@ -14,7 +14,6 @@ object SortTest {
   def selectionSort(data: List[Int]): List[Int] = ???
   def quickSort(data: List[Int]): List[Int] = ???
   def bubbleSort(data: List[Int]): List[Int] = ???
-  import functionadaptors._
   val sort = selectionSort _ or quickSort _ or bubbleSort _ by (_.size) using Measurement.RunTime
   val sort2 = (selectionSort _).or(quickSort _).or(bubbleSort _).by(_.size).using(Measurement.RunTime)
   // Doesn't compile:
