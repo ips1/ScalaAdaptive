@@ -40,9 +40,9 @@ object UsageExample {
   // ------------------
   object Sortable {
     implicit class SortableList[Int](list: List[Int]) {
-      def selectionSort(): List[Int] = ???
-      def quickSort(): List[Int] = ???
-      def bubbleSort(): List[Int] = ???
+      private def selectionSort(): List[Int] = ???
+      private def quickSort(): List[Int] = ???
+      private def bubbleSort(): List[Int] = ???
       val sort = selectionSort _ or quickSort _ or bubbleSort _ by (() => list.size) using Measurement.RunTime
     }
   }
