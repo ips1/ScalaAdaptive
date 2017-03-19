@@ -7,7 +7,7 @@ import options.Measurement
   * Created by pk250187 on 3/19/17.
   */
 
-object SortTest {
+object UsageExample {
   // -------------------------
   // Functional usage example:
   // -------------------------
