@@ -55,6 +55,6 @@ object Sorter {
     list.sortBy(x => x)
   }
 
-  val sort = selectionSort _ or standardSort _
+  val sort = selectionSort _ or standardSort
 }
 

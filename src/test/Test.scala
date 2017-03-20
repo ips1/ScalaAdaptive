@@ -6,7 +6,7 @@ import scala.util.Random
   * Created by pk250187 on 3/19/17.
   */
 object Test {
-  val dataSize = 4000
+  val dataSize = 1000
   val runCount = 200
   lazy val data = Seq.fill(dataSize)(Random.nextInt).toList
 

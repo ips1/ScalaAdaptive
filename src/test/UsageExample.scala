@@ -14,26 +14,8 @@ object UsageExample {
   def selectionSort(data: List[Int]): List[Int] = ???
   def quickSort(data: List[Int]): List[Int] = ???
   def bubbleSort(data: List[Int]): List[Int] = ???
-  val sort = selectionSort _ or quickSort _ or bubbleSort _ by (_.size) using Measurement.RunTime
-  val sort2 = (selectionSort _).or(quickSort _).or(bubbleSort _).by(_.size).using(Measurement.RunTime)
-  // Doesn't compile:
-  // val sort3 = selectionSort _ or quickSort or bubbleSort by (_.size) using Measurement.RunTime
-  // val sort4 = (selectionSort _).or(quickSort).or(bubbleSort).by(_.size).using(Measurement.RunTime)
-
-  // Why do the following examples compile? It looks like the same kind of conversion / eta expansion
-  val chain = (selectionSort _).andThen(quickSort).andThen(bubbleSort)
-
-  def run[T, R](fun: T => R) = ???
-  run(selectionSort)
-
-  class Foo[T, R] {
-    def run(fun: T => R) = ???
-  }
-
-  val x = new Foo[List[Int], List[Int]]()
-  x.run(selectionSort)
-
-  List(List(1,2), List(10, 2)).map(selectionSort)
+  val sort = selectionSort _ or quickSort or bubbleSort by (_.size) using Measurement.RunTime
+  val sort2 = (selectionSort _).or(quickSort).or(bubbleSort).by(_.size).using(Measurement.RunTime)
 
   // ------------------
   // OOP usage example:
