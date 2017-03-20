@@ -18,6 +18,7 @@ class FunctionAdaptor0[R](private val options: List[RunOption[() => R]],
 
   override def apply(): R = {
     val test = options.map(f => new ReferencedFunction[R]({ () => f.function() }, f.reference))
-    Adaptive.tracker.runOption(test)
+    val by = if (bySelector != null) bySelector() else 0
+    Adaptive.tracker.runOption(test, by)
   }
 }

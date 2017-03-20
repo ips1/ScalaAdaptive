@@ -17,6 +17,8 @@ object UsageExample {
   val sort = selectionSort _ or quickSort or bubbleSort by (_.size) using Measurement.RunTime
   val sort2 = (selectionSort _).or(quickSort).or(bubbleSort).by(_.size).using(Measurement.RunTime)
 
+  val chain = selectionSort _ andThen quickSort andThen bubbleSort
+
   // ------------------
   // OOP usage example:
   // ------------------
