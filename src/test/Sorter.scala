@@ -26,7 +26,7 @@ object Sorter {
   }
 
   def quickSort(ls: List[Int]): List[Int] = {
-    println("Running quickSort")
+    println(">> Running quickSort")
 
     def sort(ls: List[Int])(parent: List[Int]): List[Int] = {
       if (ls.size <= 1) ls ::: parent else {
@@ -51,11 +51,38 @@ object Sorter {
     return ls
   }
 
+  def radixSort(list: List[Int]): List[Int] = ???
+
+  def bubbleSort[A <% Ordered[A]](list: List[A]): List[A] = {
+    def sort(as: List[A], bs: List[A]): List[A] =
+      if (as.isEmpty) bs
+      else bubble(as, Nil, bs)
+
+    def bubble(as: List[A], zs: List[A], bs: List[A]): List[A] = as match {
+      case h1 :: h2 :: t =>
+        if (h1 > h2) bubble(h1 :: t, h2 :: zs, bs)
+        else bubble(h2 :: t, h1 :: zs, bs)
+      case h1 :: Nil => sort(zs, h1 :: bs)
+    }
+
+    sort(list, Nil)
+  }
+
+  def doStuff[A <% Ordered[A]](list: List[A]) = ???
+
   def standardSort(list: List[Int]): List[Int] = {
     println(">> Running standardSort")
     list.sortBy(x => x)
   }
 
+  val list: List[Int] = List(1,2,3)
+
+  //doStuff(list)
+
   val sort = selectionSort _ or standardSort by (_.size)
+
+  //val sort = selectionSort _ or bubbleSort by (_.size)
+
+  //val sort2 = bubbleSort _ or selectionSort
 }
 

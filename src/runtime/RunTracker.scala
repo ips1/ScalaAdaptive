@@ -17,15 +17,15 @@ class RunTracker[TMeasurement](historyStorage: HistoryStorage[TMeasurement],
   override def runOption[TReturnType](options: Seq[ReferencedFunction[TReturnType]], byValue: Int = 0): TReturnType = {
     // TODO: byValue not specified
     val targetBucket = if (byValue != 0) bucketSelector.selectGroupForValue(byValue) else bucketSelector.defaultGroup
-    logger.log(s"Target bucket: ${targetBucket}, byValue: ${byValue}")
+    logger.log(s"Target bucket: $targetBucket, byValue: $byValue")
 
-    val histories = options.map(f => historyStorage.getHistory(new HistoryKey(f.reference, targetBucket)))
+    val histories = options.map(f => historyStorage.getHistory(HistoryKey(f.reference, targetBucket)))
 
     val selectedRecord = runSelector.selectOption(histories)
     logger.log(s"Selected option: ${selectedRecord.reference}")
     val (result, performance) = performanceProvider.measureFunctionRun(options.find(_.reference == selectedRecord.reference).get.fun)
-    logger.log(s"Performance on ${byValue} measured: ${performance.measurement}")
+    logger.log(s"Performance on $byValue measured: ${performance.measurement}")
     selectedRecord.applyNewRun(performance)
-    return result
+    result
   }
 }
