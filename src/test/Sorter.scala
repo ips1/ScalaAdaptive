@@ -14,7 +14,7 @@ object Sorter {
     }
 
   def selectionSort(xs: List[Int]): List[Int] = {
-    println("Running selectionSort")
+    println(">> Running selectionSort")
     def selectionSortHelper(xs: List[Int], accumulator: List[Int]): List[Int] =
       if(xs.isEmpty) accumulator
       else {
@@ -52,6 +52,7 @@ object Sorter {
   }
 
   def standardSort(list: List[Int]): List[Int] = {
+    println(">> Running standardSort")
     list.sortBy(x => x)
   }
 

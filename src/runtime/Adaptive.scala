@@ -1,20 +1,24 @@
 package runtime
 
-import grouping.LogarithmBucketSelector
+import configuration.{Configuration, TimeMeasurementDefaultConfiguration}
+import grouping.LogarithmGroupSelector
 import performance.RunTimeProvider
-import runtime.history.MapHistoryStorage
+import runtime.history.{FullRunHistory, MapHistoryStorage, RunData, RunHistory}
+import runtime.selection.SimpleRunSelector
+
+import scala.collection.mutable.ArrayBuffer
 
 /**
   * Created by pk250187 on 3/19/17.
   */
 object Adaptive {
-  def initTracker(): RunTracker = {
-    new RunTracker(
-      new MapHistoryStorage[Long],
-      new SimpleRunSelector,
-      new RunTimeProvider,
-      new LogarithmBucketSelector)
+  def initTracker(configuration: Configuration): FunctionRunner = {
+    new RunTracker[configuration.MeasurementType](
+      configuration.historyStorage,
+      configuration.runSelector,
+      configuration.performanceProvider,
+      configuration.groupSelector)
   }
 
-  lazy val tracker = initTracker()
+  lazy val tracker = initTracker(TimeMeasurementDefaultConfiguration)
 }

@@ -1,6 +1,6 @@
 package test
 
-import grouping.LogarithmBucketSelector
+import grouping.LogarithmGroupSelector
 
 import scala.util.Random
 
