@@ -1,6 +1,7 @@
 package configuration
 
 import grouping.{GroupSelector, LogarithmGroupSelector}
+import logging.{ConsoleLogger, FileLogger, Logger}
 import performance.{PerformanceProvider, RunTimeProvider}
 import runtime.history.{FullRunHistory, HistoryStorage, MapHistoryStorage, RunData}
 import runtime.selection.{RunSelector, SimpleRunSelector}
@@ -17,4 +18,5 @@ object TimeMeasurementDefaultConfiguration extends Configuration {
   override val runSelector: RunSelector[MeasurementType] = new SimpleRunSelector(20)
   override val performanceProvider: PerformanceProvider[MeasurementType] = new RunTimeProvider
   override val groupSelector: GroupSelector = new LogarithmGroupSelector
+  override val logger: Logger = new ConsoleLogger//new FileLogger("adaptive_log.txt")
 }

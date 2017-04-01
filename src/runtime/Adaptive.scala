@@ -17,7 +17,8 @@ object Adaptive {
       configuration.historyStorage,
       configuration.runSelector,
       configuration.performanceProvider,
-      configuration.groupSelector)
+      configuration.groupSelector,
+      configuration.logger)
   }
 
   lazy val tracker = initTracker(TimeMeasurementDefaultConfiguration)

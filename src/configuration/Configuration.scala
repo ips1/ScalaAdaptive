@@ -1,10 +1,9 @@
 package configuration
-import grouping.{GroupSelector, LogarithmGroupSelector}
-import performance.{PerformanceProvider, RunTimeProvider}
-import runtime.history.{FullRunHistory, HistoryStorage, MapHistoryStorage, RunData}
-import runtime.selection.{RunSelector, SimpleRunSelector}
-
-import scala.collection.mutable.ArrayBuffer
+import grouping.GroupSelector
+import logging.Logger
+import performance.PerformanceProvider
+import runtime.history.HistoryStorage
+import runtime.selection.RunSelector
 
 /**
   * Created by pk250187 on 3/26/17.
@@ -15,4 +14,5 @@ trait Configuration {
   val runSelector: RunSelector[MeasurementType]
   val performanceProvider: PerformanceProvider[MeasurementType]
   val groupSelector: GroupSelector
+  val logger: Logger
 }
