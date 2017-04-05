@@ -16,16 +16,19 @@ object Test {
 
   def isOrdered(l : List[Int]): Boolean = (l, l.tail).zipped.forall(_ <= _)
 
-  def runTest(): Unit = {
+  def runTest(testFnc: (List[Int]) => List[Int]): Unit = {
     Seq.range(0, runCount).foreach(i => {
       val data = if (i % 2 == 0) smallData else bigData
       println(s"Running test no: ${i} on ${data.size}")
-      val res = Sorter.sort(data)
+      val res = testFnc(data)
       assert(isOrdered(res))
     })
   }
 
   def main(args: Array[String]): Unit = {
-    runTest()
+    import Sortable._
+
+    runTest(l => l.sort())
+    //runTest(l => Sorter.sort(l))
   }
 }
