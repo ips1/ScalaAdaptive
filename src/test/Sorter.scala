@@ -53,7 +53,7 @@ object Sorter {
 
   def radixSort(list: List[Int]): List[Int] = ???
 
-  def bubbleSort[A <% Ordered[A]](list: List[A]): List[A] = {
+  def bubbleSort[A](list: List[A])(implicit ord: A => Ordered[A]): List[A] = {
     def sort(as: List[A], bs: List[A]): List[A] =
       if (as.isEmpty) bs
       else bubble(as, Nil, bs)
@@ -79,7 +79,9 @@ object Sorter {
 
   //doStuff(list)
 
-  val sort = selectionSort _ or standardSort by (_.size)
+  val sort = radixSort _ or bubbleSort[Int]
+
+//  val sort = selectionSort _ or standardSort by (_.size)
 
   //val sort = selectionSort _ or bubbleSort by (_.size)
 
