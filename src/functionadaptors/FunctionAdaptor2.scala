@@ -11,7 +11,7 @@ class FunctionAdaptor2[I1, I2, R](private val options: List[RunOption[(I1, I2) =
                                   private val using: Measurement = Measurement.RunTime,
                                   private val bySelector: (I1, I2) => Int = null) extends ((I1, I2) => R) {
 
-  def or[J1 <: I1, J2 <: I2, S >: R](fun: (J1, J2) => S): (J1, J2) => S = orAdaptor(Implicits.toAdaptor2(fun))
+  def or[J1 <: I1, J2 <: I2, S >: R](fun: (J1, J2) => S): (J1, J2) => S = orAdaptor(Implicits.toAdaptor(fun))
   private def orAdaptor[J1 <: I1, J2 <: I2, S >: R](fun: FunctionAdaptor2[J1, J2, S]): (J1, J2) => S =
     new FunctionAdaptor2[J1, J2, S](this.options.map(opt => new RunOption[(J1, J2) => S]((a1, a2) => opt.function(a1, a2), opt.reference)) ++ fun.options)
   def by(selector: (I1, I2) => Int): (I1, I2) => R = new FunctionAdaptor2[I1, I2, R](options, using, selector)

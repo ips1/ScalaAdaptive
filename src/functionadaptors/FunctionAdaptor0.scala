@@ -11,7 +11,7 @@ class FunctionAdaptor0[R](private val options: List[RunOption[() => R]],
                              private val using: Measurement = Measurement.RunTime,
                              private val bySelector: () => Int = null) extends (() => R) {
 
-  def or(fun: () => R): () => R = orAdaptor(Implicits.toAdaptor0(fun))
+  def or(fun: () => R): () => R = orAdaptor(Implicits.toAdaptor(fun))
   private def orAdaptor(fun: FunctionAdaptor0[R]): () => R = new FunctionAdaptor0[R](this.options ++ fun.options)
   def by(selector: () => Int): () => R = new FunctionAdaptor0[R](options, using, selector)
   def using(measurement: Measurement): () => R = new FunctionAdaptor0[R](options, measurement, bySelector)
