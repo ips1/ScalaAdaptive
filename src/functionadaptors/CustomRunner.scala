@@ -16,7 +16,7 @@ trait CustomRunner extends FunctionRunner {
     case _ => null
   }
 
-  def runOption[TReturnType](options: Seq[ReferencedFunction[TReturnType]], byValue: Int = 0): TReturnType =
-    if (runner != null) runner.runOption(options, byValue)
-    else Adaptive.runner.runOption(options, byValue)
+  def runOption[TReturnType](options: Seq[ReferencedFunction[TReturnType]], inputDescriptor: Long = 0): TReturnType =
+    if (runner != null) runner.runOption(options, inputDescriptor)
+    else Adaptive.runner.runOption(options, inputDescriptor)
 }

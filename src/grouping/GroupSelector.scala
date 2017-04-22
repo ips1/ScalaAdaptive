@@ -5,5 +5,5 @@ package grouping
   */
 trait GroupSelector {
   val defaultGroup = new GroupId(0)
-  def selectGroupForValue(value: Int): GroupId
+  def selectGroupForValue(value: Long): GroupId
 }
