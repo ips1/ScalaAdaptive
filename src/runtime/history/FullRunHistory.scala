@@ -19,4 +19,5 @@ class FullRunHistory[TMeasurement](val reference: FunctionReference,
   }
 
   override def average(): Double = num.toDouble(sum) / runItems.size
+  override def best(): Double = num.toDouble(runItems.map(_.measurement).min)
 }

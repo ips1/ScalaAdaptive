@@ -9,5 +9,6 @@ trait RunHistory[TMeasurement] {
   def reference: FunctionReference
   def runCount: Int
   def average(): Double
+  def best(): Double
   def applyNewRun(runResult: RunData[TMeasurement]): Unit
 }

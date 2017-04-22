@@ -4,7 +4,7 @@ import grouping.{GroupSelector, LogarithmGroupSelector}
 import logging.{ConsoleLogger, Logger}
 import performance.{PerformanceProvider, RunTimeProvider}
 import runtime.history.{FullRunHistory, HistoryStorage, MapHistoryStorage, RunData}
-import runtime.selection.{RunSelector, SimpleRunSelector}
+import runtime.selection.{RunSelector, BestAverageSelector}
 
 import scala.collection.mutable.ArrayBuffer
 
