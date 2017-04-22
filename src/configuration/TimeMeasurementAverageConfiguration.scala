@@ -1,9 +1,6 @@
 package configuration
 
-import grouping.{GroupSelector, LogarithmGroupSelector}
-import logging.{ConsoleLogger, FileLogger, Logger}
 import performance.{PerformanceProvider, RunTimeProvider}
-import runtime.history.{FullRunHistory, HistoryStorage, MapHistoryStorage, RunData}
 import runtime.selection.{BestAverageSelector, LowRunAwareSelector, RunSelector}
 
 import scala.collection.mutable.ArrayBuffer
