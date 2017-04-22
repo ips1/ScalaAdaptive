@@ -11,9 +11,7 @@ import scala.collection.mutable.ArrayBuffer
 /**
   * Created by pk250187 on 3/26/17.
   */
-object TimeMeasurementDefaultConfiguration extends BaseConfiguration {
-  type MeasurementType = Long
-
+object TimeMeasurementAverageConfiguration extends BaseLongConfiguration {
   override val runSelector: RunSelector[MeasurementType] = new SimpleRunSelector(20)
   override val performanceProvider: PerformanceProvider[MeasurementType] = new RunTimeProvider
 }

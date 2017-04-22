@@ -8,10 +8,15 @@ import scala.collection.mutable.ArrayBuffer
   * Created by pk250187 on 3/21/17.
   */
 class FullRunHistory[TMeasurement](val reference: FunctionReference,
-                                   val runItems: ArrayBuffer[RunData[TMeasurement]]) extends RunHistory[TMeasurement] {
-  override def runCount: Int = runItems.size
-  override def applyNewRun(runResult: RunData[TMeasurement]): Unit = runItems.append(runResult)
+                                   val runItems: ArrayBuffer[RunData[TMeasurement]])
+                                  (implicit num: Numeric[TMeasurement]) extends RunHistory[TMeasurement] {
+  private var sum: TMeasurement = num.zero
 
-  override def average(implicit num: Numeric[TMeasurement]): Double =
-    num.toDouble(runItems.map(_.measurement).sum) / runItems.size
+  override def runCount: Int = runItems.size
+  override def applyNewRun(runResult: RunData[TMeasurement]): Unit = {
+    sum = num.plus(sum, runResult.measurement)
+    runItems.append(runResult)
+  }
+
+  override def average(): Double = num.toDouble(sum) / runItems.size
 }

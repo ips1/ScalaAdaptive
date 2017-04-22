@@ -8,6 +8,6 @@ import references.FunctionReference
 trait RunHistory[TMeasurement] {
   def reference: FunctionReference
   def runCount: Int
-  def average(implicit num: Numeric[TMeasurement]): Double
+  def average(): Double
   def applyNewRun(runResult: RunData[TMeasurement]): Unit
 }
