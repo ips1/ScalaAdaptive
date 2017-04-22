@@ -4,7 +4,7 @@ import scala.util.Random
   * Created by pk250187 on 3/19/17.
   */
 object Test {
-  val bigDataSize = 4000
+  val bigDataSize = 2000
   val smallDataSize = 20
   val runCount = 200
   lazy val smallData = Seq.fill(smallDataSize)(Random.nextInt).toList
@@ -24,7 +24,8 @@ object Test {
   def main(args: Array[String]): Unit = {
     import Sortable._
 
-    runTest(l => l.sort())
-    //runTest(l => Sorter.sort(l))
+    //runTest(l => l.sort())
+    val sorter = new Sorter()
+    runTest(l => sorter.sort(l))
   }
 }

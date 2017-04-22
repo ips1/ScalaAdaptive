@@ -1,7 +1,8 @@
 package functionadaptors
 
 import options.Measurement.Measurement
-import options.{Measurement, RunOption}
+import options.Storage.Storage
+import options.{Measurement, RunOption, Storage}
 import runtime.{Adaptive, ReferencedFunction}
 
 /**
@@ -9,7 +10,8 @@ import runtime.{Adaptive, ReferencedFunction}
   */
 class FunctionAdaptor2[I1, I2, R](private val options: List[RunOption[(I1, I2) => R]],
                                   private val using: Measurement = Measurement.RunTime,
-                                  private val bySelector: (I1, I2) => Int = null) extends ((I1, I2) => R) {
+                                  private val bySelector: (I1, I2) => Int = null,
+                                  protected val storage: Storage = Storage.Global) extends ((I1, I2) => R) with CustomRunner {
 
   def or[J1 <: I1, J2 <: I2, S >: R](fun: (J1, J2) => S): (J1, J2) => S = orAdaptor(Implicits.toAdaptor(fun))
   private def orAdaptor[J1 <: I1, J2 <: I2, S >: R](fun: FunctionAdaptor2[J1, J2, S]): (J1, J2) => S =
@@ -20,6 +22,6 @@ class FunctionAdaptor2[I1, I2, R](private val options: List[RunOption[(I1, I2) =
   override def apply(v1: I1, v2: I2): R = {
     val test = options.map(f => new ReferencedFunction[R]({ () => f.function(v1, v2) }, f.reference))
     val by = if (bySelector != null) bySelector(v1, v2) else 0
-    Adaptive.tracker.runOption(test, by)
+    runOption(test, by)
   }
 }

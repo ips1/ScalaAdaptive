@@ -11,15 +11,15 @@ object Adaptive {
 
   private def initTracker(configuration: Configuration): FunctionRunner = {
     new RunTracker[configuration.MeasurementType](
-      configuration.globalHistoryStorage,
+      configuration.historyStorageFactory(),
       configuration.runSelector,
       configuration.performanceProvider,
       configuration.groupSelector,
       configuration.logger)
   }
 
-  def createStorage: HistoryStorage[defaultConfiguration.MeasurementType] =
-    defaultConfiguration.historyStorageFactory()
+  def createRunner(): FunctionRunner =
+    initTracker(defaultConfiguration)
 
-  lazy val tracker = initTracker(defaultConfiguration)
+  lazy val runner = createRunner()
 }

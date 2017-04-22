@@ -16,7 +16,7 @@ import scala.reflect.runtime.universe.{TypeTag, typeOf}
 class FunctionAdaptor1[T, R](private val options: List[RunOption[(T) => R]],
                              private val using: Measurement = Measurement.RunTime,
                              private val bySelector: (T) => Int = null,
-                             private val storage: Storage = Storage.Global) extends ((T) => R) {
+                             protected val storage: Storage = Storage.Global) extends ((T) => R) with CustomRunner {
   // Necessary for being able to omit the _ operator in chained calls
   //def or[J <: T, S >: R](fun: (J) => S): (J) => S = macro FunctionAdaptor1.or_impl[J, S]
 
@@ -30,7 +30,7 @@ class FunctionAdaptor1[T, R](private val options: List[RunOption[(T) => R]],
   override def apply(v1: T): R = {
     val test = options.map(f => new ReferencedFunction[R]({ () => f.function(v1) }, f.reference))
     val by = if (bySelector != null) bySelector(v1) else 0
-    Adaptive.tracker.runOption(test, by)
+    runOption(test, by)
   }
 }
 

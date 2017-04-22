@@ -1,7 +1,9 @@
+import options.Storage
+
 /**
   * Created by petrkubat on 29/01/2017.
   */
-object Sorter {
+class Sorter {
   def maximum(xs: List[Int]): List[Int] =
     (List(xs.head) /: xs.tail) {
       (ys, x) =>
@@ -77,9 +79,9 @@ object Sorter {
 
   import macros.AdaptiveMacros._
 
-  val sort = radixSort _ or bubbleSort[Int]
+  //val sort = radixSort _ or bubbleSort[Int]
 
-//  val sort = selectionSort _ or standardSort by (_.size)
+  val sort = selectionSort _ or standardSort by (_.size) withStorage Storage.Local
 
   //val sort = selectionSort _ or bubbleSort by (_.size)
 
