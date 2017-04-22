@@ -1,7 +1,3 @@
-package test
-
-import grouping.LogarithmGroupSelector
-
 import scala.util.Random
 
 /**

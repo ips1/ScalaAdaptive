@@ -1,6 +1,3 @@
-package test
-
-import functionadaptors.Implicits._
 import options.Measurement
 
 /**
@@ -8,6 +5,7 @@ import options.Measurement
   */
 
 object UsageExample {
+  import macros.AdaptiveMacros._
   // -------------------------
   // Functional usage example:
   // -------------------------
@@ -23,11 +21,13 @@ object UsageExample {
   // OOP usage example:
   // ------------------
   object Sortable {
+    import functionadaptors.Implicits._
+
     implicit class SortableList[Int](list: List[Int]) {
       private def selectionSort(): List[Int] = ???
       private def quickSort(): List[Int] = ???
       private def bubbleSort(): List[Int] = ???
-      val sort = selectionSort _ or quickSort _ or bubbleSort _ by (() => list.size) using Measurement.RunTime
+      val sort = selectionSort _ or quickSort or bubbleSort by (() => list.size) using Measurement.RunTime
     }
   }
 }

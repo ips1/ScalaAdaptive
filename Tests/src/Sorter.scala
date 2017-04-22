@@ -1,7 +1,3 @@
-package test
-
-import functionadaptors.Implicits._
-
 /**
   * Created by petrkubat on 29/01/2017.
   */
@@ -79,6 +75,8 @@ object Sorter {
 
   //doStuff(list)
 
+  import macros.AdaptiveMacros._
+
   val sort = radixSort _ or bubbleSort[Int]
 
 //  val sort = selectionSort _ or standardSort by (_.size)
@@ -87,4 +85,3 @@ object Sorter {
 
   //val sort2 = bubbleSort _ or selectionSort
 }
-

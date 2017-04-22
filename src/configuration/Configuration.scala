@@ -10,7 +10,8 @@ import runtime.selection.RunSelector
   */
 trait Configuration {
   type MeasurementType
-  val historyStorage: HistoryStorage[MeasurementType]
+  val historyStorageFactory: () => HistoryStorage[MeasurementType]
+  val globalHistoryStorage: HistoryStorage[MeasurementType] = historyStorageFactory()
   val runSelector: RunSelector[MeasurementType]
   val performanceProvider: PerformanceProvider[MeasurementType]
   val groupSelector: GroupSelector

@@ -1,13 +1,12 @@
-package test
-
-import functionadaptors.Implicits._
-
 import scala.collection.mutable
 
 /**
   * Created by pk250187 on 4/2/17.
   */
 object Implicits {
+  import macros.AdaptiveMacros._
+  //import functionadaptors.Implicits.{
+
   def implicitFun1[A](list: List[A])(implicit ord: A => Ordered[A]): List[A] = ???
   def implicitFun2[A](list: List[A])(implicit ord: A => Ordered[A]): List[A] = ???
 
@@ -26,6 +25,8 @@ object Implicits {
     }
     result.toList
   }
+
+  import functionadaptors.Implicits._
 
   def map[A, B](list: List[A], fun: (A) => B): List[B] = (defaultMap[A, B] _ or iterativeMap[A, B])(list, fun)
 

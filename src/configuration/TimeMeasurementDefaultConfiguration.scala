@@ -13,8 +13,11 @@ import scala.collection.mutable.ArrayBuffer
   */
 object TimeMeasurementDefaultConfiguration extends Configuration {
   type MeasurementType = Long
-  override val historyStorage: HistoryStorage[MeasurementType] =
-    new MapHistoryStorage[MeasurementType](ref => new FullRunHistory[MeasurementType](ref, new ArrayBuffer[RunData[MeasurementType]]()))
+  override val historyStorageFactory: () => HistoryStorage[Long] = () => {
+    new MapHistoryStorage[MeasurementType](ref =>
+      new FullRunHistory[MeasurementType](ref, new ArrayBuffer[RunData[MeasurementType]]())
+    )
+  }
   override val runSelector: RunSelector[MeasurementType] = new SimpleRunSelector(20)
   override val performanceProvider: PerformanceProvider[MeasurementType] = new RunTimeProvider
   override val groupSelector: GroupSelector = new LogarithmGroupSelector
