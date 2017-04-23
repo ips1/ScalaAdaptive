@@ -12,8 +12,8 @@ import scala.collection.mutable.ArrayBuffer
 trait BaseConfiguration extends Configuration {
   protected val num: Numeric[MeasurementType]
   override val historyStorageFactory: () => HistoryStorage[MeasurementType] = () => {
-    new MapHistoryStorage[MeasurementType](ref =>
-      new FullRunHistory[MeasurementType](ref, new ArrayBuffer[RunData[MeasurementType]]())(num)
+    new MapHistoryStorage[MeasurementType](key =>
+      new FullRunHistory[MeasurementType](key, new ArrayBuffer[RunData[MeasurementType]]())(num)
     )
   }
   override val groupSelector: GroupSelector = new LogarithmGroupSelector
