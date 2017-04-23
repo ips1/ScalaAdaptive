@@ -18,6 +18,6 @@ class BasicFileNameForKeyProvider extends FileNameForKeyProvider {
   }
 
   override def getFileNameForHistoryKey(key: HistoryKey): String = key match {
-    case HistoryKey(function, groupId) => s"${getFunctionString(function)}_${getGroupIdString(groupId)}"
+    case HistoryKey(function, groupId) => s"${getFunctionString(function)}_${getGroupIdString(groupId)}.hist"
   }
 }
