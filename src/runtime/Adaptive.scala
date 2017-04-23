@@ -18,8 +18,23 @@ object Adaptive {
       configuration.logger)
   }
 
+  private def initPersistentTracker(configuration: Configuration): Option[FunctionRunner] =
+    configuration.persistentHistoryStorageFactory().map(persistentStorage =>
+      new RunTracker[configuration.MeasurementType](
+        persistentStorage,
+        configuration.runSelector,
+        configuration.performanceProvider,
+        configuration.groupSelector,
+        configuration.logger
+      )
+    )
+
   def createRunner(): FunctionRunner =
     initTracker(defaultConfiguration)
 
-  lazy val runner = createRunner()
+  lazy val runner: FunctionRunner = createRunner()
+  lazy val persistentRunner: FunctionRunner = initPersistentTracker(defaultConfiguration) match {
+    case Some(r) => r
+    case _ => runner
+  }
 }

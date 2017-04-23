@@ -25,7 +25,7 @@ class RunTracker[TMeasurement](historyStorage: HistoryStorage[TMeasurement],
     logger.log(s"Selected option: ${selectedRecord.reference}")
     val (result, performance) = performanceProvider.measureFunctionRun(options.find(_.reference == selectedRecord.reference).get.fun)
     logger.log(s"Performance on $inputDescriptor measured: $performance")
-    selectedRecord.applyNewRun(new RunData(inputDescriptor, performance))
+    historyStorage.applyNewRun(selectedRecord.key, new RunData(inputDescriptor, performance))
     result
   }
 }

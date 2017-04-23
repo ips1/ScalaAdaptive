@@ -1,12 +1,12 @@
 package runtime.history.serialization
 
+import java.io.{FileOutputStream, PrintWriter}
 import java.nio.file.Path
 
 import runtime.history.{FullRunHistory, HistoryKey, RunData}
 
 import scala.collection.mutable.ArrayBuffer
 import scala.io.Source
-import scalax.io._
 
 /**
   * Created by pk250187 on 4/23/17.
@@ -20,8 +20,9 @@ class BasicHistorySerializer(private val rootPath: Path,
     rootPath.resolve(fileNameForKeyProvider.getFileNameForHistoryKey(key))
 
   override def serializeNewRun(key: HistoryKey, run: RunData[Long]): Unit = {
-    val file = Resource.fromFile(getFilePath(key).toFile)
-    file.append(runDataSerializer.serializeRunData(run))
+    val writer = new PrintWriter(new FileOutputStream(getFilePath(key).toFile,true))
+    writer.println(runDataSerializer.serializeRunData(run))
+    writer.close()
   }
 
   override def deserializeHistory(key: HistoryKey): Option[FullRunHistory[Long]] = {

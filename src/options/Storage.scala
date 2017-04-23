@@ -7,4 +7,5 @@ object Storage extends Enumeration {
   type Storage = Value
   val Local = Value("Local")
   val Global = Value("Global")
+  val Persistent = Value("Persistent")
 }

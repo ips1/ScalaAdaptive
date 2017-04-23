@@ -7,6 +7,7 @@ import references.FunctionReference
   */
 trait RunHistory[TMeasurement] {
   def reference: FunctionReference
+  def key: HistoryKey
   def runCount: Int
   def average(): Double
   def best(): Double
