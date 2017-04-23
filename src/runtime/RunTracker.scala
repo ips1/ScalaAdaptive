@@ -14,18 +14,41 @@ class RunTracker[TMeasurement](historyStorage: HistoryStorage[TMeasurement],
                                performanceProvider: PerformanceProvider[TMeasurement],
                                bucketSelector: GroupSelector,
                                logger: Logger) extends FunctionRunner {
-  override def runOption[TReturnType](options: Seq[ReferencedFunction[TReturnType]], inputDescriptor: Long = 0): TReturnType = {
-    // TODO: byValue not specified
-    val targetBucket = if (inputDescriptor != 0) bucketSelector.selectGroupForValue(inputDescriptor) else bucketSelector.defaultGroup
+
+  private def selectRecord[TReturnType](options: Seq[ReferencedFunction[TReturnType]], inputDescriptor: Long) = {
+    val targetBucket =
+      if (inputDescriptor != 0) bucketSelector.selectGroupForValue(inputDescriptor)
+      else bucketSelector.defaultGroup
+
     logger.log(s"Target bucket: $targetBucket, byValue: $inputDescriptor")
 
     val histories = options.map(f => historyStorage.getHistory(HistoryKey(f.reference, targetBucket)))
 
     val selectedRecord = runSelector.selectOption(histories)
     logger.log(s"Selected option: ${selectedRecord.reference}")
-    val (result, performance) = performanceProvider.measureFunctionRun(options.find(_.reference == selectedRecord.reference).get.fun)
+    selectedRecord
+  }
+
+  override def runOption[TReturnType](options: Seq[ReferencedFunction[TReturnType]],
+                                      inputDescriptor: Long = 0): TReturnType = {
+    // TODO: inputDescriptor not specified
+    val selectedRecord = selectRecord(options, inputDescriptor)
+    val functionToRun = options.find(_.reference == selectedRecord.reference).get.fun
+
+    runMeasuredFunction(functionToRun, selectedRecord.key, inputDescriptor)
+  }
+
+  override def runOptionWithDelayedMeasure[TReturnType](options: Seq[ReferencedFunction[TReturnType]],
+                                               inputDescriptor: Long = 0): (TReturnType, MeasurementToken) = {
+    val selectedRecord = selectRecord(options, inputDescriptor)
+    val functionToRun = options.find(_.reference == selectedRecord.reference).get.fun
+    (functionToRun(), new MeasurementTokenImplementation(this, inputDescriptor, selectedRecord.key))
+  }
+
+  override def runMeasuredFunction[TReturnType](fun: () => TReturnType, key: HistoryKey, inputDescriptor: Long): TReturnType = {
+    val (result, performance) = performanceProvider.measureFunctionRun(fun)
     logger.log(s"Performance on $inputDescriptor measured: $performance")
-    historyStorage.applyNewRun(selectedRecord.key, new RunData(inputDescriptor, performance))
+    historyStorage.applyNewRun(key, new RunData(inputDescriptor, performance))
     result
   }
 }

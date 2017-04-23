@@ -4,7 +4,7 @@ import macros.{AdaptiveMacros, AdaptiveMacrosHelper}
 import options.Measurement.Measurement
 import options.Storage.Storage
 import options.{Measurement, RunOption, Storage}
-import runtime.{Adaptive, ReferencedFunction}
+import runtime.{Adaptive, MeasurementToken, ReferencedFunction}
 
 import scala.language.experimental.macros
 import scala.reflect.macros.Context
@@ -16,7 +16,9 @@ import scala.reflect.runtime.universe.{TypeTag, typeOf}
 class FunctionAdaptor1[T, R](private val options: List[RunOption[(T) => R]],
                              private val using: Measurement = Measurement.RunTime,
                              private val bySelector: (T) => Int = null,
-                             protected val storage: Storage = Storage.Global) extends ((T) => R) with CustomRunner {
+                             private val storage: Storage = Storage.Global) extends ((T) => R) {
+  private val customRunner = new CustomRunner(storage)
+
   // Necessary for being able to omit the _ operator in chained calls
   //def or[J <: T, S >: R](fun: (J) => S): (J) => S = macro FunctionAdaptor1.or_impl[J, S]
 
@@ -27,10 +29,17 @@ class FunctionAdaptor1[T, R](private val options: List[RunOption[(T) => R]],
   def withStorage(newStorage: Storage): (T) => R = new FunctionAdaptor1[T, R](options, using, bySelector, newStorage)
   def using(measurement: Measurement): (T) => R = new FunctionAdaptor1[T, R](options, measurement, bySelector, storage)
 
+  private def generateOptions(v1: T): Seq[ReferencedFunction[R]] =
+    options.map(f => new ReferencedFunction[R]({ () => f.function(v1) }, f.reference))
+
+  private def createInputDescriptor(v1: T) = if (bySelector != null) bySelector(v1) else 0
+
   override def apply(v1: T): R = {
-    val test = options.map(f => new ReferencedFunction[R]({ () => f.function(v1) }, f.reference))
-    val by = if (bySelector != null) bySelector(v1) else 0
-    runOption(test, by)
+    customRunner.runOption(generateOptions(v1), createInputDescriptor(v1))
+  }
+
+  def applyWithoutMeasuring(v1: T): (R, MeasurementToken) = {
+    customRunner.runOptionWithDelayedMeasure(generateOptions(v1), createInputDescriptor(v1))
   }
 }
 

@@ -7,6 +7,6 @@ import java.io.{BufferedWriter, File, FileWriter, PrintWriter}
   */
 class FileLogger(fileName: String) extends Logger {
   private val fileWriter = new PrintWriter(new BufferedWriter(new FileWriter(new File(fileName))))
-  override def log(message: String): Unit = fileWriter.println(message)
+  override def write(message: String): Unit = fileWriter.println(message)
   // TODO: close the file?
 }
