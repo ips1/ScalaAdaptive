@@ -7,13 +7,13 @@ import runtime.history.RunHistory
   */
 class LowRunAwareSelector[TMeasurement](val innerSelector: RunSelector[TMeasurement],
                                         val lowRunLimit: Int) extends RunSelector[TMeasurement] {
-  override def selectOption(records: Seq[RunHistory[TMeasurement]]): RunHistory[TMeasurement] = {
+  override def selectOption(records: Seq[RunHistory[TMeasurement]], inputDescriptor: Long): RunHistory[TMeasurement] = {
     val lowRunOptions = records.filter(_.runCount < lowRunLimit)
 
     if (lowRunOptions.nonEmpty) {
       return lowRunOptions.head
     }
 
-    innerSelector.selectOption(records)
+    innerSelector.selectOption(records, inputDescriptor)
   }
 }

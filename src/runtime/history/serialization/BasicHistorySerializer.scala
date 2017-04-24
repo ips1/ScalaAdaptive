@@ -20,7 +20,9 @@ class BasicHistorySerializer(private val rootPath: Path,
     rootPath.resolve(fileNameForKeyProvider.getFileNameForHistoryKey(key))
 
   override def serializeNewRun(key: HistoryKey, run: RunData[Long]): Unit = {
-    val writer = new PrintWriter(new FileOutputStream(getFilePath(key).toFile,true))
+    val file = getFilePath(key).toFile
+    file.getParentFile.mkdirs()
+    val writer = new PrintWriter(new FileOutputStream(file, true))
     writer.println(runDataSerializer.serializeRunData(run))
     writer.close()
   }

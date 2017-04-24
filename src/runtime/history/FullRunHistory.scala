@@ -8,7 +8,7 @@ import scala.collection.mutable.ArrayBuffer
   * Created by pk250187 on 3/21/17.
   */
 class FullRunHistory[TMeasurement](override val key: HistoryKey,
-                                   val runItems: ArrayBuffer[RunData[TMeasurement]])
+                                   override val runItems: ArrayBuffer[RunData[TMeasurement]])
                                   (implicit num: Numeric[TMeasurement]) extends RunHistory[TMeasurement] {
   // TODO: remove runItems from ctor OR add sum to ctor - inconsistency!!!
   private var sum: TMeasurement = num.zero
