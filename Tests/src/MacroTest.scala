@@ -1,3 +1,4 @@
+import adaptivetests.sorting.Sorter
 import functionadaptors.{FunctionAdaptor1, Implicits}
 
 /**
@@ -15,6 +16,13 @@ object MacroTest {
     Thread.sleep(10)
     i + 1
   }
+
+  val sort = new Sorter()
+  sort.getClass.getName
+
+  val testXXXX = printAst(sort.selectionSort(List()))
+
+  val testXXX = printAst(classOf[Sorter].getTypeName + ".ahoj")
 
   val test = printAst(functionadaptors.Implicits.toAdaptor({
     (i: Int) => MacroTest.this.increment(i)

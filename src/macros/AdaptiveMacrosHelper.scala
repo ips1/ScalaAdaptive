@@ -15,7 +15,16 @@ class AdaptiveMacrosHelper[C <: Context](val c: C) {
     //val toAdaptorCallOld = Select(Ident(newTypeName("functionadaptors.Implicits")), newTermName("toAdaptor"))
 
     //val toAdaptorCall = TypeApply(Select(Select(Ident(newTermName("functionadaptors")), newTermName("Implicits")), newTermName("toAdaptor")), List(TypeTree(), TypeTree()))
-    val toAdaptorCall = Select(Select(Ident(newTermName("functionadaptors")), newTermName("Implicits")), newTermName("toAdaptor"))
+    val toAdaptorCall =
+      Select(
+        Select(
+          Ident(
+            TermName("functionadaptors")
+          ),
+          TermName("Implicits")
+        ),
+        TermName("toAdaptor")
+      )
 
     def generateDefaultConversion(functionTree: Tree): Tree =
       Apply(
@@ -23,31 +32,80 @@ class AdaptiveMacrosHelper[C <: Context](val c: C) {
         List(functionTree)
       )
 
-    def generateExplicitConversion(functionTree: Tree, methodName: String) =
+    def generateExplicitConversion(functionTree: Tree, methodNameTree: Tree) =
       Apply(
         toAdaptorCall,
         List(
           functionTree,
-          Apply(Select(Select(Ident(newTermName("references")), newTermName("MethodNameReference")), newTermName("apply")), List(Literal(Constant(methodName))))
+          Apply(
+            Select(
+              Select(
+                Ident(
+                  TermName("references")
+                ),
+                TermName("MethodNameReference")
+              ),
+              TermName("apply")
+            ),
+            List(
+              methodNameTree
+            )
+          )
         )
       )
 
-    def getMethodNameFromFunctionExpression(expression: Tree): Option[String] = expression match {
-      case Select(_, _) => Some(expression.toString())
+    def generateNameFromTypeAndMehod(typeTree: Tree, method: Name): Option[Tree] = {
+//      val typeNameTerm = TermName(typeName.toString)
+//      val methodNameTerm = TermName(method.toString)
+//      Some(q"""(classOf[${typeNameTerm.decodedName.toString}].getTypeName + ".${methodNameTerm.decodedName.toString}")""")
+
+
+
+      Some(
+        Apply(
+          Select(
+            Apply(
+              Select(
+                Apply(
+                  Select(
+                    typeTree,
+                    TermName("getClass")
+                  ),
+                  List()
+                ),
+                TermName("getName")
+              ),
+              List()
+            ),
+            TermName("$plus")
+          ),
+          List(Literal(Constant(s".$method")))
+        )
+      )
+//      None
+    }
+
+    def getMethodNameFromFunctionExpression(expression: Tree): Option[Tree] = expression match {
+      case Select(typeTree, methodTree) => generateNameFromTypeAndMehod(typeTree, methodTree)
+        // TODO: Cover the following: (+ support genericity?)
+        // Warning:scalac: TypeApply(Select(This(TypeName("CovarianceContravariance")), TermName("method2")), List(TypeTree().setOriginal(Ident(TypeName("T")))))
+      case _ =>
+        println("------------------------")
+        println(showRaw(expression))
+        None
+    }
+
+    def extractMethodFromCall(call: Tree): Option[Tree] = call match {
+      case Apply(function, args) =>
+        println(showRaw(function))
+        getMethodNameFromFunctionExpression(function)
       case _ => None
     }
 
-    def extractMethodFromCall(call: Tree): Option[String] = call match {
-      case Apply(function, args) => {
-        println(showRaw(function)); getMethodNameFromFunctionExpression(function)
-      }
-      case _ => None
-    }
-
-    def extractMethodNameFromEtaExpansion(etaExpansion: Tree): Option[String] = etaExpansion match {
-      case Block(_, body) => {
-        println(body); extractMethodNameFromEtaExpansion(body)
-      }
+    def extractMethodNameFromEtaExpansion(etaExpansion: Tree): Option[Tree] = etaExpansion match {
+      case Block(_, body) =>
+        println(body)
+        extractMethodNameFromEtaExpansion(body)
       case Function(_, call) => extractMethodFromCall(call)
       case _ => None
     }
@@ -62,13 +120,10 @@ class AdaptiveMacrosHelper[C <: Context](val c: C) {
     resultTree
   }
 
-  def wrapTreeInAdapterConversionAndOrCall(funTree: c.Tree, types: List[Tree]): c.Tree = {
+  def wrapTreeInAdapterConversionAndOrCall(funTree: c.Tree): c.Tree = {
     val convertedTree = wrapTreeInAdapterConversion(funTree)
     Apply(
-      TypeApply(
-        Select(c.prefix.tree, newTermName("orAdaptor")),
-        types
-      ),
+      Select(c.prefix.tree, newTermName("orAdaptor")),
       List(convertedTree)
     )
   }

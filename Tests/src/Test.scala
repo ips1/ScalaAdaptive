@@ -1,3 +1,5 @@
+import adaptivetests.sorting.Sorter
+
 import scala.util.Random
 
 /**

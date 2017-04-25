@@ -10,6 +10,7 @@ import scala.language.implicitConversions
   */
 object Implicits {
   implicit def toAdaptor[I, R](fun: (I) => R): FunctionAdaptor1[I, R] = fun match {
+      // TODO: Erasure not checking actual types?
     case adaptor: FunctionAdaptor1[I, R] => adaptor
     case _ => new FunctionAdaptor1[I, R](List(new RunOption(fun, ClosureNameReference(fun.getClass.getTypeName))))
   }
