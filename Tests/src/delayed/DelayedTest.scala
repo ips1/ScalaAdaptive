@@ -4,7 +4,7 @@ package delayed
   * Created by pk250187 on 4/23/17.
   */
 object DelayedTest {
-  import functionadaptors.Implicits._
+  import scalaadaptive.api.Implicits._
   def getFastConfig(): DelayedConfig = FastConfig()
   def getSlowConfig(): DelayedConfig = SlowConfig()
   val getConfig: () => DelayedConfig = getFastConfig _ or getSlowConfig

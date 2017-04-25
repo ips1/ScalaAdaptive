@@ -1,4 +1,4 @@
-import functionadaptors.Implicits._
+import scalaadaptive.api.Implicits._
 
 class A
 class B

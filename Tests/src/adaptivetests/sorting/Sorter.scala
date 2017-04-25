@@ -1,6 +1,6 @@
 package adaptivetests.sorting
 
-import options.Storage
+import scalaadaptive.core.options.Storage
 
 /**
   * Created by petrkubat on 29/01/2017.
@@ -79,7 +79,7 @@ class Sorter {
 
   //doStuff(list)
 
-  import macros.AdaptiveMacros._
+  import scalaadaptive.core.macros.AdaptiveMacros._
 
   //val sort = radixSort _ or bubbleSort[Int]
 

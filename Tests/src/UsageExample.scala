@@ -1,11 +1,11 @@
-import options.Measurement
+import scalaadaptive.core.options.Measurement
 
 /**
   * Created by pk250187 on 3/19/17.
   */
 
 object UsageExample {
-  import macros.AdaptiveMacros._
+  import scalaadaptive.core.macros.AdaptiveMacros._
   // -------------------------
   // Functional usage example:
   // -------------------------
@@ -21,7 +21,7 @@ object UsageExample {
   // OOP usage example:
   // ------------------
   object Sortable {
-    import functionadaptors.Implicits._
+    import scalaadaptive.api.Implicits._
 
     implicit class SortableList[Int](list: List[Int]) {
       private def selectionSort(): List[Int] = ???

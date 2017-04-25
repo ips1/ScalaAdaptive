@@ -4,7 +4,7 @@ package traits
   * Created by pk250187 on 4/5/17.
   */
 class TestImpl extends TestTrait {
-  import functionadaptors.Implicits._
+  import scalaadaptive.api.Implicits._
 
   def impl1(arg: List[Int]): List[String] = arg.map("Num: " + _.toString)
   def impl2(arg: List[Int]): List[String] = arg.map(i => s"Num: $i")
@@ -16,7 +16,7 @@ class TestImpl extends TestTrait {
 }
 
 class NewTestImple extends TestTrait {
-  import functionadaptors.Implicits._
+  import scalaadaptive.api.Implicits._
 
   def impl1(arg: List[Int]): List[String] = arg.map("Num: " + _.toString)
   def impl2(arg: List[Int]): List[String] = arg.map(i => s"Num: $i")

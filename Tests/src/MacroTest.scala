@@ -1,11 +1,11 @@
 import adaptivetests.sorting.Sorter
-import functionadaptors.{FunctionAdaptor1, Implicits}
+import scalaadaptive.api.functionadaptors.FunctionAdaptor1
 
 /**
   * Created by pk250187 on 4/9/17.
   */
 object MacroTest {
-  import macros.AdaptiveMacros._
+  import scalaadaptive.core.macros.AdaptiveMacros._
 
   def increment(i: Int): Int = i + 1
   def increment2(i: Int): Int = {
@@ -24,9 +24,9 @@ object MacroTest {
 
   val testXXX = printAst(classOf[Sorter].getTypeName + ".ahoj")
 
-  val test = printAst(functionadaptors.Implicits.toAdaptor({
+  val test = printAst(scalaadaptive.api.Implicits.toAdaptor({
     (i: Int) => MacroTest.this.increment(i)
-  }, references.MethodNameReference.apply("MacroTest.this.increment")))
+  }, scalaadaptive.core.references.MethodNameReference.apply("MacroTest.this.increment")))
 
   val incFun1: FunctionAdaptor1[Int, Int] = incrementSlow _ or increment
   val incFun2 = incrementSlow _ or increment

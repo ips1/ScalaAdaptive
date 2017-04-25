@@ -3,8 +3,7 @@
   */
 
 import adaptivetests.sorting.Sorter
-import functionadaptors.Implicits._
-
+import scalaadaptive.api.Implicits._
 object Sortable {
   implicit class SortableList[T](list: List[T])(implicit ord: T => Ordered[T]) {
     private def standardSort(): List[T] = list.sorted

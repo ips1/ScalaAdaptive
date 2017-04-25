@@ -2,8 +2,7 @@
   * Created by pk250187 on 4/8/17.
   */
 object Generics {
-  import functionadaptors.Implicits._
-
+  import scalaadaptive.api.Implicits._
   def defaultCount[A](list: List[A], item: A) = list.count(_ == item)
   def customCount[A](list: List[A], item: A) = list.filter(_ == item).map((i) => 1).sum
 
