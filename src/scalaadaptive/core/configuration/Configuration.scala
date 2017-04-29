@@ -2,6 +2,7 @@ package scalaadaptive.core.configuration
 import scalaadaptive.core.grouping.GroupSelector
 import scalaadaptive.core.logging.Logger
 import scalaadaptive.core.performance.PerformanceProvider
+import scalaadaptive.core.references.CustomIdentifierValidator
 import scalaadaptive.core.runtime.history.HistoryStorage
 import scalaadaptive.core.runtime.selection.RunSelector
 
@@ -16,4 +17,5 @@ trait Configuration {
   val performanceProvider: PerformanceProvider[MeasurementType]
   val groupSelector: GroupSelector
   val logger: Logger
+  val identifierValidator: CustomIdentifierValidator
 }

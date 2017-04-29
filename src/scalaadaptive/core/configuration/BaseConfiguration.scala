@@ -3,8 +3,8 @@ package scalaadaptive.core.configuration
 import scalaadaptive.core.grouping.{GroupSelector, LogarithmGroupSelector}
 import scalaadaptive.core.logging.{ConsoleLogger, Logger}
 import scalaadaptive.core.runtime.history.{FullRunHistory, HistoryStorage, MapHistoryStorage, RunData}
-
 import scala.collection.mutable.ArrayBuffer
+import scalaadaptive.core.references.{AlphanumValidator, CustomIdentifierValidator}
 
 /**
   * Created by pk250187 on 4/22/17.
@@ -18,4 +18,5 @@ trait BaseConfiguration extends Configuration {
   }
   override val groupSelector: GroupSelector = new LogarithmGroupSelector
   override val logger: Logger = new ConsoleLogger
+  override val identifierValidator: CustomIdentifierValidator = new AlphanumValidator
 }

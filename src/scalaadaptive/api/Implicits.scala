@@ -14,7 +14,7 @@ object Implicits {
     case _ => new FunctionAdaptor1[I, R](List(new RunOption(fun, ClosureNameReference(fun.getClass.getTypeName))))
   }
 
-  implicit def toAdaptor[I, R](fun: (I) => R, reference: FunctionReference): FunctionAdaptor1[I, R] = fun match {
+  def toAdaptor[I, R](fun: (I) => R, reference: FunctionReference): FunctionAdaptor1[I, R] = fun match {
     case adaptor: FunctionAdaptor1[I, R] => adaptor
     case _ => new FunctionAdaptor1[I, R](List(new RunOption(fun, reference)))
   }

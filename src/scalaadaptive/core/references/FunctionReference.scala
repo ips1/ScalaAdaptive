@@ -7,3 +7,4 @@ abstract class FunctionReference
 
 case class MethodNameReference(name: String) extends FunctionReference
 case class ClosureNameReference(name: String) extends FunctionReference
+case class CustomReference(name: String) extends FunctionReference

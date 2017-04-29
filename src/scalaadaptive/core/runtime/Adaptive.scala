@@ -1,6 +1,7 @@
 package scalaadaptive.core.runtime
 
 import scalaadaptive.core.configuration.{Configuration, TimeMeasurementAverageConfiguration}
+import scalaadaptive.core.references.CustomIdentifierValidator
 import scalaadaptive.core.runtime.history._
 
 /**
@@ -28,6 +29,8 @@ object Adaptive {
         configuration.logger
       )
     )
+
+  def getIdentifierValidator: CustomIdentifierValidator = defaultConfiguration.identifierValidator
 
   def createRunner(): FunctionRunner =
     initTracker(defaultConfiguration)
