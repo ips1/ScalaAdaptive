@@ -79,7 +79,7 @@ class Sorter {
 
   //doStuff(list)
 
-  import scalaadaptive.core.macros.AdaptiveMacros._
+  import scalaadaptive.api.Implicits._
 
   //val sort = radixSort _ or bubbleSort[Int]
 

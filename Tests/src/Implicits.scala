@@ -4,8 +4,7 @@ import scala.collection.mutable
   * Created by pk250187 on 4/2/17.
   */
 object Implicits {
-  import scalaadaptive.core.macros.AdaptiveMacros._
-  //import scalaadaptive.api.functionadaptors.Implicits.{
+  import scalaadaptive.api.Implicits._
 
   def implicitFun1[A](list: List[A])(implicit ord: A => Ordered[A]): List[A] = ???
   def implicitFun2[A](list: List[A])(implicit ord: A => Ordered[A]): List[A] = ???

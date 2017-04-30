@@ -7,8 +7,7 @@ import scalaadaptive.core.options.{Measurement, RunOption, Storage}
 import scalaadaptive.core.runtime.{Adaptive, MeasurementToken, ReferencedFunction}
 
 import scala.language.experimental.macros
-import scala.reflect.macros.Context
-import scala.reflect.runtime.universe.{TypeTag, typeOf}
+import scala.reflect.macros.blackbox.Context
 
 /**
   * Created by pk250187 on 3/19/17.
@@ -41,16 +40,14 @@ class FunctionAdaptor1[T, R](private val options: List[RunOption[(T) => R]],
   def applyWithoutMeasuring(v1: T): (R, MeasurementToken) = {
     customRunner.runOptionWithDelayedMeasure(generateOptions(v1), createInputDescriptor(v1))
   }
+
+  def toDebugString: String = options.map(o => o.reference.toString).mkString(", ")
 }
 
 object FunctionAdaptor1 {
   def or_impl[J, S](c: Context)(fun: c.Expr[(J) => S]): c.Expr[FunctionAdaptor1[J, S]] = {
-    import c.universe.{TypeTree, Ident, newTypeName}
-    //val types = List(TypeTree().setOriginal(Ident(newTypeName("J"))), TypeTree().setOriginal(Ident(newTypeName("S"))))
-    //val types = List(TypeTree(), TypeTree())
     val resultTree = new AdaptiveMacrosHelper[c.type](c)
       .wrapTreeInAdapterConversionAndOrCall(fun.tree)
-    println(resultTree)
     c.Expr[FunctionAdaptor1[J, S]](resultTree)
   }
 }

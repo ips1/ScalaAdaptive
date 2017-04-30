@@ -5,7 +5,7 @@ import scalaadaptive.core.options.Measurement
   */
 
 object UsageExample {
-  import scalaadaptive.core.macros.AdaptiveMacros._
+  import scalaadaptive.api.Implicits._
   // -------------------------
   // Functional usage example:
   // -------------------------

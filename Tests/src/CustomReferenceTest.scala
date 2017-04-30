@@ -7,7 +7,7 @@ import scalaadaptive.core.options.Storage
   * Created by pk250187 on 4/29/17.
   */
 object CustomReferenceTest {
-  import scalaadaptive.core.macros.AdaptiveMacros._
+  import scalaadaptive.api.Implicits._
   val runner = new TestRunner()
 
   //runTest(l => l.sort())
@@ -24,7 +24,7 @@ object CustomReferenceTest {
   def main(args: Array[String]): Unit = {
     //runTest(l => sorter.sort(l))
     Seq.range(0, 1).foreach(i => {
-      runner.runIncrementalTest(l => sortWithCustom(l))
+      runner.runIncrementalTest(l => sort(l))
     })
   }
 }

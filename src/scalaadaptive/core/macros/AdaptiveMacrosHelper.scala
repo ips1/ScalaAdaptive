@@ -1,9 +1,9 @@
 package scalaadaptive.core.macros
 
 import scalaadaptive.api.functionadaptors.FunctionAdaptor1
-
 import scala.language.experimental.macros
-import scala.reflect.macros.Context
+import scala.reflect.macros.blackbox.Context
+import scalaadaptive.core.macros.methodnames.EtaExpansionConverter
 
 /**
   * Created by pk250187 on 4/9/17.
@@ -11,7 +11,12 @@ import scala.reflect.macros.Context
 class AdaptiveMacrosHelper[C <: Context](val c: C) {
   import c.universe._
 
-  def wrapTreeInAdapterConversion(funTree: c.Tree): c.Tree = {
+  val converter = new EtaExpansionConverter[c.type](c)
+
+  def wrapTreeInAdapterConversion(funTree: c.Tree): c.Tree =
+    converter.convertEtaExpansionTree(funTree)
+
+  def wrapTreeInAdapterConversionOld(funTree: c.Tree): c.Tree = {
     //val toAdaptorCallOld = Select(Ident(newTypeName("scalaadaptive.api.functionadaptors.Implicits")), newTermName("toAdaptor"))
 
     //val toAdaptorCall = TypeApply(Select(Select(Ident(newTermName("scalaadaptive.api.functionadaptors")), newTermName("Implicits")), newTermName("toAdaptor")), List(TypeTree(), TypeTree()))

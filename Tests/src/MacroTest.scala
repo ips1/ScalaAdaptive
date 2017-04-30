@@ -6,6 +6,7 @@ import scalaadaptive.api.functionadaptors.FunctionAdaptor1
   */
 object MacroTest {
   import scalaadaptive.core.macros.AdaptiveMacros._
+  import scalaadaptive.api.Implicits._
 
   def increment(i: Int): Int = i + 1
   def increment2(i: Int): Int = {
@@ -17,16 +18,18 @@ object MacroTest {
     i + 1
   }
 
+  def getSorter(): Sorter = new Sorter()
+
   val sort = new Sorter()
-  sort.getClass.getName
+  val test123 = printAst(increment _)
 
-  val testXXXX = printAst(sort.selectionSort(List()))
+//  val testXXXX = printAst(sort.selectionSort(List()))
 
-  val testXXX = printAst(classOf[Sorter].getTypeName + ".ahoj")
+//  val testXXX = printAst(classOf[Sorter].getTypeName + ".ahoj")
 
-  val test = printAst(scalaadaptive.api.Implicits.toAdaptor({
-    (i: Int) => MacroTest.this.increment(i)
-  }, scalaadaptive.core.references.MethodNameReference.apply("MacroTest.this.increment")))
+//  val test = printAst(scalaadaptive.api.Implicits.toAdaptor({
+//    (i: Int) => MacroTest.this.increment(i)
+//  }, scalaadaptive.core.references.MethodNameReference.apply("MacroTest.this.increment")))
 
   val incFun1: FunctionAdaptor1[Int, Int] = incrementSlow _ or increment
   val incFun2 = incrementSlow _ or increment

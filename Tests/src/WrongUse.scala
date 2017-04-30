@@ -4,7 +4,7 @@ import scalaadaptive.core.options.Storage
   * Created by pk250187 on 4/29/17.
   */
 object WrongUse {
-  import scalaadaptive.core.macros.AdaptiveMacros._
+  import scalaadaptive.api.Implicits._
   def impl1(data: List[Int]): Int = ???
   def impl2(data: List[Int]): Int = ???
 
