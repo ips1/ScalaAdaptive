@@ -2,7 +2,7 @@ import adaptivetests.sorting.Sorter
 import adaptivetests.testmethods.TestMethods
 
 import scala.util.Random
-import scalaadaptive.core.configuration.defaults.{GroupedRunHistoryInterpolationConfiguration, ImmutableFullHistoryInterpolationConfiguration}
+import scalaadaptive.core.configuration.defaults.{FullHistoryInterpolationConfiguration, GroupedRunHistoryInterpolationConfiguration, ImmutableFullHistoryInterpolationConfiguration}
 import scalaadaptive.core.runtime.Adaptive
 
 /**
@@ -20,6 +20,7 @@ object Test {
     //runTest(l => sorter.sort(l))
 //    val configurations = List(ImmutableFullHistoryInterpolationConfiguration)//, GroupedRunHistoryInterpolationConfiguration)
 
+    //val configurations = List(ImmutableFullHistoryInterpolationConfiguration)
     val configurations = List(GroupedRunHistoryInterpolationConfiguration)
     configurations.foreach(cfg => {
       Adaptive.initialize(cfg)

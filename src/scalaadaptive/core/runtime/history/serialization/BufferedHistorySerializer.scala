@@ -12,7 +12,7 @@ class BufferedHistorySerializer[TMeasurement](val innerSerializer: HistorySerial
   private val serializationBuffer = new mutable.HashMap[HistoryKey, mutable.ArrayBuffer[RunData[TMeasurement]]]()
 
   override def serializeMultipleRuns(key: HistoryKey, runs: Seq[RunData[TMeasurement]]): Unit = {
-    val keyBuffer = serializationBuffer.getOrElse(key, new mutable.ArrayBuffer[RunData[TMeasurement]]())
+    val keyBuffer = serializationBuffer.getOrElseUpdate(key, new mutable.ArrayBuffer[RunData[TMeasurement]]())
     keyBuffer.appendAll(runs)
     if (keyBuffer.size > bufferLimit) {
       innerSerializer.serializeMultipleRuns(key, keyBuffer)

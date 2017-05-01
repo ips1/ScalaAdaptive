@@ -2,6 +2,7 @@ package scalaadaptive.api.functionadaptors
 
 import scalaadaptive.core.options.Storage
 import scalaadaptive.core.options.Storage.Storage
+import scalaadaptive.core.performance.PerformanceTracker
 import scalaadaptive.core.runtime.{Adaptive, FunctionRunner, MeasurementToken, ReferencedFunction}
 import scalaadaptive.core.runtime.history.HistoryKey
 
@@ -29,7 +30,9 @@ class CustomRunner(val storage: Storage) extends FunctionRunner {
                                                         inputDescriptor: Long = 0): (TReturnType, MeasurementToken) =
     selectRunner.runOptionWithDelayedMeasure(options, inputDescriptor)
 
-  override def runMeasuredFunction[TReturnType](fun: () => TReturnType, key: HistoryKey,
-                                                inputDescriptor: Long): TReturnType =
-    selectRunner.runMeasuredFunction(fun, key, inputDescriptor)
+  override def runMeasuredFunction[TReturnType](fun: () => TReturnType,
+                                                key: HistoryKey,
+                                                inputDescriptor: Long,
+                                                tracker: PerformanceTracker): TReturnType =
+    selectRunner.runMeasuredFunction(fun, key, inputDescriptor, tracker)
 }

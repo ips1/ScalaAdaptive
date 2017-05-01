@@ -1,5 +1,6 @@
 package scalaadaptive.core.runtime
 
+import scalaadaptive.core.performance.PerformanceTracker
 import scalaadaptive.core.runtime.history.HistoryKey
 
 /**
@@ -7,7 +8,8 @@ import scalaadaptive.core.runtime.history.HistoryKey
   */
 class MeasurementTokenImplementation(private val runner: FunctionRunner,
                                      private val inputDescriptor: Long,
-                                     private val key: HistoryKey) extends MeasurementToken {
+                                     private val key: HistoryKey,
+                                     private val tracker: PerformanceTracker) extends MeasurementToken {
   override def runMeasuredFunction[TReturnValue](fun: () => TReturnValue): TReturnValue =
-    runner.runMeasuredFunction(fun, key, inputDescriptor)
+    runner.runMeasuredFunction(fun, key, inputDescriptor, tracker)
 }

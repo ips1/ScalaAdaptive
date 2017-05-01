@@ -2,7 +2,7 @@ package scalaadaptive.core.runtime
 
 import scalaadaptive.core.grouping.GroupSelector
 import scalaadaptive.core.logging.Logger
-import scalaadaptive.core.performance.PerformanceProvider
+import scalaadaptive.core.performance.{PerformanceProvider, PerformanceTracker, PerformanceTrackerImpl}
 import scalaadaptive.core.runtime.history.historystorage.HistoryStorage
 import scalaadaptive.core.runtime.history.{HistoryKey, RunData}
 import scalaadaptive.core.runtime.selection.RunSelector
@@ -33,23 +33,40 @@ class RunTracker[TMeasurement](historyStorage: HistoryStorage[TMeasurement],
   override def runOption[TReturnType](options: Seq[ReferencedFunction[TReturnType]],
                                       inputDescriptor: Long = 0): TReturnType = {
     // TODO: inputDescriptor not specified
+
+    val tracker = new PerformanceTrackerImpl
+    tracker.startTracking()
+
     val selectedRecord = selectRecord(options, inputDescriptor)
     val functionToRun = options.find(_.reference == selectedRecord.reference).get.fun
 
-    runMeasuredFunction(functionToRun, selectedRecord.key, inputDescriptor)
+    tracker.addSelectionTime()
+    runMeasuredFunction(functionToRun, selectedRecord.key, inputDescriptor, tracker)
   }
 
   override def runOptionWithDelayedMeasure[TReturnType](options: Seq[ReferencedFunction[TReturnType]],
                                                inputDescriptor: Long = 0): (TReturnType, MeasurementToken) = {
+    val tracker = new PerformanceTrackerImpl
+    tracker.startTracking()
+
     val selectedRecord = selectRecord(options, inputDescriptor)
     val functionToRun = options.find(_.reference == selectedRecord.reference).get.fun
-    (functionToRun(), new MeasurementTokenImplementation(this, inputDescriptor, selectedRecord.key))
+
+    tracker.addSelectionTime()
+    (functionToRun(), new MeasurementTokenImplementation(this, inputDescriptor, selectedRecord.key, tracker))
   }
 
-  override def runMeasuredFunction[TReturnType](fun: () => TReturnType, key: HistoryKey, inputDescriptor: Long): TReturnType = {
+  override def runMeasuredFunction[TReturnType](fun: () => TReturnType,
+                                                       key: HistoryKey,
+                                                       inputDescriptor: Long,
+                                                       tracker: PerformanceTracker): TReturnType = {
+    tracker.startTracking()
     val (result, performance) = performanceProvider.measureFunctionRun(fun)
+    tracker.addFunctionTime()
     logger.log(s"Performance on $inputDescriptor measured: $performance")
     historyStorage.applyNewRun(key, new RunData(inputDescriptor, performance))
+    tracker.addStoringTime()
+    tracker.getStatistics.lines.foreach(logger.log)
     result
   }
 }

@@ -42,7 +42,7 @@ object Adaptive {
 
   def initialize(configuration: Configuration): Unit = {
     currentConfiguration = configuration
-    var runner: FunctionRunner = initTracker(currentConfiguration)
-    var persistentRunner: FunctionRunner = initPersistentTracker(currentConfiguration).getOrElse(runner)
+    runner = initTracker(currentConfiguration)
+    persistentRunner = initPersistentTracker(currentConfiguration).getOrElse(runner)
   }
 }
