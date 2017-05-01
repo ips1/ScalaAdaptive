@@ -1,11 +1,12 @@
 package scalaadaptive.core.macros.methodnames
 
+import scala.reflect.macros.blackbox
 import scala.reflect.macros.blackbox.Context
 
 /**
   * Created by pk250187 on 4/30/17.
   */
-class TreeBuilder[C <: Context](val c: C) {
+class TreeBuilder[C <: blackbox.Context](val c: C) {
   import c.universe._
 
   private def buildTypeTree(targetNameParts: List[String]) = {

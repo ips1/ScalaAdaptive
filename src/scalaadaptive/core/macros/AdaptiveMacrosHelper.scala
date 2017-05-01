@@ -2,13 +2,14 @@ package scalaadaptive.core.macros
 
 import scalaadaptive.api.functionadaptors.FunctionAdaptor1
 import scala.language.experimental.macros
+import scala.reflect.macros.blackbox
 import scala.reflect.macros.blackbox.Context
 import scalaadaptive.core.macros.methodnames.EtaExpansionConverter
 
 /**
   * Created by pk250187 on 4/9/17.
   */
-class AdaptiveMacrosHelper[C <: Context](val c: C) {
+class AdaptiveMacrosHelper[C <: blackbox.Context](val c: C) {
   import c.universe._
 
   val converter = new EtaExpansionConverter[c.type](c)

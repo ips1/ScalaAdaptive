@@ -1,5 +1,6 @@
 package scalaadaptive.core.macros.methodnames
 
+import scala.reflect.macros.blackbox
 import scala.reflect.macros.blackbox.Context
 import scalaadaptive.api.Implicits
 import scalaadaptive.core.references.MethodNameReference
@@ -7,7 +8,7 @@ import scalaadaptive.core.references.MethodNameReference
 /**
   * Created by pk250187 on 4/30/17.
   */
-class EtaExpansionConverter[C <: Context](val c: C) {
+class EtaExpansionConverter[C <: blackbox.Context](val c: C) {
   import c.universe._
   val extractor = new EtaExpansionExtractor[c.type](c)
   val treeBuilder = new TreeBuilder[c.type](c)
