@@ -6,7 +6,9 @@ import scala.util.Random
 class TestRunner {
   val bigDataSize = 2000
   val smallDataSize = 20
-  val runCount = 200
+  val testRunCount = 4
+  val runCount = 100
+  val step = 2
   lazy val smallData = Seq.fill(smallDataSize)(Random.nextInt).toList
   lazy val bigData = Seq.fill(bigDataSize)(Random.nextInt).toList
 
@@ -23,14 +25,16 @@ class TestRunner {
     })
   }
 
-  def runIncrementalTest(testFnc: (List[Int]) => List[Int]): Unit = {
-    Seq.range(0, runCount).foreach(i => {
-      Seq.range(0, 1).foreach(j => {
-        val data = customData(smallDataSize + i)
-        println(s"Running test no: ${i} on ${data.size}")
-        val res = testFnc(data)
-        assert(isOrdered(res))
-      })
-    })
+  def runIncrementalTest(testFnc: List[Int] => List[Int]): Unit = {
+    Seq.range(0, testRunCount).foreach(k =>
+      Seq.range(0, runCount).foreach(i =>
+        Seq.range(0, 2).foreach(j => {
+          val data = customData(smallDataSize + i * 2)
+          println(s"Running test no: ${i} on ${data.size}")
+          val res = testFnc(data)
+          //assert(isOrdered(res))
+        })
+      )
+    )
   }
 }
