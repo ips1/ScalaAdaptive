@@ -4,8 +4,9 @@ import java.nio.file.{Path, Paths}
 
 import scalaadaptive.core.runtime.history._
 import scalaadaptive.core.runtime.history.serialization.{BasicFileNameForKeyProvider, BasicHistorySerializer, LongRunDataSerializer}
-
 import scala.collection.mutable.ArrayBuffer
+import scalaadaptive.core.runtime.history.historystorage.PersistentHistoryStorage
+import scalaadaptive.extensions.AverageableImplicits.LongIsAverageable
 
 /**
   * Created by pk250187 on 4/22/17.
@@ -13,12 +14,13 @@ import scala.collection.mutable.ArrayBuffer
 trait BaseLongConfiguration extends BaseConfiguration {
   type MeasurementType = Long
   protected val rootPath: Path
-  override val num = Numeric.LongIsIntegral
+  protected val historySerializer =
+    new BasicHistorySerializer(rootPath, new BasicFileNameForKeyProvider, new LongRunDataSerializer(','))
+
+  override val num = LongIsAverageable
   override val persistentHistoryStorageFactory: () => Option[PersistentHistoryStorage[MeasurementType]] = () =>
     Some(new PersistentHistoryStorage[MeasurementType](
-        new MapHistoryStorage[MeasurementType](key =>
-          new FullRunHistory[MeasurementType](key, new ArrayBuffer[RunData[MeasurementType]]())(num)
-        ),
-        new BasicHistorySerializer(rootPath, new BasicFileNameForKeyProvider, new LongRunDataSerializer(','))
+        historyStorageFactory(),
+        historySerializer
     ))
 }

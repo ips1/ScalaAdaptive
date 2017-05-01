@@ -1,7 +1,8 @@
 package scalaadaptive.core.runtime.selection
 
 import org.apache.commons.math3.analysis.interpolation.LinearInterpolator
-import scalaadaptive.core.runtime.history.RunHistory
+
+import scalaadaptive.core.runtime.history.runhistory.RunHistory
 
 /**
   * Created by pk250187 on 4/23/17.
@@ -12,15 +13,13 @@ class InterpolationSelector[TMeasurement](implicit num: Numeric[TMeasurement])
     val interpolator = new LinearInterpolator()
     val polynomials =
       records.map(runHistory => {
-        val sortedData = runHistory.runItems
-          .groupBy(i => i.inputDescriptor)
-          .mapValues(v => num.toDouble(v.map(_.measurement).sum) / v.size)
+        val sortedData = runHistory.runAveragesGroupedByDescriptor
           .toList
           .sortBy(i => i._1)
         (runHistory,
          interpolator.interpolate(
            sortedData.map(i => i._1.toDouble).toArray,
-           sortedData.map(i => i._2).toArray
+           sortedData.map(i => num.toDouble(i._2.averageRunData.measurement)).toArray
          )
         )
       })

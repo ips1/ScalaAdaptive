@@ -1,6 +1,6 @@
 package scalaadaptive.core.runtime.selection
 
-import scalaadaptive.core.runtime.history.RunHistory
+import scalaadaptive.core.runtime.history.runhistory.RunHistory
 
 /**
   * Created by pk250187 on 4/22/17.

@@ -1,6 +1,7 @@
 package scalaadaptive.core.runtime
 
-import scalaadaptive.core.configuration.{Configuration, TimeMeasurementAverageConfiguration}
+import scalaadaptive.core.configuration.Configuration
+import scalaadaptive.core.configuration.defaults.FullHistoryInterpolationConfiguration
 import scalaadaptive.core.references.CustomIdentifierValidator
 import scalaadaptive.core.runtime.history._
 
@@ -8,7 +9,8 @@ import scalaadaptive.core.runtime.history._
   * Created by pk250187 on 3/19/17.
   */
 object Adaptive {
-  private val defaultConfiguration = TimeMeasurementAverageConfiguration
+  private val defaultConfiguration = FullHistoryInterpolationConfiguration
+  private var currentConfiguration: Configuration = defaultConfiguration
 
   private def initTracker(configuration: Configuration): FunctionRunner = {
     new RunTracker[configuration.MeasurementType](
@@ -30,14 +32,17 @@ object Adaptive {
       )
     )
 
-  def getIdentifierValidator: CustomIdentifierValidator = defaultConfiguration.identifierValidator
+  def getIdentifierValidator: CustomIdentifierValidator = currentConfiguration.identifierValidator
+
+  var runner: FunctionRunner = initTracker(defaultConfiguration)
+  var persistentRunner: FunctionRunner = initPersistentTracker(defaultConfiguration).getOrElse(runner)
 
   def createRunner(): FunctionRunner =
-    initTracker(defaultConfiguration)
+    initTracker(currentConfiguration)
 
-  lazy val runner: FunctionRunner = createRunner()
-  lazy val persistentRunner: FunctionRunner = initPersistentTracker(defaultConfiguration) match {
-    case Some(r) => r
-    case _ => runner
+  def initialize(configuration: Configuration): Unit = {
+    currentConfiguration = configuration
+    var runner: FunctionRunner = initTracker(currentConfiguration)
+    var persistentRunner: FunctionRunner = initPersistentTracker(currentConfiguration).getOrElse(runner)
   }
 }

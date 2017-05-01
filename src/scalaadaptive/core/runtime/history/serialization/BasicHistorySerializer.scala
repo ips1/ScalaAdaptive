@@ -3,7 +3,7 @@ package scalaadaptive.core.runtime.history.serialization
 import java.io.{FileOutputStream, PrintWriter}
 import java.nio.file.Path
 
-import scalaadaptive.core.runtime.history.{FullRunHistory, HistoryKey, RunData}
+import scalaadaptive.core.runtime.history.{HistoryKey, RunData}
 
 import scala.collection.mutable.ArrayBuffer
 import scala.io.Source
@@ -19,29 +19,28 @@ class BasicHistorySerializer(private val rootPath: Path,
   private def getFilePath(key: HistoryKey): Path =
     rootPath.resolve(fileNameForKeyProvider.getFileNameForHistoryKey(key))
 
-  override def serializeNewRun(key: HistoryKey, run: RunData[Long]): Unit = {
+  override def serializeMultipleRuns(key: HistoryKey, runs: Seq[RunData[Long]]): Unit = {
     val file = getFilePath(key).toFile
     file.getParentFile.mkdirs()
     val writer = new PrintWriter(new FileOutputStream(file, true))
-    writer.println(runDataSerializer.serializeRunData(run))
+    runs.foreach(r => writer.println(runDataSerializer.serializeRunData(r)))
     writer.close()
   }
 
-  override def deserializeHistory(key: HistoryKey): Option[FullRunHistory[Long]] = {
+  override def deserializeHistory(key: HistoryKey): Option[Seq[RunData[Long]]] = {
     val file = getFilePath(key).toFile
     if (!file.exists || !file.canRead) {
       return None
     }
 
-    // TODO: Add factory?
-    var history = new FullRunHistory[Long](key, new ArrayBuffer[RunData[Long]]())
+    val history = new ArrayBuffer[RunData[Long]]()
     for (line <- Source.fromFile(file).getLines()) {
       runDataSerializer.deserializeRunData(line) match {
-        case Some(runData) => history.applyNewRun(runData)
+        case Some(runData) => history.append(runData)
         case _ =>
       }
     }
 
-    return Some(history)
+    Some(history)
   }
 }

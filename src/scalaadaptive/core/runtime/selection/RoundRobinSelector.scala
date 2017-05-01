@@ -1,9 +1,11 @@
 package scalaadaptive.core.runtime.selection
 
 import scala.collection.mutable
-import scalaadaptive.core.runtime.history.{HistoryKey, RunHistory}
+import scalaadaptive.core.runtime.history.HistoryKey
 import java.time
 import java.time.{Instant, ZonedDateTime}
+
+import scalaadaptive.core.runtime.history.runhistory.RunHistory
 
 /**
   * Created by pk250187 on 4/29/17.

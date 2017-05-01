@@ -3,7 +3,8 @@ package scalaadaptive.core.runtime
 import scalaadaptive.core.grouping.GroupSelector
 import scalaadaptive.core.logging.Logger
 import scalaadaptive.core.performance.PerformanceProvider
-import scalaadaptive.core.runtime.history.{HistoryKey, HistoryStorage, RunData}
+import scalaadaptive.core.runtime.history.historystorage.HistoryStorage
+import scalaadaptive.core.runtime.history.{HistoryKey, RunData}
 import scalaadaptive.core.runtime.selection.RunSelector
 
 /**

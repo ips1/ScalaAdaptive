@@ -1,6 +1,8 @@
-package scalaadaptive.core.runtime.history
+package scalaadaptive.core.runtime.history.historystorage
 
 import scala.collection.mutable
+import scalaadaptive.core.runtime.history.runhistory.RunHistory
+import scalaadaptive.core.runtime.history.{HistoryKey, RunData}
 
 /**
   * Created by pk250187 on 3/21/17.
@@ -10,8 +12,7 @@ class MapHistoryStorage[TMeasurement](val newHistoryFactory: (HistoryKey) => Run
   private val histories: mutable.HashMap[HistoryKey, RunHistory[TMeasurement]] =
     new mutable.HashMap[HistoryKey, RunHistory[TMeasurement]]()
 
-  def hasHistory(key: HistoryKey): Boolean = histories.contains(key)
-  def addHistory(key: HistoryKey, history: RunHistory[TMeasurement]): Unit = histories.put(key, history)
+  override def hasHistory(key: HistoryKey): Boolean = histories.contains(key)
 
   override def getHistory(key: HistoryKey): RunHistory[TMeasurement] =
     histories.getOrElseUpdate(key, newHistoryFactory(key))

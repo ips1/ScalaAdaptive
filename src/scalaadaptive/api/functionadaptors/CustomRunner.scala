@@ -3,7 +3,7 @@ package scalaadaptive.api.functionadaptors
 import scalaadaptive.core.options.Storage
 import scalaadaptive.core.options.Storage.Storage
 import scalaadaptive.core.runtime.{Adaptive, FunctionRunner, MeasurementToken, ReferencedFunction}
-import scalaadaptive.core.runtime.history.{HistoryKey, HistoryStorage}
+import scalaadaptive.core.runtime.history.HistoryKey
 
 /**
   * Created by pk250187 on 4/22/17.
