@@ -1,9 +1,9 @@
 package scalaadaptive.core.macros
 
-import scalaadaptive.api.functionadaptors.FunctionAdaptor1
 import scala.language.experimental.macros
 import scala.reflect.macros.blackbox
 import scala.reflect.macros.blackbox.Context
+import scalaadaptive.core.adaptors.FunctionAdaptor1
 
 object AdaptiveMacros {
   def printAst(arg: Any): Any = macro printAst_impl

@@ -13,11 +13,11 @@ object CustomReferenceTest {
   //runTest(l => l.sort())
   val sorter = new Sorter()
 
-  val sort = sorter.selectionSort _ or sorter.standardSort by (_.size) withStorage Storage.Persistent
+  val sort = sorter.selectionSort _ or sorter.standardSort by (_.size) using Storage.Persistent
   val sortWithCustom =
     IdentifiedFunction(sorter.selectionSort, "SelectionSort") or
     IdentifiedFunction(sorter.standardSort, "StandardSort") by
-      (_.size) withStorage
+      (_.size) using
       Storage.Persistent
 
 

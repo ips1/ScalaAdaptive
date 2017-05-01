@@ -1,5 +1,6 @@
 import adaptivetests.sorting.Sorter
-import scalaadaptive.api.functionadaptors.FunctionAdaptor1
+
+import scalaadaptive.core.adaptors.FunctionAdaptor1
 
 /**
   * Created by pk250187 on 4/9/17.
@@ -34,7 +35,7 @@ object MacroTest {
 //    (i: Int) => MacroTest.this.increment(i)
 //  }, scalaadaptive.core.references.MethodNameReference.apply("MacroTest.this.increment")))
 
-  val incFun1: FunctionAdaptor1[Int, Int] = incrementSlow _ or increment
+  val incFun1 = incrementSlow _ or increment
   val incFun2 = incrementSlow _ or increment
   val incFun3 = incrementSlow _ or increment2
 

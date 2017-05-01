@@ -48,7 +48,7 @@ object CovarianceContravariance {
   def method1[T](arg: T) = s"$arg"
   def method2[T](arg: T) = s"$arg"
 
-  def method[T](arg: T) = (method1[T] _ or method2[T])(arg)
+//  def method[T](arg: T) = (method1[T] _ or method2[T])(arg)
 
   def fun8(arg: Any): Any = ???
 //  val fun9: (String) => Any = fun8 _ or fun3

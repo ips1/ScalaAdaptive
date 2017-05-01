@@ -83,7 +83,7 @@ class Sorter {
 
   //val sort = radixSort _ or bubbleSort[Int]
 
-  val sort = selectionSort _ or standardSort by (_.size) withStorage Storage.Persistent
+  val sort = selectionSort _ or standardSort by (_.size) using Storage.Persistent
 
   //val sort = selectionSort _ or bubbleSort by (_.size)
 

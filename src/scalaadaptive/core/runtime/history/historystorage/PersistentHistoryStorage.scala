@@ -14,20 +14,18 @@ class PersistentHistoryStorage[TMeasurement](private val localHistory: HistorySt
   override def getHistory(key: HistoryKey): RunHistory[TMeasurement] = {
     val hasHistory = localHistory.hasHistory(key)
 
-    val history = localHistory.getHistory(key)
-
     if (!hasHistory) {
       val loaded = historySerializer.deserializeHistory(key)
 
       loaded match {
         case Some(data) => {
-          data.foreach(item => history.applyNewRun(item))
+          data.foreach(item => localHistory.applyNewRun(key, item))
         }
         case _ =>
       }
     }
 
-    history
+    localHistory.getHistory(key)
   }
 
   override def applyNewRun(key: HistoryKey, run: RunData[TMeasurement]): Unit = {

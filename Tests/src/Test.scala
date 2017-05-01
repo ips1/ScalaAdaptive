@@ -2,7 +2,7 @@ import adaptivetests.sorting.Sorter
 import adaptivetests.testmethods.TestMethods
 
 import scala.util.Random
-import scalaadaptive.core.configuration.defaults.{FullHistoryInterpolationConfiguration, GroupedRunHistoryInterpolationConfiguration, ImmutableFullHistoryInterpolationConfiguration}
+import scalaadaptive.core.configuration.defaults._
 import scalaadaptive.core.runtime.Adaptive
 
 /**

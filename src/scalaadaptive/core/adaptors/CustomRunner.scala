@@ -1,10 +1,10 @@
-package scalaadaptive.api.functionadaptors
+package scalaadaptive.core.adaptors
 
 import scalaadaptive.core.options.Storage
 import scalaadaptive.core.options.Storage.Storage
 import scalaadaptive.core.performance.PerformanceTracker
-import scalaadaptive.core.runtime.{Adaptive, FunctionRunner, MeasurementToken, ReferencedFunction}
 import scalaadaptive.core.runtime.history.HistoryKey
+import scalaadaptive.core.runtime.{Adaptive, FunctionRunner, MeasurementToken, ReferencedFunction}
 
 /**
   * Created by pk250187 on 4/22/17.
