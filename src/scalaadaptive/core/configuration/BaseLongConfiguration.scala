@@ -19,6 +19,10 @@ trait BaseLongConfiguration extends BaseConfiguration {
   override val persistentHistoryStorageFactory: () => Option[PersistentHistoryStorage[MeasurementType]] = () =>
     Some(new PersistentHistoryStorage[MeasurementType](
         historyStorageFactory(),
-        new BasicHistorySerializer(rootPath, new BasicFileNameForKeyProvider, new LongRunDataSerializer(','))
+        new BasicHistorySerializer(
+          rootPath,
+          new BasicFileNameForKeyProvider,
+          new LongRunDataSerializer(','),
+          logger)
     ))
 }
