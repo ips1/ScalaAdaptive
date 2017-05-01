@@ -1,4 +1,4 @@
-package scalaadaptive.core.configuration.defaults
+package scalaadaptive.core.configuration.blocks
 
 import scalaadaptive.core.configuration.BaseLongConfiguration
 import scalaadaptive.core.runtime.selection.{InterpolationSelector, LowRunAwareSelector, RoundRobinSelector, RunSelector}

@@ -1,4 +1,4 @@
-package scalaadaptive.core.configuration.defaults
+package scalaadaptive.core.configuration.blocks
 
 import scalaadaptive.core.configuration.BaseLongConfiguration
 import scalaadaptive.core.performance.{PerformanceProvider, RunTimeProvider}

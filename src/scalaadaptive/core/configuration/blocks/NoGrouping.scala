@@ -1,4 +1,4 @@
-package scalaadaptive.core.configuration.defaults
+package scalaadaptive.core.configuration.blocks
 
 import scalaadaptive.core.configuration.Configuration
 import scalaadaptive.core.grouping.{GroupSelector, SingleGroupSelector}
