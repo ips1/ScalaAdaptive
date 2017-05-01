@@ -23,14 +23,24 @@ class EtaExpansionExtractor[C <: Context](val c: C) {
     case _ => None
   }
 
-  def extractMethodTarget(block: Tree): Option[Tree] = extractFunctionBody(block) match {
-    case Some(Apply(Select(target, _), _)) => Some(target)
+  def extractMethodCall(block: Tree): Option[Tree] = extractFunctionBody(block) match {
+    // Warning! Case branch order is significant
+    // Type arguments are applied to the method
+    case Some(Apply(TypeApply(call, _), _)) => Some(call)
+    case Some(Apply(Apply(TypeApply(call, _), _), _)) => Some(call)
+    // Simple case - no type arguments to the method
+    case Some(Apply(call, _)) => Some(call)
     case _ => None
   }
 
-  def extractMethodName(block: Tree): Option[Name] = extractFunctionBody(block) match {
-    case Some(Apply(Select(_, name), _)) => Some(name)
-    case _ => None
+  def extractMethodTarget(block: Tree): Option[Tree] = extractMethodCall(block) match {
+    case Some(Select(target, _)) => Some(target)
+    case res => None
+  }
+
+  def extractMethodName(block: Tree): Option[Name] = extractMethodCall(block) match {
+    case Some(Select(_, name)) => Some(name)
+    case res => None
   }
 
 //  def extractMethodTargetAndNameFromFunctionBodyTree(call: Tree): Option[(Tree, Name)] = call match {

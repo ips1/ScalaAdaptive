@@ -18,6 +18,9 @@ object MacroTest {
     i + 1
   }
 
+  val x = 15
+  printAst(x + 1)
+
   def getSorter(): Sorter = new Sorter()
 
   val sort = new Sorter()
