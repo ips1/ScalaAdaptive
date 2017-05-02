@@ -17,9 +17,9 @@ object DelayedTest {
   }
 
   def test() = {
-    val (config, token) = getConfig.applyWithoutMeasuring()
+    val (config, measure) = getConfig^()
     for (x <- 1 to 10) {
-      token.runMeasuredFunction(() => run(config))
+      measure(() => run(config))
     }
   }
 

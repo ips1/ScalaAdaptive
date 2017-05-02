@@ -14,6 +14,8 @@ class InterpolationSelector[TMeasurement](implicit num: Numeric[TMeasurement])
     val interpolator = new LoessInterpolator()
 
     // TODO: Exceptions thrown from interpolator!
+    // Should not be used on ungrouped data!
+    // TODO: Exception in thread "main" org.apache.commons.math3.exception.NumberIsTooSmallException: number of points (1)
     val polynomials =
       records.map(runHistory => {
         val sortedData = runHistory.runAveragesGroupedByDescriptor

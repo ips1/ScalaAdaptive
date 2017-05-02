@@ -1,7 +1,7 @@
 package scalaadaptive.core.runtime
 
 import scalaadaptive.core.configuration.Configuration
-import scalaadaptive.core.configuration.defaults.FullHistoryInterpolationConfiguration
+import scalaadaptive.core.configuration.defaults.{FullHistoryInterpolationConfiguration, FullHistoryTTestConfiguration}
 import scalaadaptive.core.references.CustomIdentifierValidator
 import scalaadaptive.core.runtime.history._
 
@@ -9,7 +9,7 @@ import scalaadaptive.core.runtime.history._
   * Created by pk250187 on 3/19/17.
   */
 object Adaptive {
-  private val defaultConfiguration = FullHistoryInterpolationConfiguration
+  private val defaultConfiguration = FullHistoryTTestConfiguration
   private var currentConfiguration: Configuration = defaultConfiguration
 
   private def initTracker(configuration: Configuration): FunctionRunner = {
