@@ -1,6 +1,6 @@
 package scalaadaptive.core.runtime.selection
 
-import org.apache.commons.math3.analysis.interpolation.LinearInterpolator
+import org.apache.commons.math3.analysis.interpolation.{LinearInterpolator, LoessInterpolator}
 
 import scalaadaptive.core.runtime.history.runhistory.RunHistory
 
@@ -10,7 +10,10 @@ import scalaadaptive.core.runtime.history.runhistory.RunHistory
 class InterpolationSelector[TMeasurement](implicit num: Numeric[TMeasurement])
   extends RunSelector[TMeasurement] {
   override def selectOption(records: Seq[RunHistory[TMeasurement]], inputDescriptor: Long): RunHistory[TMeasurement] = {
-    val interpolator = new LinearInterpolator()
+    //val interpolator = new LinearInterpolator()
+    val interpolator = new LoessInterpolator()
+
+    // TODO: Exceptions thrown from interpolator!
     val polynomials =
       records.map(runHistory => {
         val sortedData = runHistory.runAveragesGroupedByDescriptor

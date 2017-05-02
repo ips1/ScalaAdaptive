@@ -26,4 +26,5 @@ class CachedAverageRunHistory[TMeasurement] private (private val internalHistory
   override def best(): Option[Double] = internalHistory.best()
   override def runAveragesGroupedByDescriptor: Map[Long, GroupedRunData[TMeasurement]] =
     internalHistory.runAveragesGroupedByDescriptor
+  override def runStatistics = internalHistory.runStatistics
 }

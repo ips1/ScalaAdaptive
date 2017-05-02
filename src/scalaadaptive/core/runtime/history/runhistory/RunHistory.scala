@@ -1,5 +1,7 @@
 package scalaadaptive.core.runtime.history.runhistory
 
+import org.apache.commons.math3.stat.descriptive.StatisticalSummary
+
 import scalaadaptive.core.references.FunctionReference
 import scalaadaptive.core.runtime.history.{GroupedRunData, HistoryKey, RunData}
 
@@ -10,6 +12,7 @@ trait RunHistory[TMeasurement] {
   def reference: FunctionReference = key.function
   def key: HistoryKey
   def runCount: Int
+  def runStatistics: StatisticalSummary
   def runItems: Iterable[RunData[TMeasurement]]
   def runAveragesGroupedByDescriptor: Map[Long, GroupedRunData[TMeasurement]]
   def average(): Option[Double]

@@ -22,10 +22,12 @@ object Test {
 
     //val configurations = List(ImmutableFullHistoryInterpolationConfiguration)
     //val configurations = List(GroupedRunHistoryInterpolationConfiguration)
-    val configurations = List(GroupedRunHistoryInterpolationConfiguration)
+    val configurations = List(FullHistoryTTestConfiguration)
     configurations.foreach(cfg => {
       Adaptive.initialize(cfg)
-      runner.runIncrementalTest(l => testMethods.function(l))
+      //runner.runIncrementalTest(l => testMethods.function(l))
+      //runner.runTest(l => sorter.sort(l))
+      runner.runTest(l => testMethods.function(l))
     })
   }
 }

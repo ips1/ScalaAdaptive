@@ -1,6 +1,7 @@
 package scalaadaptive.core.runtime.history.runhistory
 
 import scala.collection.mutable.ArrayBuffer
+import scalaadaptive.core.runtime.history.runhistory.defaults.{DefaultAverage, DefaultBest, DefaultGrouping, DefaultStatistics}
 import scalaadaptive.core.runtime.history.{HistoryKey, RunData}
 import scalaadaptive.extensions.Averageable
 
@@ -11,7 +12,8 @@ class FullRunHistory[TMeasurement] private (override val key: HistoryKey,
                                    override val runItems: ArrayBuffer[RunData[TMeasurement]])
                                   (implicit override val num: Averageable[TMeasurement])
   extends RunHistory[TMeasurement]
-    with RunAveragesGrouper[TMeasurement]
+    with DefaultGrouping[TMeasurement]
+    with DefaultStatistics[TMeasurement]
     with DefaultBest[TMeasurement]
     with DefaultAverage[TMeasurement] {
   def this(key: HistoryKey)(implicit num: Averageable[TMeasurement]) =

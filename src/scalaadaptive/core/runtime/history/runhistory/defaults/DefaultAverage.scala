@@ -1,5 +1,6 @@
-package scalaadaptive.core.runtime.history.runhistory
+package scalaadaptive.core.runtime.history.runhistory.defaults
 
+import scalaadaptive.core.runtime.history.runhistory.RunHistory
 import scalaadaptive.extensions.Averageable
 
 /**
