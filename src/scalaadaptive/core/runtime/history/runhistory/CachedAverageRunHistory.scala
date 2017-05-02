@@ -3,8 +3,6 @@ package scalaadaptive.core.runtime.history.runhistory
 import scalaadaptive.core.runtime.history.{GroupedRunData, HistoryKey, RunData}
 import scalaadaptive.extensions.Averageable
 
-// TODO: Delete this?!?!
-
 /**
   * Created by pk250187 on 4/25/17.
   */

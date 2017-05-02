@@ -21,6 +21,7 @@ object Test {
 //    val configurations = List(ImmutableFullHistoryInterpolationConfiguration)//, GroupedRunHistoryInterpolationConfiguration)
 
     //val configurations = List(ImmutableFullHistoryInterpolationConfiguration)
+    //val configurations = List(GroupedRunHistoryInterpolationConfiguration)
     val configurations = List(GroupedRunHistoryInterpolationConfiguration)
     configurations.foreach(cfg => {
       Adaptive.initialize(cfg)
