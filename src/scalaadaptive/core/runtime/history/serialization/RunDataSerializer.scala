@@ -1,6 +1,6 @@
 package scalaadaptive.core.runtime.history.serialization
 
-import scalaadaptive.core.runtime.history.RunData
+import scalaadaptive.core.runtime.history.rundata.RunData
 
 /**
   * Created by pk250187 on 4/23/17.

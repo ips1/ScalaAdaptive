@@ -1,7 +1,7 @@
 package scalaadaptive.core.runtime.history.runhistory.defaults
 
 import scalaadaptive.core.runtime.history.runhistory.RunHistory
-import scalaadaptive.core.runtime.history.{GroupedRunData, RunData}
+import scalaadaptive.core.runtime.history.rundata.{ArtificialRunData, GroupedRunData, RunData}
 import scalaadaptive.extensions.Averageable
 
 /**
@@ -16,7 +16,7 @@ trait DefaultGrouping[TMeasurement] extends RunHistory[TMeasurement] {
       val average = num.average(v._2.map(i => i.measurement))
       average match {
         case Some(avg) => Some(new GroupedRunData[TMeasurement](
-          new RunData[TMeasurement](v._1, avg), v._2.size))
+          new ArtificialRunData[TMeasurement](v._1, avg), v._2.size))
         case _ => None
       }
     })

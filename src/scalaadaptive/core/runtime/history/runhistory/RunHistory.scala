@@ -3,7 +3,8 @@ package scalaadaptive.core.runtime.history.runhistory
 import org.apache.commons.math3.stat.descriptive.StatisticalSummary
 
 import scalaadaptive.core.references.FunctionReference
-import scalaadaptive.core.runtime.history.{GroupedRunData, HistoryKey, RunData}
+import scalaadaptive.core.runtime.history.rundata.{GroupedRunData, RunData}
+import scalaadaptive.core.runtime.history.HistoryKey
 
 /**
   * Created by pk250187 on 3/21/17.

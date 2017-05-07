@@ -1,10 +1,13 @@
 package scalaadaptive.core.runtime
 
+import java.time.Instant
+
 import scalaadaptive.core.grouping.GroupSelector
 import scalaadaptive.core.logging.Logger
 import scalaadaptive.core.performance.{PerformanceProvider, PerformanceTracker, PerformanceTrackerImpl}
 import scalaadaptive.core.runtime.history.historystorage.HistoryStorage
-import scalaadaptive.core.runtime.history.{HistoryKey, RunData}
+import scalaadaptive.core.runtime.history.HistoryKey
+import scalaadaptive.core.runtime.history.rundata.{RunData, TimestampedRunData}
 import scalaadaptive.core.runtime.selection.RunSelector
 
 /**
@@ -64,7 +67,7 @@ class RunTracker[TMeasurement](historyStorage: HistoryStorage[TMeasurement],
     val (result, performance) = performanceProvider.measureFunctionRun(fun)
     tracker.addFunctionTime()
     logger.log(s"Performance on $inputDescriptor measured: $performance")
-    historyStorage.applyNewRun(key, new RunData(inputDescriptor, performance))
+    historyStorage.applyNewRun(key, new TimestampedRunData[TMeasurement](inputDescriptor, Instant.now, performance))
     tracker.addStoringTime()
     tracker.getStatistics.lines.foreach(logger.log)
     result

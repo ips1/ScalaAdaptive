@@ -2,7 +2,8 @@ package scalaadaptive.core.runtime.history.runhistory
 
 import org.apache.commons.math3.stat.descriptive.{StatisticalSummary, SummaryStatistics}
 
-import scalaadaptive.core.runtime.history.{GroupedRunData, HistoryKey, RunData}
+import scalaadaptive.core.runtime.history.rundata.{GroupedRunData, RunData}
+import scalaadaptive.core.runtime.history.HistoryKey
 import scalaadaptive.extensions.Averageable
 
 /**

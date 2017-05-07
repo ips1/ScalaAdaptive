@@ -1,4 +1,4 @@
-package scalaadaptive.core.runtime.history
+package scalaadaptive.core.runtime.history.rundata
 
 /**
   * Created by pk250187 on 5/1/17.

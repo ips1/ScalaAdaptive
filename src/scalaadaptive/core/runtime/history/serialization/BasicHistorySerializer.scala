@@ -3,10 +3,11 @@ package scalaadaptive.core.runtime.history.serialization
 import java.io.{FileOutputStream, IOException, PrintWriter}
 import java.nio.file.Path
 
-import scalaadaptive.core.runtime.history.{HistoryKey, RunData}
+import scalaadaptive.core.runtime.history.HistoryKey
 import scala.collection.mutable.ArrayBuffer
 import scala.io.Source
 import scalaadaptive.core.logging.Logger
+import scalaadaptive.core.runtime.history.rundata.RunData
 
 /**
   * Created by pk250187 on 4/23/17.

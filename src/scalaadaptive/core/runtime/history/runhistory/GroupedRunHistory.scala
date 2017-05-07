@@ -1,7 +1,8 @@
 package scalaadaptive.core.runtime.history.runhistory
 
+import scalaadaptive.core.runtime.history.rundata.{ArtificialRunData, GroupedRunData, RunData}
 import scalaadaptive.core.runtime.history.runhistory.defaults.DefaultStatistics
-import scalaadaptive.core.runtime.history.{GroupedRunData, HistoryKey, RunData}
+import scalaadaptive.core.runtime.history.HistoryKey
 import scalaadaptive.extensions.Averageable
 import scalaadaptive.extensions.IntExtensions._
 
@@ -44,7 +45,7 @@ class GroupedRunHistory[TMeasurement] private (override val key: HistoryKey,
     val newAverage =
       num.newAverage(groupedRunData.averageRunData.measurement, groupedRunData.runCount, runData.measurement)
 
-    new GroupedRunData[TMeasurement](new RunData[TMeasurement](runData.inputDescriptor, newAverage), newCount)
+    new GroupedRunData[TMeasurement](new ArtificialRunData[TMeasurement](runData.inputDescriptor, newAverage), newCount)
   }
 
   override def applyNewRun(runResult: RunData[TMeasurement]): RunHistory[TMeasurement] = {

@@ -1,7 +1,8 @@
 package scalaadaptive.core.runtime.history.historystorage
 
 import scalaadaptive.core.runtime.history.runhistory.RunHistory
-import scalaadaptive.core.runtime.history.{HistoryKey, RunData}
+import scalaadaptive.core.runtime.history.HistoryKey
+import scalaadaptive.core.runtime.history.rundata.RunData
 
 /**
   * Created by pk250187 on 3/21/17.

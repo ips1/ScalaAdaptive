@@ -1,7 +1,8 @@
 package scalaadaptive.core.runtime.history.runhistory
 
 import scalaadaptive.core.runtime.history.runhistory.defaults.{DefaultAverage, DefaultBest, DefaultGrouping, DefaultStatistics}
-import scalaadaptive.core.runtime.history.{HistoryKey, RunData}
+import scalaadaptive.core.runtime.history.HistoryKey
+import scalaadaptive.core.runtime.history.rundata.RunData
 import scalaadaptive.extensions.Averageable
 
 /**
