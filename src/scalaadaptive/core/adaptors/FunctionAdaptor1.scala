@@ -7,7 +7,7 @@ import scalaadaptive.api.adaptors.MultiFunction1
 import scalaadaptive.core.macros.AdaptiveMacrosHelper
 import scalaadaptive.core.options.Storage.Storage
 import scalaadaptive.core.options.{RunOption, Storage}
-import scalaadaptive.core.runtime.{MeasurementToken, ReferencedFunction}
+import scalaadaptive.core.runtime.{MeasurementToken, ReferencedFunction, TrainingHelper}
 
 /**
   * Created by pk250187 on 3/19/17.
@@ -16,6 +16,7 @@ class FunctionAdaptor1[T, R](private val options: List[RunOption[(T) => R]],
                              private val selector: (T) => Int = null,
                              private val storage: Storage = Storage.Global) extends MultiFunction1[T, R] {
   private val customRunner = new CustomRunner(storage)
+  private val trainingHelper = new TrainingHelper(customRunner)
 
   // Necessary for being able to omit the _ operator in chained calls
 
@@ -43,6 +44,12 @@ class FunctionAdaptor1[T, R](private val options: List[RunOption[(T) => R]],
   def orAdaptor(fun: FunctionAdaptor1[T, R]): FunctionAdaptor1[T, R] =
     new FunctionAdaptor1[T, R](
       this.options.map(opt => new RunOption[(T) => R](arg => opt.function(arg), opt.reference)) ++ fun.options)
+
+  override def train(data: Seq[T]): Unit = {
+    data.foreach { d =>
+      trainingHelper.train(generateOptions(d), createInputDescriptor(d))
+    }
+  }
 }
 
 object FunctionAdaptor1 {

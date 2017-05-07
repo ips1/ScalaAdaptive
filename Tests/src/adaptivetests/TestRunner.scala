@@ -1,3 +1,5 @@
+package adaptivetests
+
 import scala.util.Random
 
 /**

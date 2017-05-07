@@ -1,5 +1,7 @@
 package delayed
 
+import scalaadaptive.core.options.Storage
+
 /**
   * Created by pk250187 on 4/23/17.
   */
@@ -7,7 +9,7 @@ object DelayedTest {
   import scalaadaptive.api.Implicits._
   def getFastConfig(): DelayedConfig = FastConfig()
   def getSlowConfig(): DelayedConfig = SlowConfig()
-  val getConfig: () => DelayedConfig = getFastConfig _ or getSlowConfig
+  val getConfig: () => DelayedConfig = getFastConfig _ or getSlowConfig using Storage.Persistent
 
   def run(config: DelayedConfig) = {
     config match {

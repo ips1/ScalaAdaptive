@@ -1,3 +1,4 @@
+import adaptivetests.TestRunner
 import adaptivetests.sorting.Sorter
 import adaptivetests.testmethods.TestMethods
 
@@ -10,7 +11,6 @@ import scalaadaptive.core.runtime.Adaptive
   */
 object Test {
   def main(args: Array[String]): Unit = {
-    import Sortable._
 
     val runner = new TestRunner()
 

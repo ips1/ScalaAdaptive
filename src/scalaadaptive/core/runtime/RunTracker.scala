@@ -28,7 +28,12 @@ class RunTracker[TMeasurement](historyStorage: HistoryStorage[TMeasurement],
 
     val histories = options.map(f => historyStorage.getHistory(HistoryKey(f.reference, targetBucket)))
 
-    val selectedRecord = runSelector.selectOption(histories, inputDescriptor)
+    val selectedRecord =
+      if (histories.length > 1)
+        runSelector.selectOption(histories, inputDescriptor)
+      else
+        histories.head
+
     logger.log(s"Selected option: ${selectedRecord.reference}")
     selectedRecord
   }

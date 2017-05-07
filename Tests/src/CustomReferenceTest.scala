@@ -1,3 +1,4 @@
+import adaptivetests.TestRunner
 import adaptivetests.sorting.Sorter
 
 import scalaadaptive.api.IdentifiedFunction

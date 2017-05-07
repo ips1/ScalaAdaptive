@@ -13,6 +13,8 @@ trait MultiFunction1[T1, R] extends Function1[T1, R] {
   def by(selector: (T1) => Int): (T1) => R
   def using(newStorage: Storage): (T1) => R
 
+  def train(data: Seq[T1]): Unit
+
   override def apply(arg1: T1): R
 
   def applyWithoutMeasuring(arg1: T1): (R, MeasurementToken)
