@@ -11,10 +11,10 @@ import scala.language.experimental.macros
   * Created by pk250187 on 5/1/17.
   */
 trait MultiFunction1[T1, R] extends Function1[T1, R] {
-  def or(fun: (T1) => R): (T1) => R = macro FunctionAdaptor1.or_impl[T1, R]
-  def by(selector: (T1) => Int): (T1) => R
-  def using(newStorage: Storage): (T1) => R
-  def limitedTo(duration: Duration): (T1) => R
+  def or(fun: (T1) => R): MultiFunction1[T1, R] = macro FunctionAdaptor1.or_impl[T1, R]
+  def by(selector: (T1) => Int): MultiFunction1[T1, R]
+  def using(newStorage: Storage): MultiFunction1[T1, R]
+  def limitedTo(duration: Duration): MultiFunction1[T1, R]
 
   def train(data: Seq[T1]): Unit
 
@@ -25,8 +25,6 @@ trait MultiFunction1[T1, R] extends Function1[T1, R] {
 
   def toDebugString: String
 
-  def orMultiFunction(fun: FunctionAdaptor1[T1, R]): (T1) => R = this match {
-    case adaptor: FunctionAdaptor1[T1, R] => adaptor.orAdaptor(fun)
-    case _ => fun
-  }
+  // This method unfortunately has to accept the concrete type because of Scala macro magic :/
+  def orMultiFunction(fun: FunctionAdaptor1[T1, R]): MultiFunction1[T1, R]
 }

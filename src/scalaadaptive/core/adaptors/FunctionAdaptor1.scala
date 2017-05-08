@@ -25,11 +25,11 @@ class FunctionAdaptor1[T, R](private val options: List[RunOption[(T) => R]],
 
 //  def or(fun: (T) => R): FunctionAdaptor1[T, R] = orAdaptor(Implicits.toAdaptor(fun))
 
-  override def by(newSelector: (T) => Int): (T) => R =
+  override def by(newSelector: (T) => Int): FunctionAdaptor1[T, R] =
     new FunctionAdaptor1[T, R](options, Some(newSelector), storage, duration)
-  override def using(newStorage: Storage): (T) => R =
+  override def using(newStorage: Storage): FunctionAdaptor1[T, R] =
     new FunctionAdaptor1[T, R](options, selector, newStorage, duration)
-  override def limitedTo(newDuration: Duration): (T) => R =
+  override def limitedTo(newDuration: Duration): FunctionAdaptor1[T, R] =
     new FunctionAdaptor1[T, R](options, selector, storage, Some(newDuration))
 
   override def apply(v1: T): R = customRunner.runOption(generateOptions(v1), createInputDescriptor(v1), duration)
@@ -46,7 +46,7 @@ class FunctionAdaptor1[T, R](private val options: List[RunOption[(T) => R]],
   private def createInputDescriptor(v1: T): Option[Long] =
     if (selector.isDefined) Some(selector.get(v1)) else None
 
-  def orAdaptor(fun: FunctionAdaptor1[T, R]): FunctionAdaptor1[T, R] =
+  override def orMultiFunction(fun: FunctionAdaptor1[T, R]): FunctionAdaptor1[T, R] =
     new FunctionAdaptor1[T, R](
       this.options.map(opt => new RunOption[(T) => R](arg => opt.function(arg), opt.reference)) ++ fun.options)
 
