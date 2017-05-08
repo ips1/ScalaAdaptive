@@ -9,16 +9,23 @@ import scalaadaptive.core.runtime.history.runhistory.RunHistory
   */
 class RegressionSelector[TMeasurement](implicit num: Numeric[TMeasurement])
   extends RunSelector[TMeasurement] {
-  override def selectOption(records: Seq[RunHistory[TMeasurement]], inputDescriptor: Long): RunHistory[TMeasurement] = {
+  override def selectOption(records: Seq[RunHistory[TMeasurement]], inputDescriptor: Option[Long]): RunHistory[TMeasurement] = {
+
+    val descriptor = inputDescriptor match {
+      case Some(d) => d
+      case _ => return records.head
+    }
 
     val regressions = records.map(r => {
       val regression = new SimpleRegression()
-      r.runItems.foreach(i => regression.addData(i.inputDescriptor, num.toDouble(i.measurement)))
+      r.runItems
+        .filter(i => i.inputDescriptor.isDefined)
+        .foreach(i => regression.addData(i.inputDescriptor.get, num.toDouble(i.measurement)))
       (r, regression)
     })
 
     // TODO: Not enough values?
-    val min = regressions.minBy(p => p._2.predict(inputDescriptor))
+    val min = regressions.minBy(p => p._2.predict(descriptor))
 
     min._1
   }

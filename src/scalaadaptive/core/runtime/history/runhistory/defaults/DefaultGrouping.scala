@@ -10,7 +10,7 @@ import scalaadaptive.extensions.Averageable
 trait DefaultGrouping[TMeasurement] extends RunHistory[TMeasurement] {
   protected val num: Averageable[TMeasurement]
 
-  override def runAveragesGroupedByDescriptor: Map[Long, GroupedRunData[TMeasurement]] = runItems
+  override def runAveragesGroupedByDescriptor: Map[Option[Long], GroupedRunData[TMeasurement]] = runItems
     .groupBy(i => i.inputDescriptor)
     .map(v => {
       val average = num.average(v._2.map(i => i.measurement))

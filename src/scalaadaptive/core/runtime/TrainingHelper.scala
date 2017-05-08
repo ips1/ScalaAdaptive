@@ -5,9 +5,9 @@ package scalaadaptive.core.runtime
   */
 class TrainingHelper(val runner: FunctionRunner) {
   def train[TReturnType](functions: Seq[ReferencedFunction[TReturnType]],
-                         inputDescriptor: Long): Unit = {
+                         inputDescriptor: Option[Long]): Unit = {
     functions.foreach { f =>
-      runner.runOption(List(f), inputDescriptor)
+      runner.runOption(List(f), inputDescriptor, None)
     }
   }
 }

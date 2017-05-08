@@ -3,19 +3,17 @@ package scalaadaptive.core.runtime.history.serialization
 import java.time.Instant
 
 import scalaadaptive.core.runtime.history.rundata.{ArtificialRunData, RunData, TimestampedRunData}
+import scalaadaptive.extensions.OptionSerializer
 
 /**
   * Created by pk250187 on 4/23/17.
   */
 class LongRunDataSerializer(private val separator: Char) extends RunDataSerializer[Long] {
-
   override def serializeRunData(run: RunData[Long]): String = {
-    val timeString = run.time match {
-      case Some(time) => time.toString
-      case _ => ""
-    }
+    val timeString = OptionSerializer.serializeOption(run.time)
+    val descriptorString = OptionSerializer.serializeOption(run.inputDescriptor)
 
-    s"$timeString$separator${run.inputDescriptor}$separator${run.measurement}"
+    s"$timeString$separator$descriptorString$separator${run.measurement}"
   }
 
   override def deserializeRunData(string: String): Option[RunData[Long]] = {
@@ -26,7 +24,7 @@ class LongRunDataSerializer(private val separator: Char) extends RunDataSerializ
 
     try {
       val time = parts(0)
-      val inputDescriptor = parts(1).toLong
+      val inputDescriptor = OptionSerializer.deserizalizeOption[Long](parts(1), s => s.toLong)
       val measurement = parts(2).toLong
 
       val data =

@@ -1,9 +1,9 @@
-package training
+package adaptivetests.training
 
 import adaptivetests.TestRunner
 import adaptivetests.testmethods.TestMethods
 
-import scalaadaptive.core.configuration.defaults.ImmutableFullHistoryInterpolationConfiguration
+import scalaadaptive.core.configuration.defaults.{GroupedRunHistoryInterpolationConfiguration, ImmutableFullHistoryInterpolationConfiguration}
 import scalaadaptive.core.runtime.Adaptive
 
 /**
@@ -13,7 +13,7 @@ object TrainingTest {
   def main(args: Array[String]): Unit = {
     import scalaadaptive.api.Implicits._
 
-    val configurations = List(ImmutableFullHistoryInterpolationConfiguration)
+    val configurations = List(GroupedRunHistoryInterpolationConfiguration)
     val runner = new TestRunner()
     val testMethods = new TestMethods()
 

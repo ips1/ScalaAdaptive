@@ -8,7 +8,7 @@ import scalaadaptive.core.runtime.history.runhistory.RunHistory
 class LowRunAwareSelector[TMeasurement](val lowRunSelector: RunSelector[TMeasurement],
                                         val normalSelector: RunSelector[TMeasurement],
                                         val lowRunLimit: Int) extends RunSelector[TMeasurement] {
-  override def selectOption(records: Seq[RunHistory[TMeasurement]], inputDescriptor: Long): RunHistory[TMeasurement] = {
+  override def selectOption(records: Seq[RunHistory[TMeasurement]], inputDescriptor: Option[Long]): RunHistory[TMeasurement] = {
     val lowRunOptions = records.filter(_.runCount < lowRunLimit)
 
     if (lowRunOptions.nonEmpty) {

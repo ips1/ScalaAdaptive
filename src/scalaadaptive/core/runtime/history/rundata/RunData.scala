@@ -7,7 +7,7 @@ import java.time.Instant
   */
 
 trait RunData[TMeasurement] {
-  val inputDescriptor: Long
+  val inputDescriptor: Option[Long]
   val time: Option[Instant]
   val measurement: TMeasurement
 }

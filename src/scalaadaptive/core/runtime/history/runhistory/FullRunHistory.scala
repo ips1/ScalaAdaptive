@@ -25,4 +25,9 @@ class FullRunHistory[TMeasurement] private (override val key: HistoryKey,
     runItems.append(runResult)
     this
   }
+
+  override def takeWhile(filter: (RunData[TMeasurement]) => Boolean): RunHistory[TMeasurement] = {
+    val filteredItems = runItems.reverseIterator.takeWhile(filter).toIterable
+    new ImmutableFullRunHistory[TMeasurement](key, filteredItems)
+  }
 }

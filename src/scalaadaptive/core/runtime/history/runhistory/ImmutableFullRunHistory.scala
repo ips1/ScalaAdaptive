@@ -8,9 +8,8 @@ import scalaadaptive.extensions.Averageable
 /**
   * Created by pk250187 on 5/1/17.
   */
-class ImmutableFullRunHistory[TMeasurement] private (override val key: HistoryKey,
-                                            override val runItems: List[RunData[TMeasurement]],
-                                            val sum: TMeasurement)
+class ImmutableFullRunHistory[TMeasurement] (override val key: HistoryKey,
+                                             override val runItems: Iterable[RunData[TMeasurement]])
                                            (implicit override val num: Averageable[TMeasurement])
   extends RunHistory[TMeasurement]
     with DefaultGrouping[TMeasurement]
@@ -19,12 +18,16 @@ class ImmutableFullRunHistory[TMeasurement] private (override val key: HistoryKe
     with DefaultStatistics[TMeasurement] {
 
   def this(key: HistoryKey)(implicit num: Averageable[TMeasurement]) =
-    this(key, List(), num.zero)
+    this(key, List())
 
   override def runCount: Int = runItems.size
   override def applyNewRun(runResult: RunData[TMeasurement]): ImmutableFullRunHistory[TMeasurement] = {
-    val newSum = num.plus(sum, runResult.measurement)
-    val newItems = runResult :: runItems
-    new ImmutableFullRunHistory[TMeasurement](key, newItems, newSum)
+    val newItems = runResult :: runItems.toList
+    new ImmutableFullRunHistory[TMeasurement](key, newItems)
+  }
+
+  override def takeWhile(filter: (RunData[TMeasurement]) => Boolean): RunHistory[TMeasurement] = {
+    val filteredItems = runItems.takeWhile(filter)
+    new ImmutableFullRunHistory[TMeasurement](key, filteredItems)
   }
 }

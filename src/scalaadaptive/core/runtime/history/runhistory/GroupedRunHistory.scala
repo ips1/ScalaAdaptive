@@ -12,7 +12,7 @@ import scalaadaptive.extensions.IntExtensions._
 
 class GroupedRunHistory[TMeasurement] private (override val key: HistoryKey,
                                       override val runCount: Int,
-                                      private val data: Map[Long, GroupedRunData[TMeasurement]])
+                                      private val data: Map[Option[Long], GroupedRunData[TMeasurement]])
                                      (implicit override val num: Averageable[TMeasurement]) extends RunHistory[TMeasurement]
   with DefaultStatistics[TMeasurement] {
 
@@ -59,5 +59,8 @@ class GroupedRunHistory[TMeasurement] private (override val key: HistoryKey,
     new GroupedRunHistory[TMeasurement](key, runCount + 1, data + (runResult.inputDescriptor -> newData))
   }
 
-  override def runAveragesGroupedByDescriptor: Map[Long, GroupedRunData[TMeasurement]] = data
+  override def runAveragesGroupedByDescriptor: Map[Option[Long], GroupedRunData[TMeasurement]] = data
+
+  // TODO: Implement this
+  override def takeWhile(filter: (RunData[TMeasurement]) => Boolean): RunHistory[TMeasurement] = ???
 }

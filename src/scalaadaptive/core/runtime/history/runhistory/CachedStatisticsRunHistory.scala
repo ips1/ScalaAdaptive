@@ -30,7 +30,9 @@ class CachedStatisticsRunHistory[TMeasurement] private (private val internalHist
   override def runCount: Int = internalHistory.runCount
   override def runItems: Iterable[RunData[TMeasurement]] = internalHistory.runItems
   override def best(): Option[Double] = internalHistory.best()
-  override def runAveragesGroupedByDescriptor: Map[Long, GroupedRunData[TMeasurement]] =
+  override def runAveragesGroupedByDescriptor: Map[Option[Long], GroupedRunData[TMeasurement]] =
     internalHistory.runAveragesGroupedByDescriptor
   override def average(): Option[Double] = internalHistory.average()
+  override def takeWhile(filter: (RunData[TMeasurement]) => Boolean): RunHistory[TMeasurement] =
+    internalHistory.takeWhile(filter)
 }

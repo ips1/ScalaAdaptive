@@ -1,5 +1,7 @@
 package scalaadaptive.api.adaptors
 
+import java.time.Duration
+
 import scalaadaptive.core.adaptors.FunctionAdaptor1
 import scalaadaptive.core.options.Storage.Storage
 import scalaadaptive.core.runtime.MeasurementToken
@@ -12,6 +14,7 @@ trait MultiFunction1[T1, R] extends Function1[T1, R] {
   def or(fun: (T1) => R): (T1) => R = macro FunctionAdaptor1.or_impl[T1, R]
   def by(selector: (T1) => Int): (T1) => R
   def using(newStorage: Storage): (T1) => R
+  def limitedTo(duration: Duration): (T1) => R
 
   def train(data: Seq[T1]): Unit
 

@@ -1,4 +1,4 @@
-package delayed
+package adaptivetests.delayed
 
 import scalaadaptive.core.options.Storage
 

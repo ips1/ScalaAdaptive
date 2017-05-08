@@ -9,7 +9,15 @@ import scalaadaptive.core.runtime.history.runhistory.RunHistory
   */
 class InterpolationSelector[TMeasurement](implicit num: Numeric[TMeasurement])
   extends RunSelector[TMeasurement] {
-  override def selectOption(records: Seq[RunHistory[TMeasurement]], inputDescriptor: Long): RunHistory[TMeasurement] = {
+  override def selectOption(records: Seq[RunHistory[TMeasurement]],
+                            inputDescriptor: Option[Long]): RunHistory[TMeasurement] = {
+
+    val descriptor = inputDescriptor match {
+      case Some(d) => d
+      case _ => return records.head
+    }
+
+    // TODO : Chose interpolator
     //val interpolator = new LinearInterpolator()
     val interpolator = new LoessInterpolator()
 
@@ -20,19 +28,20 @@ class InterpolationSelector[TMeasurement](implicit num: Numeric[TMeasurement])
       records.map(runHistory => {
         val sortedData = runHistory.runAveragesGroupedByDescriptor
           .toList
+          .filter(i => i._1.isDefined)
           .sortBy(i => i._1)
         (runHistory,
          interpolator.interpolate(
-           sortedData.map(i => i._1.toDouble).toArray,
+           sortedData.map(i => i._1.get.toDouble).toArray,
            sortedData.map(i => num.toDouble(i._2.averageRunData.measurement)).toArray
          )
         )
       })
 
-    val min = polynomials.minBy(p => if (!p._2.isValidPoint(inputDescriptor)) {
+    val min = polynomials.minBy(p => if (!p._2.isValidPoint(descriptor)) {
       println("Invalid point!")
       -1
-    } else p._2.value(inputDescriptor))
+    } else p._2.value(descriptor))
 
     min._1
   }
