@@ -34,9 +34,7 @@ class FunctionAdaptor2[I1, I2, R](private val options: List[RunOption[(I1, I2) =
     options.map(o => o.reference.toString).mkString(", ")
 
   private def orAdaptor(fun: FunctionAdaptor2[I1, I2, R]): (I1, I2) => R =
-    new FunctionAdaptor2[I1, I2, R](
-      this.options.map(opt => new RunOption[(I1, I2) => R](
-        (a1, a2) => opt.function(a1, a2), opt.reference)) ++ fun.options)
+    new FunctionAdaptor2[I1, I2, R](this.options ++ fun.options)
 
   private def generateOptions(v1: I1, v2: I2): Seq[ReferencedFunction[R]] =
     options.map(f => new ReferencedFunction[R]({ () => f.function(v1, v2) }, f.reference))
