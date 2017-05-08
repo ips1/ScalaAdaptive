@@ -14,6 +14,8 @@ class LowRunAwareSelector[TMeasurement](val lowRunSelector: RunSelector[TMeasure
     val lowRunOptions = records.filter(_.runCount < lowRunLimit)
 
     if (lowRunOptions.nonEmpty) {
+      logger.log(s"LowRunAwareSelector: Not enough data for: " +
+        s"${lowRunOptions.map(o => s"${o.reference} - ${o.runCount}").mkString(", ")}")
       return lowRunSelector.selectOption(lowRunOptions, inputDescriptor)
     }
 
