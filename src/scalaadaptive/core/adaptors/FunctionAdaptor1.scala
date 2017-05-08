@@ -8,7 +8,7 @@ import scala.reflect.macros.blackbox.Context
 import scalaadaptive.api.adaptors.MultiFunction1
 import scalaadaptive.core.macros.AdaptiveMacrosHelper
 import scalaadaptive.core.options.Storage.Storage
-import scalaadaptive.core.options.{RunOption, Storage}
+import scalaadaptive.core.options.Storage
 import scalaadaptive.core.runtime.{MeasurementToken, ReferencedFunction, TrainingHelper}
 
 /**

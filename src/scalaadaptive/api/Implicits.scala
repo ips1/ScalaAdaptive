@@ -2,12 +2,11 @@ package scalaadaptive.api
 
 import scala.reflect.macros.blackbox.Context
 import scalaadaptive.core.macros.AdaptiveMacrosHelper
-import scalaadaptive.core.options.RunOption
 import scalaadaptive.core.references.{ClosureNameReference, FunctionReference}
 import scala.language.experimental.macros
 import scala.reflect.macros.blackbox
 import scalaadaptive.api.adaptors.{MultiFunction0, MultiFunction1, MultiFunction2}
-import scalaadaptive.core.adaptors.{Conversions, FunctionAdaptor0, FunctionAdaptor1, FunctionAdaptor2}
+import scalaadaptive.core.adaptors._
 
 /**
   * Created by pk250187 on 3/19/17.

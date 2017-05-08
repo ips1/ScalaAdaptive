@@ -3,7 +3,7 @@ package scalaadaptive.core.adaptors
 import scalaadaptive.api.Implicits
 import scalaadaptive.api.adaptors.MultiFunction2
 import scalaadaptive.core.options.Storage.Storage
-import scalaadaptive.core.options.{RunOption, Storage}
+import scalaadaptive.core.options.Storage
 import scalaadaptive.core.runtime.{MeasurementToken, ReferencedFunction}
 
 /**

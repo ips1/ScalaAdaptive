@@ -1,4 +1,4 @@
-package scalaadaptive.core.options
+package scalaadaptive.core.adaptors
 
 import scalaadaptive.core.references.FunctionReference
 

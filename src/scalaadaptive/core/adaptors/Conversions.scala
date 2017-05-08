@@ -1,7 +1,6 @@
 package scalaadaptive.core.adaptors
 
 import scalaadaptive.api.adaptors.{MultiFunction0, MultiFunction2}
-import scalaadaptive.core.options.RunOption
 import scalaadaptive.core.references.{ClosureNameReference, FunctionReference}
 
 /**
