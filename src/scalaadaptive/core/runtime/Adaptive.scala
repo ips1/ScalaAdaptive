@@ -2,6 +2,7 @@ package scalaadaptive.core.runtime
 
 import scalaadaptive.core.configuration.Configuration
 import scalaadaptive.core.configuration.defaults.{FullHistoryInterpolationConfiguration, FullHistoryTTestConfiguration}
+import scalaadaptive.core.logging.LogManager
 import scalaadaptive.core.references.CustomIdentifierValidator
 import scalaadaptive.core.runtime.history._
 
@@ -42,6 +43,7 @@ object Adaptive {
 
   def initialize(configuration: Configuration): Unit = {
     currentConfiguration = configuration
+    LogManager.setLogger(currentConfiguration.logger)
     runner = initTracker(currentConfiguration)
     persistentRunner = initPersistentTracker(currentConfiguration).getOrElse(runner)
   }

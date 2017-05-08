@@ -11,6 +11,7 @@ class InterpolationSelector[TMeasurement](implicit num: Numeric[TMeasurement])
   extends RunSelector[TMeasurement] {
   override def selectOption(records: Seq[RunHistory[TMeasurement]],
                             inputDescriptor: Option[Long]): RunHistory[TMeasurement] = {
+    logger.log("Selecting using InterpolationSelector")
 
     val descriptor = inputDescriptor match {
       case Some(d) => d

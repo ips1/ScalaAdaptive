@@ -16,6 +16,7 @@ class RoundRobinSelector[TMeasurement] extends RunSelector[TMeasurement] {
   private val lastRuns: mutable.HashMap[HistoryKey, Instant] = new mutable.HashMap[HistoryKey, Instant]()
 
   override def selectOption(records: Seq[RunHistory[TMeasurement]], inputDescriptor: Option[Long]): RunHistory[TMeasurement] = {
+    logger.log("Selecting using RoundRobinSelector")
     val selected = records.minBy(r => lastRuns.getOrElse(r.key, Instant.MIN))
     lastRuns.put(selected.key, currentTime)
     selected

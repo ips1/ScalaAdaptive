@@ -9,6 +9,8 @@ class LowRunAwareSelector[TMeasurement](val lowRunSelector: RunSelector[TMeasure
                                         val normalSelector: RunSelector[TMeasurement],
                                         val lowRunLimit: Int) extends RunSelector[TMeasurement] {
   override def selectOption(records: Seq[RunHistory[TMeasurement]], inputDescriptor: Option[Long]): RunHistory[TMeasurement] = {
+    logger.log("Selecting using LowRunAwareSelector")
+
     val lowRunOptions = records.filter(_.runCount < lowRunLimit)
 
     if (lowRunOptions.nonEmpty) {

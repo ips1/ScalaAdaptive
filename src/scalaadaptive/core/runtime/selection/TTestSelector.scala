@@ -14,6 +14,8 @@ class TTestSelector(val secondarySelector: RunSelector[Long],
   val testRunner = new TTestRunner
 
   override def selectOption(records: Seq[RunHistory[Long]], inputDescriptor: Option[Long]): RunHistory[Long] = {
+    logger.log("Selecting using TTestSelector")
+
     val statistics = records.map(rh => (rh, rh.runStatistics))
 
     var leader = statistics.head
