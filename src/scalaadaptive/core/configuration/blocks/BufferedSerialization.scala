@@ -17,6 +17,6 @@ trait BufferedSerialization extends BaseLongConfiguration {
           new BasicFileNameForKeyProvider,
           new LongRunDataSerializer(','),
           logger),
-        20)
+        15)
     ))
 }

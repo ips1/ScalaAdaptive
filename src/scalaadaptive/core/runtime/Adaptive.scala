@@ -1,6 +1,7 @@
 package scalaadaptive.core.runtime
 
-import scalaadaptive.core.configuration.Configuration
+import scalaadaptive.core.adaptors.AdaptorConfig
+import scalaadaptive.core.configuration.{Configuration}
 import scalaadaptive.core.configuration.defaults.{FullHistoryInterpolationConfiguration, FullHistoryTTestConfiguration}
 import scalaadaptive.core.logging.LogManager
 import scalaadaptive.core.references.CustomIdentifierValidator
@@ -34,6 +35,8 @@ object Adaptive {
     )
 
   def getIdentifierValidator: CustomIdentifierValidator = currentConfiguration.identifierValidator
+
+  def getMultiFunctionDefaults: AdaptorConfig = currentConfiguration.multiFunctionDefaults
 
   var runner: FunctionRunner = initTracker(defaultConfiguration)
   var persistentRunner: FunctionRunner = initPersistentTracker(defaultConfiguration).getOrElse(runner)

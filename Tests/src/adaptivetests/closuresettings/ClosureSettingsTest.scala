@@ -15,8 +15,9 @@ object ClosureSettingsTest {
   import scalaadaptive.api.Implicits._
 
   val testMethods = new TestMethods()
-  val closureFunc = testMethods.slowMethod _ or testMethods.fastMethod asClosures()
-  val func = testMethods.slowMethod _ or testMethods.fastMethod
+  val closureFunc = testMethods.slowMethod _ or testMethods.fastMethod asClosures true
+  val nonClosureFunc = testMethods.slowMethod _ or testMethods.fastMethod asClosures false
+  val defaultFunc = testMethods.slowMethod _ or testMethods.fastMethod
 
   val runner = new TestRunner()
 
@@ -24,6 +25,7 @@ object ClosureSettingsTest {
     Adaptive.initialize(FullHistoryTTestConfiguration)
 
     runner.runIncrementalTest(l => closureFunc(l))
-    runner.runIncrementalTest(l => func(l))
+    runner.runIncrementalTest(l => nonClosureFunc(l))
+    runner.runIncrementalTest(l => defaultFunc(l))
   }
 }

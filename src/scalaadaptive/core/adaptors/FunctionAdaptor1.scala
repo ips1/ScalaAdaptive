@@ -15,11 +15,9 @@ import scalaadaptive.core.runtime.{MeasurementToken, ReferencedFunction, Trainin
   * Created by pk250187 on 3/19/17.
   */
 class FunctionAdaptor1[T, R](private val options: List[RunOption[(T) => R]],
-                             private val selector: Option[(T) => Int] = None,
-                             private val storage: Storage = Storage.Global,
-                             private val duration: Option[Duration] = None,
-                             private val closureReferences: Boolean = false) extends MultiFunction1[T, R] {
-  private val customRunner = new CustomRunner(storage)
+                             private val selector: Option[(T) => Int],
+                             private val adaptorConfig: AdaptorConfig) extends MultiFunction1[T, R] {
+  private val customRunner = new CustomRunner(adaptorConfig.storage)
   private val trainingHelper = new TrainingHelper(customRunner)
 
   // Necessary for being able to omit the _ operator in chained calls
@@ -27,31 +25,31 @@ class FunctionAdaptor1[T, R](private val options: List[RunOption[(T) => R]],
 //  def or(fun: (T) => R): FunctionAdaptor1[T, R] = orAdaptor(Implicits.toAdaptor(fun))
 
   override def by(newSelector: (T) => Int): FunctionAdaptor1[T, R] =
-    new FunctionAdaptor1[T, R](options, Some(newSelector), storage, duration, closureReferences)
+    new FunctionAdaptor1[T, R](options, Some(newSelector), adaptorConfig)
   override def using(newStorage: Storage): FunctionAdaptor1[T, R] =
-    new FunctionAdaptor1[T, R](options, selector, newStorage, duration, closureReferences)
+    new FunctionAdaptor1[T, R](options, selector, adaptorConfig.using(newStorage))
   override def limitedTo(newDuration: Duration): FunctionAdaptor1[T, R] =
-    new FunctionAdaptor1[T, R](options, selector, storage, Some(newDuration), closureReferences)
-  override def asClosures(): MultiFunction1[T, R] =
-    new FunctionAdaptor1[T, R](options, selector, storage, duration, true)
+    new FunctionAdaptor1[T, R](options, selector, adaptorConfig.limitedTo(newDuration))
+  override def asClosures(closureIdentification: Boolean): MultiFunction1[T, R] =
+    new FunctionAdaptor1[T, R](options, selector, adaptorConfig.asClosures(closureIdentification))
 
-  override def apply(v1: T): R = customRunner.runOption(generateOptions(v1), createInputDescriptor(v1), duration)
+  override def apply(v1: T): R = customRunner.runOption(generateOptions(v1), createInputDescriptor(v1), adaptorConfig.duration)
 
   override def applyWithoutMeasuring(v1: T): (R, MeasurementToken) =
-    customRunner.runOptionWithDelayedMeasure(generateOptions(v1), createInputDescriptor(v1), duration)
+    customRunner.runOptionWithDelayedMeasure(generateOptions(v1), createInputDescriptor(v1), adaptorConfig.duration)
 
   override def toDebugString: String =
     options.map(o => o.reference.toString).mkString(", ")
 
   private def generateOptions(v1: T): Seq[ReferencedFunction[R]] =
     options.map(f => new ReferencedFunction[R]({ () => f.function(v1) },
-      if (closureReferences) f.closureReference else f.reference))
+      if (adaptorConfig.closureReferences) f.closureReference else f.reference))
 
   private def createInputDescriptor(v1: T): Option[Long] =
     if (selector.isDefined) Some(selector.get(v1)) else None
 
   override def orMultiFunction(fun: FunctionAdaptor1[T, R]): FunctionAdaptor1[T, R] =
-    new FunctionAdaptor1[T, R](this.options ++ fun.options)
+    new FunctionAdaptor1[T, R](this.options ++ fun.options, selector, adaptorConfig)
 
   override def train(data: Seq[T]): Unit = {
     data.foreach { d =>

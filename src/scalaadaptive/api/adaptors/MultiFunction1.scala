@@ -15,7 +15,7 @@ trait MultiFunction1[T1, R] extends Function1[T1, R] {
   def by(selector: (T1) => Int): MultiFunction1[T1, R]
   def using(newStorage: Storage): MultiFunction1[T1, R]
   def limitedTo(duration: Duration): MultiFunction1[T1, R]
-  def asClosures(): MultiFunction1[T1, R]
+  def asClosures(closureIdentification: Boolean): MultiFunction1[T1, R]
 
   def train(data: Seq[T1]): Unit
 
