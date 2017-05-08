@@ -10,34 +10,14 @@ import scalaadaptive.extensions.IntExtensions._
   * Created by pk250187 on 4/25/17.
   */
 
-class GroupedRunHistory[TMeasurement] private (override val key: HistoryKey,
-                                      override val runCount: Int,
-                                      private val data: Map[Option[Long], GroupedRunData[TMeasurement]])
-                                     (implicit override val num: Averageable[TMeasurement]) extends RunHistory[TMeasurement]
+class CachedGroupedRunHistory[TMeasurement] private(override val runCount: Int,
+                                                    private val internalHistory: RunHistory[TMeasurement],
+                                                    private val data: Map[Option[Long], GroupedRunData[TMeasurement]])
+                                                   (implicit override val num: Averageable[TMeasurement]) extends RunHistory[TMeasurement]
   with DefaultStatistics[TMeasurement] {
 
-  def this(key: HistoryKey)(implicit num: Averageable[TMeasurement]) =
-    this(key, 0, Map())
-
-  override def runItems: Iterable[RunData[TMeasurement]] = data
-    .values
-    .flatMap(data => data.runCount.times(() => data.averageRunData))
-
-  override def average(): Option[Double] =
-    if (runCount == 0) None else
-      Some(data
-        .values
-        .map(data => data.runCount * num.toDouble(data.averageRunData.measurement))
-        .sum / runCount)
-
-  override def best(): Option[Double] =
-    if (runCount == 0) None else
-      Some(num.toDouble(
-        data
-        .values
-        .map(_.averageRunData.measurement)
-        .min)
-  )
+  def this(internalHistory: RunHistory[TMeasurement])(implicit num: Averageable[TMeasurement]) =
+    this(0, internalHistory, Map())
 
   private def applyNewRunToTheGroupedRunData(groupedRunData: GroupedRunData[TMeasurement],
                                              runData: RunData[TMeasurement]) = {
@@ -56,11 +36,21 @@ class GroupedRunHistory[TMeasurement] private (override val key: HistoryKey,
       case None => new GroupedRunData[TMeasurement](runResult, 1)
     }
 
-    new GroupedRunHistory[TMeasurement](key, runCount + 1, data + (runResult.inputDescriptor -> newData))
+    val newInternalHistory = internalHistory.applyNewRun(runResult)
+
+    new CachedGroupedRunHistory[TMeasurement](
+      runCount + 1,
+      newInternalHistory,
+      data + (runResult.inputDescriptor -> newData))
   }
 
   override def runAveragesGroupedByDescriptor: Map[Option[Long], GroupedRunData[TMeasurement]] = data
 
-  // TODO: Implement this
-  override def takeWhile(filter: (RunData[TMeasurement]) => Boolean): RunHistory[TMeasurement] = ???
+  // Delegations:
+  override def runItems: Iterable[RunData[TMeasurement]] = internalHistory.runItems
+  override def average(): Option[Double] = internalHistory.average()
+  override def best(): Option[Double] = internalHistory.best()
+  override def takeWhile(filter: (RunData[TMeasurement]) => Boolean): RunHistory[TMeasurement] =
+    internalHistory.takeWhile(filter)
+  override def key: HistoryKey = internalHistory.key
 }

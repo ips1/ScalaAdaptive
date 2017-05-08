@@ -4,7 +4,7 @@ import scalaadaptive.core.configuration.BaseLongConfiguration
 import scalaadaptive.core.configuration.blocks._
 import scalaadaptive.core.configuration.defaults.GroupedRunHistoryInterpolationConfiguration.{MeasurementType, num}
 import scalaadaptive.core.runtime.history.historystorage.{HistoryStorage, MapHistoryStorage}
-import scalaadaptive.core.runtime.history.runhistory.{CachedStatisticsRunHistory, FullRunHistory, GroupedRunHistory}
+import scalaadaptive.core.runtime.history.runhistory.{CachedStatisticsRunHistory, FullRunHistory, CachedGroupedRunHistory}
 
 /**
   * Created by pk250187 on 5/2/17.
