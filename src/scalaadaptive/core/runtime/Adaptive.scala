@@ -2,7 +2,7 @@ package scalaadaptive.core.runtime
 
 import scalaadaptive.core.adaptors.AdaptorConfig
 import scalaadaptive.core.configuration.{Configuration}
-import scalaadaptive.core.configuration.defaults.{FullHistoryInterpolationConfiguration, FullHistoryTTestConfiguration}
+import scalaadaptive.core.configuration.defaults.{FullHistoryTTestConfiguration}
 import scalaadaptive.core.logging.LogManager
 import scalaadaptive.core.references.CustomIdentifierValidator
 import scalaadaptive.core.runtime.history._
@@ -17,7 +17,8 @@ object Adaptive {
   private def initTracker(configuration: Configuration): FunctionRunner = {
     new RunTracker[configuration.MeasurementType](
       configuration.historyStorageFactory(),
-      configuration.runSelector,
+      configuration.discreteRunSelector,
+      configuration.continuousRunSelector,
       configuration.performanceProvider,
       configuration.groupSelector,
       configuration.logger)
@@ -27,7 +28,8 @@ object Adaptive {
     configuration.persistentHistoryStorageFactory().map(persistentStorage =>
       new RunTracker[configuration.MeasurementType](
         persistentStorage,
-        configuration.runSelector,
+        configuration.discreteRunSelector,
+        configuration.continuousRunSelector,
         configuration.performanceProvider,
         configuration.groupSelector,
         configuration.logger

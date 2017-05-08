@@ -12,5 +12,6 @@ object FullHistoryBestAverageSelection
     with RunTimeMeasurement
     with DefaultPath
     with BufferedSerialization
+    with InterpolationSelection
     // Temporary change:
     with NoGrouping

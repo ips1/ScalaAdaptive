@@ -7,7 +7,7 @@ import scalaadaptive.core.runtime.selection.{BestAverageSelector, LowRunAwareSel
   * Created by pk250187 on 5/1/17.
   */
 trait BestAverageSelection extends BaseLongConfiguration {
-  override val runSelector: RunSelector[Long] = new LowRunAwareSelector[Long](
+  override val discreteRunSelector: RunSelector[Long] = new LowRunAwareSelector[Long](
     new RoundRobinSelector[Long](),
     new BestAverageSelector(),
     20)

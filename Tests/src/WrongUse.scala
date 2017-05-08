@@ -8,5 +8,5 @@ object WrongUse {
   def impl1(data: List[Int]): Int = ???
   def impl2(data: List[Int]): Int = ???
 
-  def processData(data: List[Int]): Int = (impl1 _ or impl2 using Storage.Local)(data)
+  def processData(data: List[Int]): Int = (impl1 _ or impl2 storeUsing Storage.Local)(data)
 }

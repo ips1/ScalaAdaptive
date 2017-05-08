@@ -14,11 +14,12 @@ object GroupedRunHistoryInterpolationConfiguration
   with RunTimeMeasurement
   with DefaultPath
   with BufferedSerialization
+  with TTestSelection
   // Temporary change:
   with NoGrouping {
     override val historyStorageFactory: () => HistoryStorage[MeasurementType] = () => {
       new MapHistoryStorage[MeasurementType](key =>
-        new CachedGroupedRunHistory[Long](new ImmutableFullRunHistory[Long](key))(num)
+        new CachedGroupedRunHistory[Long](new ImmutableFullRunHistory[Long](key)(num))(num)
       )
     }
 }

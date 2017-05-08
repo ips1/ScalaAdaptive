@@ -4,6 +4,8 @@ import java.time.{Duration, Instant}
 
 import scalaadaptive.core.grouping.GroupSelector
 import scalaadaptive.core.logging.Logger
+import scalaadaptive.core.options.Selection
+import scalaadaptive.core.options.Selection.Selection
 import scalaadaptive.core.performance.{PerformanceProvider, PerformanceTracker, PerformanceTrackerImpl}
 import scalaadaptive.core.runtime.history.historystorage.HistoryStorage
 import scalaadaptive.core.runtime.history.HistoryKey
@@ -15,7 +17,8 @@ import scalaadaptive.core.runtime.selection.RunSelector
   * Created by pk250187 on 3/19/17.
   */
 class RunTracker[TMeasurement](historyStorage: HistoryStorage[TMeasurement],
-                               runSelector: RunSelector[TMeasurement],
+                               discreteRunSelector: RunSelector[TMeasurement],
+                               continuousRunSelector: RunSelector[TMeasurement],
                                performanceProvider: PerformanceProvider[TMeasurement],
                                bucketSelector: GroupSelector,
                                logger: Logger) extends FunctionRunner {
@@ -26,7 +29,13 @@ class RunTracker[TMeasurement](historyStorage: HistoryStorage[TMeasurement],
       rd => rd.time.isDefined && Duration.between(rd.time.get, currentTime).compareTo(duration) < 0)
   }
 
+  private def getSelectorForSelection(selection: Selection) = selection match {
+    case Selection.Continuous => continuousRunSelector
+    case Selection.Discrete => discreteRunSelector
+  }
+
   private def selectRecord[TReturnType](options: Seq[ReferencedFunction[TReturnType]],
+                                        runSelector: RunSelector[TMeasurement],
                                         inputDescriptor: Option[Long],
                                         limitedBy: Option[Duration]) = {
     val targetBucket = inputDescriptor match {
@@ -55,13 +64,14 @@ class RunTracker[TMeasurement](historyStorage: HistoryStorage[TMeasurement],
 
   override def runOption[TReturnType](options: Seq[ReferencedFunction[TReturnType]],
                                       inputDescriptor: Option[Long],
-                                      limitedBy: Option[Duration]): TReturnType = {
+                                      limitedBy: Option[Duration],
+                                      selection: Selection): TReturnType = {
     // TODO: inputDescriptor not specified
 
     val tracker = new PerformanceTrackerImpl
     tracker.startTracking()
 
-    val selectedRecord = selectRecord(options, inputDescriptor, limitedBy)
+    val selectedRecord = selectRecord(options, getSelectorForSelection(selection), inputDescriptor, limitedBy)
     val functionToRun = options.find(_.reference == selectedRecord.reference).get.fun
 
     tracker.addSelectionTime()
@@ -70,11 +80,12 @@ class RunTracker[TMeasurement](historyStorage: HistoryStorage[TMeasurement],
 
   override def runOptionWithDelayedMeasure[TReturnType](options: Seq[ReferencedFunction[TReturnType]],
                                                         inputDescriptor: Option[Long],
-                                                        limitedBy: Option[Duration]): (TReturnType, MeasurementToken) = {
+                                                        limitedBy: Option[Duration],
+                                                        selection: Selection): (TReturnType, MeasurementToken) = {
     val tracker = new PerformanceTrackerImpl
     tracker.startTracking()
 
-    val selectedRecord = selectRecord(options, inputDescriptor, limitedBy)
+    val selectedRecord = selectRecord(options, getSelectorForSelection(selection), inputDescriptor, limitedBy)
     val functionToRun = options.find(_.reference == selectedRecord.reference).get.fun
 
     tracker.addSelectionTime()

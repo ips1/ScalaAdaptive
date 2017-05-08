@@ -48,5 +48,5 @@ class TestMethods {
     x
   }
 
-  val function = linearHighConstant _ or quadraticMinConstant by (x => x.size) using Storage.Persistent
+  val function = linearHighConstant _ or quadraticMinConstant by (x => x.size) storeUsing Storage.Persistent
 }

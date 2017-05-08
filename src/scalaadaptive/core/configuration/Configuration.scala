@@ -14,7 +14,8 @@ trait Configuration {
   type MeasurementType
   val historyStorageFactory: () => HistoryStorage[MeasurementType]
   val persistentHistoryStorageFactory: () => Option[HistoryStorage[MeasurementType]]
-  val runSelector: RunSelector[MeasurementType]
+  val discreteRunSelector: RunSelector[MeasurementType]
+  val continuousRunSelector: RunSelector[MeasurementType]
   val performanceProvider: PerformanceProvider[MeasurementType]
   val groupSelector: GroupSelector
   val logger: Logger

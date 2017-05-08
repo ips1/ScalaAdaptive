@@ -6,6 +6,7 @@ import scalaadaptive.core.adaptors.FunctionAdaptor1
 import scalaadaptive.core.options.Storage.Storage
 import scalaadaptive.core.runtime.MeasurementToken
 import scala.language.experimental.macros
+import scalaadaptive.core.options.Selection.Selection
 
 /**
   * Created by pk250187 on 5/1/17.
@@ -13,7 +14,8 @@ import scala.language.experimental.macros
 trait MultiFunction1[T1, R] extends Function1[T1, R] {
   def or(fun: (T1) => R): MultiFunction1[T1, R] = macro FunctionAdaptor1.or_impl[T1, R]
   def by(selector: (T1) => Int): MultiFunction1[T1, R]
-  def using(newStorage: Storage): MultiFunction1[T1, R]
+  def selectUsing(selection: Selection): MultiFunction1[T1, R]
+  def storeUsing(storage: Storage): MultiFunction1[T1, R]
   def limitedTo(duration: Duration): MultiFunction1[T1, R]
   def asClosures(closureIdentification: Boolean): MultiFunction1[T1, R]
 

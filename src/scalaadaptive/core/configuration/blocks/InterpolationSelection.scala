@@ -7,7 +7,7 @@ import scalaadaptive.core.runtime.selection.{InterpolationSelector, LowRunAwareS
   * Created by pk250187 on 5/1/17.
   */
 trait InterpolationSelection extends BaseLongConfiguration {
-  override val runSelector: RunSelector[Long] =
+  override val continuousRunSelector: RunSelector[Long] =
     new LowRunAwareSelector[Long](
       new RoundRobinSelector[Long](),
       new InterpolationSelector[Long](),

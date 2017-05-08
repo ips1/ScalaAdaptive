@@ -1,13 +1,16 @@
 package scalaadaptive.core.runtime
 
+import scalaadaptive.core.options.Selection.Selection
+
 /**
   * Created by pk250187 on 5/7/17.
   */
 class TrainingHelper(val runner: FunctionRunner) {
   def train[TReturnType](functions: Seq[ReferencedFunction[TReturnType]],
-                         inputDescriptor: Option[Long]): Unit = {
+                         inputDescriptor: Option[Long],
+                         selection: Selection): Unit = {
     functions.foreach { f =>
-      runner.runOption(List(f), inputDescriptor, None)
+      runner.runOption(List(f), inputDescriptor, None, selection)
     }
   }
 }

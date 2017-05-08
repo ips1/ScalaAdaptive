@@ -4,11 +4,10 @@ import java.time.Duration
 
 import scala.language.experimental.macros
 import scala.reflect.macros.blackbox
-import scala.reflect.macros.blackbox.Context
 import scalaadaptive.api.adaptors.MultiFunction1
 import scalaadaptive.core.macros.AdaptiveMacrosHelper
+import scalaadaptive.core.options.Selection.Selection
 import scalaadaptive.core.options.Storage.Storage
-import scalaadaptive.core.options.Storage
 import scalaadaptive.core.runtime.{MeasurementToken, ReferencedFunction, TrainingHelper}
 
 /**
@@ -26,17 +25,22 @@ class FunctionAdaptor1[T, R](private val options: List[RunOption[(T) => R]],
 
   override def by(newSelector: (T) => Int): FunctionAdaptor1[T, R] =
     new FunctionAdaptor1[T, R](options, Some(newSelector), adaptorConfig)
-  override def using(newStorage: Storage): FunctionAdaptor1[T, R] =
-    new FunctionAdaptor1[T, R](options, selector, adaptorConfig.using(newStorage))
+  override def selectUsing(newSelection: Selection): FunctionAdaptor1[T, R] =
+    new FunctionAdaptor1[T, R](options, selector, adaptorConfig.selectUsing(newSelection))
+  override def storeUsing(newStorage: Storage): FunctionAdaptor1[T, R] =
+    new FunctionAdaptor1[T, R](options, selector, adaptorConfig.storeUsing(newStorage))
   override def limitedTo(newDuration: Duration): FunctionAdaptor1[T, R] =
     new FunctionAdaptor1[T, R](options, selector, adaptorConfig.limitedTo(newDuration))
   override def asClosures(closureIdentification: Boolean): MultiFunction1[T, R] =
     new FunctionAdaptor1[T, R](options, selector, adaptorConfig.asClosures(closureIdentification))
 
-  override def apply(v1: T): R = customRunner.runOption(generateOptions(v1), createInputDescriptor(v1), adaptorConfig.duration)
+  override def apply(v1: T): R =
+    customRunner
+      .runOption(generateOptions(v1), createInputDescriptor(v1), adaptorConfig.duration, adaptorConfig.selection)
 
   override def applyWithoutMeasuring(v1: T): (R, MeasurementToken) =
-    customRunner.runOptionWithDelayedMeasure(generateOptions(v1), createInputDescriptor(v1), adaptorConfig.duration)
+    customRunner
+      .runOptionWithDelayedMeasure(generateOptions(v1), createInputDescriptor(v1), adaptorConfig.duration, adaptorConfig.selection)
 
   override def toDebugString: String =
     options.map(o => o.reference.toString).mkString(", ")
@@ -53,7 +57,7 @@ class FunctionAdaptor1[T, R](private val options: List[RunOption[(T) => R]],
 
   override def train(data: Seq[T]): Unit = {
     data.foreach { d =>
-      trainingHelper.train(generateOptions(d), createInputDescriptor(d))
+      trainingHelper.train(generateOptions(d), createInputDescriptor(d), adaptorConfig.selection)
     }
   }
 }

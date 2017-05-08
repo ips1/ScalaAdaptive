@@ -3,7 +3,7 @@ package scalaadaptive.core.adaptors
 import scalaadaptive.api.Implicits
 import scalaadaptive.api.adaptors.MultiFunction0
 import scalaadaptive.core.options.Storage.Storage
-import scalaadaptive.core.options.Storage
+import scalaadaptive.core.options.{Selection, Storage}
 import scalaadaptive.core.runtime.{MeasurementToken, ReferencedFunction}
 
 /**
@@ -23,11 +23,11 @@ class FunctionAdaptor0[R](private val options: List[RunOption[() => R]],
     new FunctionAdaptor0[R](options, selector, newStorage)
 
   override def apply(): R = {
-    customRunner.runOption(generateOptions(), createInputDescriptor(), None)
+    customRunner.runOption(generateOptions(), createInputDescriptor(), None, Selection.Continuous)
   }
 
   override def applyWithoutMeasuring(): (R, MeasurementToken) = {
-    customRunner.runOptionWithDelayedMeasure(generateOptions(), createInputDescriptor(), None)
+    customRunner.runOptionWithDelayedMeasure(generateOptions(), createInputDescriptor(), None, Selection.Continuous)
   }
 
   override def toDebugString: String =

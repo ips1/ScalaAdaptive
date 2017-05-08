@@ -3,7 +3,7 @@ package scalaadaptive.core.adaptors
 import scalaadaptive.api.Implicits
 import scalaadaptive.api.adaptors.MultiFunction2
 import scalaadaptive.core.options.Storage.Storage
-import scalaadaptive.core.options.Storage
+import scalaadaptive.core.options.{Selection, Storage}
 import scalaadaptive.core.runtime.{MeasurementToken, ReferencedFunction}
 
 /**
@@ -22,13 +22,13 @@ class FunctionAdaptor2[I1, I2, R](private val options: List[RunOption[(I1, I2) =
     new FunctionAdaptor2[I1, I2, R](options, selector, newStorage)
 
 
-  override def apply(v1: I1, v2: I2): R = {
-    customRunner.runOption(generateOptions(v1, v2), createInputDescriptor(v1, v2), None)
-  }
+  override def apply(v1: I1, v2: I2): R =
+    customRunner
+      .runOption(generateOptions(v1, v2), createInputDescriptor(v1, v2), None, Selection.Continuous)
 
-  override def applyWithoutMeasuring(v1: I1, v2: I2): (R, MeasurementToken) = {
-    customRunner.runOptionWithDelayedMeasure(generateOptions(v1, v2), createInputDescriptor(v1, v2), None)
-  }
+  override def applyWithoutMeasuring(v1: I1, v2: I2): (R, MeasurementToken) =
+    customRunner
+      .runOptionWithDelayedMeasure(generateOptions(v1, v2), createInputDescriptor(v1, v2), None, Selection.Continuous)
 
   override def toDebugString: String =
     options.map(o => o.reference.toString).mkString(", ")

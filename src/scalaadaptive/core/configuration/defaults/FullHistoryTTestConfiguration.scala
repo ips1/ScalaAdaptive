@@ -14,7 +14,8 @@ object FullHistoryTTestConfiguration
     with TTestSelection
     with RunTimeMeasurement
     with DefaultPath
-    with BufferedSerialization {
+    with BufferedSerialization
+    with InterpolationSelection {
   override val historyStorageFactory: () => HistoryStorage[MeasurementType] = () => {
     new MapHistoryStorage[MeasurementType](key =>
       new CachedStatisticsRunHistory[Long](new FullRunHistory[Long](key)(num))(num)

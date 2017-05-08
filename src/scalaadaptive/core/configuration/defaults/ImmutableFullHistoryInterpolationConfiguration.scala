@@ -14,6 +14,7 @@ object ImmutableFullHistoryInterpolationConfiguration
     with RunTimeMeasurement
     with DefaultPath
     with BufferedSerialization
+    with TTestSelection
     // Temporary change:
     with NoGrouping {
   override val historyStorageFactory: () => HistoryStorage[MeasurementType] = () => {
