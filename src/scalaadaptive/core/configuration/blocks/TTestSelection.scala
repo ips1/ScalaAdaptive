@@ -11,5 +11,5 @@ trait TTestSelection extends BaseLongConfiguration {
   override val discreteRunSelector: RunSelector[Long] = new LowRunAwareSelector[Long](
     roundRobinSelector,
     new TTestSelector(roundRobinSelector, 0.05),
-    20)
+    10)
 }
