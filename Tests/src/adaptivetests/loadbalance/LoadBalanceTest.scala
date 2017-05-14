@@ -7,7 +7,7 @@ import scalaadaptive.core.runtime.Adaptive
   * Created by pk250187 on 5/14/17.
   */
 object LoadBalanceTest {
-  val stageRunCount = 40
+  val stageRunCount = 50
   val testController = new LoadBalanceTestController()
 
   private def runStage() = {
