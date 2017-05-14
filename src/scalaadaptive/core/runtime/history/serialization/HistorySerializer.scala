@@ -12,4 +12,5 @@ trait HistorySerializer[TMeasurement] {
     serializeMultipleRuns(key, List(run))
   def serializeMultipleRuns(key: HistoryKey, runs: Seq[RunData[TMeasurement]])
   def deserializeHistory(key: HistoryKey): Option[Seq[RunData[TMeasurement]]]
+  def removeHistory(key: HistoryKey): Unit
 }

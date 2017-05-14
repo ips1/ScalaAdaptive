@@ -24,4 +24,6 @@ class BufferedHistorySerializer[TMeasurement](val innerSerializer: HistorySerial
   // Delegation:
   override def deserializeHistory(key: HistoryKey): Option[Seq[RunData[TMeasurement]]] =
     innerSerializer.deserializeHistory(key)
+
+  override def removeHistory(key: HistoryKey): Unit = innerSerializer.removeHistory(key)
 }

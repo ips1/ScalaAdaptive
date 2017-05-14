@@ -57,4 +57,19 @@ class BasicHistorySerializer(private val rootPath: Path,
 
     Some(history)
   }
+
+  override def removeHistory(key: HistoryKey): Unit = {
+    logger.log(s"Trying to remove history file of $key")
+
+    val file = getFilePath(key).toFile
+    try {
+      if (file.exists && file.canWrite) {
+
+        file.delete()
+      }
+    } catch {
+      case e: Exception =>
+        logger.log(s"Failed to remove history file: ${e.getMessage}")
+    }
+  }
 }
