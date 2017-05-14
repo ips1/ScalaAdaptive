@@ -2,8 +2,9 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/ScalaAdaptive.iml" filepath="$PROJECT_DIR$/ScalaAdaptive.iml" />
       <module fileurl="file://$PROJECT_DIR$/Tests/Tests.iml" filepath="$PROJECT_DIR$/Tests/Tests.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/scalaadaptive.iml" filepath="$PROJECT_DIR$/.idea/modules/scalaadaptive.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/scalaadaptive-build.iml" filepath="$PROJECT_DIR$/.idea/modules/scalaadaptive-build.iml" />
     </modules>
   </component>
 </project>

@@ -7,8 +7,8 @@
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
-    <orderEntry type="module" module-name="ScalaAdaptive" />
     <orderEntry type="library" name="scala-sdk-2.11.8" level="application" />
-    <orderEntry type="library" name="org.scalaj:scalaj-http_2.11:2.3.0" level="project" />
+    <orderEntry type="module" module-name="scalaadaptive" />
+    <orderEntry type="library" name="SBT: org.scalaj:scalaj-http_2.11:2.3.0:jar" level="project" />
   </component>
 </module>
