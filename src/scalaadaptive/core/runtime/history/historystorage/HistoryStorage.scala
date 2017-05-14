@@ -19,11 +19,11 @@ trait HistoryStorage[TMeasurement] {
   def hasHistory(key: HistoryKey): Boolean
 
   /** Applies new run to the history specified by key in the storage. Not thread-safe in general. */
-  def applyNewRun(key: HistoryKey, run: RunData[TMeasurement])
+  def applyNewRun(key: HistoryKey, run: RunData[TMeasurement]): Unit
 
   /** Removes all runs corresponding to the history key */
-  def flushHistory(key: HistoryKey)
+  def flushHistory(key: HistoryKey): Unit
 
   /** Removes all runs corresponding to the function */
-  def flushHistory(function: FunctionReference) = getKeysForFunction(function).foreach(flushHistory)
+  def flushHistory(function: FunctionReference): Unit = getKeysForFunction(function).foreach(flushHistory)
 }

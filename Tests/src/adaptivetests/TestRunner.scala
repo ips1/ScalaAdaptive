@@ -8,7 +8,7 @@ import scala.util.Random
 class TestRunner {
   val bigDataSize = 100
   val smallDataSize = 20
-  val testRunCount = 4
+  val testRunCount = 2
   val runCount = 100
   val step = 2
   lazy val smallData = Seq.fill(smallDataSize)(Random.nextInt).toList

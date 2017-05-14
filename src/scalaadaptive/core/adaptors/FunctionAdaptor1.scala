@@ -8,6 +8,7 @@ import scalaadaptive.api.adaptors.MultiFunction1
 import scalaadaptive.core.macros.AdaptiveMacrosHelper
 import scalaadaptive.core.options.Selection.Selection
 import scalaadaptive.core.options.Storage.Storage
+import scalaadaptive.core.references.FunctionReference
 import scalaadaptive.core.runtime.{MeasurementToken, ReferencedFunction, TrainingHelper}
 
 /**
@@ -15,9 +16,10 @@ import scalaadaptive.core.runtime.{MeasurementToken, ReferencedFunction, Trainin
   */
 class FunctionAdaptor1[T, R](private val options: List[RunOption[(T) => R]],
                              private val selector: Option[(T) => Int],
-                             private val adaptorConfig: AdaptorConfig) extends MultiFunction1[T, R] {
-  private val customRunner = new CustomRunner(adaptorConfig.storage)
-  private val trainingHelper = new TrainingHelper(customRunner)
+                             private val adaptorConfig: AdaptorConfig) extends MultiFunction1[T, R] with FunctionAdaptorCommon {
+  override protected val runner = new CustomRunner(adaptorConfig.storage)
+  override protected def functionReferences: Iterable[FunctionReference] = options.map(o => o.reference)
+  private val trainingHelper = new TrainingHelper(runner)
 
   // Necessary for being able to omit the _ operator in chained calls
 
@@ -35,15 +37,12 @@ class FunctionAdaptor1[T, R](private val options: List[RunOption[(T) => R]],
     new FunctionAdaptor1[T, R](options, selector, adaptorConfig.asClosures(closureIdentification))
 
   override def apply(v1: T): R =
-    customRunner
+    runner
       .runOption(generateOptions(v1), createInputDescriptor(v1), adaptorConfig.duration, adaptorConfig.selection)
 
   override def applyWithoutMeasuring(v1: T): (R, MeasurementToken) =
-    customRunner
+    runner
       .runOptionWithDelayedMeasure(generateOptions(v1), createInputDescriptor(v1), adaptorConfig.duration, adaptorConfig.selection)
-
-  override def toDebugString: String =
-    options.map(o => o.reference.toString).mkString(", ")
 
   private def generateOptions(v1: T): Seq[ReferencedFunction[R]] =
     options.map(f => new ReferencedFunction[R]({ () => f.function(v1) },

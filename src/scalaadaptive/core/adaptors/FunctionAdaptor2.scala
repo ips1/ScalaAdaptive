@@ -4,6 +4,7 @@ import scalaadaptive.api.Implicits
 import scalaadaptive.api.adaptors.MultiFunction2
 import scalaadaptive.core.options.Storage.Storage
 import scalaadaptive.core.options.{Selection, Storage}
+import scalaadaptive.core.references.FunctionReference
 import scalaadaptive.core.runtime.{MeasurementToken, ReferencedFunction}
 
 /**
@@ -11,8 +12,9 @@ import scalaadaptive.core.runtime.{MeasurementToken, ReferencedFunction}
   */
 class FunctionAdaptor2[I1, I2, R](private val options: List[RunOption[(I1, I2) => R]],
                                   private val selector: Option[(I1, I2) => Int] = None,
-                                  private val storage: Storage = Storage.Global) extends MultiFunction2[I1, I2, R] {
-  private val customRunner = new CustomRunner(storage)
+                                  private val storage: Storage = Storage.Global) extends MultiFunction2[I1, I2, R] with FunctionAdaptorCommon {
+  override protected val runner = new CustomRunner(storage)
+  override protected def functionReferences: Iterable[FunctionReference] = options.map(o => o.reference)
 
   override def or(fun: (I1, I2) => R): (I1, I2) => R =
     orAdaptor(Conversions.toAdaptor(fun))
@@ -23,15 +25,12 @@ class FunctionAdaptor2[I1, I2, R](private val options: List[RunOption[(I1, I2) =
 
 
   override def apply(v1: I1, v2: I2): R =
-    customRunner
+    runner
       .runOption(generateOptions(v1, v2), createInputDescriptor(v1, v2), None, Selection.Continuous)
 
   override def applyWithoutMeasuring(v1: I1, v2: I2): (R, MeasurementToken) =
-    customRunner
+    runner
       .runOptionWithDelayedMeasure(generateOptions(v1, v2), createInputDescriptor(v1, v2), None, Selection.Continuous)
-
-  override def toDebugString: String =
-    options.map(o => o.reference.toString).mkString(", ")
 
   private def orAdaptor(fun: FunctionAdaptor2[I1, I2, R]): (I1, I2) => R =
     new FunctionAdaptor2[I1, I2, R](this.options ++ fun.options)

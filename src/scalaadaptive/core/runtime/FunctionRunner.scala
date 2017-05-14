@@ -4,6 +4,7 @@ import java.time.Duration
 
 import scalaadaptive.core.options.Selection.Selection
 import scalaadaptive.core.performance.PerformanceTracker
+import scalaadaptive.core.references.FunctionReference
 import scalaadaptive.core.runtime.history.HistoryKey
 
 /**
@@ -24,4 +25,6 @@ trait FunctionRunner {
                                        key: HistoryKey,
                                        inputDescriptor: Option[Long],
                                        tracker: PerformanceTracker): TReturnType
+
+  def flushHistory(reference: FunctionReference)
 }

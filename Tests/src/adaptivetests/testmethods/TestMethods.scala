@@ -1,6 +1,6 @@
 package adaptivetests.testmethods
 
-import scalaadaptive.core.options.Storage
+import scalaadaptive.core.options.{Selection, Storage}
 
 /**
   * Created by pk250187 on 5/1/17.
@@ -48,5 +48,10 @@ class TestMethods {
     x
   }
 
-  val function = linearHighConstant _ or quadraticMinConstant by (x => x.size) storeUsing Storage.Persistent
+  val function = (
+    linearHighConstant _ or quadraticMinConstant
+    by (x => x.size)
+    selectUsing Selection.Continuous
+    storeUsing Storage.Persistent
+  )
 }

@@ -7,6 +7,7 @@ import scalaadaptive.core.logging.Logger
 import scalaadaptive.core.options.Selection
 import scalaadaptive.core.options.Selection.Selection
 import scalaadaptive.core.performance.{PerformanceProvider, PerformanceTracker, PerformanceTrackerImpl}
+import scalaadaptive.core.references.FunctionReference
 import scalaadaptive.core.runtime.history.historystorage.HistoryStorage
 import scalaadaptive.core.runtime.history.HistoryKey
 import scalaadaptive.core.runtime.history.rundata.{RunData, TimestampedRunData}
@@ -105,4 +106,7 @@ class RunTracker[TMeasurement](historyStorage: HistoryStorage[TMeasurement],
     tracker.getStatistics.lines.foreach(logger.log)
     result
   }
+
+  override def flushHistory(reference: FunctionReference): Unit =
+    historyStorage.flushHistory(reference)
 }

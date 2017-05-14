@@ -4,15 +4,17 @@ import scalaadaptive.api.Implicits
 import scalaadaptive.api.adaptors.MultiFunction0
 import scalaadaptive.core.options.Storage.Storage
 import scalaadaptive.core.options.{Selection, Storage}
-import scalaadaptive.core.runtime.{MeasurementToken, ReferencedFunction}
+import scalaadaptive.core.references.FunctionReference
+import scalaadaptive.core.runtime.{FunctionRunner, MeasurementToken, ReferencedFunction}
 
 /**
   * Created by pk250187 on 3/19/17.
   */
 class FunctionAdaptor0[R](private val options: List[RunOption[() => R]],
                           private val selector: Option[() => Int] = None,
-                          private val storage: Storage = Storage.Global) extends MultiFunction0[R] {
-  private val customRunner = new CustomRunner(storage)
+                          private val storage: Storage = Storage.Global) extends MultiFunction0[R] with FunctionAdaptorCommon {
+  override protected val runner = new CustomRunner(storage)
+  override protected def functionReferences: Iterable[FunctionReference] = options.map(o => o.reference)
 
   override def or(fun: () => R): () => R =
     orAdaptor(Conversions.toAdaptor(fun))
@@ -23,15 +25,12 @@ class FunctionAdaptor0[R](private val options: List[RunOption[() => R]],
     new FunctionAdaptor0[R](options, selector, newStorage)
 
   override def apply(): R = {
-    customRunner.runOption(generateOptions(), createInputDescriptor(), None, Selection.Continuous)
+    runner.runOption(generateOptions(), createInputDescriptor(), None, Selection.Continuous)
   }
 
   override def applyWithoutMeasuring(): (R, MeasurementToken) = {
-    customRunner.runOptionWithDelayedMeasure(generateOptions(), createInputDescriptor(), None, Selection.Continuous)
+    runner.runOptionWithDelayedMeasure(generateOptions(), createInputDescriptor(), None, Selection.Continuous)
   }
-
-  override def toDebugString: String =
-    options.map(o => o.reference.toString).mkString(", ")
 
   private def orAdaptor(fun: FunctionAdaptor0[R]): () => R = new FunctionAdaptor0[R](this.options ++ fun.options)
 
