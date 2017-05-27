@@ -9,7 +9,7 @@ object DelayedTest {
   import scalaadaptive.api.Implicits._
   def getFastConfig(): DelayedConfig = FastConfig()
   def getSlowConfig(): DelayedConfig = SlowConfig()
-  val getConfig: () => DelayedConfig = getFastConfig _ or getSlowConfig using Storage.Persistent
+  val getConfig: () => DelayedConfig = getFastConfig _ or getSlowConfig storeUsing Storage.Persistent
 
   def run(config: DelayedConfig) = {
     config match {

@@ -1,44 +1,42 @@
 package scalaadaptive.core.adaptors
 
+import scala.reflect.macros.blackbox
 import scalaadaptive.api.Implicits
 import scalaadaptive.api.adaptors.MultiFunction0
+import scalaadaptive.api.adaptors.MultiFunction1
+import scalaadaptive.core.macros.AdaptiveMacrosHelper
 import scalaadaptive.core.options.Storage.Storage
 import scalaadaptive.core.options.{Selection, Storage}
 import scalaadaptive.core.references.FunctionReference
 import scalaadaptive.core.runtime.invocationtokens.InvocationToken
-import scalaadaptive.core.runtime.{FunctionRunner, AppliedFunction}
+import scalaadaptive.core.runtime.{AppliedFunction, FunctionFactory, FunctionRunner, MultipleImplementationFunction}
 
 /**
   * Created by pk250187 on 3/19/17.
   */
-class FunctionAdaptor0[R](private val options: List[RunOption[() => R]],
-                          private val selector: Option[() => Int] = None,
-                          private val storage: Storage = Storage.Global) extends MultiFunction0[R] with FunctionAdaptorCommon {
-  override protected val runner = new CustomRunner(storage)
-  override protected def functionReferences: Iterable[FunctionReference] = options.map(o => o.reference)
+class FunctionAdaptor0[R](val function: MultipleImplementationFunction[Unit, R],
+                          val functionFactory: FunctionFactory)
+  extends FunctionAdaptorBase[Unit, R, FunctionAdaptor0[R]]
+    with MultiFunction0[R] {
 
-  override def or(fun: () => R): () => R =
-    orAdaptor(Conversions.toAdaptor(fun))
+  override protected val createNew: (MultipleImplementationFunction[Unit, R]) => FunctionAdaptor0[R] =
+    f => new FunctionAdaptor0[R](f, functionFactory)
 
-  override def by(newSelector: () => Int): () => R =
-    new FunctionAdaptor0[R](options, Some(newSelector), storage)
-  override def using(newStorage: Storage): () => R =
-    new FunctionAdaptor0[R](options, selector, newStorage)
+  override def by(selector: () => Long): MultiFunction0[R] = byGrouped((_) => selector())
 
-  override def apply(): R = ??? /*{
-    runner.runOption(generateOptions(), createInputDescriptor(), None, Selection.Continuous)
-  }*/
+  override def apply(): R = function.invoke()
 
-  override def applyWithoutMeasuring(): (R, InvocationToken) = ??? /*{
-    runner.runOptionWithDelayedMeasure(generateOptions(), createInputDescriptor(), None, Selection.Continuous)
-  }*/
+  override def applyWithoutMeasuring(): (R, InvocationToken) = function.invokeWithDelayedMeasure()
 
-  private def orAdaptor(fun: FunctionAdaptor0[R]): () => R = new FunctionAdaptor0[R](this.options ++ fun.options)
+  // This method unfortunately has to accept the concrete type because of Scala macro magic :/
+  override def orMultiFunction(otherFun: FunctionAdaptor0[R]): FunctionAdaptor0[R] =
+    createNew(functionFactory.createFunction[Unit, R](function.functions ++ otherFun.function.functions, function.inputDescriptorSelector, function.adaptorConfig))
+}
 
-  private def generateOptions(): Seq[AppliedFunction[R]] =
-    options.map(f => new AppliedFunction[R]({ () => f.function() }, f.reference))
-
-  private def createInputDescriptor(): Option[Long] =
-    if (selector.isDefined) Some(selector.get())
-    else None
+object FunctionAdaptor0 {
+  def or_impl[R](c: blackbox.Context)(fun: c.Expr[() => R]): c.Expr[FunctionAdaptor0[R]] = {
+    val resultTree = new AdaptiveMacrosHelper[c.type](c)
+      .wrapTreeInAdapterConversionAndOrCall(fun.tree)
+    c.Expr[FunctionAdaptor0[R]](resultTree)
+  }
 }

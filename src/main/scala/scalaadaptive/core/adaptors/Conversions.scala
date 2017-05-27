@@ -1,35 +1,50 @@
 package scalaadaptive.core.adaptors
 
-import scalaadaptive.api.adaptors.{MultiFunction0, MultiFunction2}
 import scalaadaptive.core.references.{ClosureNameReference, FunctionReference}
-import scalaadaptive.core.runtime.Adaptive
+import scalaadaptive.core.runtime.{Adaptive, FunctionFactory, ReferencedFunction}
 
 /**
-  * Created by pk250187 on 5/1/17.
+  * Created by pk250187 on 5/27/17.
   */
 object Conversions {
   private val defaults = Adaptive.getMultiFunctionDefaults
+  private def functionFactory: FunctionFactory = Adaptive.getFunctionFactory
 
   private def generateClosureNameReference(closure: Any) = ClosureNameReference(closure.getClass.getTypeName)
 
-  def toAdaptor[R](fun: () => R): FunctionAdaptor0[R] = fun match {
+  def toAdaptor[R](fun: () => R): FunctionAdaptor0[R] = toAdaptor(fun, generateClosureNameReference(fun))
+
+  def toAdaptor[R](fun: () => R, reference: FunctionReference): FunctionAdaptor0[R] = fun match {
     case adaptor: FunctionAdaptor0[R] => adaptor
-    case _ => new FunctionAdaptor0[R](List(new RunOption(fun, generateClosureNameReference(fun))))
+    case _ =>
+      new FunctionAdaptor0[R](
+        functionFactory.createFunction[Unit, R](
+          new ReferencedFunction[Unit, R]((Unit) => fun(), generateClosureNameReference(fun), reference)),
+        functionFactory
+      )
   }
 
-  def createAdaptor[I, R](options: List[RunOption[(I) => R]]) =
-    new FunctionAdaptor1[I, R](options, None, defaults)
+  def toAdaptor[T1, R](fun: (T1) => R): FunctionAdaptor1[T1, R] = toAdaptor(fun, generateClosureNameReference(fun))
 
-  def toAdaptor[I, R](fun: (I) => R): FunctionAdaptor1[I, R] = toAdaptor(fun, generateClosureNameReference(fun))
-
-  def toAdaptor[I, R](fun: (I) => R, reference: FunctionReference): FunctionAdaptor1[I, R] = fun match {
-    // TODO: Erasure not checking actual types?
-    case adaptor: FunctionAdaptor1[I, R] => adaptor
-    case _ => createAdaptor(List(new RunOption(fun, generateClosureNameReference(fun), reference)))
+  def toAdaptor[T1, R](fun: (T1) => R, reference: FunctionReference): FunctionAdaptor1[T1, R] = fun match {
+    case adaptor: FunctionAdaptor1[T1, R] => adaptor
+    case _ =>
+      new FunctionAdaptor1[T1, R](
+        functionFactory.createFunction[T1, R](
+          new ReferencedFunction[T1, R](fun, generateClosureNameReference(fun), reference)),
+        functionFactory
+      )
   }
 
-  def toAdaptor[I1, I2, R](fun: (I1, I2) => R): FunctionAdaptor2[I1, I2, R] = fun match {
-    case adaptor: FunctionAdaptor2[I1, I2, R] => adaptor
-    case _ => new FunctionAdaptor2[I1, I2, R](List(new RunOption(fun, generateClosureNameReference(fun))))
+  def toAdaptor[T1, T2, R](fun: (T1, T2) => R): FunctionAdaptor2[T1, T2, R] = toAdaptor(fun, generateClosureNameReference(fun))
+
+  def toAdaptor[T1, T2, R](fun: (T1, T2) => R, reference: FunctionReference): FunctionAdaptor2[T1, T2, R] = fun match {
+    case adaptor: FunctionAdaptor2[T1, T2, R] => adaptor
+    case _ =>
+      new FunctionAdaptor2[T1, T2, R](
+        functionFactory.createFunction[(T1, T2), R](
+          new ReferencedFunction[(T1, T2), R]((t: (T1, T2)) => fun(t._1, t._2), generateClosureNameReference(fun), reference)),
+        functionFactory
+      )
   }
 }
