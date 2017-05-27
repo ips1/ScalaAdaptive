@@ -3,7 +3,7 @@ package scalaadaptive.core.macros.methodnames
 import scala.reflect.macros.blackbox
 import scala.reflect.macros.blackbox.Context
 import scalaadaptive.api.Implicits
-import scalaadaptive.core.adaptors.{Conversions, FunctionAdaptor1}
+import scalaadaptive.core.adaptors.{Conversions, FunctionAdaptor1, NewConversions}
 import scalaadaptive.core.references.MethodNameReference
 
 /**
@@ -38,7 +38,7 @@ class EtaExpansionConverter[C <: blackbox.Context](val c: C) {
   }
 
   private def generateConversionWithArguments(arguments: List[Tree]) = {
-    val conversionsType = getObjectName(Conversions)
+    val conversionsType = getObjectName(NewConversions)
     treeBuilder.buildMethodCall(conversionsType, "toAdaptor", arguments)
   }
 

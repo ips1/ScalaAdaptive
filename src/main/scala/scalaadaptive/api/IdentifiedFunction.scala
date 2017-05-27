@@ -1,6 +1,6 @@
 package scalaadaptive.api
 
-import scalaadaptive.core.adaptors.Conversions
+import scalaadaptive.core.adaptors.{Conversions, NewConversions}
 import scalaadaptive.core.references.{CustomIdentifierValidator, CustomReference}
 import scalaadaptive.core.runtime.Adaptive
 
@@ -14,5 +14,5 @@ object IdentifiedFunction {
     if (!validator.isValidIdentifier(identifier))
       throw new InvalidIdentifierException(s"Identifier $identifier is not valid")
     else
-      Conversions.toAdaptor(function, CustomReference(identifier))
+      NewConversions.toAdaptor(function, CustomReference(identifier))
 }

@@ -5,7 +5,8 @@ import scalaadaptive.core.macros.AdaptiveMacrosHelper
 import scalaadaptive.core.references.{ClosureNameReference, FunctionReference}
 import scala.language.experimental.macros
 import scala.reflect.macros.blackbox
-import scalaadaptive.api.adaptors.{MultiFunction0, MultiFunction1, MultiFunction2}
+import scalaadaptive.api.adaptors.{MultiFunction0, MultiFunction2}
+import scalaadaptive.api.newadaptors.MultiFunction1
 import scalaadaptive.core.adaptors._
 
 /**

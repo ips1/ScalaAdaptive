@@ -5,7 +5,7 @@ import scalaadaptive.core.runtime.history.rundata.RunData
 /**
   * Created by pk250187 on 3/19/17.
   */
-class RunTimeProvider extends PerformanceProvider[Long] {
+class RunTimeProvider extends MeasurementProvider[Long] {
   override def measureFunctionRun[TOut](fun: () => TOut): (TOut, Long) = {
     val startTime = System.nanoTime()
     val result = fun()

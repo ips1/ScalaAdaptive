@@ -2,7 +2,7 @@ package scalaadaptive.core.configuration
 import scalaadaptive.core.adaptors.AdaptorConfig
 import scalaadaptive.core.grouping.GroupSelector
 import scalaadaptive.core.logging.Logger
-import scalaadaptive.core.performance.PerformanceProvider
+import scalaadaptive.core.performance.MeasurementProvider
 import scalaadaptive.core.references.CustomIdentifierValidator
 import scalaadaptive.core.runtime.history.historystorage.HistoryStorage
 import scalaadaptive.core.runtime.selection.RunSelector
@@ -16,7 +16,7 @@ trait Configuration {
   val persistentHistoryStorageFactory: () => Option[HistoryStorage[MeasurementType]]
   val discreteRunSelector: RunSelector[MeasurementType]
   val continuousRunSelector: RunSelector[MeasurementType]
-  val performanceProvider: PerformanceProvider[MeasurementType]
+  val performanceProvider: MeasurementProvider[MeasurementType]
   val groupSelector: GroupSelector
   val logger: Logger
   val identifierValidator: CustomIdentifierValidator

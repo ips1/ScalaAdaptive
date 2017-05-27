@@ -8,7 +8,8 @@ import scalaadaptive.core.options.Storage.Storage
 import scalaadaptive.core.performance.PerformanceTracker
 import scalaadaptive.core.references.FunctionReference
 import scalaadaptive.core.runtime.history.HistoryKey
-import scalaadaptive.core.runtime.{Adaptive, FunctionRunner, MeasurementToken, ReferencedFunction}
+import scalaadaptive.core.runtime._
+import scalaadaptive.core.runtime.invocationtokens.{InvocationToken, InvocationTokenWithCallbacks}
 
 /**
   * Created by pk250187 on 4/22/17.
@@ -27,23 +28,19 @@ class CustomRunner(val storage: Storage) extends FunctionRunner {
     }
 
   // Delegations
-  override def runOption[TReturnType](options: Seq[ReferencedFunction[TReturnType]],
-                                      inputDescriptor: Option[Long],
-                                      limitedBy: Option[Duration],
-                                      selection: Selection): TReturnType =
-    selectRunner.runOption(options, inputDescriptor, limitedBy, selection)
-
-  override def runOptionWithDelayedMeasure[TReturnType](options: Seq[ReferencedFunction[TReturnType]],
-                                                        inputDescriptor: Option[Long],
-                                                        limitedBy: Option[Duration],
-                                                        selection: Selection): (TReturnType, MeasurementToken) =
-    selectRunner.runOptionWithDelayedMeasure(options, inputDescriptor, limitedBy, selection)
-
-  override def runMeasuredFunction[TReturnType](fun: () => TReturnType,
-                                                key: HistoryKey,
+  override def runOption[TArgType, TReturnType](options: Seq[ReferencedFunction[TArgType, TReturnType]],
+                                                arguments: TArgType,
                                                 inputDescriptor: Option[Long],
-                                                tracker: PerformanceTracker): TReturnType =
-    selectRunner.runMeasuredFunction(fun, key, inputDescriptor, tracker)
+                                                limitedBy: Option[Duration],
+                                                selection: Selection): RunResult[TReturnType] =
+    selectRunner.runOption(options, arguments, inputDescriptor, limitedBy, selection)
+
+  override def runOptionWithDelayedMeasure[TArgType, TReturnType](options: Seq[ReferencedFunction[TArgType, TReturnType]],
+                                                                  arguments: TArgType,
+                                                                  inputDescriptor: Option[Long],
+                                                                  limitedBy: Option[Duration],
+                                                                  selection: Selection): (TReturnType, InvocationTokenWithCallbacks) =
+    selectRunner.runOptionWithDelayedMeasure(options, arguments, inputDescriptor, limitedBy, selection)
 
   override def flushHistory(reference: FunctionReference): Unit =
     selectRunner.flushHistory(reference)

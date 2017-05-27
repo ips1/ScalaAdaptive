@@ -9,7 +9,8 @@ import scalaadaptive.core.macros.AdaptiveMacrosHelper
 import scalaadaptive.core.options.Selection.Selection
 import scalaadaptive.core.options.Storage.Storage
 import scalaadaptive.core.references.FunctionReference
-import scalaadaptive.core.runtime.{MeasurementToken, ReferencedFunction, TrainingHelper}
+import scalaadaptive.core.runtime.invocationtokens.InvocationToken
+import scalaadaptive.core.runtime.{AppliedFunction, ReferencedFunction, TrainingHelper}
 
 /**
   * Created by pk250187 on 3/19/17.
@@ -18,8 +19,10 @@ class FunctionAdaptor1[T, R](private val options: List[RunOption[(T) => R]],
                              private val selector: Option[(T) => Int],
                              private val adaptorConfig: AdaptorConfig) extends MultiFunction1[T, R] with FunctionAdaptorCommon {
   override protected val runner = new CustomRunner(adaptorConfig.storage)
-  override protected def functionReferences: Iterable[FunctionReference] = options.map(o => o.reference)
   private val trainingHelper = new TrainingHelper(runner)
+  private val referencedFunctions = List() /*options.map(f => new ReferencedFunction[T, R](f.function,
+    if (adaptorConfig.closureReferences) f.closureReference else f.reference))*/
+  override protected def functionReferences: Iterable[FunctionReference] = ??? /*referencedFunctions.map(o => o.reference)*/
 
   // Necessary for being able to omit the _ operator in chained calls
 
@@ -36,16 +39,16 @@ class FunctionAdaptor1[T, R](private val options: List[RunOption[(T) => R]],
   override def asClosures(closureIdentification: Boolean): MultiFunction1[T, R] =
     new FunctionAdaptor1[T, R](options, selector, adaptorConfig.asClosures(closureIdentification))
 
-  override def apply(v1: T): R =
-    runner
-      .runOption(generateOptions(v1), createInputDescriptor(v1), adaptorConfig.duration, adaptorConfig.selection)
+  override def apply(v1: T): R = ???
+    /*runner
+      .runOption(generateOptions(v1), createInputDescriptor(v1), adaptorConfig.duration, adaptorConfig.selection)*/
 
-  override def applyWithoutMeasuring(v1: T): (R, MeasurementToken) =
-    runner
-      .runOptionWithDelayedMeasure(generateOptions(v1), createInputDescriptor(v1), adaptorConfig.duration, adaptorConfig.selection)
+  override def applyWithoutMeasuring(v1: T): (R, InvocationToken) = ???
+    /*runner
+      .runOptionWithDelayedMeasure(generateOptions(v1), createInputDescriptor(v1), adaptorConfig.duration, adaptorConfig.selection)*/
 
-  private def generateOptions(v1: T): Seq[ReferencedFunction[R]] =
-    options.map(f => new ReferencedFunction[R]({ () => f.function(v1) },
+  private def generateOptions(v1: T): Seq[AppliedFunction[R]] =
+    options.map(f => new AppliedFunction[R]({ () => f.function(v1) },
       if (adaptorConfig.closureReferences) f.closureReference else f.reference))
 
   private def createInputDescriptor(v1: T): Option[Long] =

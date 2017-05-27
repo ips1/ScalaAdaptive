@@ -3,6 +3,8 @@
   <component name="ScalaCompilerConfiguration">
     <option name="implicitConversions" value="true" />
     <option name="macros" value="true" />
-    <profile name="SBT 1" modules="scalaadaptive" />
+    <profile name="SBT 1" modules="scalaadaptive">
+      <option name="macros" value="true" />
+    </profile>
   </component>
 </project>

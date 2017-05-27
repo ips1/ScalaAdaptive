@@ -2,15 +2,16 @@ package scalaadaptive.core.runtime
 
 import scalaadaptive.core.options.Selection.Selection
 
+// TODO: Delete this class
 /**
   * Created by pk250187 on 5/7/17.
   */
 class TrainingHelper(val runner: FunctionRunner) {
-  def train[TReturnType](functions: Seq[ReferencedFunction[TReturnType]],
+  def train[TReturnType](functions: Seq[AppliedFunction[TReturnType]],
                          inputDescriptor: Option[Long],
-                         selection: Selection): Unit = {
+                         selection: Selection): Unit = ??? /* {
     functions.foreach { f =>
       runner.runOption(List(f), inputDescriptor, None, selection)
     }
-  }
+  } */
 }

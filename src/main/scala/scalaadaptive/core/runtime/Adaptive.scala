@@ -40,6 +40,8 @@ object Adaptive {
 
   def getMultiFunctionDefaults: AdaptorConfig = currentConfiguration.multiFunctionDefaults
 
+  def getFunctionFactory: FunctionFactory = new DefaultFunctionFactory
+
   var runner: FunctionRunner = initTracker(defaultConfiguration)
   var persistentRunner: FunctionRunner = initPersistentTracker(defaultConfiguration).getOrElse(runner)
 

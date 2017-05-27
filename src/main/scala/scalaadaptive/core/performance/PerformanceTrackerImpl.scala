@@ -16,7 +16,9 @@ class PerformanceTrackerImpl extends PerformanceTracker {
 
   override def addFunctionTime(time: Long): Unit = functionTimeTotal += time
 
-  def getOverheadTime: Long = selectionTimeTotal + storingTimeTotal
+  override def getOverheadTime: Long = selectionTimeTotal + storingTimeTotal
+
+  override def getFunctionTime: Long = functionTimeTotal
 
   override def getOverheadPercentage: Double = if (functionTimeTotal > 0) getOverheadTime.toDouble / functionTimeTotal else 0
 
