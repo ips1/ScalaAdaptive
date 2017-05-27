@@ -51,7 +51,7 @@ class TestMethods {
   val function = (
     linearHighConstant _ or quadraticMinConstant
     by (x => x.size)
-    selectUsing Selection.Continuous
+    selectUsing Selection.Discrete
     storeUsing Storage.Persistent
   )
 }

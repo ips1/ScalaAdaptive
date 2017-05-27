@@ -33,7 +33,7 @@ class DefaultFunctionFactory extends FunctionFactory {
                                                   adaptorConfig: AdaptorConfig): MultipleImplementationFunction[TArgType, TRetType] =
     new MultipleImplementationFunction[TArgType, TRetType](function.functions,
       function.inputDescriptorSelector,
-      function.selectionRunner,
+      new CustomRunner(adaptorConfig.storage),
       adaptorConfig,
       initialPolicy
     )

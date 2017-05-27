@@ -1,6 +1,8 @@
 package adaptivetests.delayed
 
-import scalaadaptive.core.options.Storage
+import scalaadaptive.core.configuration.defaults.FullHistoryTTestConfiguration
+import scalaadaptive.core.options.{Selection, Storage}
+import scalaadaptive.core.runtime.Adaptive
 
 /**
   * Created by pk250187 on 4/23/17.
@@ -9,7 +11,9 @@ object DelayedTest {
   import scalaadaptive.api.Implicits._
   def getFastConfig(): DelayedConfig = FastConfig()
   def getSlowConfig(): DelayedConfig = SlowConfig()
-  val getConfig: () => DelayedConfig = getFastConfig _ or getSlowConfig storeUsing Storage.Persistent
+  val getConfig: () => DelayedConfig = (getFastConfig _ or getSlowConfig
+    selectUsing Selection.Discrete
+    storeUsing Storage.Persistent)
 
   def run(config: DelayedConfig) = {
     config match {
@@ -26,6 +30,8 @@ object DelayedTest {
   }
 
   def main(args: Array[String]): Unit = {
+    Adaptive.initialize(FullHistoryTTestConfiguration)
+
     for (x <- 1 to 20) {
       test()
     }

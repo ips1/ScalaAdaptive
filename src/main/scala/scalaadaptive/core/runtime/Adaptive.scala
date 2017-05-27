@@ -54,4 +54,7 @@ object Adaptive {
     runner = initTracker(currentConfiguration)
     persistentRunner = initPersistentTracker(currentConfiguration).getOrElse(runner)
   }
+
+  // Default initialization
+  initialize(defaultConfiguration)
 }
