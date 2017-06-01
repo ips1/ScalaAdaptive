@@ -12,11 +12,9 @@ import scalaadaptive.core.runtime.Adaptive
 object Test {
   def main(args: Array[String]): Unit = {
 
-    val runner = new TestRunner()
+    val runner = new TestRunner(4)
 
     //runTest(l => l.sort())
-    val sorter = new Sorter()
-    val testMethods = new TestMethods()
     //runTest(l => sorter.sort(l))
 //    val configurations = List(ImmutableFullHistoryInterpolationConfiguration)//, GroupedRunHistoryInterpolationConfiguration)
 
@@ -25,9 +23,13 @@ object Test {
     val configurations = List(FullHistoryTTestConfiguration)
     configurations.foreach(cfg => {
       Adaptive.initialize(cfg)
-      //runner.runIncrementalTest(l => testMethods.function(l))
+      val sorter = new Sorter()
+      val testMethods = new TestMethods()
+      //runner.runIncrementalTest(l => sorter.sort(l))
+      //runner.runIncrementalTest(l => testMethods.functionContinuous(l))
+      runner.runIncrementalTest(l => testMethods.functionContinuousWithLimitedOverhead(l))
       //runner.runTest(l => sorter.sort(l))
-      runner.runTest(l => testMethods.function(l))
+      //runner.runTest(l => testMethods.function(l))
     })
   }
 }

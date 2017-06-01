@@ -1,6 +1,6 @@
 package adaptivetests.sorting
 
-import scalaadaptive.core.options.Storage
+import scalaadaptive.core.options.{Selection, Storage}
 
 /**
   * Created by petrkubat on 29/01/2017.
@@ -83,7 +83,7 @@ class Sorter {
 
   //val sort = radixSort _ or bubbleSort[Int]
 
-  val sort = selectionSort _ or standardSort by (_.size) //using Storage.Persistent
+  val sort = standardSort _ or selectionSort by (_.size) selectUsing Selection.Continuous //using Storage.Persistent
 
   //val sort = selectionSort _ or bubbleSort by (_.size)
 

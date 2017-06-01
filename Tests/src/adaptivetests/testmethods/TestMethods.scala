@@ -1,6 +1,7 @@
 package adaptivetests.testmethods
 
 import scalaadaptive.core.options.{Selection, Storage}
+import scalaadaptive.core.runtime.policies.{LimitedOverheadPolicy, StopSelectingWhenDecidedPolicy}
 
 /**
   * Created by pk250187 on 5/1/17.
@@ -37,21 +38,36 @@ class TestMethods {
   }
 
   def linearHighConstant(x: List[Int]): List[Int] = {
-    val sleepTime = ((x.size * highConstant) / 100).toInt
+    println("linearHighConstant")
+    val sleepTime = ((x.size * highConstant) / 1000).toInt
     Thread.sleep(sleepTime)
     x
   }
 
   def quadraticMinConstant(x: List[Int]): List[Int] = {
-    val sleepTime = ((x.size * x.size * minConstant) / 100).toInt
+    println("quadraticMinConstant")
+    val sleepTime = ((x.size * x.size * minConstant) / 1000).toInt
     Thread.sleep(sleepTime)
     x
   }
 
-  val function = (
+  val functionDiscrete = (
     linearHighConstant _ or quadraticMinConstant
     by (x => x.size)
     selectUsing Selection.Discrete
     storeUsing Storage.Persistent
   )
+
+  val functionContinuous = (
+    linearHighConstant _ or quadraticMinConstant
+      by (x => x.size)
+      selectUsing Selection.Continuous
+      storeUsing Storage.Persistent
+      withPolicy new StopSelectingWhenDecidedPolicy(80, 0.6)
+    )
+
+  val functionContinuousWithLimitedOverhead =
+    functionContinuous withPolicy new LimitedOverheadPolicy(1000 * 1000 * 1000, 1000 * 1000 * 200)
+
+  val function = functionDiscrete
 }
