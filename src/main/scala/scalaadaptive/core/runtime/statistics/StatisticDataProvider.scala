@@ -8,6 +8,7 @@ trait StatisticDataProvider {
   def getStreakLength: Long
   def getTotalOverheadTime: Long
   def getAccumulatedOverheadTime: Long
+  def getLastRunCount: Long
 
   def resetAccumulatedOverheadTime(): Unit
 }

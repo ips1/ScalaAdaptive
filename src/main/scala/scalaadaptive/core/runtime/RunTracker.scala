@@ -107,7 +107,7 @@ class RunTracker[TMeasurement](historyStorage: HistoryStorage[TMeasurement],
     historyStorage.applyNewRun(key, new TimestampedRunData[TMeasurement](inputDescriptor, Instant.now, performance))
     tracker.addStoringTime()
     tracker.getStatistics.lines.foreach(logger.log)
-    new RunResult(result, new RunData(key.function, tracker))
+    new RunResult(result, new RunData(key.function, inputDescriptor, tracker))
   }
 
   override def flushHistory(reference: FunctionReference): Unit =

@@ -24,6 +24,7 @@ class AdaptorStatistics[TArgType, TRetType](defaultLast: ReferencedFunction[TArg
 
   override def applyRunData(data: RunData): Unit = {
     records.append(new StatisticsRecord(data.selectedFunction,
+      data.inputDescriptor,
       data.performance.getFunctionTime,
       data.performance.getOverheadTime,
       data.performance.getOverheadPercentage))
@@ -53,6 +54,7 @@ class AdaptorStatistics[TArgType, TRetType](defaultLast: ReferencedFunction[TArg
     referenceResolver(timesSelected.minBy(_._2)._1)
   override def getTotalRunCount: Long = totalRunCount
   override def getAccumulatedOverheadTime: Long = accumulatedOverheadTime
+  override def getLastRunCount = timesSelected.getOrElse(last.reference, 0)
   override def resetAccumulatedOverheadTime(): Unit = {
     accumulatedOverheadTime = 0
   }
