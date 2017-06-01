@@ -7,7 +7,6 @@ import scalaadaptive.core.runtime.{Adaptive, FunctionFactory, ReferencedFunction
   * Created by pk250187 on 5/27/17.
   */
 object Conversions {
-  private val defaults = Adaptive.getMultiFunctionDefaults
   private def functionFactory: FunctionFactory = Adaptive.getFunctionFactory
 
   private def generateClosureNameReference(closure: Any) = ClosureNameReference(closure.getClass.getTypeName)
