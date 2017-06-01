@@ -2,11 +2,11 @@ package scalaadaptive.core.adaptors
 
 import java.time.Duration
 
-import scalaadaptive.api.adaptors.MultiFunction1
+import scalaadaptive.api.adaptors.MultiFunctionCommon
 import scalaadaptive.core.options.Selection.Selection
 import scalaadaptive.core.options.Storage.Storage
-import scalaadaptive.core.references.FunctionReference
-import scalaadaptive.core.runtime.{FunctionFactory, MultipleImplementationFunction, ReferencedFunction, TrainingHelper}
+import scalaadaptive.core.runtime.policies.Policy
+import scalaadaptive.core.runtime.{FunctionFactory, MultipleImplementationFunction, ReferencedFunction}
 
 /**
   * Created by pk250187 on 5/27/17.
@@ -29,6 +29,8 @@ abstract class FunctionAdaptorBase[TArgType, TRetType, TFunctionAdaptorType] {
     createNew(functionFactory.createFunction[TArgType, TRetType](function, function.adaptorConfig.storeUsing(newStorage)))
   def limitedTo(newDuration: Duration): TFunctionAdaptorType =
     createNew(functionFactory.createFunction[TArgType, TRetType](function, function.adaptorConfig.limitedTo(newDuration)))
+  def withPolicy(newPolicy: Policy): TFunctionAdaptorType =
+    createNew(functionFactory.createFunction[TArgType, TRetType](function, function.adaptorConfig.withPolicy(newPolicy)))
 
   def asClosures(closureIdentification: Boolean): TFunctionAdaptorType =
     createNew(functionFactory.createFunction[TArgType, TRetType](

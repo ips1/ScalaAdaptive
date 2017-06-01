@@ -15,9 +15,8 @@ import scalaadaptive.core.runtime.statistics.{AdaptorStatistics, StatisticsHolde
 class MultipleImplementationFunction[TArgType, TRetType](val functions: Seq[ReferencedFunction[TArgType, TRetType]],
                                                          val inputDescriptorSelector: Option[(TArgType) => Long],
                                                          val selectionRunner: FunctionRunner,
-                                                         val adaptorConfig: AdaptorConfig,
-                                                         startPolicy: Policy) {
-  private var currentPolicy = startPolicy
+                                                         val adaptorConfig: AdaptorConfig) {
+  private var currentPolicy = adaptorConfig.startPolicy
 
   // TODO: Reference resolver - didn't find?
   private val statistics = new AdaptorStatistics[TArgType, TRetType](functions.head,

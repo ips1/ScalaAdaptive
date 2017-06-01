@@ -8,14 +8,11 @@ import scalaadaptive.core.runtime.statistics.AdaptorStatistics
   * Created by pk250187 on 5/27/17.
   */
 class DefaultFunctionFactory extends FunctionFactory {
-  private def initialPolicy = new AlwaysSelectPolicy //TODO: Change
-
   override def createFunction[TArgType, TRetType](firstOption: ReferencedFunction[TArgType, TRetType]): MultipleImplementationFunction[TArgType, TRetType] =
     new MultipleImplementationFunction[TArgType, TRetType](List(firstOption),
       None,
       new CustomRunner(Adaptive.getMultiFunctionDefaults.storage),
-      Adaptive.getMultiFunctionDefaults,
-      initialPolicy
+      Adaptive.getMultiFunctionDefaults
     )
 
   // TODO: Empty sequence?
@@ -25,8 +22,7 @@ class DefaultFunctionFactory extends FunctionFactory {
     new MultipleImplementationFunction[TArgType, TRetType](options,
       inputDescriptorSelector,
       new CustomRunner(adaptorConfig.storage),
-      adaptorConfig,
-      initialPolicy
+      adaptorConfig
     )
 
   override def createFunction[TArgType, TRetType](function: MultipleImplementationFunction[TArgType, TRetType],
@@ -34,7 +30,6 @@ class DefaultFunctionFactory extends FunctionFactory {
     new MultipleImplementationFunction[TArgType, TRetType](function.functions,
       function.inputDescriptorSelector,
       new CustomRunner(adaptorConfig.storage),
-      adaptorConfig,
-      initialPolicy
+      adaptorConfig
     )
 }
