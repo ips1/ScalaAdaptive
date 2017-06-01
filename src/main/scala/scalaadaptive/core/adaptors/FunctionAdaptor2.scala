@@ -3,11 +3,8 @@ package scalaadaptive.core.adaptors
 import scala.reflect.macros.blackbox
 import scalaadaptive.api.adaptors.MultiFunction2
 import scalaadaptive.core.macros.AdaptiveMacrosHelper
-import scalaadaptive.core.options.Storage.Storage
-import scalaadaptive.core.options.{Selection, Storage}
-import scalaadaptive.core.references.FunctionReference
-import scalaadaptive.core.runtime.{AppliedFunction, FunctionFactory, MultipleImplementationFunction}
 import scalaadaptive.core.runtime.invocationtokens.InvocationToken
+import scalaadaptive.core.runtime.{FunctionFactory, MultipleImplementationFunction}
 
 
 /**
