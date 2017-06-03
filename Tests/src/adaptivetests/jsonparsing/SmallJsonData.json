@@ -1,0 +1,26 @@
+{
+  "people": [
+    {
+      "id": 0,
+      "isActive": false,
+      "age": 23,
+      "name": "Ruiz Dominguez",
+      "email": "ruizdominguez@iplax.com",
+      "phone": "+1 (895) 402-2465",
+      "address": "103 Trucklemans Lane, Belva, Alabama, 1828",
+      "about": "Lorem incididunt qui dolore incididunt pariatur ut quis et non commodo amet. Magna dolor pariatur voluptate magna quis sunt nisi fugiat Lorem qui proident sit nostrud adipisicing. Cillum in exercitation anim velit nisi minim incididunt elit commodo sit proident eiusmod culpa.\r\n",
+      "tags": [
+        "irure",
+        "consequat",
+        "ad",
+        "fugiat",
+        "ullamco",
+        "veniam",
+        "aliqua",
+        "ex",
+        "irure",
+        "pariatur"
+      ]
+    }
+  ]
+}

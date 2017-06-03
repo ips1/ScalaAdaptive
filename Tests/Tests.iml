@@ -10,5 +10,9 @@
     <orderEntry type="library" name="scala-sdk-2.11.8" level="application" />
     <orderEntry type="module" module-name="scalaadaptive" />
     <orderEntry type="library" name="SBT: org.scalaj:scalaj-http_2.11:2.3.0:jar" level="project" />
+    <orderEntry type="library" name="com.google.code.gson:gson:2.8.1" level="project" />
+    <orderEntry type="library" name="net.sf.flexjson:flexjson:3.3" level="project" />
+    <orderEntry type="library" name="com.fasterxml.jackson.core:jackson-databind:2.8.8.1" level="project" />
+    <orderEntry type="library" name="com.fasterxml.jackson.module:jackson-module-scala_2.11:2.8.8" level="project" />
   </component>
 </module>
