@@ -79,4 +79,8 @@ class MultipleImplementationFunction[TArgType, TRetType](val functions: Seq[Refe
   def train(dataSet: Seq[TArgType]): Unit = dataSet.foreach(d => train(d))
 
   def flushHistory(): Unit = functions.foreach(f => selectionRunner.flushHistory(f.reference))
+
+  def setPolicy(policy: Policy): Unit = currentPolicy = policy
+
+  def resetPolicy(): Unit = setPolicy(adaptorConfig.startPolicy)
 }

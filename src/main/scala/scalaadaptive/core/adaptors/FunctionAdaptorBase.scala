@@ -43,4 +43,8 @@ abstract class FunctionAdaptorBase[TArgType, TRetType, TFunctionAdaptorType] {
     function.functionReferences.map(r => r.toString).mkString(", ")
 
   def flushHistory(): Unit = function.flushHistory()
+
+  def setPolicy(policy: Policy): Unit = function.setPolicy(policy)
+
+  def resetPolicy(): Unit = function.resetPolicy()
 }

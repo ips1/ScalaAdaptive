@@ -20,4 +20,6 @@ trait MultiFunctionCommon[TArgType, TRetType, TFunctionAdaptorType] {
   def train(data: Seq[TArgType]): Unit
   def toDebugString: String
   def flushHistory(): Unit
+  def setPolicy(policy: Policy): Unit
+  def resetPolicy(): Unit
 }
