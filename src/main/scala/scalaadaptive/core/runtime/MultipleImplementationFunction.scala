@@ -2,7 +2,7 @@ package scalaadaptive.core.runtime
 
 import java.time.Duration
 
-import scalaadaptive.core.adaptors.AdaptorConfig
+import scalaadaptive.core.adaptors.FunctionConfig
 import scalaadaptive.core.options.Selection.Selection
 import scalaadaptive.core.references.FunctionReference
 import scalaadaptive.core.runtime.invocationtokens.{InvocationToken, SimpleInvocationToken}
@@ -15,7 +15,7 @@ import scalaadaptive.core.runtime.statistics.{AdaptorStatistics, StatisticsHolde
 class MultipleImplementationFunction[TArgType, TRetType](val functions: Seq[ReferencedFunction[TArgType, TRetType]],
                                                          val inputDescriptorSelector: Option[(TArgType) => Long],
                                                          val selectionRunner: FunctionRunner,
-                                                         val adaptorConfig: AdaptorConfig) {
+                                                         val adaptorConfig: FunctionConfig) {
   private var currentPolicy = adaptorConfig.startPolicy
 
   // TODO: Reference resolver - didn't find?

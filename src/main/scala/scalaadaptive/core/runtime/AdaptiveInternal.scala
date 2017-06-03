@@ -1,6 +1,6 @@
 package scalaadaptive.core.runtime
 
-import scalaadaptive.core.adaptors.AdaptorConfig
+import scalaadaptive.core.adaptors.FunctionConfig
 import scalaadaptive.core.configuration.{Configuration}
 import scalaadaptive.core.configuration.defaults.{FullHistoryTTestConfiguration}
 import scalaadaptive.core.logging.LogManager
@@ -10,7 +10,7 @@ import scalaadaptive.core.runtime.history._
 /**
   * Created by pk250187 on 3/19/17.
   */
-object Adaptive {
+object AdaptiveInternal {
   private val defaultConfiguration = FullHistoryTTestConfiguration
   private var currentConfiguration: Configuration = defaultConfiguration
 
@@ -38,7 +38,7 @@ object Adaptive {
 
   def getIdentifierValidator: CustomIdentifierValidator = currentConfiguration.identifierValidator
 
-  def getMultiFunctionDefaults: AdaptorConfig = currentConfiguration.multiFunctionDefaults
+  def getMultiFunctionDefaults: FunctionConfig = currentConfiguration.multiFunctionDefaults
 
   def getFunctionFactory: FunctionFactory = new DefaultFunctionFactory
 

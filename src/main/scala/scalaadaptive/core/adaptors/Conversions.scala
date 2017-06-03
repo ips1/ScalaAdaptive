@@ -1,13 +1,13 @@
 package scalaadaptive.core.adaptors
 
 import scalaadaptive.core.references.{ClosureNameReference, FunctionReference}
-import scalaadaptive.core.runtime.{Adaptive, FunctionFactory, ReferencedFunction}
+import scalaadaptive.core.runtime.{AdaptiveInternal, FunctionFactory, ReferencedFunction}
 
 /**
   * Created by pk250187 on 5/27/17.
   */
 object Conversions {
-  private def functionFactory: FunctionFactory = Adaptive.getFunctionFactory
+  private def functionFactory: FunctionFactory = AdaptiveInternal.getFunctionFactory
 
   private def generateClosureNameReference(closure: Any) = ClosureNameReference(closure.getClass.getTypeName)
 

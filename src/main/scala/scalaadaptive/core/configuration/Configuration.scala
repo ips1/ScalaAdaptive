@@ -1,5 +1,5 @@
 package scalaadaptive.core.configuration
-import scalaadaptive.core.adaptors.AdaptorConfig
+import scalaadaptive.core.adaptors.FunctionConfig
 import scalaadaptive.core.grouping.GroupSelector
 import scalaadaptive.core.logging.Logger
 import scalaadaptive.core.performance.MeasurementProvider
@@ -20,5 +20,5 @@ trait Configuration {
   val groupSelector: GroupSelector
   val logger: Logger
   val identifierValidator: CustomIdentifierValidator
-  val multiFunctionDefaults: AdaptorConfig
+  val multiFunctionDefaults: FunctionConfig
 }

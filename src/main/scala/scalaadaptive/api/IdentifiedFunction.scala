@@ -2,13 +2,13 @@ package scalaadaptive.api
 
 import scalaadaptive.core.adaptors.{Conversions}
 import scalaadaptive.core.references.{CustomIdentifierValidator, CustomReference}
-import scalaadaptive.core.runtime.Adaptive
+import scalaadaptive.core.runtime.AdaptiveInternal
 
 /**
   * Created by pk250187 on 4/29/17.
   */
 object IdentifiedFunction {
-  val validator: CustomIdentifierValidator = Adaptive.getIdentifierValidator
+  val validator: CustomIdentifierValidator = AdaptiveInternal.getIdentifierValidator
 
   def apply[T, R](function: (T) => R, identifier: String) =
     if (!validator.isValidIdentifier(identifier))

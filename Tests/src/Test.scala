@@ -4,7 +4,7 @@ import adaptivetests.testmethods.TestMethods
 
 import scala.util.Random
 import scalaadaptive.core.configuration.defaults._
-import scalaadaptive.core.runtime.Adaptive
+import scalaadaptive.api.Adaptive
 
 /**
   * Created by pk250187 on 3/19/17.

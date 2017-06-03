@@ -16,15 +16,15 @@ import scalaadaptive.core.runtime.invocationtokens.{InvocationToken, InvocationT
   */
 class CustomRunner(val storage: Storage) extends FunctionRunner {
   private val runner: FunctionRunner = storage match {
-    case Storage.Local => Adaptive.createRunner()
+    case Storage.Local => AdaptiveInternal.createRunner()
     case _ => null
   }
 
   private def selectRunner: FunctionRunner =
     storage match {
       case Storage.Local => runner
-      case Storage.Persistent => Adaptive.persistentRunner
-      case _ => Adaptive.runner
+      case Storage.Persistent => AdaptiveInternal.persistentRunner
+      case _ => AdaptiveInternal.runner
     }
 
   // Delegations
