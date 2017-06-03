@@ -9,7 +9,7 @@ import scalaadaptive.core.runtime.selection._
 trait RegressionSelection extends BaseLongConfiguration {
   override val continuousRunSelector: RunSelector[Long] =
     new LowRunAwareSelector[Long](
-      new RoundRobinSelector[Long](),
+      new LeastDataSelector[Long](),
       new RegressionSelector[Long](),
       30)
 }

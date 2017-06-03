@@ -7,9 +7,9 @@ import scalaadaptive.core.runtime.selection._
   * Created by pk250187 on 5/2/17.
   */
 trait TTestSelection extends BaseLongConfiguration {
-  private val roundRobinSelector = new RoundRobinSelector[Long]()
+  private val leastDataSelector = new LeastDataSelector[Long]()
   override val discreteRunSelector: RunSelector[Long] = new LowRunAwareSelector[Long](
-    roundRobinSelector,
-    new TTestSelector(roundRobinSelector, 0.05),
+    leastDataSelector,
+    new TTestSelector(leastDataSelector, 0.05),
     10)
 }
