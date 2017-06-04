@@ -1,7 +1,7 @@
 package scalaadaptive.core.runtime.history.serialization
 
-import scalaadaptive.core.grouping.GroupId
-import scalaadaptive.core.references.{ClosureNameReference, CustomReference, FunctionReference, MethodNameReference}
+import scalaadaptive.core.runtime.grouping.GroupId
+import scalaadaptive.core.functions.references.{ClosureNameReference, CustomReference, FunctionReference, MethodNameReference}
 import scalaadaptive.core.runtime.history.HistoryKey
 
 /**

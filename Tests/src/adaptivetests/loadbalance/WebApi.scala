@@ -2,7 +2,7 @@ package adaptivetests.loadbalance
 
 import java.time.Duration
 
-import scalaadaptive.core.options.Selection
+import scalaadaptive.api.options.Selection
 import scalaj.http.{Http, HttpOptions, HttpResponse}
 
 /**

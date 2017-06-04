@@ -1,7 +1,7 @@
 package scalaadaptive.core.runtime.history
 
-import scalaadaptive.core.grouping.GroupId
-import scalaadaptive.core.references.FunctionReference
+import scalaadaptive.core.runtime.grouping.GroupId
+import scalaadaptive.core.functions.references.FunctionReference
 
 /**
   * Created by pk250187 on 3/21/17.

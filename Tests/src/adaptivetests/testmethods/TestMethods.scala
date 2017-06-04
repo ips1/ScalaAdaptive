@@ -1,7 +1,7 @@
 package adaptivetests.testmethods
 
-import scalaadaptive.core.options.{Selection, Storage}
-import scalaadaptive.core.runtime.policies.{LimitedOverheadPolicy, StopSelectingWhenDecidedPolicy}
+import scalaadaptive.api.options.{Selection, Storage}
+import scalaadaptive.core.functions.policies.{LimitedOverheadPolicy, StopSelectingWhenDecidedPolicy}
 
 /**
   * Created by pk250187 on 5/1/17.

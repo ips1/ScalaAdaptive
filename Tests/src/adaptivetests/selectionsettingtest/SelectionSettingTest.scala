@@ -6,7 +6,7 @@ import adaptivetests.TestRunner
 import adaptivetests.testmethods.TestMethods
 
 import scalaadaptive.core.configuration.defaults.{FullHistoryTTestConfiguration, GroupedRunHistoryInterpolationConfiguration}
-import scalaadaptive.core.options.Selection
+import scalaadaptive.api.options.Selection
 import scalaadaptive.api.Adaptive
 
 /**

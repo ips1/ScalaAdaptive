@@ -1,8 +1,8 @@
 package scalaadaptive.core.configuration
-import scalaadaptive.core.adaptors.FunctionConfig
-import scalaadaptive.core.grouping.GroupSelector
+import scalaadaptive.core.functions.adaptors.FunctionConfig
+import scalaadaptive.core.runtime.grouping.GroupSelector
 import scalaadaptive.core.logging.Logger
-import scalaadaptive.core.references.CustomIdentifierValidator
+import scalaadaptive.core.functions.references.CustomIdentifierValidator
 import scalaadaptive.core.runtime.history.evaluation.EvaluationProvider
 import scalaadaptive.core.runtime.history.historystorage.HistoryStorage
 import scalaadaptive.core.runtime.selection.RunSelector

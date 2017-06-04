@@ -1,13 +1,13 @@
 package scalaadaptive.core.configuration
 
-import scalaadaptive.core.grouping.{GroupSelector, LogarithmGroupSelector}
+import scalaadaptive.core.runtime.grouping.{GroupSelector, LogarithmGroupSelector}
 import scalaadaptive.core.logging.{ConsoleLogger, Logger}
-import scalaadaptive.core.adaptors.FunctionConfig
-import scalaadaptive.core.options.{Selection, Storage}
-import scalaadaptive.core.references.{AlphanumValidator, CustomIdentifierValidator}
+import scalaadaptive.core.functions.adaptors.FunctionConfig
+import scalaadaptive.api.options.{Selection, Storage}
+import scalaadaptive.core.functions.references.{AlphanumValidator, CustomIdentifierValidator}
 import scalaadaptive.core.runtime.history.historystorage.{HistoryStorage, MapHistoryStorage}
 import scalaadaptive.core.runtime.history.runhistory.{CachedAverageRunHistory, FullRunHistory}
-import scalaadaptive.core.runtime.policies.AlwaysSelectPolicy
+import scalaadaptive.core.functions.policies.AlwaysSelectPolicy
 import scalaadaptive.extensions.Averageable
 
 /**

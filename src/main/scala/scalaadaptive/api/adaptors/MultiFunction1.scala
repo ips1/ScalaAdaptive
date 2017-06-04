@@ -2,7 +2,7 @@ package scalaadaptive.api.adaptors
 
 import java.time.Duration
 
-import scalaadaptive.core.adaptors.FunctionAdaptor1
+import scalaadaptive.core.functions.adaptors.FunctionAdaptor1
 import scalaadaptive.core.runtime.invocationtokens.InvocationToken
 import scala.language.experimental.macros
 

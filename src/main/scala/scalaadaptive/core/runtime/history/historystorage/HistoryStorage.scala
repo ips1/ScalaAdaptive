@@ -1,6 +1,6 @@
 package scalaadaptive.core.runtime.history.historystorage
 
-import scalaadaptive.core.references.FunctionReference
+import scalaadaptive.core.functions.references.FunctionReference
 import scalaadaptive.core.runtime.history.runhistory.RunHistory
 import scalaadaptive.core.runtime.history.HistoryKey
 import scalaadaptive.core.runtime.history.evaluation.data.EvaluationData

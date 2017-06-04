@@ -1,4 +1,4 @@
-import scalaadaptive.core.options.Storage
+import scalaadaptive.api.options.Storage
 
 /**
   * Created by pk250187 on 4/29/17.

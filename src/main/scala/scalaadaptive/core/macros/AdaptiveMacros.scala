@@ -3,7 +3,7 @@ package scalaadaptive.core.macros
 import scala.language.experimental.macros
 import scala.reflect.macros.blackbox
 import scala.reflect.macros.blackbox.Context
-import scalaadaptive.core.adaptors.FunctionAdaptor1
+import scalaadaptive.core.functions.adaptors.FunctionAdaptor1
 
 object AdaptiveMacros {
   def printAst(arg: Any): Any = macro printAst_impl

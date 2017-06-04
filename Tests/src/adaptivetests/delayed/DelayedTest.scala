@@ -1,7 +1,7 @@
 package adaptivetests.delayed
 
 import scalaadaptive.core.configuration.defaults.FullHistoryTTestConfiguration
-import scalaadaptive.core.options.{Selection, Storage}
+import scalaadaptive.api.options.{Selection, Storage}
 import scalaadaptive.api.Adaptive
 
 /**

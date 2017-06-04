@@ -4,7 +4,7 @@ import adaptivetests.TestRunner
 import adaptivetests.testmethods.TestMethods
 
 import scalaadaptive.core.configuration.defaults.GroupedRunHistoryInterpolationConfiguration
-import scalaadaptive.core.options.Storage
+import scalaadaptive.api.options.Storage
 import scalaadaptive.api.Adaptive
 
 /**

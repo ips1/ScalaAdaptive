@@ -1,11 +1,12 @@
 package scalaadaptive.core.runtime
 
-import scalaadaptive.core.adaptors.FunctionConfig
-import scalaadaptive.core.configuration.{Configuration}
-import scalaadaptive.core.configuration.defaults.{FullHistoryTTestConfiguration}
+import scalaadaptive.core.functions.adaptors.FunctionConfig
+import scalaadaptive.core.configuration.Configuration
+import scalaadaptive.core.configuration.defaults.FullHistoryTTestConfiguration
 import scalaadaptive.core.logging.LogManager
-import scalaadaptive.core.references.CustomIdentifierValidator
+import scalaadaptive.core.functions.references.CustomIdentifierValidator
 import scalaadaptive.core.runtime.history._
+import scalaadaptive.core.functions.{DefaultFunctionFactory, FunctionFactory}
 
 /**
   * Created by pk250187 on 3/19/17.
@@ -14,8 +15,8 @@ object AdaptiveInternal {
   private val defaultConfiguration = FullHistoryTTestConfiguration
   private var currentConfiguration: Configuration = defaultConfiguration
 
-  private def initOptionRunner(configuration: Configuration): OptionRunner = {
-    new HistoryBasedOptionRunner[configuration.MeasurementType](
+  private def initOptionRunner(configuration: Configuration): AdaptiveRunner = {
+    new HistoryBasedAdaptiveRunner[configuration.MeasurementType](
       configuration.historyStorageFactory(),
       configuration.discreteRunSelector,
       configuration.continuousRunSelector,
@@ -24,9 +25,9 @@ object AdaptiveInternal {
       configuration.logger)
   }
 
-  private def initPersistentOptionRunner(configuration: Configuration): Option[OptionRunner] =
+  private def initPersistentOptionRunner(configuration: Configuration): Option[AdaptiveRunner] =
     configuration.persistentHistoryStorageFactory().map(persistentStorage =>
-      new HistoryBasedOptionRunner[configuration.MeasurementType](
+      new HistoryBasedAdaptiveRunner[configuration.MeasurementType](
         persistentStorage,
         configuration.discreteRunSelector,
         configuration.continuousRunSelector,
@@ -42,10 +43,10 @@ object AdaptiveInternal {
 
   def getFunctionFactory: FunctionFactory = new DefaultFunctionFactory
 
-  var runner: OptionRunner = initOptionRunner(defaultConfiguration)
-  var persistentRunner: OptionRunner = initPersistentOptionRunner(defaultConfiguration).getOrElse(runner)
+  var runner: AdaptiveRunner = initOptionRunner(defaultConfiguration)
+  var persistentRunner: AdaptiveRunner = initPersistentOptionRunner(defaultConfiguration).getOrElse(runner)
 
-  def createRunner(): OptionRunner =
+  def createRunner(): AdaptiveRunner =
     initOptionRunner(currentConfiguration)
 
   def initialize(configuration: Configuration): Unit = {

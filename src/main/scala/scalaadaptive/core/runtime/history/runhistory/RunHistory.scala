@@ -2,7 +2,7 @@ package scalaadaptive.core.runtime.history.runhistory
 
 import org.apache.commons.math3.stat.descriptive.StatisticalSummary
 
-import scalaadaptive.core.references.FunctionReference
+import scalaadaptive.core.functions.references.FunctionReference
 import scalaadaptive.core.runtime.history.HistoryKey
 import scalaadaptive.core.runtime.history.evaluation.data.{GroupedEvaluationData, EvaluationData}
 

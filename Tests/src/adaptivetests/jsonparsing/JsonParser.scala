@@ -5,7 +5,7 @@ import com.fasterxml.jackson.module.scala.DefaultScalaModule
 import com.google.gson.GsonBuilder
 import flexjson.JSONDeserializer
 
-import scalaadaptive.core.options.Selection
+import scalaadaptive.api.options.Selection
 
 /**
   * Created by pk250187 on 6/1/17.

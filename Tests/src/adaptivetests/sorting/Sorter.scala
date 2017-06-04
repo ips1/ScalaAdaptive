@@ -1,6 +1,6 @@
 package adaptivetests.sorting
 
-import scalaadaptive.core.options.{Selection, Storage}
+import scalaadaptive.api.options.{Selection, Storage}
 
 /**
   * Created by petrkubat on 29/01/2017.

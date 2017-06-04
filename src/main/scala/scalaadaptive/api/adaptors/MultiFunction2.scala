@@ -1,7 +1,7 @@
 package scalaadaptive.api.adaptors
 
 
-import scalaadaptive.core.adaptors.FunctionAdaptor2
+import scalaadaptive.core.functions.adaptors.FunctionAdaptor2
 import scalaadaptive.core.runtime.invocationtokens.InvocationToken
 import scala.language.experimental.macros
 

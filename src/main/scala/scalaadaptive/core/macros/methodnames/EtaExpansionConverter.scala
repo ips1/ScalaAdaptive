@@ -3,8 +3,8 @@ package scalaadaptive.core.macros.methodnames
 import scala.reflect.macros.blackbox
 import scala.reflect.macros.blackbox.Context
 import scalaadaptive.api.Implicits
-import scalaadaptive.core.adaptors.Conversions
-import scalaadaptive.core.references.MethodNameReference
+import scalaadaptive.core.functions.adaptors.Conversions
+import scalaadaptive.core.functions.references.MethodNameReference
 
 /**
   * Created by pk250187 on 4/30/17.
