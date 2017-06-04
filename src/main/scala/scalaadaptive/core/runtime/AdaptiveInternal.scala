@@ -14,8 +14,8 @@ object AdaptiveInternal {
   private val defaultConfiguration = FullHistoryTTestConfiguration
   private var currentConfiguration: Configuration = defaultConfiguration
 
-  private def initTracker(configuration: Configuration): OptionRunner = {
-    new RunTracker[configuration.MeasurementType](
+  private def initOptionRunner(configuration: Configuration): OptionRunner = {
+    new HistoryBasedOptionRunner[configuration.MeasurementType](
       configuration.historyStorageFactory(),
       configuration.discreteRunSelector,
       configuration.continuousRunSelector,
@@ -24,9 +24,9 @@ object AdaptiveInternal {
       configuration.logger)
   }
 
-  private def initPersistentTracker(configuration: Configuration): Option[OptionRunner] =
+  private def initPersistentOptionRunner(configuration: Configuration): Option[OptionRunner] =
     configuration.persistentHistoryStorageFactory().map(persistentStorage =>
-      new RunTracker[configuration.MeasurementType](
+      new HistoryBasedOptionRunner[configuration.MeasurementType](
         persistentStorage,
         configuration.discreteRunSelector,
         configuration.continuousRunSelector,
@@ -42,17 +42,17 @@ object AdaptiveInternal {
 
   def getFunctionFactory: FunctionFactory = new DefaultFunctionFactory
 
-  var runner: OptionRunner = initTracker(defaultConfiguration)
-  var persistentRunner: OptionRunner = initPersistentTracker(defaultConfiguration).getOrElse(runner)
+  var runner: OptionRunner = initOptionRunner(defaultConfiguration)
+  var persistentRunner: OptionRunner = initPersistentOptionRunner(defaultConfiguration).getOrElse(runner)
 
   def createRunner(): OptionRunner =
-    initTracker(currentConfiguration)
+    initOptionRunner(currentConfiguration)
 
   def initialize(configuration: Configuration): Unit = {
     currentConfiguration = configuration
     LogManager.setLogger(currentConfiguration.logger)
-    runner = initTracker(currentConfiguration)
-    persistentRunner = initPersistentTracker(currentConfiguration).getOrElse(runner)
+    runner = initOptionRunner(currentConfiguration)
+    persistentRunner = initPersistentOptionRunner(currentConfiguration).getOrElse(runner)
   }
 
   // Default initialization

@@ -19,12 +19,12 @@ import scalaadaptive.core.runtime.selection.RunSelector
 /**
   * Created by pk250187 on 3/19/17.
   */
-class RunTracker[TMeasurement](historyStorage: HistoryStorage[TMeasurement],
-                               discreteRunSelector: RunSelector[TMeasurement],
-                               continuousRunSelector: RunSelector[TMeasurement],
-                               measurementProvider: EvaluationProvider[TMeasurement],
-                               bucketSelector: GroupSelector,
-                               logger: Logger) extends OptionRunner with DelayedFunctionRunner {
+class HistoryBasedOptionRunner[TMeasurement](historyStorage: HistoryStorage[TMeasurement],
+                                             discreteRunSelector: RunSelector[TMeasurement],
+                                             continuousRunSelector: RunSelector[TMeasurement],
+                                             measurementProvider: EvaluationProvider[TMeasurement],
+                                             bucketSelector: GroupSelector,
+                                             logger: Logger) extends OptionRunner with DelayedFunctionRunner {
 
   private def filterHistoryByDuration(history: RunHistory[TMeasurement], duration: Duration) = {
     val currentTime = Instant.now()
