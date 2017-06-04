@@ -60,9 +60,6 @@ class EtaExpansionConverter[C <: blackbox.Context](val c: C) {
       block <- Some(reconstructBlock(blockStatements, conversion))
     } yield block
 
-    newBlock match {
-      case Some(t) => t
-      case _ => generateConversionWithArguments(List(tree))
-    }
+    newBlock.getOrElse(generateConversionWithArguments(List(tree)))
   }
 }

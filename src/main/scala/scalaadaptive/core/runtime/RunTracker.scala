@@ -21,7 +21,7 @@ import scalaadaptive.core.runtime.selection.RunSelector
 class RunTracker[TMeasurement](historyStorage: HistoryStorage[TMeasurement],
                                discreteRunSelector: RunSelector[TMeasurement],
                                continuousRunSelector: RunSelector[TMeasurement],
-                               performanceProvider: MeasurementProvider[TMeasurement],
+                               measurementProvider: MeasurementProvider[TMeasurement],
                                bucketSelector: GroupSelector,
                                logger: Logger) extends FunctionRunner with DelayedFunctionRunner {
 
@@ -101,10 +101,10 @@ class RunTracker[TMeasurement](historyStorage: HistoryStorage[TMeasurement],
                                                 inputDescriptor: Option[Long],
                                                 tracker: PerformanceTracker): RunResult[TReturnType] = {
     tracker.startTracking()
-    val (result, performance) = performanceProvider.measureFunctionRun(fun)
+    val (result, measurement) = measurementProvider.measureFunctionRun(fun)
     tracker.addFunctionTime()
-    logger.log(s"Performance on $inputDescriptor measured: $performance")
-    historyStorage.applyNewRun(key, new TimestampedRunData[TMeasurement](inputDescriptor, Instant.now, performance))
+    logger.log(s"Performance on $inputDescriptor measured: $measurement")
+    historyStorage.applyNewRun(key, new TimestampedRunData[TMeasurement](inputDescriptor, Instant.now, measurement))
     tracker.addStoringTime()
     tracker.getStatistics.lines.foreach(logger.log)
     new RunResult(result, new RunData(key.function, inputDescriptor, tracker))

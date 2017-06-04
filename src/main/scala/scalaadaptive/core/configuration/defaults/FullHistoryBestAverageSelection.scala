@@ -14,4 +14,5 @@ object FullHistoryBestAverageSelection
     with BufferedSerialization
     with InterpolationSelection
     // Temporary change:
+  // TODO: Decide
     with NoGrouping
