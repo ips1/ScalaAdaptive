@@ -14,11 +14,8 @@ class MeasuringInvocationToken(private val runner: DelayedFunctionRunner,
   private var performanceCallback: Option[(RunData) => Unit] = None
 
   override def runMeasuredFunction[TReturnValue](fun: () => TReturnValue): TReturnValue = {
-    val result = runner.runMeasuredFunction(fun, key, inputDescriptor, tracker)
-    performanceCallback match {
-      case Some(callback) => callback(result.runData)
-      case _ =>
-    }
+    val result = runner.runMeasuredFunction((_: Unit) => fun(), (), key, inputDescriptor, tracker)
+    performanceCallback.foreach(_(result.runData))
 
     result.value
   }
