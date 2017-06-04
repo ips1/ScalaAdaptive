@@ -6,7 +6,7 @@ import scalaadaptive.core.grouping.GroupSelector
 import scalaadaptive.core.logging.Logger
 import scalaadaptive.core.options.Selection
 import scalaadaptive.core.options.Selection.Selection
-import scalaadaptive.core.performance.{PerformanceTracker, PerformanceTrackerImpl}
+import scalaadaptive.core.performance.{PerformanceTracker, BasicPerformanceTracker}
 import scalaadaptive.core.references.FunctionReference
 import scalaadaptive.core.runtime.history.historystorage.HistoryStorage
 import scalaadaptive.core.runtime.history.HistoryKey
@@ -72,7 +72,7 @@ class RunTracker[TMeasurement](historyStorage: HistoryStorage[TMeasurement],
                                                 selection: Selection): RunResult[TReturnType] = {
     // TODO: inputDescriptor not specified
 
-    val tracker = new PerformanceTrackerImpl
+    val tracker = new BasicPerformanceTracker
     tracker.startTracking()
 
     val selectedRecord = selectRecord(options, getSelectorForSelection(selection), inputDescriptor, limitedBy)
@@ -87,7 +87,7 @@ class RunTracker[TMeasurement](historyStorage: HistoryStorage[TMeasurement],
                                                                   inputDescriptor: Option[Long],
                                                                   limitedBy: Option[Duration],
                                                                   selection: Selection): (TReturnType, InvocationTokenWithCallbacks) = {
-    val tracker = new PerformanceTrackerImpl
+    val tracker = new BasicPerformanceTracker
     tracker.startTracking()
 
     val selectedRecord = selectRecord(options, getSelectorForSelection(selection), inputDescriptor, limitedBy)

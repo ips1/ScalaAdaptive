@@ -3,7 +3,7 @@ package scalaadaptive.core.performance
 /**
   * Created by pk250187 on 5/1/17.
   */
-class PerformanceTrackerImpl extends PerformanceTracker {
+class BasicPerformanceTracker extends PerformanceTracker {
   private var selectionTimeTotal: Long = 0
   private var storingTimeTotal: Long = 0
   private var functionTimeTotal: Long = 0
