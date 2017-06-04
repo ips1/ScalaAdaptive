@@ -18,9 +18,8 @@ class MultipleImplementationFunction[TArgType, TRetType](val functions: Seq[Refe
                                                          val adaptorConfig: FunctionConfig) {
   private var currentPolicy = adaptorConfig.startPolicy
 
-  // TODO: Reference resolver - didn't find?
   private val statistics = new AdaptorStatistics[TArgType, TRetType](functions.head,
-    ref => functions.find(f => f.reference == ref).get)
+    ref => functions.find(f => f.reference == ref))
 
   val functionReferences: Seq[FunctionReference] =
     functions.map(f => if (adaptorConfig.closureReferences) f.closureReference else f.reference)

@@ -70,8 +70,6 @@ class HistoryBasedOptionRunner[TMeasurement](historyStorage: HistoryStorage[TMea
                                                 inputDescriptor: Option[Long],
                                                 limitedBy: Option[Duration],
                                                 selection: Selection): RunResult[TReturnType] = {
-    // TODO: inputDescriptor not specified
-
     val tracker = new BasicPerformanceTracker
     tracker.startTracking()
 
@@ -79,7 +77,7 @@ class HistoryBasedOptionRunner[TMeasurement](historyStorage: HistoryStorage[TMea
     val functionToRun = options.find(_.reference == selectedRecord.reference).get.fun
 
     tracker.addSelectionTime()
-    runMeasuredFunction(() => functionToRun(arguments), selectedRecord.key, inputDescriptor, tracker)
+    runMeasuredFunction(functionToRun, arguments, selectedRecord.key, inputDescriptor, tracker)
   }
 
   override def runOptionWithDelayedMeasure[TArgType, TReturnType](options: Seq[ReferencedFunction[TArgType, TReturnType]],
@@ -97,12 +95,13 @@ class HistoryBasedOptionRunner[TMeasurement](historyStorage: HistoryStorage[TMea
     (functionToRun(arguments), new MeasuringInvocationToken(this, inputDescriptor, selectedRecord.key, tracker))
   }
 
-  override def runMeasuredFunction[TReturnType](fun: () => TReturnType,
-                                                key: HistoryKey,
-                                                inputDescriptor: Option[Long],
-                                                tracker: PerformanceTracker): RunResult[TReturnType] = {
+  override def runMeasuredFunction[TArgType, TReturnType](fun: (TArgType) => TReturnType,
+                                                          arguments: TArgType,
+                                                          key: HistoryKey,
+                                                          inputDescriptor: Option[Long],
+                                                          tracker: PerformanceTracker): RunResult[TReturnType] = {
     tracker.startTracking()
-    val (result, measurement) = measurementProvider.evaluateFunctionRun(fun)
+    val (result, measurement) = measurementProvider.evaluateFunctionRun(fun, arguments)
     tracker.addFunctionTime()
     logger.log(s"Performance on $inputDescriptor measured: $measurement")
     historyStorage.applyNewRun(key, new EvaluationData[TMeasurement](inputDescriptor, Instant.now, measurement))

@@ -10,7 +10,7 @@ import scalaadaptive.core.runtime.{ReferencedFunction, RunData}
   * Created by pk250187 on 5/20/17.
   */
 class AdaptorStatistics[TArgType, TRetType](defaultLast: ReferencedFunction[TArgType, TRetType],
-                                            val referenceResolver: (FunctionReference) => ReferencedFunction[TArgType,TRetType])
+                                            val referenceResolver: (FunctionReference) => Option[ReferencedFunction[TArgType,TRetType]])
   extends StatisticsHolder[TArgType, TRetType] {
   val records: ArrayBuffer[StatisticsRecord] = new ArrayBuffer[StatisticsRecord]()
   val timesSelected: mutable.HashMap[FunctionReference, Long] = new mutable.HashMap[FunctionReference, Long]
@@ -34,7 +34,7 @@ class AdaptorStatistics[TArgType, TRetType](defaultLast: ReferencedFunction[TArg
       streakLength += 1
     }
     else {
-      last = referenceResolver(data.selectedFunction)
+      last = referenceResolver(data.selectedFunction).getOrElse(defaultLast)
       streakLength = 1
     }
 
@@ -49,9 +49,9 @@ class AdaptorStatistics[TArgType, TRetType](defaultLast: ReferencedFunction[TArg
   override def getStreakLength: Long = streakLength
   override def getTotalOverheadTime: Long = totalOverheadTime
   override def getMostSelectedFunction: ReferencedFunction[TArgType, TRetType] =
-    referenceResolver(timesSelected.maxBy(_._2)._1)
+    referenceResolver(timesSelected.maxBy(_._2)._1).getOrElse(defaultLast)
   override def getLeastSelectedFunction: ReferencedFunction[TArgType, TRetType] =
-    referenceResolver(timesSelected.minBy(_._2)._1)
+    referenceResolver(timesSelected.minBy(_._2)._1).getOrElse(defaultLast)
   override def getTotalRunCount: Long = totalRunCount
   override def getAccumulatedOverheadTime: Long = accumulatedOverheadTime
   override def getLastRunCount = timesSelected.getOrElse(last.reference, 0)
