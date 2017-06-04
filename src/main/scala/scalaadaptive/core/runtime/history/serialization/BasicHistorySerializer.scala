@@ -7,7 +7,7 @@ import scalaadaptive.core.runtime.history.HistoryKey
 import scala.collection.mutable.ArrayBuffer
 import scala.io.Source
 import scalaadaptive.core.logging.Logger
-import scalaadaptive.core.runtime.history.rundata.RunData
+import scalaadaptive.core.runtime.history.evaluation.data.EvaluationData
 
 /**
   * Created by pk250187 on 4/23/17.
@@ -21,7 +21,7 @@ class BasicHistorySerializer(private val rootPath: Path,
   private def getFilePath(key: HistoryKey): Path =
     rootPath.resolve(fileNameForKeyProvider.getFileNameForHistoryKey(key))
 
-  override def serializeMultipleRuns(key: HistoryKey, runs: Seq[RunData[Long]]): Unit = {
+  override def serializeMultipleRuns(key: HistoryKey, runs: Seq[EvaluationData[Long]]): Unit = {
     val file = getFilePath(key).toFile
 
     try {
@@ -34,13 +34,13 @@ class BasicHistorySerializer(private val rootPath: Path,
     }
   }
 
-  override def deserializeHistory(key: HistoryKey): Option[Seq[RunData[Long]]] = {
+  override def deserializeHistory(key: HistoryKey): Option[Seq[EvaluationData[Long]]] = {
     val file = getFilePath(key).toFile
     if (!file.exists || !file.canRead) {
       return None
     }
 
-    val history = new ArrayBuffer[RunData[Long]]()
+    val history = new ArrayBuffer[EvaluationData[Long]]()
 
     try {
       for (line <- Source.fromFile(file).getLines()) {

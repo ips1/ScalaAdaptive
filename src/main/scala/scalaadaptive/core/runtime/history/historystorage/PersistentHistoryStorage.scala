@@ -4,7 +4,7 @@ import scalaadaptive.core.references.FunctionReference
 import scalaadaptive.core.runtime.history.runhistory.RunHistory
 import scalaadaptive.core.runtime.history.serialization.HistorySerializer
 import scalaadaptive.core.runtime.history.HistoryKey
-import scalaadaptive.core.runtime.history.rundata.RunData
+import scalaadaptive.core.runtime.history.evaluation.data.EvaluationData
 
 /**
   * Created by pk250187 on 4/23/17.
@@ -30,7 +30,7 @@ class PersistentHistoryStorage[TMeasurement](private val localHistory: HistorySt
     localHistory.getHistory(key)
   }
 
-  override def applyNewRun(key: HistoryKey, run: RunData[TMeasurement]): Unit = {
+  override def applyNewRun(key: HistoryKey, run: EvaluationData[TMeasurement]): Unit = {
     historySerializer.serializeNewRun(key, run)
     localHistory.applyNewRun(key, run)
   }

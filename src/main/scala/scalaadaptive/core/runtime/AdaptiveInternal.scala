@@ -14,7 +14,7 @@ object AdaptiveInternal {
   private val defaultConfiguration = FullHistoryTTestConfiguration
   private var currentConfiguration: Configuration = defaultConfiguration
 
-  private def initTracker(configuration: Configuration): FunctionRunner = {
+  private def initTracker(configuration: Configuration): OptionRunner = {
     new RunTracker[configuration.MeasurementType](
       configuration.historyStorageFactory(),
       configuration.discreteRunSelector,
@@ -24,7 +24,7 @@ object AdaptiveInternal {
       configuration.logger)
   }
 
-  private def initPersistentTracker(configuration: Configuration): Option[FunctionRunner] =
+  private def initPersistentTracker(configuration: Configuration): Option[OptionRunner] =
     configuration.persistentHistoryStorageFactory().map(persistentStorage =>
       new RunTracker[configuration.MeasurementType](
         persistentStorage,
@@ -42,10 +42,10 @@ object AdaptiveInternal {
 
   def getFunctionFactory: FunctionFactory = new DefaultFunctionFactory
 
-  var runner: FunctionRunner = initTracker(defaultConfiguration)
-  var persistentRunner: FunctionRunner = initPersistentTracker(defaultConfiguration).getOrElse(runner)
+  var runner: OptionRunner = initTracker(defaultConfiguration)
+  var persistentRunner: OptionRunner = initPersistentTracker(defaultConfiguration).getOrElse(runner)
 
-  def createRunner(): FunctionRunner =
+  def createRunner(): OptionRunner =
     initTracker(currentConfiguration)
 
   def initialize(configuration: Configuration): Unit = {

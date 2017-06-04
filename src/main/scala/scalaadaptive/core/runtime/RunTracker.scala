@@ -6,11 +6,12 @@ import scalaadaptive.core.grouping.GroupSelector
 import scalaadaptive.core.logging.Logger
 import scalaadaptive.core.options.Selection
 import scalaadaptive.core.options.Selection.Selection
-import scalaadaptive.core.performance.{MeasurementProvider, PerformanceTracker, PerformanceTrackerImpl}
+import scalaadaptive.core.performance.{PerformanceTracker, PerformanceTrackerImpl}
 import scalaadaptive.core.references.FunctionReference
 import scalaadaptive.core.runtime.history.historystorage.HistoryStorage
 import scalaadaptive.core.runtime.history.HistoryKey
-import scalaadaptive.core.runtime.history.rundata.TimestampedRunData
+import scalaadaptive.core.runtime.history.evaluation.EvaluationProvider
+import scalaadaptive.core.runtime.history.evaluation.data.EvaluationData
 import scalaadaptive.core.runtime.history.runhistory.RunHistory
 import scalaadaptive.core.runtime.invocationtokens.{InvocationToken, InvocationTokenWithCallbacks, MeasuringInvocationToken}
 import scalaadaptive.core.runtime.selection.RunSelector
@@ -21,14 +22,14 @@ import scalaadaptive.core.runtime.selection.RunSelector
 class RunTracker[TMeasurement](historyStorage: HistoryStorage[TMeasurement],
                                discreteRunSelector: RunSelector[TMeasurement],
                                continuousRunSelector: RunSelector[TMeasurement],
-                               measurementProvider: MeasurementProvider[TMeasurement],
+                               measurementProvider: EvaluationProvider[TMeasurement],
                                bucketSelector: GroupSelector,
-                               logger: Logger) extends FunctionRunner with DelayedFunctionRunner {
+                               logger: Logger) extends OptionRunner with DelayedFunctionRunner {
 
   private def filterHistoryByDuration(history: RunHistory[TMeasurement], duration: Duration) = {
     val currentTime = Instant.now()
     history.takeWhile(
-      rd => rd.time.isDefined && Duration.between(rd.time.get, currentTime).compareTo(duration) < 0)
+      rd => Duration.between(rd.time, currentTime).compareTo(duration) < 0)
   }
 
   private def getSelectorForSelection(selection: Selection) = selection match {
@@ -101,10 +102,10 @@ class RunTracker[TMeasurement](historyStorage: HistoryStorage[TMeasurement],
                                                 inputDescriptor: Option[Long],
                                                 tracker: PerformanceTracker): RunResult[TReturnType] = {
     tracker.startTracking()
-    val (result, measurement) = measurementProvider.measureFunctionRun(fun)
+    val (result, measurement) = measurementProvider.evaluateFunctionRun(fun)
     tracker.addFunctionTime()
     logger.log(s"Performance on $inputDescriptor measured: $measurement")
-    historyStorage.applyNewRun(key, new TimestampedRunData[TMeasurement](inputDescriptor, Instant.now, measurement))
+    historyStorage.applyNewRun(key, new EvaluationData[TMeasurement](inputDescriptor, Instant.now, measurement))
     tracker.addStoringTime()
     tracker.getStatistics.lines.foreach(logger.log)
     new RunResult(result, new RunData(key.function, inputDescriptor, tracker))

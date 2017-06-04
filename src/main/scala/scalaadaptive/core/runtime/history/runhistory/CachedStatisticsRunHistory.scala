@@ -2,8 +2,8 @@ package scalaadaptive.core.runtime.history.runhistory
 
 import org.apache.commons.math3.stat.descriptive.{StatisticalSummary, SummaryStatistics}
 
-import scalaadaptive.core.runtime.history.rundata.{GroupedRunData, RunData}
 import scalaadaptive.core.runtime.history.HistoryKey
+import scalaadaptive.core.runtime.history.evaluation.data.{GroupedEvaluationData, EvaluationData}
 import scalaadaptive.extensions.Averageable
 
 /**
@@ -17,7 +17,7 @@ class CachedStatisticsRunHistory[TMeasurement] private (private val internalHist
   def this(internalHistory: RunHistory[TMeasurement])(implicit num: Averageable[TMeasurement]) =
     this(internalHistory, new SummaryStatistics())
 
-  override def applyNewRun(runResult: RunData[TMeasurement]): RunHistory[TMeasurement] = {
+  override def applyNewRun(runResult: EvaluationData[TMeasurement]): RunHistory[TMeasurement] = {
     val newStatistics = new SummaryStatistics(internalStatistics)
     newStatistics.addValue(num.toDouble(runResult.measurement))
     new CachedStatisticsRunHistory[TMeasurement](internalHistory.applyNewRun(runResult), newStatistics)
@@ -28,11 +28,11 @@ class CachedStatisticsRunHistory[TMeasurement] private (private val internalHist
   // Delegations:
   override def key: HistoryKey = internalHistory.key
   override def runCount: Int = internalHistory.runCount
-  override def runItems: Iterable[RunData[TMeasurement]] = internalHistory.runItems
+  override def runItems: Iterable[EvaluationData[TMeasurement]] = internalHistory.runItems
   override def best(): Option[Double] = internalHistory.best()
-  override def runAveragesGroupedByDescriptor: Map[Option[Long], GroupedRunData[TMeasurement]] =
+  override def runAveragesGroupedByDescriptor: Map[Option[Long], GroupedEvaluationData[TMeasurement]] =
     internalHistory.runAveragesGroupedByDescriptor
   override def average(): Option[Double] = internalHistory.average()
-  override def takeWhile(filter: (RunData[TMeasurement]) => Boolean): RunHistory[TMeasurement] =
+  override def takeWhile(filter: (EvaluationData[TMeasurement]) => Boolean): RunHistory[TMeasurement] =
     internalHistory.takeWhile(filter)
 }

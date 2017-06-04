@@ -4,7 +4,7 @@ import org.apache.commons.math3.analysis.interpolation.{LinearInterpolator, Loes
 import org.apache.commons.math3.analysis.polynomials.PolynomialSplineFunction
 import org.apache.commons.math3.exception.NumberIsTooSmallException
 
-import scalaadaptive.core.runtime.history.rundata.GroupedRunData
+import scalaadaptive.core.runtime.history.evaluation.data.GroupedEvaluationData
 import scalaadaptive.core.runtime.history.runhistory.RunHistory
 
 /**
@@ -21,12 +21,12 @@ class InterpolationSelector[TMeasurement](implicit num: Numeric[TMeasurement])
     * @param sortedData
     * @return
     */
-  private def interpolate(sortedData: Seq[(Option[Long], GroupedRunData[TMeasurement])]): Option[PolynomialSplineFunction] = {
+  private def interpolate(sortedData: Seq[(Option[Long], GroupedEvaluationData[TMeasurement])]): Option[PolynomialSplineFunction] = {
     try {
       Some(
         getInterpolator.interpolate(
           sortedData.map(i => i._1.get.toDouble).toArray,
-          sortedData.map(i => num.toDouble(i._2.averageRunData.measurement)).toArray
+          sortedData.map(i => num.toDouble(i._2.averageMeasurement)).toArray
         )
       )
     } catch {

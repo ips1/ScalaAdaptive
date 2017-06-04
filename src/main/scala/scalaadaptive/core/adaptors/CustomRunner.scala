@@ -14,13 +14,13 @@ import scalaadaptive.core.runtime.invocationtokens.{InvocationToken, InvocationT
 /**
   * Created by pk250187 on 4/22/17.
   */
-class CustomRunner(val storage: Storage) extends FunctionRunner {
-  private val runner: FunctionRunner = storage match {
+class CustomRunner(val storage: Storage) extends OptionRunner {
+  private val runner: OptionRunner = storage match {
     case Storage.Local => AdaptiveInternal.createRunner()
     case _ => null
   }
 
-  private def selectRunner: FunctionRunner =
+  private def selectRunner: OptionRunner =
     storage match {
       case Storage.Local => runner
       case Storage.Persistent => AdaptiveInternal.persistentRunner

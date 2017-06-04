@@ -4,7 +4,7 @@ import scala.collection.mutable
 import scalaadaptive.core.references.FunctionReference
 import scalaadaptive.core.runtime.history.runhistory.RunHistory
 import scalaadaptive.core.runtime.history.HistoryKey
-import scalaadaptive.core.runtime.history.rundata.RunData
+import scalaadaptive.core.runtime.history.evaluation.data.EvaluationData
 
 /**
   * Created by pk250187 on 3/21/17.
@@ -19,7 +19,7 @@ class MapHistoryStorage[TMeasurement](val newHistoryFactory: (HistoryKey) => Run
   override def getHistory(key: HistoryKey): RunHistory[TMeasurement] =
     histories.getOrElseUpdate(key, newHistoryFactory(key))
 
-  override def applyNewRun(key: HistoryKey, run: RunData[TMeasurement]): Unit = {
+  override def applyNewRun(key: HistoryKey, run: EvaluationData[TMeasurement]): Unit = {
     val oldHistory = histories.getOrElseUpdate(key, newHistoryFactory(key))
     histories.update(key, oldHistory.applyNewRun(run))
   }

@@ -6,7 +6,7 @@ import scalaadaptive.core.options.Selection.Selection
 /**
   * Created by pk250187 on 5/7/17.
   */
-class TrainingHelper(val runner: FunctionRunner) {
+class TrainingHelper(val runner: OptionRunner) {
   def train[TReturnType](functions: Seq[AppliedFunction[TReturnType]],
                          inputDescriptor: Option[Long],
                          selection: Selection): Unit = ??? /* {
