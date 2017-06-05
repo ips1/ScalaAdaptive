@@ -1,9 +1,11 @@
 package scalaadaptive.core.configuration
 
+import scalaadaptive.analytics.{AnalyticsSerializer, CsvAnalyticsSerializer}
 import scalaadaptive.core.runtime.grouping.{GroupSelector, LogarithmGroupSelector}
 import scalaadaptive.core.logging.{ConsoleLogger, Logger}
 import scalaadaptive.core.functions.adaptors.FunctionConfig
 import scalaadaptive.api.options.{Selection, Storage}
+import scalaadaptive.core.functions.analytics.{AnalyticsCollector, BasicAnalyticsCollector}
 import scalaadaptive.core.functions.{DefaultFunctionFactory, FunctionFactory}
 import scalaadaptive.core.functions.references.{AlphanumValidator, CustomIdentifierValidator}
 import scalaadaptive.core.runtime.history.historystorage.{HistoryStorage, MapHistoryStorage}
@@ -29,6 +31,10 @@ trait BaseConfiguration extends Configuration {
     () => new AlphanumValidator
   override val createFunctionFactory: () => FunctionFactory =
     () => new DefaultFunctionFactory
+  override val createAnalyticsCollector: () => AnalyticsCollector =
+    () => new BasicAnalyticsCollector
+  override val createAnalyticsSerializer: () => AnalyticsSerializer =
+    () => new CsvAnalyticsSerializer
 
   override val createMultiFunctionDefaultConfig: () => FunctionConfig =
     () => new FunctionConfig(Selection.Discrete, Storage.Global, None, false, new AlwaysSelectPolicy)

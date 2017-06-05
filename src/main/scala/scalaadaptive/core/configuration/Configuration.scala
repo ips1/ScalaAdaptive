@@ -1,6 +1,8 @@
 package scalaadaptive.core.configuration
-import scalaadaptive.core.functions.FunctionFactory
+import scalaadaptive.analytics.{AnalyticsSerializer, CsvAnalyticsSerializer}
+import scalaadaptive.core.functions.{DefaultFunctionFactory, FunctionFactory}
 import scalaadaptive.core.functions.adaptors.FunctionConfig
+import scalaadaptive.core.functions.analytics.{AnalyticsCollector, BasicAnalyticsCollector}
 import scalaadaptive.core.runtime.grouping.GroupSelector
 import scalaadaptive.core.logging.Logger
 import scalaadaptive.core.functions.references.CustomIdentifierValidator
@@ -23,4 +25,6 @@ trait Configuration {
   val createIdentifierValidator: () => CustomIdentifierValidator
   val createMultiFunctionDefaultConfig: () => FunctionConfig
   val createFunctionFactory: () => FunctionFactory
+  val createAnalyticsSerializer: () => AnalyticsSerializer
+  val createAnalyticsCollector: () => AnalyticsCollector
 }

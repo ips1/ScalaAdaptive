@@ -41,6 +41,8 @@ object AdaptiveInternal {
 
   private var identifierValidator: CustomIdentifierValidator = defaultConfiguration.createIdentifierValidator()
   private var multiFunctionDefaults: FunctionConfig = defaultConfiguration.createMultiFunctionDefaultConfig()
+  private var functionFactory: FunctionFactory = defaultConfiguration.createFunctionFactory()
+  private var analyticsSerializer: AnalyticsSerializer = defaultConfiguration.createAnalyticsSerializer()
   private var runner: AdaptiveRunner = initOptionRunner(defaultConfiguration)
   private var persistentRunner: AdaptiveRunner = initPersistentOptionRunner(defaultConfiguration).getOrElse(runner)
 
@@ -52,12 +54,11 @@ object AdaptiveInternal {
 
   def getSharedPersistentRunner: AdaptiveRunner = persistentRunner
 
-  // TODO: Extract into configuration!
-  def getFunctionFactory: FunctionFactory = new DefaultFunctionFactory
+  def getFunctionFactory: FunctionFactory = functionFactory
 
-  def getAnalyticsSerializer: AnalyticsSerializer = new CsvAnalyticsSerializer
+  def getAnalyticsSerializer: AnalyticsSerializer = analyticsSerializer
 
-  def createAnalytics(): AnalyticsCollector = new BasicAnalyticsCollector
+  def createAnalytics(): AnalyticsCollector = currentConfiguration.createAnalyticsCollector()
 
   def createNewRunner(): AdaptiveRunner =
     initOptionRunner(currentConfiguration)
@@ -69,6 +70,8 @@ object AdaptiveInternal {
     persistentRunner = initPersistentOptionRunner(currentConfiguration).getOrElse(runner)
     identifierValidator = currentConfiguration.createIdentifierValidator()
     multiFunctionDefaults = currentConfiguration.createMultiFunctionDefaultConfig()
+    functionFactory = currentConfiguration.createFunctionFactory()
+    analyticsSerializer = currentConfiguration.createAnalyticsSerializer()
   }
 
   def reset(): Unit = {
