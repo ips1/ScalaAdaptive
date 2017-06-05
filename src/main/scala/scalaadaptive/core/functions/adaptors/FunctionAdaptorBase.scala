@@ -2,19 +2,21 @@ package scalaadaptive.core.functions.adaptors
 
 import java.time.Duration
 
-import scalaadaptive.api.adaptors.MultiFunctionCommon
+import scalaadaptive.analytics.{AnalyticsData, BasicAnalyticsData, CsvAnalyticsSerializer}
 import scalaadaptive.api.options.Selection.Selection
 import scalaadaptive.api.options.Storage.Storage
 import scalaadaptive.core.functions.policies.Policy
 import scalaadaptive.core.functions.{FunctionFactory, MultipleImplementationFunction, ReferencedFunction}
+import scalaadaptive.core.runtime.AdaptiveInternal
 
 /**
   * Created by pk250187 on 5/27/17.
   */
 abstract class FunctionAdaptorBase[TArgType, TRetType, TFunctionAdaptorType] {
   protected val function: MultipleImplementationFunction[TArgType, TRetType]
-  protected val functionFactory: FunctionFactory
   protected val createNew: (MultipleImplementationFunction[TArgType, TRetType]) => TFunctionAdaptorType
+
+  protected def functionFactory: FunctionFactory = AdaptiveInternal.getFunctionFactory
 
   private def updateFunctionsWithClosureIdentification(asClosures: Boolean) =
     function.functions.map(f =>
@@ -47,4 +49,6 @@ abstract class FunctionAdaptorBase[TArgType, TRetType, TFunctionAdaptorType] {
   def setPolicy(policy: Policy): Unit = function.setPolicy(policy)
 
   def resetPolicy(): Unit = function.resetPolicy()
+
+  def getAnalyticsData: AnalyticsData = new BasicAnalyticsData(function.statistics.records, new CsvAnalyticsSerializer)
 }

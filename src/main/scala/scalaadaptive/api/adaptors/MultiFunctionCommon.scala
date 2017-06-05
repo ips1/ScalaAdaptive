@@ -2,6 +2,7 @@ package scalaadaptive.api.adaptors
 
 import java.time.Duration
 
+import scalaadaptive.analytics.AnalyticsData
 import scalaadaptive.api.options.Selection.Selection
 import scalaadaptive.api.options.Storage.Storage
 import scalaadaptive.core.functions.policies.Policy
@@ -22,4 +23,6 @@ trait MultiFunctionCommon[TArgType, TRetType, TFunctionAdaptorType] {
   def flushHistory(): Unit
   def setPolicy(policy: Policy): Unit
   def resetPolicy(): Unit
+
+  def getAnalyticsData: AnalyticsData
 }

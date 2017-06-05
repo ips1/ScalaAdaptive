@@ -14,4 +14,7 @@ trait FunctionFactory {
 
   def createFunction[TArgType, TRetType](multipleImplementationFunction: MultipleImplementationFunction[TArgType, TRetType],
                                          adaptorConfig: FunctionConfig): MultipleImplementationFunction[TArgType, TRetType]
+
+  def mergeFunctions[TArgType, TRetType](firstFunction: MultipleImplementationFunction[TArgType, TRetType],
+                                         secondFunction: MultipleImplementationFunction[TArgType, TRetType]): MultipleImplementationFunction[TArgType, TRetType]
 }

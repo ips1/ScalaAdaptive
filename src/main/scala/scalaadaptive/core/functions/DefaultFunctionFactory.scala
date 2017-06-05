@@ -31,4 +31,13 @@ class DefaultFunctionFactory extends FunctionFactory {
       new CustomRunner(adaptorConfig.storage),
       adaptorConfig
     )
+
+  override def mergeFunctions[TArgType, TRetType](firstFunction: MultipleImplementationFunction[TArgType, TRetType],
+                                                  secondFunction: MultipleImplementationFunction[TArgType, TRetType]): MultipleImplementationFunction[TArgType, TRetType] = {
+    new MultipleImplementationFunction[TArgType, TRetType](firstFunction.functions ++ secondFunction.functions,
+      firstFunction.inputDescriptorSelector,
+      new CustomRunner(firstFunction.adaptorConfig.storage),
+      firstFunction.adaptorConfig
+    )
+  }
 }
