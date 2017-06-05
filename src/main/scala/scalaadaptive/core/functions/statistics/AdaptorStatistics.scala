@@ -1,7 +1,10 @@
 package scalaadaptive.core.functions.statistics
 
+import java.time.Instant
+
 import scala.collection.mutable
 import scala.collection.mutable.ArrayBuffer
+import scalaadaptive.analytics.{AnalyticsData, BasicAnalyticsData, CsvAnalyticsSerializer}
 import scalaadaptive.core.performance.PerformanceProvider
 import scalaadaptive.core.functions.references.FunctionReference
 import scalaadaptive.core.functions.{ReferencedFunction, RunData}
@@ -23,7 +26,8 @@ class AdaptorStatistics[TArgType, TRetType](defaultLast: ReferencedFunction[TArg
   private var totalOverheadPercentage: Double = 0
 
   override def applyRunData(data: RunData): Unit = {
-    records.append(new StatisticsRecord(data.selectedFunction,
+    records.append(new StatisticsRecord(Instant.now,
+      data.selectedFunction,
       data.inputDescriptor,
       data.performance.getFunctionTime,
       data.performance.getOverheadTime,

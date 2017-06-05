@@ -16,7 +16,7 @@ class MultipleImplementationFunction[TArgType, TRetType](val functions: Seq[Refe
                                                          val adaptorConfig: FunctionConfig) {
   private var currentPolicy = adaptorConfig.startPolicy
 
-  private val statistics = new AdaptorStatistics[TArgType, TRetType](functions.head,
+  val statistics = new AdaptorStatistics[TArgType, TRetType](functions.head,
     ref => functions.find(f => f.reference == ref))
 
   val functionReferences: Seq[FunctionReference] =

@@ -1,5 +1,7 @@
 package adaptivetests.jsonparsing
 
+import java.io.PrintWriter
+
 import scala.io.Source
 import data.PersonList
 
@@ -14,6 +16,8 @@ object Test {
 
     Seq.range(0, 60).foreach(i => parser.parse(bigJsonString, classOf[PersonList]))
     Seq.range(0, 60).foreach(i => parser.parse(smallJsonString, classOf[PersonList]))
+
+    parser.parse.getAnalyticsData.saveData(new PrintWriter(System.out))
 
     println("DONE!")
   }
