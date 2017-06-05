@@ -11,7 +11,7 @@ import scalaadaptive.math.{HigherExpectation, LowerExpectation, TTestRunner}
   */
 class TTestSelector(val secondarySelector: RunSelector[Long],
                     val alpha: Double) extends RunSelector[Long] {
-  val testRunner = new TTestRunner
+  val testRunner = new TTestRunner(() => logger)
 
   override def selectOption(records: Seq[RunHistory[Long]], inputDescriptor: Option[Long]): RunHistory[Long] = {
     logger.log("Selecting using TTestSelector")

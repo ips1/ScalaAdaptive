@@ -30,7 +30,7 @@ object DelayedTest {
   }
 
   def main(args: Array[String]): Unit = {
-    Adaptive.initialize(FullHistoryTTestConfiguration)
+    Adaptive.initialize(new FullHistoryTTestConfiguration)
 
     for (x <- 1 to 20) {
       test()

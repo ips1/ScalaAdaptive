@@ -28,7 +28,7 @@ class TestMethods {
 //  }
 
   def slowMethod(x: List[Int]): List[Int] = {
-    Thread.sleep(100)
+    Thread.sleep(20)
     x
   }
 

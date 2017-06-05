@@ -20,7 +20,7 @@ object LimitedTest {
   val runner = new TestRunner()
 
   def main(args: Array[String]): Unit = {
-    Adaptive.initialize(FullHistoryTTestConfiguration)
+    Adaptive.initialize(new FullHistoryTTestConfiguration)
 
     runner.runIncrementalTest(l => limitedFunc(l))
   }

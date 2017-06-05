@@ -20,7 +20,7 @@ object Test {
 
     //val configurations = List(ImmutableFullHistoryInterpolationConfiguration)
     //val configurations = List(GroupedRunHistoryInterpolationConfiguration)
-    val configurations = List(FullHistoryTTestConfiguration)
+    val configurations = List(new FullHistoryTTestConfiguration)
     configurations.foreach(cfg => {
       Adaptive.initialize(cfg)
       val sorter = new Sorter()

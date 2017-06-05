@@ -12,7 +12,7 @@ import scalaadaptive.core.functions.{DefaultFunctionFactory, FunctionFactory}
   * Created by pk250187 on 3/19/17.
   */
 object AdaptiveInternal {
-  private val defaultConfiguration = FullHistoryTTestConfiguration
+  private val defaultConfiguration = new FullHistoryTTestConfiguration
   private var currentConfiguration: Configuration = defaultConfiguration
 
   private def initOptionRunner(configuration: Configuration): AdaptiveRunner = {
@@ -56,6 +56,10 @@ object AdaptiveInternal {
     persistentRunner = initPersistentOptionRunner(currentConfiguration).getOrElse(runner)
   }
 
+  def reset(): Unit = {
+    initialize(currentConfiguration)
+  }
+
   // Default initialization
-  initialize(defaultConfiguration)
+  reset()
 }

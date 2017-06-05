@@ -9,7 +9,7 @@ import scalaadaptive.core.runtime.history.runhistory.{CachedStatisticsRunHistory
 /**
   * Created by pk250187 on 5/2/17.
   */
-object FullHistoryTTestConfiguration
+class FullHistoryTTestConfiguration
   extends BaseLongConfiguration
     with TTestSelection
     with RunTimeMeasurement

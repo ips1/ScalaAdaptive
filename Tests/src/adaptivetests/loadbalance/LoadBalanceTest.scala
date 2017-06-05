@@ -17,7 +17,7 @@ object LoadBalanceTest {
   }
 
   def main(args: Array[String]): Unit = {
-    Adaptive.initialize(FullHistoryTTestConfiguration)
+    Adaptive.initialize(new FullHistoryTTestConfiguration)
 
     runStage()
     testController.increaseLoad(3123)
