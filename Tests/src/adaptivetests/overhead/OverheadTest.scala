@@ -1,4 +1,4 @@
-package adaptivetests.policyoverhead
+package adaptivetests.overhead
 
 import adaptivetests.testmethods.TestMethods
 

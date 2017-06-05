@@ -12,17 +12,17 @@ import scalaadaptive.extensions.AverageableImplicits.LongIsAverageable
   * Created by pk250187 on 4/22/17.
   */
 trait BaseLongConfiguration extends BaseConfiguration {
-  type MeasurementType = Long
+  type TMeasurement = Long
   protected val rootPath: Path
 
   override val num = LongIsAverageable
-  override val persistentHistoryStorageFactory: () => Option[PersistentHistoryStorage[MeasurementType]] = () =>
-    Some(new PersistentHistoryStorage[MeasurementType](
-        historyStorageFactory(),
+  override val createPersistentHistoryStorage: () => Option[PersistentHistoryStorage[TMeasurement]] = () =>
+    Some(new PersistentHistoryStorage[TMeasurement](
+        createHistoryStorage(),
         new BasicHistorySerializer(
           rootPath,
           new BasicFileNameForKeyProvider,
           new LongRunDataSerializer(','),
-          logger)
+          createLogger())
     ))
 }

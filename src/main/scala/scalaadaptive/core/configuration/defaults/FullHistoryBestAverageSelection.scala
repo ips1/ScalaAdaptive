@@ -6,7 +6,7 @@ import scalaadaptive.core.configuration.blocks._
 /**
   * Created by pk250187 on 5/1/17.
   */
-object FullHistoryBestAverageSelection
+class FullHistoryBestAverageSelection
   extends BaseLongConfiguration
     with BestAverageSelection
     with RunTimeMeasurement

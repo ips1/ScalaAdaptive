@@ -28,11 +28,13 @@ class TestMethods {
 //  }
 
   def slowMethod(x: List[Int]): List[Int] = {
+    println("slow")
     Thread.sleep(20)
     x
   }
 
   def fastMethod(x: List[Int]): List[Int] = {
+    println("fast")
     Thread.sleep(10)
     x
   }

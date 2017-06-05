@@ -1,8 +1,8 @@
 package scalaadaptive.core.functions.adaptors
 
-import scalaadaptive.core.functions.references.{ClosureNameReference, FunctionReference}
+import scalaadaptive.core.functions.references.{ClosureNameReference, FunctionReference, ReferencedFunction}
 import scalaadaptive.core.runtime.AdaptiveInternal
-import scalaadaptive.core.functions.{FunctionFactory, ReferencedFunction}
+import scalaadaptive.core.functions.FunctionFactory
 
 /**
   * Created by pk250187 on 5/27/17.

@@ -8,7 +8,7 @@ import scalaadaptive.core.runtime.history.runhistory.{CachedAverageRunHistory, I
 /**
   * Created by pk250187 on 5/1/17.
   */
-object ImmutableFullHistoryInterpolationConfiguration
+class ImmutableFullHistoryInterpolationConfiguration
   extends BaseLongConfiguration
     with InterpolationSelection
     with RunTimeMeasurement
@@ -17,9 +17,9 @@ object ImmutableFullHistoryInterpolationConfiguration
     with TTestSelection
     // Temporary change:
     with NoGrouping {
-  override val historyStorageFactory: () => HistoryStorage[MeasurementType] = () => {
-    new MapHistoryStorage[MeasurementType](key =>
-      new CachedAverageRunHistory[MeasurementType](new ImmutableFullRunHistory[MeasurementType](key)(num))(num)
+  override val createHistoryStorage: () => HistoryStorage[TMeasurement] = () => {
+    new MapHistoryStorage[TMeasurement](key =>
+      new CachedAverageRunHistory[TMeasurement](new ImmutableFullRunHistory[TMeasurement](key)(num))(num)
     )
   }
 }

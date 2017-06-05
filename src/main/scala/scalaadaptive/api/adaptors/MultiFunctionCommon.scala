@@ -24,5 +24,5 @@ trait MultiFunctionCommon[TArgType, TRetType, TFunctionAdaptorType] {
   def setPolicy(policy: Policy): Unit
   def resetPolicy(): Unit
 
-  def getAnalyticsData: AnalyticsData
+  def getAnalyticsData: Option[AnalyticsData]
 }

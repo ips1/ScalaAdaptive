@@ -13,7 +13,7 @@ object TrainingTest {
   def main(args: Array[String]): Unit = {
     import scalaadaptive.api.Implicits._
 
-    val configurations = List(GroupedRunHistoryInterpolationConfiguration)
+    val configurations = List(new GroupedRunHistoryInterpolationConfiguration)
     val runner = new TestRunner()
     val testMethods = new TestMethods()
 

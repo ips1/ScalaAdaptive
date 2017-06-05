@@ -8,7 +8,8 @@ import scalaadaptive.core.runtime.selection._
   */
 trait TTestSelection extends BaseLongConfiguration {
   private val leastDataSelector = new LeastDataSelector[Long]()
-  override val discreteRunSelector: RunSelector[Long] = new LowRunAwareSelector[Long](
+  override val createDiscreteRunSelector: () => RunSelector[Long] =
+    () => new LowRunAwareSelector[Long](
     leastDataSelector,
     new TTestSelector(leastDataSelector, 0.05),
     10)

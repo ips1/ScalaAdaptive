@@ -7,7 +7,7 @@ import scalaadaptive.core.logging.Logger
 import scalaadaptive.api.options.Selection
 import scalaadaptive.api.options.Selection.Selection
 import scalaadaptive.core.performance.{BasicPerformanceTracker, PerformanceTracker}
-import scalaadaptive.core.functions.references.FunctionReference
+import scalaadaptive.core.functions.references.{FunctionReference, ReferencedFunction}
 import scalaadaptive.core.runtime.history.historystorage.HistoryStorage
 import scalaadaptive.core.runtime.history.HistoryKey
 import scalaadaptive.core.runtime.history.evaluation.EvaluationProvider
@@ -15,7 +15,7 @@ import scalaadaptive.core.runtime.history.evaluation.data.EvaluationData
 import scalaadaptive.core.runtime.history.runhistory.RunHistory
 import scalaadaptive.core.runtime.invocationtokens.{InvocationTokenWithCallbacks, MeasuringInvocationToken}
 import scalaadaptive.core.runtime.selection.RunSelector
-import scalaadaptive.core.functions.{ReferencedFunction, RunData, RunResult}
+import scalaadaptive.core.functions.{RunData, RunResult}
 
 /**
   * Created by pk250187 on 3/19/17.

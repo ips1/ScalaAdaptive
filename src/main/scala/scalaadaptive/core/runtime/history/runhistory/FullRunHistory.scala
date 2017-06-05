@@ -10,7 +10,7 @@ import scalaadaptive.extensions.Averageable
   * Created by pk250187 on 3/21/17.
   */
 class FullRunHistory[TMeasurement] private (override val key: HistoryKey,
-                                   override val runItems: ArrayBuffer[EvaluationData[TMeasurement]])
+                                            override val runItems: ArrayBuffer[EvaluationData[TMeasurement]])
                                   (implicit override val num: Averageable[TMeasurement])
   extends RunHistory[TMeasurement]
     with DefaultGrouping[TMeasurement]

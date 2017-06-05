@@ -1,8 +1,10 @@
 package scalaadaptive.core.runtime
 
+import scalaadaptive.analytics.{AnalyticsSerializer, BasicAnalyticsData, CsvAnalyticsSerializer}
 import scalaadaptive.core.functions.adaptors.FunctionConfig
 import scalaadaptive.core.configuration.Configuration
 import scalaadaptive.core.configuration.defaults.FullHistoryTTestConfiguration
+import scalaadaptive.core.functions.analytics.{AnalyticsCollector, BasicAnalyticsCollector}
 import scalaadaptive.core.logging.LogManager
 import scalaadaptive.core.functions.references.CustomIdentifierValidator
 import scalaadaptive.core.runtime.history._
@@ -16,44 +18,57 @@ object AdaptiveInternal {
   private var currentConfiguration: Configuration = defaultConfiguration
 
   private def initOptionRunner(configuration: Configuration): AdaptiveRunner = {
-    new HistoryBasedAdaptiveRunner[configuration.MeasurementType](
-      configuration.historyStorageFactory(),
-      configuration.discreteRunSelector,
-      configuration.continuousRunSelector,
-      configuration.performanceProvider,
-      configuration.groupSelector,
-      configuration.logger)
+    new HistoryBasedAdaptiveRunner[configuration.TMeasurement](
+      configuration.createHistoryStorage(),
+      configuration.createDiscreteRunSelector(),
+      configuration.createContinuousRunSelector(),
+      configuration.createPerformanceProvider(),
+      configuration.createGroupSelector(),
+      configuration.createLogger())
   }
 
   private def initPersistentOptionRunner(configuration: Configuration): Option[AdaptiveRunner] =
-    configuration.persistentHistoryStorageFactory().map(persistentStorage =>
-      new HistoryBasedAdaptiveRunner[configuration.MeasurementType](
+    configuration.createPersistentHistoryStorage().map(persistentStorage =>
+      new HistoryBasedAdaptiveRunner[configuration.TMeasurement](
         persistentStorage,
-        configuration.discreteRunSelector,
-        configuration.continuousRunSelector,
-        configuration.performanceProvider,
-        configuration.groupSelector,
-        configuration.logger
+        configuration.createDiscreteRunSelector(),
+        configuration.createContinuousRunSelector(),
+        configuration.createPerformanceProvider(),
+        configuration.createGroupSelector(),
+        configuration.createLogger()
       )
     )
 
-  def getIdentifierValidator: CustomIdentifierValidator = currentConfiguration.identifierValidator
+  private var identifierValidator: CustomIdentifierValidator = defaultConfiguration.createIdentifierValidator()
+  private var multiFunctionDefaults: FunctionConfig = defaultConfiguration.createMultiFunctionDefaultConfig()
+  private var runner: AdaptiveRunner = initOptionRunner(defaultConfiguration)
+  private var persistentRunner: AdaptiveRunner = initPersistentOptionRunner(defaultConfiguration).getOrElse(runner)
 
-  def getMultiFunctionDefaults: FunctionConfig = currentConfiguration.multiFunctionDefaults
+  def getIdentifierValidator: CustomIdentifierValidator = identifierValidator
 
+  def getMultiFunctionDefaults: FunctionConfig = multiFunctionDefaults
+
+  def getSharedRunner: AdaptiveRunner = runner
+
+  def getSharedPersistentRunner: AdaptiveRunner = persistentRunner
+
+  // TODO: Extract into configuration!
   def getFunctionFactory: FunctionFactory = new DefaultFunctionFactory
 
-  var runner: AdaptiveRunner = initOptionRunner(defaultConfiguration)
-  var persistentRunner: AdaptiveRunner = initPersistentOptionRunner(defaultConfiguration).getOrElse(runner)
+  def getAnalyticsSerializer: AnalyticsSerializer = new CsvAnalyticsSerializer
 
-  def createRunner(): AdaptiveRunner =
+  def createAnalytics(): AnalyticsCollector = new BasicAnalyticsCollector
+
+  def createNewRunner(): AdaptiveRunner =
     initOptionRunner(currentConfiguration)
 
   def initialize(configuration: Configuration): Unit = {
     currentConfiguration = configuration
-    LogManager.setLogger(currentConfiguration.logger)
+    LogManager.setLogger(currentConfiguration.createLogger())
     runner = initOptionRunner(currentConfiguration)
     persistentRunner = initPersistentOptionRunner(currentConfiguration).getOrElse(runner)
+    identifierValidator = currentConfiguration.createIdentifierValidator()
+    multiFunctionDefaults = currentConfiguration.createMultiFunctionDefaultConfig()
   }
 
   def reset(): Unit = {

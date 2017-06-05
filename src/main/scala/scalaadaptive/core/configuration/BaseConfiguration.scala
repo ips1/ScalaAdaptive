@@ -4,6 +4,7 @@ import scalaadaptive.core.runtime.grouping.{GroupSelector, LogarithmGroupSelecto
 import scalaadaptive.core.logging.{ConsoleLogger, Logger}
 import scalaadaptive.core.functions.adaptors.FunctionConfig
 import scalaadaptive.api.options.{Selection, Storage}
+import scalaadaptive.core.functions.{DefaultFunctionFactory, FunctionFactory}
 import scalaadaptive.core.functions.references.{AlphanumValidator, CustomIdentifierValidator}
 import scalaadaptive.core.runtime.history.historystorage.{HistoryStorage, MapHistoryStorage}
 import scalaadaptive.core.runtime.history.runhistory.{CachedAverageRunHistory, FullRunHistory}
@@ -14,15 +15,21 @@ import scalaadaptive.extensions.Averageable
   * Created by pk250187 on 4/22/17.
   */
 trait BaseConfiguration extends Configuration {
-  protected val num: Averageable[MeasurementType]
-  override val historyStorageFactory: () => HistoryStorage[MeasurementType] = () => {
-    new MapHistoryStorage[MeasurementType](key =>
-      new CachedAverageRunHistory[MeasurementType](new FullRunHistory[MeasurementType](key)(num))(num)
+  protected val num: Averageable[TMeasurement]
+  override val createHistoryStorage: () => HistoryStorage[TMeasurement] = () => {
+    new MapHistoryStorage[TMeasurement](key =>
+      new CachedAverageRunHistory[TMeasurement](new FullRunHistory[TMeasurement](key)(num))(num)
     )
   }
-  override val groupSelector: GroupSelector = new LogarithmGroupSelector
-  override val logger: Logger = new ConsoleLogger
-  override val identifierValidator: CustomIdentifierValidator = new AlphanumValidator
+  override val createGroupSelector: () => GroupSelector =
+    () => new LogarithmGroupSelector
+  override val createLogger: () => Logger =
+    () => new ConsoleLogger
+  override val createIdentifierValidator: () => CustomIdentifierValidator =
+    () => new AlphanumValidator
+  override val createFunctionFactory: () => FunctionFactory =
+    () => new DefaultFunctionFactory
 
-  override val multiFunctionDefaults = new FunctionConfig(Selection.Discrete, Storage.Global, None, false, new AlwaysSelectPolicy)
+  override val createMultiFunctionDefaultConfig: () => FunctionConfig =
+    () => new FunctionConfig(Selection.Discrete, Storage.Global, None, false, new AlwaysSelectPolicy)
 }

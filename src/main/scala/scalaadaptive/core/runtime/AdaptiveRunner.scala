@@ -4,10 +4,10 @@ import java.time.Duration
 
 import scalaadaptive.api.options.Selection.Selection
 import scalaadaptive.core.performance.PerformanceTracker
-import scalaadaptive.core.functions.references.FunctionReference
+import scalaadaptive.core.functions.references.{FunctionReference, ReferencedFunction}
 import scalaadaptive.core.runtime.history.HistoryKey
 import scalaadaptive.core.runtime.invocationtokens.InvocationTokenWithCallbacks
-import scalaadaptive.core.functions.{ReferencedFunction, RunResult}
+import scalaadaptive.core.functions.RunResult
 
 /**
   * Created by pk250187 on 3/26/17.

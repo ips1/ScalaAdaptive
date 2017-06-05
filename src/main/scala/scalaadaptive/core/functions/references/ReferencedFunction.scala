@@ -1,6 +1,4 @@
-package scalaadaptive.core.functions
-
-import scalaadaptive.core.functions.references.{ClosureNameReference, FunctionReference}
+package scalaadaptive.core.functions.references
 
 /**
   * Created by pk250187 on 5/21/17.

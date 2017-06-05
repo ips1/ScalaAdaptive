@@ -8,7 +8,7 @@ import scalaadaptive.core.runtime.history.runhistory.{CachedGroupedRunHistory, I
 /**
   * Created by pk250187 on 5/1/17.
   */
-object GroupedRunHistoryInterpolationConfiguration
+class GroupedRunHistoryInterpolationConfiguration
   extends BaseLongConfiguration
   with InterpolationSelection
   with RunTimeMeasurement
@@ -17,8 +17,8 @@ object GroupedRunHistoryInterpolationConfiguration
   with TTestSelection
   // Temporary change:
   with NoGrouping {
-    override val historyStorageFactory: () => HistoryStorage[MeasurementType] = () => {
-      new MapHistoryStorage[MeasurementType](key =>
+    override val createHistoryStorage: () => HistoryStorage[TMeasurement] = () => {
+      new MapHistoryStorage[TMeasurement](key =>
         new CachedGroupedRunHistory[Long](new ImmutableFullRunHistory[Long](key)(num))(num)
       )
     }

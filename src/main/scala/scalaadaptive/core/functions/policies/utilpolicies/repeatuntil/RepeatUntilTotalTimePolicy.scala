@@ -1,15 +1,15 @@
-package scalaadaptive.core.functions.policies.overhead
+package scalaadaptive.core.functions.policies.utilpolicies.repeatuntil
 
 import scalaadaptive.core.functions.policies.Policy
 import scalaadaptive.core.functions.policies.PolicyResult.PolicyResult
 import scalaadaptive.core.functions.statistics.StatisticDataProvider
 
 /**
-  * Created by pk250187 on 6/1/17.
+  * Created by pk250187 on 6/5/17.
   */
-class RepeatUntilOverheadPolicy(val result: PolicyResult,
-                                val overheadLimit: Long,
-                                val nextPolicy: Policy) extends Policy {
+class RepeatUntilTotalTimePolicy(val result: PolicyResult,
+                                 val totalTimeLimit: Long,
+                                 val nextPolicy: Policy) extends Policy {
   /**
     * Decides on the action to take and on the policy to use in the next decision
     *
@@ -17,7 +17,7 @@ class RepeatUntilOverheadPolicy(val result: PolicyResult,
     * @return The result and the policy that is to be used in the next decision
     */
   override def decide(statistics: StatisticDataProvider): (PolicyResult, Policy) =
-    if (statistics.getTotalOverheadTime < overheadLimit)
+    if (statistics.getTotalTime < totalTimeLimit)
       (result, this)
     else
       (result, nextPolicy)

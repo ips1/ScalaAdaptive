@@ -22,7 +22,7 @@ object SelectionSettingTest {
   val runner = new TestRunner()
 
   def main(args: Array[String]): Unit = {
-    Adaptive.initialize(GroupedRunHistoryInterpolationConfiguration)
+    Adaptive.initialize(new GroupedRunHistoryInterpolationConfiguration)
 
     runner.runIncrementalTest(l => discreteFunc(l))
     runner.runIncrementalTest(l => continuousFunc(l))

@@ -1,7 +1,6 @@
 package scalaadaptive.core.functions.statistics
 
-import scalaadaptive.core.functions.references.FunctionReference
-import scalaadaptive.core.functions.ReferencedFunction
+import scalaadaptive.core.functions.references.{FunctionReference, ReferencedFunction}
 
 /**
   * Created by pk250187 on 5/21/17.

@@ -16,7 +16,7 @@ object FlushTest {
 
     val runner = new TestRunner()
     val testMethods = new TestMethods()
-    Adaptive.initialize(GroupedRunHistoryInterpolationConfiguration)
+    Adaptive.initialize(new GroupedRunHistoryInterpolationConfiguration)
 
     runner.runIncrementalTest(l => testMethods.function(l))
 

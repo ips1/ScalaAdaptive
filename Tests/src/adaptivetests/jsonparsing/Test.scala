@@ -17,7 +17,7 @@ object Test {
     Seq.range(0, 60).foreach(i => parser.parse(bigJsonString, classOf[PersonList]))
     Seq.range(0, 60).foreach(i => parser.parse(smallJsonString, classOf[PersonList]))
 
-    parser.parse.getAnalyticsData.saveData(new PrintWriter(System.out))
+    parser.parse.getAnalyticsData.foreach(_.saveData(new PrintWriter(System.out)))
 
     println("DONE!")
   }

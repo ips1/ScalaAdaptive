@@ -1,7 +1,7 @@
 package scalaadaptive.core.functions.policies
 
 import scalaadaptive.core.functions.policies.PolicyResult.PolicyResult
-import scalaadaptive.core.functions.policies.overhead.{RepeatUntilOverheadPolicy, RepeatUntilResetTimePolicy}
+import scalaadaptive.core.functions.policies.utilpolicies.repeatuntil.{RepeatUntilOverheadPolicy, RepeatUntilResetTimePolicy}
 import scalaadaptive.core.functions.statistics.StatisticDataProvider
 
 /**
