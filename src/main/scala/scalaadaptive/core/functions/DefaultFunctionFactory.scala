@@ -36,8 +36,8 @@ class DefaultFunctionFactory extends FunctionFactory {
                                                   secondFunction: MultipleImplementationFunction[TArgType, TRetType]): MultipleImplementationFunction[TArgType, TRetType] = {
     new MultipleImplementationFunction[TArgType, TRetType](firstFunction.functions ++ secondFunction.functions,
       firstFunction.inputDescriptorSelector,
-      new CustomRunner(firstFunction.adaptorConfig.storage),
-      firstFunction.adaptorConfig
+      new CustomRunner(firstFunction.functionConfig.storage),
+      firstFunction.functionConfig
     )
   }
 }

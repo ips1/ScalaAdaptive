@@ -14,14 +14,14 @@ import scalaadaptive.core.functions.adaptors.FunctionConfig
 class MultipleImplementationFunction[TArgType, TRetType](val functions: Seq[ReferencedFunction[TArgType, TRetType]],
                                                          val inputDescriptorSelector: Option[(TArgType) => Long],
                                                          val selectionRunner: AdaptiveRunner,
-                                                         val adaptorConfig: FunctionConfig) {
-  private var currentPolicy = adaptorConfig.startPolicy
+                                                         val functionConfig: FunctionConfig) {
+  private var currentPolicy = functionConfig.startPolicy
 
   val statistics = new AdaptorStatistics[TArgType, TRetType](functions.head,
     ref => functions.find(f => f.reference == ref))
 
   val functionReferences: Seq[FunctionReference] =
-    functions.map(f => if (adaptorConfig.closureReferences) f.closureReference else f.reference)
+    functions.map(f => if (functionConfig.closureReferences) f.closureReference else f.reference)
 
   private def generateInputDescriptor(arguments: TArgType): Option[Long] =
     inputDescriptorSelector.map(sel => sel(arguments))
@@ -31,7 +31,7 @@ class MultipleImplementationFunction[TArgType, TRetType](val functions: Seq[Refe
   private def invokeUsingRunner(functions: Seq[ReferencedFunction[TArgType, TRetType]],
                                 arguments: TArgType): TRetType = {
     val runResult = selectionRunner.runOption(functions, arguments,
-      generateInputDescriptor(arguments), adaptorConfig.duration, adaptorConfig.selection)
+      generateInputDescriptor(arguments), functionConfig.duration, functionConfig.selection)
     statistics.applyRunData(runResult.runData)
     runResult.value
   }
@@ -39,7 +39,7 @@ class MultipleImplementationFunction[TArgType, TRetType](val functions: Seq[Refe
   private def invokeUsingRunnerWithDelayedMeasure(functions: Seq[ReferencedFunction[TArgType, TRetType]],
                                                   arguments: TArgType): (TRetType, InvocationToken) = {
     val (runResult, token) = selectionRunner.runOptionWithDelayedMeasure(functions, arguments,
-      generateInputDescriptor(arguments), adaptorConfig.duration, adaptorConfig.selection)
+      generateInputDescriptor(arguments), functionConfig.duration, functionConfig.selection)
     token.setAfterInvocationCallback(data => statistics.applyRunData(data))
     (runResult, token)
   }
@@ -80,5 +80,5 @@ class MultipleImplementationFunction[TArgType, TRetType](val functions: Seq[Refe
 
   def setPolicy(policy: Policy): Unit = currentPolicy = policy
 
-  def resetPolicy(): Unit = setPolicy(adaptorConfig.startPolicy)
+  def resetPolicy(): Unit = setPolicy(functionConfig.startPolicy)
 }
