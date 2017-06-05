@@ -1,7 +1,5 @@
 package scalaadaptive.api.adaptors
 
-
-import scalaadaptive.core.runtime.invocationtokens.InvocationToken
 import scala.language.experimental.macros
 import scalaadaptive.core.macros.OrMacroImpl
 

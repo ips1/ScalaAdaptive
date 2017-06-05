@@ -1,7 +1,7 @@
 import adaptivetests.TestRunner
 import adaptivetests.sorting.Sorter
 
-import scalaadaptive.api.IdentifiedFunction
+import scalaadaptive.api.identifiers.IdentifiedFunction
 import scalaadaptive.api.options.Storage
 
 /**

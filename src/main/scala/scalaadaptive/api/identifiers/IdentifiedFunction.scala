@@ -1,6 +1,6 @@
-package scalaadaptive.api
+package scalaadaptive.api.identifiers
 
-import scalaadaptive.core.functions.adaptors.{Conversions}
+import scalaadaptive.core.functions.adaptors.Conversions
 import scalaadaptive.core.functions.references.{CustomIdentifierValidator, CustomReference}
 import scalaadaptive.core.runtime.AdaptiveInternal
 

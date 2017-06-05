@@ -1,8 +1,7 @@
 package scalaadaptive.core.functions.adaptors
 
-import scalaadaptive.api.adaptors.MultiFunction1
+import scalaadaptive.api.adaptors.{InvocationToken, MultiFunction1}
 import scalaadaptive.core.functions.{FunctionFactory, MultipleImplementationFunction}
-import scalaadaptive.core.runtime.invocationtokens.InvocationToken
 
 /**
   * Created by pk250187 on 5/27/17.

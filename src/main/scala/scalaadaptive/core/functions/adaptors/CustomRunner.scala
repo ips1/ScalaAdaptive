@@ -9,7 +9,7 @@ import scalaadaptive.core.performance.PerformanceTracker
 import scalaadaptive.core.functions.references.FunctionReference
 import scalaadaptive.core.runtime.history.HistoryKey
 import scalaadaptive.core.runtime._
-import scalaadaptive.core.runtime.invocationtokens.{InvocationToken, InvocationTokenWithCallbacks}
+import scalaadaptive.core.runtime.invocationtokens.InvocationTokenWithCallbacks
 import scalaadaptive.core.functions.{ReferencedFunction, RunResult}
 
 /**

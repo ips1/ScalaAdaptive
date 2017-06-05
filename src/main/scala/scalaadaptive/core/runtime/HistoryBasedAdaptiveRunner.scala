@@ -13,7 +13,7 @@ import scalaadaptive.core.runtime.history.HistoryKey
 import scalaadaptive.core.runtime.history.evaluation.EvaluationProvider
 import scalaadaptive.core.runtime.history.evaluation.data.EvaluationData
 import scalaadaptive.core.runtime.history.runhistory.RunHistory
-import scalaadaptive.core.runtime.invocationtokens.{InvocationToken, InvocationTokenWithCallbacks, MeasuringInvocationToken}
+import scalaadaptive.core.runtime.invocationtokens.{InvocationTokenWithCallbacks, MeasuringInvocationToken}
 import scalaadaptive.core.runtime.selection.RunSelector
 import scalaadaptive.core.functions.{ReferencedFunction, RunData, RunResult}
 

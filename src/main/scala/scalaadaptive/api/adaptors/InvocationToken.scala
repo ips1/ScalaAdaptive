@@ -1,4 +1,4 @@
-package scalaadaptive.core.runtime.invocationtokens
+package scalaadaptive.api.adaptors
 
 /**
   * Created by pk250187 on 4/23/17.

@@ -1,7 +1,8 @@
 package scalaadaptive.core.functions
 
+import scalaadaptive.api.adaptors.InvocationToken
 import scalaadaptive.core.functions.references.FunctionReference
-import scalaadaptive.core.runtime.invocationtokens.{InvocationToken, SimpleInvocationToken}
+import scalaadaptive.core.runtime.invocationtokens.SimpleInvocationToken
 import scalaadaptive.core.functions.policies.{Policy, PolicyResult}
 import scalaadaptive.core.functions.statistics.AdaptorStatistics
 import scalaadaptive.core.runtime.AdaptiveRunner
