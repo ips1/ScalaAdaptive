@@ -24,5 +24,5 @@ trait BaseConfiguration extends Configuration {
   override val logger: Logger = new ConsoleLogger
   override val identifierValidator: CustomIdentifierValidator = new AlphanumValidator
 
-  override val multiFunctionDefaults = new FunctionConfig(Selection.Continuous, Storage.Global, None, false, new AlwaysSelectPolicy)
+  override val multiFunctionDefaults = new FunctionConfig(Selection.Discrete, Storage.Global, None, false, new AlwaysSelectPolicy)
 }
