@@ -74,10 +74,13 @@ class HistoryBasedAdaptiveRunner[TMeasurement](historyStorage: HistoryStorage[TM
     val tracker = new BasicPerformanceTracker
     tracker.startTracking()
 
+    // Select function to run
     val selectedRecord = selectRecord(options, getSelectorForSelection(selection), inputDescriptor, limitedBy)
     val functionToRun = options.find(_.reference == selectedRecord.reference).get.fun
 
     tracker.addSelectionTime()
+
+    // Execute the function
     runMeasuredFunction(functionToRun, arguments, selectedRecord.key, inputDescriptor, tracker)
   }
 
@@ -89,10 +92,13 @@ class HistoryBasedAdaptiveRunner[TMeasurement](historyStorage: HistoryStorage[TM
     val tracker = new BasicPerformanceTracker
     tracker.startTracking()
 
+    // Select function to run
     val selectedRecord = selectRecord(options, getSelectorForSelection(selection), inputDescriptor, limitedBy)
     val functionToRun = options.find(_.reference == selectedRecord.reference).get.fun
 
     tracker.addSelectionTime()
+
+    // Execute the function
     (functionToRun(arguments), new MeasuringInvocationToken(this, inputDescriptor, selectedRecord.key, tracker))
   }
 
@@ -102,13 +108,23 @@ class HistoryBasedAdaptiveRunner[TMeasurement](historyStorage: HistoryStorage[TM
                                                           inputDescriptor: Option[Long],
                                                           tracker: PerformanceTracker): RunResult[TReturnType] = {
     tracker.startTracking()
+
+    // Execute the function with evaluation
     val (result, measurement) = measurementProvider.evaluateFunctionRun(fun, arguments)
+
     tracker.addFunctionTime()
     logger.log(s"Performance on $inputDescriptor measured: $measurement")
+
+    // Store the evaluation result to the history
     historyStorage.applyNewRun(key, new EvaluationData[TMeasurement](inputDescriptor, Instant.now, measurement))
+
     tracker.addStoringTime()
-    tracker.getStatistics.lines.foreach(logger.log)
-    new RunResult(result, new RunData(key.function, inputDescriptor, tracker))
+
+    val performance = tracker.getPerformance
+    performance.toLogString.lines.foreach(logger.log)
+    tracker.reset()
+
+    new RunResult(result, new RunData(key.function, inputDescriptor, performance))
   }
 
   override def flushHistory(reference: FunctionReference): Unit =

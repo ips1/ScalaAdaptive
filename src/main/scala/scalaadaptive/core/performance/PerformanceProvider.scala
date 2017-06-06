@@ -7,4 +7,5 @@ trait PerformanceProvider {
   def getFunctionTime: Long
   def getOverheadTime: Long
   def getOverheadPercentage: Double
+  def toLogString: String
 }

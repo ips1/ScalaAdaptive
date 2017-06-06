@@ -16,14 +16,7 @@ class BasicPerformanceTracker extends PerformanceTracker {
 
   override def addFunctionTime(time: Long): Unit = functionTimeTotal += time
 
-  override def getOverheadTime: Long = selectionTimeTotal + storingTimeTotal
-
-  override def getFunctionTime: Long = functionTimeTotal
-
-  override def getOverheadPercentage: Double = if (functionTimeTotal > 0) getOverheadTime.toDouble / functionTimeTotal else 0
-
-  override def getStatistics: String =
-    s"Selection time: $selectionTimeTotal, storing time: $storingTimeTotal \ntotal overhead time: $getOverheadTime, function time: $functionTimeTotal, overhead percentage: ${getOverheadPercentage * 100}%"
+  override def getPerformance = new PerformanceData(functionTimeTotal, selectionTimeTotal, storingTimeTotal)
 
   override def addStoringTime(): Unit = {
     trackingFrom.foreach(t => addStoringTime(System.nanoTime() - t))
@@ -42,5 +35,12 @@ class BasicPerformanceTracker extends PerformanceTracker {
 
   override def startTracking(): Unit = {
     trackingFrom = Some(System.nanoTime())
+  }
+
+  override def reset(): Unit = {
+    selectionTimeTotal = 0
+    storingTimeTotal = 0
+    functionTimeTotal = 0
+    trackingFrom = None
   }
 }
