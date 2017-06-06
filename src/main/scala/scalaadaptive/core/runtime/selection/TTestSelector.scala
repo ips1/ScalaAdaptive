@@ -5,33 +5,35 @@ import org.apache.commons.math3.stat.inference.TestUtils
 
 import scalaadaptive.core.logging.Logger
 import scalaadaptive.core.runtime.history.runhistory.RunHistory
-import scalaadaptive.math.{HigherExpectation, LowerExpectation, TTestRunner}
+import scalaadaptive.math.{MultipleTTestRunner, TTestRunner, TestResult}
 
 /**
   * Created by pk250187 on 5/2/17.
   */
 class TTestSelector(val logger: Logger,
+                    val testRunner: MultipleTTestRunner,
                     val secondarySelector: RunSelector[Long],
                     val alpha: Double) extends RunSelector[Long] {
-  val testRunner = new TTestRunner(logger)
 
   override def selectOption(records: Seq[RunHistory[Long]], inputDescriptor: Option[Long]): RunHistory[Long] = {
     logger.log("Selecting using TTestSelector")
 
-    val statistics = records.map(rh => (rh, rh.runStatistics))
+    // Using Scala's view for lazy mapping and filtering - we need just the first result
+    val positiveResults = records
+      .view
+      .map(elem => {
+        val remaining = records
+          .filter(r => r != elem)
+          .map(r => r.runStatistics)
 
-    var leader = statistics.head
+        val result = testRunner.runTests(elem.runStatistics, remaining, alpha)
 
-    statistics.tail.foreach(item => {
-      val testResult = testRunner.runTest(leader._2, item._2, alpha)
+        (elem, result)
+      })
 
-      testResult match {
-        case Some(HigherExpectation()) => leader = item
-        case Some(LowerExpectation()) =>
-        case _ => return secondarySelector.selectOption(List(leader._1, item._1), inputDescriptor)
-      }
-    })
-
-    leader._1
+    positiveResults
+      .find(_._2.contains(TestResult.LowerExpectation))
+      .map(_._1)
+      .getOrElse(secondarySelector.selectOption(records, inputDescriptor))
   }
 }
