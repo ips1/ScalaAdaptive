@@ -1,7 +1,5 @@
 package scalaadaptive.extensions
 
-import scala.None
-
 /**
   * Created by pk250187 on 5/8/17.
   */
