@@ -4,13 +4,14 @@ import org.apache.commons.math3.analysis.interpolation.{LinearInterpolator, Loes
 import org.apache.commons.math3.analysis.polynomials.PolynomialSplineFunction
 import org.apache.commons.math3.exception.NumberIsTooSmallException
 
+import scalaadaptive.core.logging.Logger
 import scalaadaptive.core.runtime.history.evaluation.data.GroupedEvaluationData
 import scalaadaptive.core.runtime.history.runhistory.RunHistory
 
 /**
   * Created by pk250187 on 4/23/17.
   */
-class InterpolationSelector[TMeasurement](implicit num: Numeric[TMeasurement])
+class InterpolationSelector[TMeasurement](val logger: Logger)(implicit num: Numeric[TMeasurement])
   extends RunSelector[TMeasurement] {
 
   // TODO : Chose interpolator

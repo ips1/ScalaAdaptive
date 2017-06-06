@@ -6,7 +6,7 @@ import scalaadaptive.core.functions.adaptors.FunctionAdaptor1
   * Created by pk250187 on 4/9/17.
   */
 object MacroTest {
-  import scalaadaptive.core.macros.AdaptiveMacros._
+  import scalaadaptive.core.macros.MacroUtils._
   import scalaadaptive.api.Implicits._
 
   def increment(i: Int): Int = i + 1
@@ -20,12 +20,12 @@ object MacroTest {
   }
 
   val x = 15
-  printAst(x + 1)
+  //printAst(x + 1)
 
   def getSorter(): Sorter = new Sorter()
 
   val sort = new Sorter()
-  val test123 = printAst(increment _)
+  //val test123 = printAst(increment _)
 
 //  val testXXXX = printAst(sort.selectionSort(List()))
 

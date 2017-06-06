@@ -3,15 +3,17 @@ package scalaadaptive.core.runtime.selection
 import org.apache.commons.math3.stat.descriptive.{DescriptiveStatistics, SummaryStatistics}
 import org.apache.commons.math3.stat.inference.TestUtils
 
+import scalaadaptive.core.logging.Logger
 import scalaadaptive.core.runtime.history.runhistory.RunHistory
 import scalaadaptive.math.{HigherExpectation, LowerExpectation, TTestRunner}
 
 /**
   * Created by pk250187 on 5/2/17.
   */
-class TTestSelector(val secondarySelector: RunSelector[Long],
+class TTestSelector(val logger: Logger,
+                    val secondarySelector: RunSelector[Long],
                     val alpha: Double) extends RunSelector[Long] {
-  val testRunner = new TTestRunner(() => logger)
+  val testRunner = new TTestRunner(logger)
 
   override def selectOption(records: Seq[RunHistory[Long]], inputDescriptor: Option[Long]): RunHistory[Long] = {
     logger.log("Selecting using TTestSelector")

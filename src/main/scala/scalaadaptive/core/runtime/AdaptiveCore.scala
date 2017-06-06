@@ -18,26 +18,29 @@ trait AdaptiveCore {
   private var currentConfiguration: Configuration = defaultConfiguration
 
   private def initOptionRunner(configuration: Configuration): AdaptiveRunner = {
+    val logger = configuration.createLogger()
     new HistoryBasedAdaptiveRunner[configuration.TMeasurement](
       configuration.createHistoryStorage(),
-      configuration.createDiscreteRunSelector(),
-      configuration.createContinuousRunSelector(),
+      configuration.createDiscreteRunSelector(logger),
+      configuration.createContinuousRunSelector(logger),
       configuration.createPerformanceProvider(),
       configuration.createGroupSelector(),
-      configuration.createLogger())
+      logger)
   }
 
-  private def initPersistentOptionRunner(configuration: Configuration): Option[AdaptiveRunner] =
+  private def initPersistentOptionRunner(configuration: Configuration): Option[AdaptiveRunner] = {
+    val logger = configuration.createLogger()
     configuration.createPersistentHistoryStorage().map(persistentStorage =>
       new HistoryBasedAdaptiveRunner[configuration.TMeasurement](
         persistentStorage,
-        configuration.createDiscreteRunSelector(),
-        configuration.createContinuousRunSelector(),
+        configuration.createDiscreteRunSelector(logger),
+        configuration.createContinuousRunSelector(logger),
         configuration.createPerformanceProvider(),
         configuration.createGroupSelector(),
-        configuration.createLogger()
+        logger
       )
     )
+  }
 
   private var identifierValidator: CustomIdentifierValidator = defaultConfiguration.createIdentifierValidator()
   private var multiFunctionDefaults: FunctionConfig = defaultConfiguration.createMultiFunctionDefaultConfig()
@@ -65,7 +68,6 @@ trait AdaptiveCore {
 
   def initialize(configuration: Configuration): Unit = {
     currentConfiguration = configuration
-    LogManager.setLogger(currentConfiguration.createLogger())
     runner = initOptionRunner(currentConfiguration)
     persistentRunner = initPersistentOptionRunner(currentConfiguration).getOrElse(runner)
     identifierValidator = currentConfiguration.createIdentifierValidator()

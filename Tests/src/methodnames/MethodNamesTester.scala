@@ -7,7 +7,7 @@ import adaptivetests.sorting.Sorter
 
 object MethodNamesTester {
   import scalaadaptive.api.Implicits._
-  import scalaadaptive.core.macros.AdaptiveMacros._
+  import scalaadaptive.core.macros.MacroUtils._
   import scala.math._
 
   def method1(i: Int): Int = ???

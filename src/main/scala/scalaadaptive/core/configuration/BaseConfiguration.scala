@@ -9,7 +9,7 @@ import scalaadaptive.core.functions.analytics.{AnalyticsCollector, BasicAnalytic
 import scalaadaptive.core.functions.{DefaultFunctionFactory, FunctionFactory}
 import scalaadaptive.core.functions.references.{AlphanumValidator, CustomIdentifierValidator}
 import scalaadaptive.core.runtime.history.historystorage.{HistoryStorage, MapHistoryStorage}
-import scalaadaptive.core.runtime.history.runhistory.{CachedAverageRunHistory, FullRunHistory}
+import scalaadaptive.core.runtime.history.runhistory.{CachedAverageRunHistory, FullRunHistory, LimitedRunHistory}
 import scalaadaptive.core.functions.policies.AlwaysSelectPolicy
 import scalaadaptive.extensions.Averageable
 
@@ -20,7 +20,9 @@ trait BaseConfiguration extends Configuration {
   protected val num: Averageable[TMeasurement]
   override val createHistoryStorage: () => HistoryStorage[TMeasurement] = () => {
     new MapHistoryStorage[TMeasurement](key =>
-      new CachedAverageRunHistory[TMeasurement](new FullRunHistory[TMeasurement](key)(num))(num)
+      new LimitedRunHistory[TMeasurement](20000,
+        new CachedAverageRunHistory[TMeasurement](
+          new FullRunHistory[TMeasurement](key)(num))(num))
     )
   }
   override val createGroupSelector: () => GroupSelector =

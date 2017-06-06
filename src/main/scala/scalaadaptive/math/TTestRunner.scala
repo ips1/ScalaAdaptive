@@ -9,7 +9,7 @@ import scalaadaptive.core.logging.Logger
 /**
   * Created by pk250187 on 5/2/17.
   */
-class TTestRunner(val getLogger: () => Logger) {
+class TTestRunner(val logger: Logger) {
   def getQuantile(count1: Long, count2: Long, alpha: Double): Double = {
     val degreesOfFreedom = count1 + count2 - 2
 
@@ -21,14 +21,17 @@ class TTestRunner(val getLogger: () => Logger) {
               sampleStats2: StatisticalSummary,
               alpha: Double): Option[TestResult] = {
 
-    // TODO: Chceck alpha
+    if (alpha < 0.0 || alpha > 1.0) {
+      logger.log(s"Invalid alpha provided to TTestRunner: $alpha")
+      None
+    }
 
     val tValue = TestUtils.t(sampleStats1, sampleStats2)
     val quantile = getQuantile(sampleStats1.getN, sampleStats2.getN, alpha)
 
-    getLogger().log("Performing test")
-    getLogger().log(s"T-value = $tValue")
-    getLogger().log(s"Quantile = $quantile")
+    logger.log("Performing test")
+    logger.log(s"T-value = $tValue")
+    logger.log(s"Quantile = $quantile")
 
     if (tValue > quantile) {
       return Some(HigherExpectation())
@@ -37,7 +40,7 @@ class TTestRunner(val getLogger: () => Logger) {
       return Some(LowerExpectation())
     }
 
-    getLogger().log(s"Can't reject")
+    logger.log(s"Can't reject")
 
     Some(CantRejectEquality())
   }
