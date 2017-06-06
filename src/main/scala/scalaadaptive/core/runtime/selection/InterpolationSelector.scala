@@ -48,8 +48,8 @@ class InterpolationSelector[TMeasurement](val logger: Logger)(implicit num: Nume
       })
 
     val min = polynomials.minBy(p => if (p._2.isEmpty || !p._2.get.isValidPoint(descriptor)) {
-      // TODO: Replace by logger
-      println("Invalid point!")
+      // TODO: Add more logging!!!
+      logger.log("Invalid point!")
       -1
     } else p._2.get.value(descriptor))
     min._1
