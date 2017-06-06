@@ -5,7 +5,6 @@ import scalaadaptive.core.functions.adaptors.FunctionConfig
 import scalaadaptive.core.configuration.Configuration
 import scalaadaptive.core.configuration.defaults.FullHistoryTTestConfiguration
 import scalaadaptive.core.functions.analytics.{AnalyticsCollector, BasicAnalyticsCollector}
-import scalaadaptive.core.logging.LogManager
 import scalaadaptive.core.functions.references.CustomIdentifierValidator
 import scalaadaptive.core.runtime.history._
 import scalaadaptive.core.functions.{DefaultFunctionFactory, FunctionFactory}

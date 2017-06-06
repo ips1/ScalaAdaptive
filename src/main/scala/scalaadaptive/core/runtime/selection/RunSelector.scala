@@ -1,6 +1,5 @@
 package scalaadaptive.core.runtime.selection
 
-import scalaadaptive.core.logging.{LogManager, Logger}
 import scalaadaptive.core.runtime.history.runhistory.RunHistory
 
 /**
