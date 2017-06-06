@@ -39,6 +39,24 @@ class TestMethods {
     x
   }
 
+  def anotherFastMethod(x: List[Int]): List[Int] = {
+    println("fast")
+    Thread.sleep(10)
+    x
+  }
+
+  def slowestMethod(x: List[Int]): List[Int] = {
+    println("slowert")
+    Thread.sleep(30)
+    x
+  }
+
+  def anotherSlowMethod(x: List[Int]): List[Int] = {
+    println("slow")
+    Thread.sleep(20)
+    x
+  }
+
   def linearHighConstant(x: List[Int]): List[Int] = {
     println("linearHighConstant")
     val sleepTime = ((x.size * highConstant) / 1000).toInt
