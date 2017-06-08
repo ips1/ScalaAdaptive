@@ -5,13 +5,13 @@ import org.apache.commons.math3.stat.inference.TestUtils
 
 import scalaadaptive.core.logging.Logger
 import scalaadaptive.core.runtime.history.runhistory.RunHistory
-import scalaadaptive.math.{MultipleTTestRunner, TTestRunner, TestResult}
+import scalaadaptive.math.{MultipleSampleTTest, TwoSampleTTestRunner, TwoSampleTestResult}
 
 /**
   * Created by pk250187 on 5/2/17.
   */
 class TTestSelector(val logger: Logger,
-                    val testRunner: MultipleTTestRunner,
+                    val testRunner: MultipleSampleTTest,
                     val secondarySelector: RunSelector[Long],
                     val alpha: Double) extends RunSelector[Long] {
 
@@ -32,7 +32,7 @@ class TTestSelector(val logger: Logger,
       })
 
     positiveResults
-      .find(_._2.contains(TestResult.LowerExpectation))
+      .find(_._2.contains(TwoSampleTestResult.LowerExpectation))
       .map(_._1)
       .getOrElse(secondarySelector.selectOption(records, inputDescriptor))
   }

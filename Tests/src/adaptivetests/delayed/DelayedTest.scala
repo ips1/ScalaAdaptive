@@ -1,5 +1,7 @@
 package adaptivetests.delayed
 
+import java.io.PrintWriter
+
 import scalaadaptive.core.configuration.defaults.FullHistoryTTestConfiguration
 import scalaadaptive.api.options.{Selection, Storage}
 import scalaadaptive.api.Adaptive
@@ -17,8 +19,8 @@ object DelayedTest {
 
   def run(config: DelayedConfig) = {
     config match {
-      case SlowConfig() => Thread.sleep(50)
-      case FastConfig() => Thread.sleep(10)
+      case SlowConfig() => Thread.sleep(5)
+      case FastConfig() => Thread.sleep(1)
     }
   }
 
@@ -35,5 +37,7 @@ object DelayedTest {
     for (x <- 1 to 20) {
       test()
     }
+
+    getConfig.getAnalyticsData.foreach(d => d.saveData(new PrintWriter(System.out)))
   }
 }

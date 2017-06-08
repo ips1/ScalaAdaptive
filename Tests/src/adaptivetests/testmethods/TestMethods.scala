@@ -9,11 +9,23 @@ import scalaadaptive.core.functions.policies.{LimitedOverheadPolicy, StopSelecti
 class TestMethods {
   import scalaadaptive.api.Implicits._
 
+  def sleepNanos(nanos: Long): Unit = {
+    val milis = nanos / 1000000
+    val remainingNanos = (nanos - (milis * 1000000)).toInt
+    Thread.sleep(milis, remainingNanos)
+  }
+
+  def iterate(times: Int): Long =
+    Seq
+      .range(0, times)
+      .map(i => Seq.range(0, 20).sum + i)
+      .sum
+
   val slowSleepTime = 100
   val fastSleepTime = 10
 
-  val highConstant = 20
-  val minConstant = 0.5
+  val highConstant = 100
+  val minConstant = 1
 //
 //  def linearHighConstant(x: Int): Int = {
 //    val sleepTime = ((x * highConstant) / 10).toInt
@@ -57,17 +69,30 @@ class TestMethods {
     x
   }
 
-  def linearHighConstant(x: List[Int]): List[Int] = {
-    println("linearHighConstant")
-    val sleepTime = ((x.size * highConstant) / 1000).toInt
+  def linearMinConstant(x: List[Int]): List[Int] = {
+    //println("linearMinConstant")
+    val sleepTime = ((x.size * minConstant + highConstant * highConstant)).toInt
+    //sleepNanos(sleepTime)
     Thread.sleep(sleepTime)
+//    iterate(sleepTime)
+    x
+  }
+
+  def linearHighConstant(x: List[Int]): List[Int] = {
+    //println("linearHighConstant")
+    val sleepTime = ((x.size * highConstant)).toInt
+    //sleepNanos(sleepTime)
+    Thread.sleep(sleepTime)
+//    iterate(sleepTime)
     x
   }
 
   def quadraticMinConstant(x: List[Int]): List[Int] = {
-    println("quadraticMinConstant")
-    val sleepTime = ((x.size * x.size * minConstant) / 1000).toInt
+    //println("quadraticMinConstant")
+    val sleepTime = ((x.size * x.size * minConstant)).toInt
+    //sleepNanos(sleepTime)
     Thread.sleep(sleepTime)
+//    iterate(sleepTime)
     x
   }
 
@@ -83,7 +108,15 @@ class TestMethods {
       by (x => x.size)
       selectUsing Selection.Continuous
       storeUsing Storage.Persistent
-      withPolicy new StopSelectingWhenDecidedPolicy(80, 0.6)
+      //withPolicy new StopSelectingWhenDecidedPolicy(80, 0.6)
+    )
+
+  val linearFunctionsContinuous = (
+    linearHighConstant _ or linearMinConstant
+      by (x => x.size)
+      selectUsing Selection.Continuous
+      storeUsing Storage.Persistent
+    //withPolicy new StopSelectingWhenDecidedPolicy(80, 0.6)
     )
 
   val functionContinuousWithLimitedOverhead =

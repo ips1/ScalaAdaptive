@@ -1,4 +1,4 @@
-package adaptivetests.selectionsettingtest
+package adaptivetests.selectionsetting
 
 import java.time.Duration
 

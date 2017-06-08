@@ -1,12 +1,12 @@
 package scalaadaptive.math
 import org.apache.commons.math3.stat.descriptive.StatisticalSummary
 
-import scalaadaptive.math.TestResult.TestResult
+import scalaadaptive.math.TwoSampleTestResult.TwoSampleTestResult
 
 /**
   * Created by pk250187 on 6/6/17.
   */
-class BonferroniMultipleTTestRunner(val simpleTest: SimpleTTestRunner) extends MultipleTTestRunner {
+class BonferroniTTestRunner(val simpleTest: TwoSampleTTest) extends MultipleSampleTTest {
   /**
     * Runs a series of T-Tests to determine whether the first sample is from a distribution with significantly higher
     * or lower expectation than all of the other samples.
@@ -25,7 +25,7 @@ class BonferroniMultipleTTestRunner(val simpleTest: SimpleTTestRunner) extends M
     */
   override def runTests(firstSampleStats: StatisticalSummary,
                         remainingSampleStats: Seq[StatisticalSummary],
-                        alpha: Double): Option[TestResult] = {
+                        alpha: Double): Option[TwoSampleTestResult] = {
     // We need to perform one test for each remaining sample
     val numTests = remainingSampleStats.size
 
@@ -38,15 +38,15 @@ class BonferroniMultipleTTestRunner(val simpleTest: SimpleTTestRunner) extends M
     val testResults = remainingSampleStats
       .map(second => simpleTest.runTest(firstSampleStats, second, oneTestAlpha))
 
-    if (testResults.forall(res => res.contains(TestResult.HigherExpectation)))
-      return Some(TestResult.HigherExpectation)
+    if (testResults.forall(res => res.contains(TwoSampleTestResult.HigherExpectation)))
+      return Some(TwoSampleTestResult.HigherExpectation)
 
-    if (testResults.forall(res => res.contains(TestResult.LowerExpectation)))
-      return Some(TestResult.LowerExpectation)
+    if (testResults.forall(res => res.contains(TwoSampleTestResult.LowerExpectation)))
+      return Some(TwoSampleTestResult.LowerExpectation)
 
     if (testResults.exists(res => res.isEmpty))
       return None
 
-    Some(TestResult.CantRejectEquality)
+    Some(TwoSampleTestResult.CantRejectEquality)
   }
 }

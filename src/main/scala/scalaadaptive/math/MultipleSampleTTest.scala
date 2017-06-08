@@ -2,12 +2,12 @@ package scalaadaptive.math
 
 import org.apache.commons.math3.stat.descriptive.StatisticalSummary
 
-import scalaadaptive.math.TestResult.TestResult
+import scalaadaptive.math.TwoSampleTestResult.TwoSampleTestResult
 
 /**
   * Created by pk250187 on 6/6/17.
   */
-trait MultipleTTestRunner {
+trait MultipleSampleTTest {
   /**
     * Runs a series of T-Tests to determine whether the first sample is from a distribution with significantly higher
     * or lower expectation than all of the other samples.
@@ -25,5 +25,5 @@ trait MultipleTTestRunner {
     */
   def runTests(firstSampleStats: StatisticalSummary,
               remainingSampleStats: Seq[StatisticalSummary],
-              alpha: Double): Option[TestResult]
+              alpha: Double): Option[TwoSampleTestResult]
 }
