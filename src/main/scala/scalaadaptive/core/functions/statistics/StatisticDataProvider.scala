@@ -5,6 +5,8 @@ package scalaadaptive.core.functions.statistics
   */
 trait StatisticDataProvider {
   def getTotalRunCount: Long
+  def getTotalGatherCount: Long
+  def getTotalSelectCount: Long
   def getStreakLength: Long
   def getTotalTime: Long
   def getTotalOverheadTime: Long

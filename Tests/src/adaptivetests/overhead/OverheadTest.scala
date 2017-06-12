@@ -1,6 +1,6 @@
 package adaptivetests.overhead
 
-import adaptivetests.testmethods.TestMethods
+import tools.methods.TestMethods
 
 import scalaadaptive.api.Adaptive
 import scalaadaptive.api.adaptors.MultiFunction1

@@ -3,7 +3,7 @@ package adaptivetests.limited
 import java.time.Duration
 
 import adaptivetests.TestRunner
-import adaptivetests.testmethods.TestMethods
+import tools.methods.TestMethods
 
 import scalaadaptive.core.configuration.defaults.FullHistoryTTestConfiguration
 import scalaadaptive.api.Adaptive

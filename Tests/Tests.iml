@@ -14,5 +14,6 @@
     <orderEntry type="library" name="net.sf.flexjson:flexjson:3.3" level="project" />
     <orderEntry type="library" name="com.fasterxml.jackson.core:jackson-databind:2.8.8.1" level="project" />
     <orderEntry type="library" name="com.fasterxml.jackson.module:jackson-module-scala_2.11:2.8.8" level="project" />
+    <orderEntry type="library" name="SBT: org.apache.commons:commons-math3:3.3:jar" level="project" />
   </component>
 </module>

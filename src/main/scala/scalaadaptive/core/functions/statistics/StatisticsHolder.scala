@@ -8,4 +8,5 @@ import scalaadaptive.core.functions.RunData
 trait StatisticsHolder[TArgType, TRetType]
   extends StatisticDataProvider with StatisticFunctionProvider[TArgType, TRetType]{
   def applyRunData(data: RunData, markAsGather: Boolean): Unit
+  def markRun(): Unit
 }

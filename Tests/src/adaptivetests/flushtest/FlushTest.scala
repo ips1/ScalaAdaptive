@@ -1,7 +1,7 @@
 package adaptivetests.flushtest
 
 import adaptivetests.TestRunner
-import adaptivetests.testmethods.TestMethods
+import tools.methods.TestMethods
 
 import scalaadaptive.core.configuration.defaults.GroupedRunHistoryInterpolationConfiguration
 import scalaadaptive.api.options.Storage

@@ -57,6 +57,7 @@ class MultipleImplementationFunction[TArgType, TRetType](val functions: Seq[Refe
   def invoke(arguments: TArgType): TRetType = {
     val (result, newPolicy) = currentPolicy.decide(statistics)
     currentPolicy = newPolicy
+    statistics.markRun()
     result match {
       // Fast results that avoid the RunTracker invocation
       case PolicyResult.UseLast => statistics.getLast.fun(arguments)
@@ -72,6 +73,7 @@ class MultipleImplementationFunction[TArgType, TRetType](val functions: Seq[Refe
   def invokeWithDelayedMeasure(arguments: TArgType): (TRetType, InvocationToken) = {
     val (result, newPolicy) = currentPolicy.decide(statistics)
     currentPolicy = newPolicy
+    statistics.markRun()
     result match {
       // Fast results that avoid the RunTracker invocation
       case PolicyResult.UseLast => (statistics.getLast.fun(arguments), new SimpleInvocationToken)

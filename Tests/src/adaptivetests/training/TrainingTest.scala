@@ -1,7 +1,7 @@
 package adaptivetests.training
 
 import adaptivetests.TestRunner
-import adaptivetests.testmethods.TestMethods
+import tools.methods.TestMethods
 
 import scalaadaptive.core.configuration.defaults.{GroupedRunHistoryInterpolationConfiguration, ImmutableFullHistoryInterpolationConfiguration}
 import scalaadaptive.api.Adaptive

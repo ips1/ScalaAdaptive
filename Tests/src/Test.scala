@@ -1,6 +1,6 @@
 import adaptivetests.TestRunner
 import adaptivetests.sorting.Sorter
-import adaptivetests.testmethods.TestMethods
+import tools.methods.TestMethods
 
 import scala.util.Random
 import scalaadaptive.core.configuration.defaults._

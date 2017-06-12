@@ -1,7 +1,9 @@
-package adaptivetests.testmethods
+package tools.methods
+
+import tools.wait.WaitMethods
 
 import scalaadaptive.api.options.{Selection, Storage}
-import scalaadaptive.core.functions.policies.{LimitedOverheadPolicy, StopSelectingWhenDecidedPolicy}
+import scalaadaptive.core.functions.policies.LimitedOverheadPolicy
 
 /**
   * Created by pk250187 on 5/1/17.
@@ -9,11 +11,7 @@ import scalaadaptive.core.functions.policies.{LimitedOverheadPolicy, StopSelecti
 class TestMethods {
   import scalaadaptive.api.Implicits._
 
-  def sleepNanos(nanos: Long): Unit = {
-    val milis = nanos / 1000000
-    val remainingNanos = (nanos - (milis * 1000000)).toInt
-    Thread.sleep(milis, remainingNanos)
-  }
+  val delay = (x: Int) => WaitMethods.waitForNanos(x * 100)
 
   def iterate(times: Int): Long =
     Seq
@@ -73,7 +71,7 @@ class TestMethods {
     //println("linearMinConstant")
     val sleepTime = ((x.size * minConstant + highConstant * highConstant)).toInt
     //sleepNanos(sleepTime)
-    Thread.sleep(sleepTime)
+    delay(sleepTime)
 //    iterate(sleepTime)
     x
   }
@@ -82,7 +80,7 @@ class TestMethods {
     //println("linearHighConstant")
     val sleepTime = ((x.size * highConstant)).toInt
     //sleepNanos(sleepTime)
-    Thread.sleep(sleepTime)
+    delay(sleepTime)
 //    iterate(sleepTime)
     x
   }
@@ -91,7 +89,7 @@ class TestMethods {
     //println("quadraticMinConstant")
     val sleepTime = ((x.size * x.size * minConstant)).toInt
     //sleepNanos(sleepTime)
-    Thread.sleep(sleepTime)
+    delay(sleepTime)
 //    iterate(sleepTime)
     x
   }

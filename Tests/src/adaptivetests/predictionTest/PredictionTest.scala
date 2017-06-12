@@ -1,6 +1,7 @@
 package adaptivetests.predictionTest
 
-import adaptivetests.testmethods.TestMethods
+import adaptivetests.sorttest.SortTest
+import tools.methods.TestMethods
 
 import scala.util.Random
 import scalaadaptive.api.Adaptive
@@ -26,15 +27,16 @@ object PredictionTest {
     //runner.runIncrementalTest(l => testMethods.functionContinuous(l))
 
     val testCount = 400
-    val maxSize = 400
+    val maxSize = 5000
+    val verificationStep = 50
     val random = new Random(System.nanoTime)
-    val trainData = Seq.fill(testCount)(generateRandomDataOfRandomSize(maxSize)).toList
+    val trainData = Seq.fill(testCount)(generateRandomDataOfRandomSize(maxSize).toArray).toList
 
-    val function = testMethods.linearFunctionsContinuous storeUsing Storage.Global
+    val function = SortTest.sort//testMethods.linearFunctionsContinuous storeUsing Storage.Global
 
     function.train(trainData)
 
-    val verificationData = Seq.range(0, 400, 25).map(generateRandomData)
+    val verificationData = Seq.range(0, maxSize, verificationStep).map(generateRandomData).map(_.toArray)
 
     verificationData.foreach(d => {
       function(d)

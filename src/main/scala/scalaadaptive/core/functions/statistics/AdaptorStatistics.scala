@@ -18,6 +18,8 @@ class AdaptorStatistics[TArgType, TRetType](defaultLast: ReferencedFunction[TArg
   private var last: ReferencedFunction[TArgType, TRetType] = defaultLast
   private var streakLength: Long = 0
   private var totalRunCount: Long = 0
+  private var totalSelectCount: Long = 0
+  private var totalGatherCount: Long = 0
   private var totalFunctionTime: Long = 0
   private var totalOverheadTime: Long = 0
   private var totalGatherTime: Long = 0
@@ -37,15 +39,20 @@ class AdaptorStatistics[TArgType, TRetType](defaultLast: ReferencedFunction[TArg
         last = referenceResolver(data.selectedFunction).getOrElse(defaultLast)
         streakLength = 1
       }
+      totalSelectCount += 1
     }
 
-    totalRunCount += 1
     totalFunctionTime += data.performance.getFunctionTime
     totalOverheadTime += data.performance.getOverheadTime
 
     if (markAsGather) {
       totalGatherTime += (data.performance.getFunctionTime + data.performance.getOverheadTime)
+      totalGatherCount += 1
     }
+  }
+
+  override def markRun(): Unit = {
+    totalRunCount += 1
   }
 
   override def getLast: ReferencedFunction[TArgType, TRetType] = last
@@ -68,4 +75,6 @@ class AdaptorStatistics[TArgType, TRetType](defaultLast: ReferencedFunction[TArg
   override def getLastRunCount: Long = timesSelected.getOrElse(last.reference, 0)
   override def getTotalGatherTime: Long = totalGatherTime
   override def getTotalTime: Long = totalFunctionTime + totalOverheadTime
+  override def getTotalGatherCount: Long = totalGatherCount
+  override def getTotalSelectCount: Long = totalSelectCount
 }

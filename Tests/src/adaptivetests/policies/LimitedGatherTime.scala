@@ -1,6 +1,6 @@
 package adaptivetests.policies
 
-import adaptivetests.testmethods.TestMethods
+import tools.methods.TestMethods
 
 import scalaadaptive.core.functions.policies.LimitedGatherTimePolicy
 
