@@ -1,6 +1,7 @@
 package scalaadaptive.core.functions.policies
 
 import scalaadaptive.core.functions.policies.PolicyResult.PolicyResult
+import scalaadaptive.core.functions.policies.utilpolicies.DoOncePolicy
 import scalaadaptive.core.functions.policies.utilpolicies.repeatuntil.RepeatUntilRunCountPolicy
 import scalaadaptive.core.functions.statistics.StatisticDataProvider
 
@@ -15,10 +16,12 @@ class PauseSelectionAfterStreakPolicy(val streakSize: Int, val retryEvery: Int) 
     * @return The result and the policy that is to be used in the next decision
     */
   override def decide(statistics: StatisticDataProvider): (PolicyResult, Policy) =
-    if (statistics.getStreakLength >= streakSize)
+    if (statistics.getStreakLength >= streakSize) {
+      val retryPolicy = new DoOncePolicy(PolicyResult.SelectNew, this)
       (
         PolicyResult.UseLast,
-        new RepeatUntilRunCountPolicy(PolicyResult.UseLast, statistics.getTotalRunCount + retryEvery, this)
+        new RepeatUntilRunCountPolicy(PolicyResult.UseLast, statistics.getTotalRunCount + retryEvery, retryPolicy)
       )
+    }
     else (PolicyResult.SelectNew, this)
 }
