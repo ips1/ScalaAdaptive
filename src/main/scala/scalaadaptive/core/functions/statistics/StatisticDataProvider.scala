@@ -9,7 +9,9 @@ trait StatisticDataProvider {
   def getTotalSelectCount: Long
   def getStreakLength: Long
   def getTotalTime: Long
+  def getTotalFunctionTime: Long
   def getTotalOverheadTime: Long
   def getTotalGatherTime: Long
   def getLastRunCount: Long
+  def getMostRunCount: Long
 }

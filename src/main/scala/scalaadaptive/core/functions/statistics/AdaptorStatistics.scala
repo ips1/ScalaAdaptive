@@ -26,6 +26,9 @@ class AdaptorStatistics[TArgType, TRetType](defaultLast: ReferencedFunction[TArg
   private var totalOverheadPercentage: Double = 0
   private var totalGatherPercentage: Double = 0
 
+  private def getMostSelectedRecord: (FunctionReference, Long) =
+    timesSelected.maxBy(_._2)
+
   override def applyRunData(data: RunData, markAsGather: Boolean): Unit = {
     // The run is only counted into streaks and selected counts if it wasn't marked as gather
     // (when gathering, the running function isn't selected)
@@ -63,7 +66,7 @@ class AdaptorStatistics[TArgType, TRetType](defaultLast: ReferencedFunction[TArg
     if (timesSelected.isEmpty)
       defaultLast
     else
-      referenceResolver(timesSelected.maxBy(_._2)._1).getOrElse(defaultLast)
+      referenceResolver(getMostSelectedRecord._1).getOrElse(defaultLast)
 
   override def getLeastSelectedFunction: ReferencedFunction[TArgType, TRetType] =
     if (timesSelected.isEmpty)
@@ -73,8 +76,10 @@ class AdaptorStatistics[TArgType, TRetType](defaultLast: ReferencedFunction[TArg
 
   override def getTotalRunCount: Long = totalRunCount
   override def getLastRunCount: Long = timesSelected.getOrElse(last.reference, 0)
+  override def getMostRunCount: Long = if (timesSelected.isEmpty) 0 else getMostSelectedRecord._2
   override def getTotalGatherTime: Long = totalGatherTime
   override def getTotalTime: Long = totalFunctionTime + totalOverheadTime
+  override def getTotalFunctionTime: Long = totalFunctionTime
   override def getTotalGatherCount: Long = totalGatherCount
   override def getTotalSelectCount: Long = totalSelectCount
 }
