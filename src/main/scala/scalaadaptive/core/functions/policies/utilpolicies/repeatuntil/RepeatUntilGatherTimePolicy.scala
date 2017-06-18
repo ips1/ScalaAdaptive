@@ -20,5 +20,5 @@ class RepeatUntilGatherTimePolicy(val result: PolicyResult,
     if (statistics.getTotalGatherTime < gatherTimeLimit)
       (result, this)
     else
-      (result, nextPolicy)
+      nextPolicy.decide(statistics)
 }

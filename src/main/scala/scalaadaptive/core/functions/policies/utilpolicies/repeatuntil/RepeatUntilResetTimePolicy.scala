@@ -20,5 +20,5 @@ class RepeatUntilResetTimePolicy(val result: PolicyResult,
     if (System.nanoTime() < nextResetTime)
       (result, this)
     else
-      (result, nextPolicy)
+      nextPolicy.decide(statistics)
 }

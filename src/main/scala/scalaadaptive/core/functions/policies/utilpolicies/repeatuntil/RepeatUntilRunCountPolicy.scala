@@ -9,7 +9,7 @@ import scalaadaptive.core.functions.statistics.StatisticDataProvider
   */
 class RepeatUntilRunCountPolicy(val result: PolicyResult,
                                 val runCountLimit: Long,
-                                val nextPolicy: Policy) extends Policy{
+                                val nextPolicy: Policy) extends Policy {
   /**
     * Decides on the action to take and on the policy to use in the next decision
     *
@@ -20,5 +20,5 @@ class RepeatUntilRunCountPolicy(val result: PolicyResult,
     if (statistics.getTotalRunCount < runCountLimit)
       (result, this)
     else
-      (result, nextPolicy)
+      nextPolicy.decide(statistics)
 }

@@ -20,5 +20,5 @@ class RepeatUntilOverheadPolicy(val result: PolicyResult,
     if (statistics.getTotalOverheadTime < overheadLimit)
       (result, this)
     else
-      (result, nextPolicy)
+      nextPolicy.decide(statistics)
 }

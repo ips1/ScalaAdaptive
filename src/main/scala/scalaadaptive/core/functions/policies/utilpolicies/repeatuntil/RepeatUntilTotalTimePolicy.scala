@@ -20,5 +20,5 @@ class RepeatUntilTotalTimePolicy(val result: PolicyResult,
     if (statistics.getTotalTime < totalTimeLimit)
       (result, this)
     else
-      (result, nextPolicy)
+      nextPolicy.decide(statistics)
 }
