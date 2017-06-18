@@ -5,7 +5,7 @@ import org.apache.commons.math3.stat.descriptive.StatisticalSummary
 import org.apache.commons.math3.stat.inference.TestUtils
 
 import scalaadaptive.core.logging.Logger
-import scalaadaptive.math.TwoSampleTestResult.TwoSampleTestResult
+import scalaadaptive.math.TTestResult.TTestResult
 
 /**
   * Created by pk250187 on 5/2/17.
@@ -20,12 +20,12 @@ class TwoSampleTTestRunner(val logger: Logger) extends TwoSampleTTest {
 
   /**
     * Runs a simple T-Test with the specified significance level to determine whether the first sample values are
-    * from a distribution with higher expectation than the second sample.
+    * from a distribution with higher mean than the second sample.
     * Possible results:
-    * TestResult.HigherExpectation - expecting the first sample to have higher expectation, rejecting the hypothesis
-    * that the first sample has lower expectation
-    * TestResult.LowerExpectation - expecting the first sample to have lower expectation, rejecting the hypothesis
-    * that the first sample has higher expectation
+    * TestResult.HigherMean - expecting the first sample to have higher mean, rejecting the hypothesis
+    * that the first sample has lower mean
+    * TestResult.LowerMean - expecting the first sample to have lower mean, rejecting the hypothesis
+    * that the first sample has higher mean
     * TestResult.CantReject - can't reject neither one of the hypothesis
     *
     * @param sampleStats1 First sample data statistics
@@ -35,7 +35,7 @@ class TwoSampleTTestRunner(val logger: Logger) extends TwoSampleTTest {
     */
   override def runTest(sampleStats1: StatisticalSummary,
               sampleStats2: StatisticalSummary,
-              alpha: Double): Option[TwoSampleTestResult] = {
+              alpha: Double): Option[TTestResult] = {
 
     if (alpha < 0.0 || alpha > 1.0) {
       logger.log(s"Invalid alpha provided to TTestRunner: $alpha")
@@ -50,14 +50,14 @@ class TwoSampleTTestRunner(val logger: Logger) extends TwoSampleTTest {
     logger.log(s"Quantile = $quantile")
 
     if (tValue > quantile) {
-      return Some(TwoSampleTestResult.HigherExpectation)
+      return Some(TTestResult.HigherMean)
     }
     else if (tValue < -1 * quantile) {
-      return Some(TwoSampleTestResult.LowerExpectation)
+      return Some(TTestResult.LowerMean)
     }
 
     logger.log(s"Can't reject")
 
-    Some(TwoSampleTestResult.CantRejectEquality)
+    Some(TTestResult.CantRejectEquality)
   }
 }
