@@ -2,7 +2,7 @@ package scalaadaptive.core.runtime
 
 import java.time.{Duration, Instant}
 
-import scalaadaptive.api.grouping.GroupSelector
+import scalaadaptive.api.grouping.{GroupId, GroupSelector}
 import scalaadaptive.core.logging.Logger
 import scalaadaptive.api.options.Selection
 import scalaadaptive.api.options.Selection.Selection
@@ -40,16 +40,12 @@ class HistoryBasedAdaptiveSelector[TMeasurement](historyStorage: HistoryStorage[
 
   private def selectRecord[TArgType, TReturnType](options: Seq[ReferencedFunction[TArgType, TReturnType]],
                                                   runSelector: SelectionStrategy[TMeasurement],
+                                                  groupId: GroupId,
                                                   inputDescriptor: Option[Long],
                                                   limitedBy: Option[Duration]) = {
-    val targetBucket = inputDescriptor match {
-      case Some(descriptor) => bucketSelector.selectGroupForValue(descriptor)
-      case _ => bucketSelector.defaultGroup
-    }
+    logger.log(s"Target group: $groupId, byValue: $inputDescriptor")
 
-    logger.log(s"Target bucket: $targetBucket, byValue: $inputDescriptor")
-
-    val allHistories = options.map(f => historyStorage.getHistory(HistoryKey(f.reference, targetBucket)))
+    val allHistories = options.map(f => historyStorage.getHistory(HistoryKey(f.reference, groupId)))
 
     val histories = limitedBy match {
       case Some(duration) => allHistories.map(h => filterHistoryByDuration(h, duration))
@@ -68,6 +64,7 @@ class HistoryBasedAdaptiveSelector[TMeasurement](historyStorage: HistoryStorage[
 
   override def runOption[TArgType, TReturnType](options: Seq[ReferencedFunction[TArgType, TReturnType]],
                                                 arguments: TArgType,
+                                                groupId: GroupId,
                                                 inputDescriptor: Option[Long],
                                                 limitedBy: Option[Duration],
                                                 selection: Selection): RunResult[TReturnType] = {
@@ -75,7 +72,7 @@ class HistoryBasedAdaptiveSelector[TMeasurement](historyStorage: HistoryStorage[
     tracker.startTracking()
 
     // Select function to run
-    val selectedRecord = selectRecord(options, getSelectorForSelection(selection), inputDescriptor, limitedBy)
+    val selectedRecord = selectRecord(options, getSelectorForSelection(selection), groupId, inputDescriptor, limitedBy)
     val functionToRun = options.find(_.reference == selectedRecord.reference).get.fun
 
     tracker.addSelectionTime()
@@ -86,6 +83,7 @@ class HistoryBasedAdaptiveSelector[TMeasurement](historyStorage: HistoryStorage[
 
   override def runOptionWithDelayedMeasure[TArgType, TReturnType](options: Seq[ReferencedFunction[TArgType, TReturnType]],
                                                                   arguments: TArgType,
+                                                                  groupId: GroupId,
                                                                   inputDescriptor: Option[Long],
                                                                   limitedBy: Option[Duration],
                                                                   selection: Selection): (TReturnType, InvocationTokenWithCallbacks) = {
@@ -93,7 +91,7 @@ class HistoryBasedAdaptiveSelector[TMeasurement](historyStorage: HistoryStorage[
     tracker.startTracking()
 
     // Select function to run
-    val selectedRecord = selectRecord(options, getSelectorForSelection(selection), inputDescriptor, limitedBy)
+    val selectedRecord = selectRecord(options, getSelectorForSelection(selection), groupId, inputDescriptor, limitedBy)
     val functionToRun = options.find(_.reference == selectedRecord.reference).get.fun
 
     tracker.addSelectionTime()
@@ -124,7 +122,7 @@ class HistoryBasedAdaptiveSelector[TMeasurement](historyStorage: HistoryStorage[
     performance.toLogString.lines.foreach(logger.log)
     tracker.reset()
 
-    new RunResult(result, new RunData(key.function, inputDescriptor, performance))
+    new RunResult(result, new RunData(key.function, key.groupId, inputDescriptor, performance))
   }
 
   override def flushHistory(reference: FunctionReference): Unit =

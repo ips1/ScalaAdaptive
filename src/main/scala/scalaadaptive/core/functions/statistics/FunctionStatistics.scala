@@ -11,8 +11,8 @@ import scalaadaptive.core.functions.RunData
 /**
   * Created by pk250187 on 5/20/17.
   */
-class AdaptorStatistics[TArgType, TRetType](defaultLast: ReferencedFunction[TArgType, TRetType],
-                                            val referenceResolver: (FunctionReference) => Option[ReferencedFunction[TArgType,TRetType]])
+class FunctionStatistics[TArgType, TRetType](defaultLast: ReferencedFunction[TArgType, TRetType],
+                                             val referenceResolver: (FunctionReference) => Option[ReferencedFunction[TArgType,TRetType]])
   extends StatisticsHolder[TArgType, TRetType] {
   val timesSelected: mutable.HashMap[FunctionReference, Long] = new mutable.HashMap[FunctionReference, Long]
   private var last: ReferencedFunction[TArgType, TRetType] = defaultLast

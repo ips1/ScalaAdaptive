@@ -2,6 +2,7 @@ package scalaadaptive.core.runtime
 
 import java.time.Duration
 
+import scalaadaptive.api.grouping.GroupId
 import scalaadaptive.api.options.Selection.Selection
 import scalaadaptive.core.performance.PerformanceTracker
 import scalaadaptive.core.functions.references.{FunctionReference, ReferencedFunction}
@@ -18,12 +19,14 @@ import scalaadaptive.core.functions.RunResult
 trait AdaptiveSelector {
   def runOption[TArgType, TReturnType](options: Seq[ReferencedFunction[TArgType, TReturnType]],
                                        arguments: TArgType,
+                                       groupId: GroupId,
                                        inputDescriptor: Option[Long],
                                        limitedBy: Option[Duration],
                                        selection: Selection): RunResult[TReturnType]
 
   def runOptionWithDelayedMeasure[TArgType, TReturnType](options: Seq[ReferencedFunction[TArgType, TReturnType]],
                                                          arguments: TArgType,
+                                                         groupId: GroupId,
                                                          inputDescriptor: Option[Long],
                                                          limitedBy: Option[Duration],
                                                          selection: Selection): (TReturnType, InvocationTokenWithCallbacks)
