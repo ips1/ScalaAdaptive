@@ -1,6 +1,6 @@
 package scalaadaptive.core.runtime.history.serialization
 
-import scalaadaptive.core.runtime.grouping.GroupId
+import scalaadaptive.api.grouping.{Group, GroupId, NoGroup}
 import scalaadaptive.core.functions.references.{ClosureNameReference, CustomReference, FunctionReference, MethodNameReference}
 import scalaadaptive.core.runtime.history.HistoryKey
 
@@ -15,7 +15,8 @@ class BasicFileNameForKeyProvider extends FileNameForKeyProvider {
   }
 
   private def getGroupIdString(groupId: GroupId): String = groupId match {
-    case GroupId(id) => s"$id"
+    case Group(id) => s"$id"
+    case NoGroup() => ""
   }
 
   override def getFileNameForHistoryKey(key: HistoryKey): String = key match {

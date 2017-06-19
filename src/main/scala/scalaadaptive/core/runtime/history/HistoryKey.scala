@@ -1,6 +1,6 @@
 package scalaadaptive.core.runtime.history
 
-import scalaadaptive.core.runtime.grouping.GroupId
+import scalaadaptive.api.grouping.GroupId
 import scalaadaptive.core.functions.references.FunctionReference
 
 /**

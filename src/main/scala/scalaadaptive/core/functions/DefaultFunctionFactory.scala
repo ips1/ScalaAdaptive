@@ -1,5 +1,6 @@
 package scalaadaptive.core.functions
 
+import scalaadaptive.api.grouping.{GroupId, NoGroup}
 import scalaadaptive.core.runtime.AdaptiveInternal
 import scalaadaptive.core.functions.adaptors.{FunctionConfig, StorageBasedRunner}
 import scalaadaptive.core.functions.references.ReferencedFunction
@@ -19,6 +20,7 @@ class DefaultFunctionFactory extends FunctionFactory {
   override def createFunction[TArgType, TRetType](firstOption: ReferencedFunction[TArgType, TRetType]): MultipleImplementationFunction[TArgType, TRetType] =
     new MultipleImplementationFunction[TArgType, TRetType](updateFunctionsWithConfig(List(firstOption), AdaptiveInternal.getMultiFunctionDefaults),
       None,
+      (_) => NoGroup(),
       new StorageBasedRunner(AdaptiveInternal.getMultiFunctionDefaults.storage),
       AdaptiveInternal.createAnalytics(),
       AdaptiveInternal.getMultiFunctionDefaults
@@ -28,15 +30,28 @@ class DefaultFunctionFactory extends FunctionFactory {
                                                   inputDescriptorSelector: Option[(TArgType) => Long]): MultipleImplementationFunction[TArgType, TRetType] =
     new MultipleImplementationFunction[TArgType, TRetType](function.functions,
       inputDescriptorSelector,
+      function.groupSelector,
       new StorageBasedRunner(function.functionConfig.storage),
       AdaptiveInternal.createAnalytics(),
       function.functionConfig
     )
 
   override def changeFunction[TArgType, TRetType](function: MultipleImplementationFunction[TArgType, TRetType],
+                                                  groupSelector: (TArgType) => GroupId): MultipleImplementationFunction[TArgType, TRetType] =
+    new MultipleImplementationFunction[TArgType, TRetType](function.functions,
+      function.inputDescriptorSelector,
+      groupSelector,
+      new StorageBasedRunner(function.functionConfig.storage),
+      AdaptiveInternal.createAnalytics(),
+      function.functionConfig
+    )
+
+
+  override def changeFunction[TArgType, TRetType](function: MultipleImplementationFunction[TArgType, TRetType],
                                                   newConfig: FunctionConfig): MultipleImplementationFunction[TArgType, TRetType] =
     new MultipleImplementationFunction[TArgType, TRetType](updateFunctionsWithConfig(function.functions, newConfig),
       function.inputDescriptorSelector,
+      function.groupSelector,
       new StorageBasedRunner(newConfig.storage),
       AdaptiveInternal.createAnalytics(),
       newConfig
@@ -46,6 +61,7 @@ class DefaultFunctionFactory extends FunctionFactory {
                                                   secondFunction: MultipleImplementationFunction[TArgType, TRetType]): MultipleImplementationFunction[TArgType, TRetType] = {
     new MultipleImplementationFunction[TArgType, TRetType](firstFunction.functions ++ secondFunction.functions,
       firstFunction.inputDescriptorSelector,
+      firstFunction.groupSelector,
       new StorageBasedRunner(firstFunction.functionConfig.storage),
       AdaptiveInternal.createAnalytics(),
       firstFunction.functionConfig

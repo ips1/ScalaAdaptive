@@ -2,7 +2,7 @@ package scalaadaptive.core.runtime
 
 import java.time.{Duration, Instant}
 
-import scalaadaptive.core.runtime.grouping.GroupSelector
+import scalaadaptive.api.grouping.GroupSelector
 import scalaadaptive.core.logging.Logger
 import scalaadaptive.api.options.Selection
 import scalaadaptive.api.options.Selection.Selection

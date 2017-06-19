@@ -3,7 +3,7 @@ import scalaadaptive.analytics.{AnalyticsSerializer, CsvAnalyticsSerializer}
 import scalaadaptive.core.functions.{DefaultFunctionFactory, FunctionFactory}
 import scalaadaptive.core.functions.adaptors.FunctionConfig
 import scalaadaptive.core.functions.analytics.{AnalyticsCollector, BasicAnalyticsCollector}
-import scalaadaptive.core.runtime.grouping.GroupSelector
+import scalaadaptive.api.grouping.GroupSelector
 import scalaadaptive.core.logging.Logger
 import scalaadaptive.core.functions.references.CustomIdentifierValidator
 import scalaadaptive.core.runtime.history.evaluation.EvaluationProvider

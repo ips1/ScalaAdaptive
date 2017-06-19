@@ -1,6 +1,7 @@
 package scalaadaptive.api.adaptors
 
 import scala.language.experimental.macros
+import scalaadaptive.api.grouping.GroupId
 import scalaadaptive.core.macros.OrMacroImpl
 
 /**
@@ -14,6 +15,7 @@ trait MultiFunction4[T1, T2, T3, T4, R]
     macro OrMacroImpl.or_impl[(T1, T2, T3, T4) => R, MultiFunction4[T1, T2, T3, T4, R]]
 
   def by(selector: (T1, T2, T3, T4) => Long): MultiFunction4[T1, T2, T3, T4, R]
+  def groupBy(selector: (T1, T2, T3, T4) => GroupId): MultiFunction4[T1, T2, T3, T4, R]
 
   def applyWithoutMeasuring(arg1: T1, arg2: T2, arg3: T3, arg4: T4): (R, InvocationToken)
   def ^(arg1: T1, arg2: T2, arg3: T3, arg4: T4): (R, InvocationToken) = applyWithoutMeasuring(arg1, arg2, arg3, arg4)

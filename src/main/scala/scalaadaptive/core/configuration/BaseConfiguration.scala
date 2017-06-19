@@ -1,7 +1,7 @@
 package scalaadaptive.core.configuration
 
 import scalaadaptive.analytics.{AnalyticsSerializer, CsvAnalyticsSerializer}
-import scalaadaptive.core.runtime.grouping.{GroupSelector, LogarithmGroupSelector}
+import scalaadaptive.api.grouping.{GroupSelector, LogarithmGroupSelector}
 import scalaadaptive.core.logging.{ConsoleLogger, Logger}
 import scalaadaptive.core.functions.adaptors.FunctionConfig
 import scalaadaptive.api.options.{Selection, Storage}

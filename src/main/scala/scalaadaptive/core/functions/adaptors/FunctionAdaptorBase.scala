@@ -3,6 +3,7 @@ package scalaadaptive.core.functions.adaptors
 import java.time.Duration
 
 import scalaadaptive.analytics.AnalyticsData
+import scalaadaptive.api.grouping.GroupId
 import scalaadaptive.api.options.Selection.Selection
 import scalaadaptive.api.options.Storage.Storage
 import scalaadaptive.core.functions.policies.Policy
@@ -18,8 +19,10 @@ abstract class FunctionAdaptorBase[TArgType, TRetType, TFunctionAdaptorType] {
 
   protected def functionFactory: FunctionFactory = AdaptiveInternal.getFunctionFactory
 
-  def byGrouped(newSelector: (TArgType) => Long): TFunctionAdaptorType =
+  def byTupled(newSelector: (TArgType) => Long): TFunctionAdaptorType =
     createNew(functionFactory.changeFunction[TArgType, TRetType](function, Some(newSelector)))
+  def groupByTupled(newSelector: (TArgType) => GroupId): TFunctionAdaptorType =
+    createNew(functionFactory.changeFunction[TArgType, TRetType](function, newSelector))
 
   def selectUsing(newSelection: Selection): TFunctionAdaptorType =
     createNew(functionFactory.changeFunction[TArgType, TRetType](function, function.functionConfig.selectUsing(newSelection)))

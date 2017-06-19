@@ -2,6 +2,7 @@ package scalaadaptive.core.functions
 
 import scalaadaptive.analytics.AnalyticsData
 import scalaadaptive.api.adaptors.InvocationToken
+import scalaadaptive.api.grouping.GroupId
 import scalaadaptive.core.functions.references.{FunctionReference, ReferencedFunction}
 import scalaadaptive.core.runtime.invocationtokens.SimpleInvocationToken
 import scalaadaptive.core.functions.policies.{Policy, PolicyResult}
@@ -15,6 +16,7 @@ import scalaadaptive.core.functions.analytics.AnalyticsCollector
   */
 class MultipleImplementationFunction[TArgType, TRetType](val functions: Seq[ReferencedFunction[TArgType, TRetType]],
                                                          val inputDescriptorSelector: Option[(TArgType) => Long],
+                                                         val groupSelector: (TArgType) => GroupId,
                                                          val selectionRunner: AdaptiveRunner,
                                                          val analytics: AnalyticsCollector,
                                                          val functionConfig: FunctionConfig) {

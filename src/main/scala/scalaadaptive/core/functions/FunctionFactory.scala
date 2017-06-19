@@ -1,5 +1,6 @@
 package scalaadaptive.core.functions
 
+import scalaadaptive.api.grouping.GroupId
 import scalaadaptive.core.functions.adaptors.FunctionConfig
 import scalaadaptive.core.functions.references.ReferencedFunction
 
@@ -11,6 +12,9 @@ trait FunctionFactory {
 
   def changeFunction[TArgType, TRetType](function: MultipleImplementationFunction[TArgType, TRetType],
                                          inputDescriptorSelector: Option[(TArgType) => Long]): MultipleImplementationFunction[TArgType, TRetType]
+
+  def changeFunction[TArgType, TRetType](function: MultipleImplementationFunction[TArgType, TRetType],
+                                         groupSelector: (TArgType) => GroupId): MultipleImplementationFunction[TArgType, TRetType]
 
   def changeFunction[TArgType, TRetType](multipleImplementationFunction: MultipleImplementationFunction[TArgType, TRetType],
                                          adaptorConfig: FunctionConfig): MultipleImplementationFunction[TArgType, TRetType]
