@@ -11,7 +11,7 @@ import scala.util.Random
 import scalaadaptive.api.Adaptive
 import scalaadaptive.core.configuration.blocks.{LimitedRegressionSelection, NoGrouping, NoLogger}
 import scalaadaptive.core.configuration.defaults.FullHistoryTTestConfiguration
-import scalaadaptive.core.runtime.selection.LimitedRegressionSelector
+import scalaadaptive.core.runtime.selection.LimitedRegressionSelectionStategy
 
 /**
   * Created by pk250187 on 6/7/17.

@@ -16,9 +16,9 @@ trait AdaptiveCore {
   private val defaultConfiguration = new FullHistoryTTestConfiguration
   private var currentConfiguration: Configuration = defaultConfiguration
 
-  private def initOptionRunner(configuration: Configuration): AdaptiveRunner = {
+  private def initOptionRunner(configuration: Configuration): AdaptiveSelector = {
     val logger = configuration.createLogger()
-    new HistoryBasedAdaptiveRunner[configuration.TMeasurement](
+    new HistoryBasedAdaptiveSelector[configuration.TMeasurement](
       configuration.createHistoryStorage(),
       configuration.createDiscreteRunSelector(logger),
       configuration.createContinuousRunSelector(logger),
@@ -27,10 +27,10 @@ trait AdaptiveCore {
       logger)
   }
 
-  private def initPersistentOptionRunner(configuration: Configuration): Option[AdaptiveRunner] = {
+  private def initPersistentOptionRunner(configuration: Configuration): Option[AdaptiveSelector] = {
     val logger = configuration.createLogger()
     configuration.createPersistentHistoryStorage().map(persistentStorage =>
-      new HistoryBasedAdaptiveRunner[configuration.TMeasurement](
+      new HistoryBasedAdaptiveSelector[configuration.TMeasurement](
         persistentStorage,
         configuration.createDiscreteRunSelector(logger),
         configuration.createContinuousRunSelector(logger),
@@ -45,16 +45,16 @@ trait AdaptiveCore {
   private var multiFunctionDefaults: FunctionConfig = defaultConfiguration.createMultiFunctionDefaultConfig()
   private var functionFactory: FunctionFactory = defaultConfiguration.createFunctionFactory()
   private var analyticsSerializer: AnalyticsSerializer = defaultConfiguration.createAnalyticsSerializer()
-  private var runner: AdaptiveRunner = initOptionRunner(defaultConfiguration)
-  private var persistentRunner: AdaptiveRunner = initPersistentOptionRunner(defaultConfiguration).getOrElse(runner)
+  private var runner: AdaptiveSelector = initOptionRunner(defaultConfiguration)
+  private var persistentRunner: AdaptiveSelector = initPersistentOptionRunner(defaultConfiguration).getOrElse(runner)
 
   def getIdentifierValidator: CustomIdentifierValidator = identifierValidator
 
   def getMultiFunctionDefaults: FunctionConfig = multiFunctionDefaults
 
-  def getSharedRunner: AdaptiveRunner = runner
+  def getSharedRunner: AdaptiveSelector = runner
 
-  def getSharedPersistentRunner: AdaptiveRunner = persistentRunner
+  def getSharedPersistentRunner: AdaptiveSelector = persistentRunner
 
   def getFunctionFactory: FunctionFactory = functionFactory
 
@@ -62,7 +62,7 @@ trait AdaptiveCore {
 
   def createAnalytics(): AnalyticsCollector = currentConfiguration.createAnalyticsCollector()
 
-  def createNewRunner(): AdaptiveRunner =
+  def createNewRunner(): AdaptiveSelector =
     initOptionRunner(currentConfiguration)
 
   def initialize(configuration: Configuration): Unit = {

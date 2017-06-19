@@ -15,13 +15,13 @@ import scalaadaptive.core.functions.RunResult
 /**
   * Created by pk250187 on 4/22/17.
   */
-class StorageBasedRunner(val storage: Storage) extends AdaptiveRunner {
-  private val runner: AdaptiveRunner = storage match {
+class StorageBasedSelector(val storage: Storage) extends AdaptiveSelector {
+  private val runner: AdaptiveSelector = storage match {
     case Storage.Local => AdaptiveInternal.createNewRunner()
     case _ => null
   }
 
-  private def selectRunner: AdaptiveRunner =
+  private def selectRunner: AdaptiveSelector =
     storage match {
       case Storage.Local => runner
       case Storage.Persistent => AdaptiveInternal.getSharedPersistentRunner

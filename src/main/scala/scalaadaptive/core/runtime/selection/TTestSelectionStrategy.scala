@@ -10,10 +10,10 @@ import scalaadaptive.math.{MultipleSampleTTest, TwoSampleTTestRunner, TTestResul
 /**
   * Created by pk250187 on 5/2/17.
   */
-class TTestSelector(val logger: Logger,
-                    val testRunner: MultipleSampleTTest,
-                    val secondarySelector: RunSelector[Long],
-                    val alpha: Double) extends RunSelector[Long] {
+class TTestSelectionStrategy(val logger: Logger,
+                             val testRunner: MultipleSampleTTest,
+                             val secondarySelector: SelectionStrategy[Long],
+                             val alpha: Double) extends SelectionStrategy[Long] {
 
   override def selectOption(records: Seq[RunHistory[Long]], inputDescriptor: Option[Long]): RunHistory[Long] = {
     logger.log("Selecting using TTestSelector")

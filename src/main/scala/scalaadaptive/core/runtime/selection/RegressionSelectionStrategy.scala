@@ -8,8 +8,8 @@ import scalaadaptive.core.runtime.history.runhistory.RunHistory
 /**
   * Created by pk250187 on 5/2/17.
   */
-class RegressionSelector[TMeasurement](val logger: Logger)(implicit num: Numeric[TMeasurement])
-  extends RunSelector[TMeasurement] {
+class RegressionSelectionStrategy[TMeasurement](val logger: Logger)(implicit num: Numeric[TMeasurement])
+  extends SelectionStrategy[TMeasurement] {
   override def selectOption(records: Seq[RunHistory[TMeasurement]], inputDescriptor: Option[Long]): RunHistory[TMeasurement] = {
     logger.log("Selecting using RegressionSelector")
 

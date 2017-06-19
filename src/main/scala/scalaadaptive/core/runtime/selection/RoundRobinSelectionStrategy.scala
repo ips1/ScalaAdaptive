@@ -11,7 +11,7 @@ import scalaadaptive.core.runtime.history.runhistory.RunHistory
 /**
   * Created by pk250187 on 4/29/17.
   */
-class RoundRobinSelector[TMeasurement](val logger: Logger) extends RunSelector[TMeasurement] {
+class RoundRobinSelectionStrategy[TMeasurement](val logger: Logger) extends SelectionStrategy[TMeasurement] {
   private def currentTime = ZonedDateTime.now.toInstant
 
   private val lastRuns: mutable.HashMap[HistoryKey, Instant] = new mutable.HashMap[HistoryKey, Instant]()

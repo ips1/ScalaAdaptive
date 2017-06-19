@@ -6,18 +6,18 @@ import scalaadaptive.core.functions.RunData
 import scalaadaptive.core.logging.Logger
 import scalaadaptive.core.runtime.history.evaluation.data.EvaluationData
 import scalaadaptive.core.runtime.history.runhistory.RunHistory
-import scalaadaptive.core.runtime.selection.support.{ClosestProvider, WindowSizeSelector}
+import scalaadaptive.core.runtime.selection.support.{ClosestProvider, WindowSizeProvider}
 import scalaadaptive.math.{RegressionTTest, RegressionTTestResult}
 
 /**
   * Created by pk250187 on 5/20/17.
   */
-class LimitedRegressionSelector[TMeasurement](val logger: Logger,
-                                              val windowSizeSelector: WindowSizeSelector,
-                                              val testRunner: RegressionTTest,
-                                              val secondarySelector: RunSelector[TMeasurement],
-                                              val alpha: Double)(implicit num: Numeric[TMeasurement])
-  extends RunSelector[TMeasurement] {
+class LimitedRegressionSelectionStategy[TMeasurement](val logger: Logger,
+                                                      val windowSizeSelector: WindowSizeProvider,
+                                                      val testRunner: RegressionTTest,
+                                                      val secondarySelector: SelectionStrategy[TMeasurement],
+                                                      val alpha: Double)(implicit num: Numeric[TMeasurement])
+  extends SelectionStrategy[TMeasurement] {
 
   private def createRegression(runData: Seq[EvaluationData[TMeasurement]]): SimpleRegression = {
     val regression = new SimpleRegression()

@@ -15,7 +15,7 @@ import scalaadaptive.core.functions.RunResult
   * Used to run one of multiple options passed in based on a history of previous runs of the options.
   *
   */
-trait AdaptiveRunner {
+trait AdaptiveSelector {
   def runOption[TArgType, TReturnType](options: Seq[ReferencedFunction[TArgType, TReturnType]],
                                        arguments: TArgType,
                                        inputDescriptor: Option[Long],

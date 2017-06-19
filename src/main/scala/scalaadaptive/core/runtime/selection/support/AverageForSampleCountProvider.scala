@@ -3,7 +3,7 @@ package scalaadaptive.core.runtime.selection.support
 /**
   * Created by pk250187 on 6/8/17.
   */
-class AverageForSampleCountSelector(val averageSamplesPerWindow: Int) extends WindowSizeSelector {
+class AverageForSampleCountProvider(val averageSamplesPerWindow: Int) extends WindowSizeProvider {
   override def selectWindowSize(orderedInputDescriptors: Seq[Long]): Int = {
     val distances =
       orderedInputDescriptors.dropRight(1)

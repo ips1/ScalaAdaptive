@@ -14,18 +14,18 @@ import scalaadaptive.core.runtime.history.evaluation.EvaluationProvider
 import scalaadaptive.core.runtime.history.evaluation.data.EvaluationData
 import scalaadaptive.core.runtime.history.runhistory.RunHistory
 import scalaadaptive.core.runtime.invocationtokens.{InvocationTokenWithCallbacks, MeasuringInvocationToken}
-import scalaadaptive.core.runtime.selection.RunSelector
+import scalaadaptive.core.runtime.selection.SelectionStrategy
 import scalaadaptive.core.functions.{RunData, RunResult}
 
 /**
   * Created by pk250187 on 3/19/17.
   */
-class HistoryBasedAdaptiveRunner[TMeasurement](historyStorage: HistoryStorage[TMeasurement],
-                                               discreteRunSelector: RunSelector[TMeasurement],
-                                               continuousRunSelector: RunSelector[TMeasurement],
-                                               measurementProvider: EvaluationProvider[TMeasurement],
-                                               bucketSelector: GroupSelector,
-                                               logger: Logger) extends AdaptiveRunner with DelayedFunctionRunner {
+class HistoryBasedAdaptiveSelector[TMeasurement](historyStorage: HistoryStorage[TMeasurement],
+                                                 discreteRunSelector: SelectionStrategy[TMeasurement],
+                                                 continuousRunSelector: SelectionStrategy[TMeasurement],
+                                                 measurementProvider: EvaluationProvider[TMeasurement],
+                                                 bucketSelector: GroupSelector,
+                                                 logger: Logger) extends AdaptiveSelector with DelayedFunctionRunner {
 
   private def filterHistoryByDuration(history: RunHistory[TMeasurement], duration: Duration) = {
     val currentTime = Instant.now()
@@ -39,7 +39,7 @@ class HistoryBasedAdaptiveRunner[TMeasurement](historyStorage: HistoryStorage[TM
   }
 
   private def selectRecord[TArgType, TReturnType](options: Seq[ReferencedFunction[TArgType, TReturnType]],
-                                                  runSelector: RunSelector[TMeasurement],
+                                                  runSelector: SelectionStrategy[TMeasurement],
                                                   inputDescriptor: Option[Long],
                                                   limitedBy: Option[Duration]) = {
     val targetBucket = inputDescriptor match {

@@ -8,10 +8,10 @@ import scalaadaptive.core.runtime.selection._
   * Created by pk250187 on 5/2/17.
   */
 trait RegressionSelection extends BaseLongConfiguration {
-  override val createContinuousRunSelector: (Logger) => RunSelector[Long] =
-    (log: Logger) => new LowRunAwareSelector[Long](
+  override val createContinuousRunSelector: (Logger) => SelectionStrategy[Long] =
+    (log: Logger) => new LowRunAwareSelectionStrategy[Long](
       log,
-      new LeastDataSelector[Long](log),
-      new RegressionSelector[Long](log),
+      new LeastDataSelectionStrategy[Long](log),
+      new RegressionSelectionStrategy[Long](log),
       30)
 }

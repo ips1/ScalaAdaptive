@@ -7,7 +7,7 @@ import scalaadaptive.core.functions.references.{FunctionReference, ReferencedFun
 import scalaadaptive.core.runtime.invocationtokens.SimpleInvocationToken
 import scalaadaptive.core.functions.policies.{Policy, PolicyResult}
 import scalaadaptive.core.functions.statistics.AdaptorStatistics
-import scalaadaptive.core.runtime.AdaptiveRunner
+import scalaadaptive.core.runtime.AdaptiveSelector
 import scalaadaptive.core.functions.adaptors.FunctionConfig
 import scalaadaptive.core.functions.analytics.AnalyticsCollector
 
@@ -17,7 +17,7 @@ import scalaadaptive.core.functions.analytics.AnalyticsCollector
 class MultipleImplementationFunction[TArgType, TRetType](val functions: Seq[ReferencedFunction[TArgType, TRetType]],
                                                          val inputDescriptorSelector: Option[(TArgType) => Long],
                                                          val groupSelector: (TArgType) => GroupId,
-                                                         val selectionRunner: AdaptiveRunner,
+                                                         val selectionRunner: AdaptiveSelector,
                                                          val analytics: AnalyticsCollector,
                                                          val functionConfig: FunctionConfig) {
   private var currentPolicy = functionConfig.startPolicy

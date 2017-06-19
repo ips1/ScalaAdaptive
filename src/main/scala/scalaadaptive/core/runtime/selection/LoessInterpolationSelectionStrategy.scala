@@ -11,8 +11,8 @@ import scalaadaptive.core.runtime.history.runhistory.RunHistory
 /**
   * Created by pk250187 on 4/23/17.
   */
-class InterpolationSelector[TMeasurement](val logger: Logger)(implicit num: Numeric[TMeasurement])
-  extends RunSelector[TMeasurement] {
+class LoessInterpolationSelectionStrategy[TMeasurement](val logger: Logger)(implicit num: Numeric[TMeasurement])
+  extends SelectionStrategy[TMeasurement] {
 
   // TODO : Chose interpolator
   private def getInterpolator = new LoessInterpolator()
