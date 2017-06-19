@@ -16,7 +16,7 @@ object TTestShouldSelect2 {
     Adaptive.initialize(new FullHistoryTTestConfiguration)
 
     import scalaadaptive.api.Implicits._
-    val function = methods.fastMethod _ or methods.slowMethod or methods.anotherSlowMethod selectUsing Selection.Discrete
+    val function = methods.fastMethod _ or methods.slowMethod or methods.anotherSlowMethod selectUsing Selection.NonPredictive
 
     val testRuns = 200
     Seq.range(0, testRuns).foreach(i => {

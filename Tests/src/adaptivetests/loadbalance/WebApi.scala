@@ -30,5 +30,5 @@ class WebApi(val baseUrl: String, val ports: Seq[Int]) {
 
   val performBalancedRequest = ports.tail.foldLeft(performRequest(buildUrl(ports.head)) _) { (f, port) =>
     f.or(performRequest(buildUrl(port)))
-  } selectUsing Selection.Discrete limitedTo Duration.ofSeconds(20)
+  } selectUsing Selection.NonPredictive limitedTo Duration.ofSeconds(20)
 }

@@ -21,7 +21,7 @@ import scalaadaptive.core.configuration.defaults.FullHistoryTTestConfiguration
   */
 object SortTest {
   import scalaadaptive.api.Implicits._
-  val sort = selectionSort _ or quickSort by (x => x.length) selectUsing Selection.Continuous
+  val sort = selectionSort _ or quickSort by (x => x.length) selectUsing Selection.Predictive
 
   def main(args: Array[String]): Unit = {
     Adaptive.initialize(new FullHistoryTTestConfiguration with LimitedRegressionSelection with NoGrouping)

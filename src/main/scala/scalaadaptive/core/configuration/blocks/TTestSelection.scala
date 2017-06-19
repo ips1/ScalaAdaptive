@@ -9,7 +9,7 @@ import scalaadaptive.math.{BonferroniTTestRunner, TwoSampleTTestRunner}
   * Created by pk250187 on 5/2/17.
   */
 trait TTestSelection extends BaseLongConfiguration {
-  override val createDiscreteRunSelector: (Logger) => SelectionStrategy[Long] =
+  override val createNonPredictiveSelectionStrategy: (Logger) => SelectionStrategy[Long] =
     (log: Logger) => {
       val tTestRunner = new BonferroniTTestRunner(new TwoSampleTTestRunner(log))
       val leastDataSelector = new LeastDataSelectionStrategy[Long](log)

@@ -32,6 +32,6 @@ class JsonParser[TData] {
   val parse = (
     parseWithGson _ or parseWithJackson
     by ((json, c) => json.size)
-    selectUsing Selection.Discrete
+    selectUsing Selection.NonPredictive
   )
 }

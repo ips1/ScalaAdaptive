@@ -39,5 +39,5 @@ trait BaseConfiguration extends Configuration {
     () => new CsvAnalyticsSerializer
 
   override val createMultiFunctionDefaultConfig: () => FunctionConfig =
-    () => new FunctionConfig(Selection.Discrete, Storage.Global, None, false, new AlwaysSelectPolicy)
+    () => new FunctionConfig(Selection.NonPredictive, Storage.Global, None, false, new AlwaysSelectPolicy)
 }

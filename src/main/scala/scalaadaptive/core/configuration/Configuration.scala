@@ -17,8 +17,8 @@ trait Configuration {
   type TMeasurement
   val createHistoryStorage: () => HistoryStorage[TMeasurement]
   val createPersistentHistoryStorage: () => Option[HistoryStorage[TMeasurement]]
-  val createDiscreteRunSelector: (Logger) => SelectionStrategy[TMeasurement]
-  val createContinuousRunSelector: (Logger) => SelectionStrategy[TMeasurement]
+  val createNonPredictiveSelectionStrategy: (Logger) => SelectionStrategy[TMeasurement]
+  val createPredictiveSelectionStrategy: (Logger) => SelectionStrategy[TMeasurement]
   val createPerformanceProvider: () => EvaluationProvider[TMeasurement]
   val createGroupSelector: () => GroupSelector
   val createLogger: () => Logger

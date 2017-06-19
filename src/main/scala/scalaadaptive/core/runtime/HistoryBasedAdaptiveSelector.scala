@@ -34,8 +34,8 @@ class HistoryBasedAdaptiveSelector[TMeasurement](historyStorage: HistoryStorage[
   }
 
   private def getSelectorForSelection(selection: Selection) = selection match {
-    case Selection.Continuous => continuousRunSelector
-    case Selection.Discrete => discreteRunSelector
+    case Selection.Predictive => continuousRunSelector
+    case Selection.NonPredictive => discreteRunSelector
   }
 
   private def selectRecord[TArgType, TReturnType](options: Seq[ReferencedFunction[TArgType, TReturnType]],

@@ -20,8 +20,8 @@ trait AdaptiveCore {
     val logger = configuration.createLogger()
     new HistoryBasedAdaptiveSelector[configuration.TMeasurement](
       configuration.createHistoryStorage(),
-      configuration.createDiscreteRunSelector(logger),
-      configuration.createContinuousRunSelector(logger),
+      configuration.createNonPredictiveSelectionStrategy(logger),
+      configuration.createPredictiveSelectionStrategy(logger),
       configuration.createPerformanceProvider(),
       configuration.createGroupSelector(),
       logger)
@@ -32,8 +32,8 @@ trait AdaptiveCore {
     configuration.createPersistentHistoryStorage().map(persistentStorage =>
       new HistoryBasedAdaptiveSelector[configuration.TMeasurement](
         persistentStorage,
-        configuration.createDiscreteRunSelector(logger),
-        configuration.createContinuousRunSelector(logger),
+        configuration.createNonPredictiveSelectionStrategy(logger),
+        configuration.createPredictiveSelectionStrategy(logger),
         configuration.createPerformanceProvider(),
         configuration.createGroupSelector(),
         logger

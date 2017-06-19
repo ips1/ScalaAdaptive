@@ -10,7 +10,7 @@ import scalaadaptive.math.RegressionTTestRunner
   * Created by pk250187 on 6/7/17.
   */
 trait LimitedRegressionSelection extends BaseLongConfiguration {
-  override val createContinuousRunSelector: (Logger) => SelectionStrategy[Long] =
+  override val createPredictiveSelectionStrategy: (Logger) => SelectionStrategy[Long] =
     (log: Logger) => new LowRunAwareSelectionStrategy[Long](
       log,
       new LeastDataSelectionStrategy[Long](log),
