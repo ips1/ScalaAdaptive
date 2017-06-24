@@ -23,8 +23,6 @@ class FunctionStatistics[TArgType, TRetType](defaultLast: ReferencedFunction[TAr
   private var totalFunctionTime: Long = 0
   private var totalOverheadTime: Long = 0
   private var totalGatherTime: Long = 0
-  private var totalOverheadPercentage: Double = 0
-  private var totalGatherPercentage: Double = 0
 
   private def getMostSelectedRecord: (FunctionReference, Long) =
     timesSelected.maxBy(_._2)
