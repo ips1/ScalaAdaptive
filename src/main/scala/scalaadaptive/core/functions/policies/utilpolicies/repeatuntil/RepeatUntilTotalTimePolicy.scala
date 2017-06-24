@@ -6,6 +6,10 @@ import scalaadaptive.core.functions.statistics.StatisticDataProvider
 
 /**
   * Created by pk250187 on 6/5/17.
+  *
+  * A policy that will keep producing given result until the total time statistic reaches given limit.
+  * Whenever this happens, it immediately lets the nextPolicy do the decision.
+  *
   */
 class RepeatUntilTotalTimePolicy(val result: PolicyResult,
                                  val totalTimeLimit: Long,

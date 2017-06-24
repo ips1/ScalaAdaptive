@@ -6,6 +6,10 @@ import scalaadaptive.core.functions.statistics.StatisticDataProvider
 
 /**
   * Created by pk250187 on 6/1/17.
+  *
+  * A policy that will keep producing given result until the real time in nanoseconds (fetched by System.nanoTime())
+  * reaches given limit. Whenever this happens, it immediately lets the nextPolicy do the decision.
+  *
   */
 class RepeatUntilResetTimePolicy(val result: PolicyResult,
                                  val nextResetTime: Long,

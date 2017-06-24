@@ -6,6 +6,10 @@ import scalaadaptive.core.functions.statistics.StatisticDataProvider
 
 /**
   * Created by pk250187 on 6/5/17.
+  *
+  * A policy that will keep producing given result until the gather time statistic reaches given limit.
+  * Whenever this happens, it immediately lets the nextPolicy do the decision.
+  *
   */
 class RepeatUntilGatherTimePolicy(val result: PolicyResult,
                                   val gatherTimeLimit: Long,
