@@ -6,6 +6,9 @@ import scalaadaptive.core.functions.statistics.StatisticDataProvider
 
 /**
   * Created by pk250187 on 6/12/17.
+  *
+  * A policy that will produce giver result once and then move to the nextPolicy.
+  *
   */
 class DoOncePolicy(val result: PolicyResult, val nextPolicy: Policy) extends Policy {
   /**
