@@ -1,4 +1,4 @@
-package scalaadaptive.core.functions.statistics
+package scalaadaptive.api.policies
 
 /**
   * Created by pk250187 on 5/27/17.

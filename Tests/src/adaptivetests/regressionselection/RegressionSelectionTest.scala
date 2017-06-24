@@ -9,7 +9,7 @@ import tools.methods.TestMethods
 
 import scala.util.Random
 import scalaadaptive.api.Adaptive
-import scalaadaptive.core.configuration.blocks.{LimitedRegressionSelection, NoGrouping, NoLogger}
+import scalaadaptive.core.configuration.blocks.{InterpolationSelection, LimitedRegressionSelection, NoGrouping, NoLogger}
 import scalaadaptive.core.configuration.defaults.FullHistoryTTestConfiguration
 import scalaadaptive.core.runtime.selection.LimitedRegressionSelectionStategy
 
@@ -23,15 +23,15 @@ object RegressionSelectionTest {
     //val runner = new TestRunner()
     //runner.runIncrementalTest(l => testMethods.functionContinuous(l))
 
-    val testCount = 100
-    val maxSize = 500
+    val testCount = 1000
+    val maxSize = 5000
     val random = new Random(System.nanoTime)
 
     Seq.range(0, testCount).foreach(i => {
       val inputSize = random.nextInt(maxSize)
       val data = Seq.fill(inputSize)(Random.nextInt).toList
-      testMethods.functionContinuous(data)
-      //SortTest.sort(data.toArray)
+      //testMethods.functionContinuous(data)
+      SortTest.sort(data.toArray)
     })
 
     SortTest.sort.getAnalyticsData.foreach(d => d.saveData(new PrintWriter(System.out)))

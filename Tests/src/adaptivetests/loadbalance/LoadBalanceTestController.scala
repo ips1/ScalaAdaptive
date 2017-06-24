@@ -20,8 +20,13 @@ class LoadBalanceTestController {
     .option(HttpOptions.readTimeout(20000))
     .asString
 
-  def increaseLoad(port: Int): Unit = executeCommand(port, "increaseLoad")
-  def decreaseLoad(port: Int): Unit = executeCommand(port, "decreaseLoad")
+  def increaseLoad(port: Int, times: Int = 1): Unit = {
+    Seq.range(0, times).foreach(_ => executeCommand(port, "increaseLoad"))
+  }
+  def decreaseLoad(port: Int, times: Int = 1): Unit = {
+    Seq.range(0, times).foreach(_ => executeCommand(port, "decreaseLoad"))
+  }
 
   def sendRequest(): Unit = api.performBalancedRequest(testData)
+  def sendRequest(port: Int): Unit = api.performRequest(api.buildUrl(port))(testData)
 }

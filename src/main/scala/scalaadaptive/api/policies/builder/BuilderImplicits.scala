@@ -1,9 +1,8 @@
 package scalaadaptive.api.policies.builder
 
-import scalaadaptive.api.policies.PolicyResult
+import scalaadaptive.api.policies.{PolicyResult, StatisticDataProvider}
 import scalaadaptive.api.policies.PolicyResult.PolicyResult
 import scalaadaptive.api.policies.builder.conditions.{Condition, SimpleCondition}
-import scalaadaptive.core.functions.statistics.StatisticDataProvider
 
 /**
   * Created by pk250187 on 6/24/17.

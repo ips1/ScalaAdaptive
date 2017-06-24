@@ -5,9 +5,11 @@ import scala.math
 import scala.collection.mutable
 import scala.collection.mutable.ArrayBuffer
 import scalaadaptive.api.Adaptive
+import scalaadaptive.api.grouping.Group
 import scalaadaptive.api.options.Selection
 import scalaadaptive.core.configuration.blocks.{LimitedRegressionSelection, NoGrouping}
 import scalaadaptive.core.configuration.defaults.FullHistoryTTestConfiguration
+import scalaadaptive.api.policies.PauseSelectionAfterStreakPolicy
 
 /**
   * Created with IntelliJ IDEA.
@@ -21,7 +23,13 @@ import scalaadaptive.core.configuration.defaults.FullHistoryTTestConfiguration
   */
 object SortTest {
   import scalaadaptive.api.Implicits._
-  val sort = selectionSort _ or quickSort by (x => x.length) selectUsing Selection.Predictive
+  val sort = (
+    selectionSort _ or quickSort
+    by (x => x.length)
+    groupBy (x => Group(Math.log(x.length).toInt))
+    selectUsing Selection.Predictive
+    withPolicy new PauseSelectionAfterStreakPolicy(20, 100)
+  )
 
   def main(args: Array[String]): Unit = {
     Adaptive.initialize(new FullHistoryTTestConfiguration with LimitedRegressionSelection with NoGrouping)

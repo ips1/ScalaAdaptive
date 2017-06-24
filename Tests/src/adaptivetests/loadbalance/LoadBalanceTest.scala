@@ -2,34 +2,89 @@ package adaptivetests.loadbalance
 
 import scalaadaptive.core.configuration.defaults.{FullHistoryTTestConfiguration, GroupedRunHistoryInterpolationConfiguration}
 import scalaadaptive.api.Adaptive
+import scalaadaptive.core.configuration.blocks.NoLogger
 
 /**
   * Created by pk250187 on 5/14/17.
   */
 object LoadBalanceTest {
   val stageRunCount = 50
+  val testDurationMilis = 500
   val testController = new LoadBalanceTestController()
 
+  val firstPort = 3123
+  val secondPort = 3124
+
+  private def getMilisTime = System.nanoTime() / (1000 * 1000)
+
+  private def measureRequest(request: () => Unit): Double = {
+    val startTime = System.nanoTime()
+    request()
+    (System.nanoTime() - startTime).toDouble / (1000 * 1000)
+  }
+
   private def runStage() = {
+    val startTime = getMilisTime
     Seq.range(1, stageRunCount).foreach { j =>
-      testController.sendRequest()
+      val firstDur = measureRequest(() => testController.sendRequest(firstPort))
+      val secondDur = measureRequest(() => testController.sendRequest(secondPort))
+      val combinedDur = measureRequest(() => testController.sendRequest())
+
+      println(s"$firstDur, $secondDur, $combinedDur")
+      while (getMilisTime < startTime + (j * testDurationMilis)) { }
     }
   }
 
-  def main(args: Array[String]): Unit = {
-    Adaptive.initialize(new FullHistoryTTestConfiguration)
+  def scenario1(): Unit = {
+    runStage()
+    testController.increaseLoad(firstPort, 2)
+    runStage()
+    testController.decreaseLoad(firstPort, 2)
+    runStage()
+    testController.decreaseLoad(secondPort)
+    runStage()
+    testController.increaseLoad(secondPort, 2)
+    runStage()
+    testController.increaseLoad(firstPort, 2)
+    runStage()
+    testController.decreaseLoad(firstPort)
+    testController.increaseLoad(secondPort, 2)
+    runStage()
+    testController.decreaseLoad(firstPort)
+    testController.decreaseLoad(secondPort, 3)
+  }
 
+  def scenario2(): Unit = {
+    testController.increaseLoad(firstPort, 2)
     runStage()
-    testController.increaseLoad(3123)
+    testController.decreaseLoad(firstPort, 2)
+    testController.increaseLoad(secondPort, 2)
     runStage()
-    testController.decreaseLoad(3123)
+    testController.decreaseLoad(secondPort, 2)
+    testController.increaseLoad(firstPort, 2)
     runStage()
-    testController.increaseLoad(3124)
+    testController.decreaseLoad(firstPort, 2)
+    testController.increaseLoad(secondPort, 2)
     runStage()
-    testController.increaseLoad(3123)
+    testController.decreaseLoad(secondPort, 2)
+  }
+
+  def scenario3(): Unit = {
+    testController.increaseLoad(firstPort)
     runStage()
-    testController.decreaseLoad(3123)
+    testController.increaseLoad(secondPort, 2)
     runStage()
-    testController.decreaseLoad(3124)
+    testController.increaseLoad(secondPort, 3)
+    runStage()
+    testController.decreaseLoad(secondPort, 6)
+    runStage()
+    testController.increaseLoad(secondPort, 1)
+    testController.decreaseLoad(firstPort)
+  }
+
+  def main(args: Array[String]): Unit = {
+    Adaptive.initialize(new FullHistoryTTestConfiguration with NoLogger)
+
+    scenario3()
   }
 }

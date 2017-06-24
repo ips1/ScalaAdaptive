@@ -1,6 +1,6 @@
 package scalaadaptive.api.policies.builder
 
-import scalaadaptive.core.functions.statistics.StatisticDataProvider
+import scalaadaptive.api.policies.StatisticDataProvider
 
 /**
   * Created by pk250187 on 6/24/17.

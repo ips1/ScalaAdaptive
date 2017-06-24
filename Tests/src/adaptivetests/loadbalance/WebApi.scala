@@ -28,7 +28,8 @@ class WebApi(val baseUrl: String, val ports: Seq[Int]) {
 
   import scalaadaptive.api.Implicits._
 
-  val performBalancedRequest = ports.tail.foldLeft(performRequest(buildUrl(ports.head)) _) { (f, port) =>
-    f.or(performRequest(buildUrl(port)))
-  } selectUsing Selection.NonPredictive limitedTo Duration.ofSeconds(20)
+  val performBalancedRequest =
+    ports.tail.foldLeft(performRequest(buildUrl(ports.head)) _) { (f, port) =>
+      f.or(performRequest(buildUrl(port)))
+    } selectUsing Selection.NonPredictive limitedTo Duration.ofSeconds(20)
 }

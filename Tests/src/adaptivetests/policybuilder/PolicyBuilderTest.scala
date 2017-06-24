@@ -2,8 +2,7 @@ package adaptivetests.policybuilder
 
 import scalaadaptive.api.policies.builder.BuilderImplicits
 import scalaadaptive.api.policies.builder.BuilderImplicits.gatherData
-import scalaadaptive.api.policies.{Policy, PolicyResult}
-import scalaadaptive.core.functions.statistics.StatisticDataProvider
+import scalaadaptive.api.policies.{Policy, PolicyResult, StatisticDataProvider}
 
 /**
   * Created by pk250187 on 6/23/17.

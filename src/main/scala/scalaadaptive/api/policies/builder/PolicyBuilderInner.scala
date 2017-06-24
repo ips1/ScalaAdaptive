@@ -1,11 +1,10 @@
 package scalaadaptive.api.policies.builder
 
-import scalaadaptive.api.policies.Policy
+import scalaadaptive.api.policies.{Policy, StatisticDataProvider}
 import scalaadaptive.api.policies.PolicyResult.PolicyResult
 import scalaadaptive.api.policies.builder.conditions.Condition
 import scalaadaptive.api.policies.utilpolicies.repeatuntil.RepeatUntilCondition
 import scalaadaptive.api.policies.utilpolicies.{AlwaysDoPolicy, CyclicPolicy, DoOncePolicy, IfPolicy}
-import scalaadaptive.core.functions.statistics.StatisticDataProvider
 
 /**
   * Created by pk250187 on 6/24/17.

@@ -1,8 +1,7 @@
 package scalaadaptive.api.policies.utilpolicies
 
-import scalaadaptive.api.policies.Policy
+import scalaadaptive.api.policies.{Policy, StatisticDataProvider}
 import scalaadaptive.api.policies.PolicyResult.PolicyResult
-import scalaadaptive.core.functions.statistics.StatisticDataProvider
 
 /**
   * Created by pk250187 on 6/23/17.

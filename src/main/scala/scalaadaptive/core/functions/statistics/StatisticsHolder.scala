@@ -1,5 +1,6 @@
 package scalaadaptive.core.functions.statistics
 
+import scalaadaptive.api.policies.StatisticDataProvider
 import scalaadaptive.core.functions.RunData
 
 /**

@@ -3,7 +3,6 @@ package scalaadaptive.api.policies
 import scalaadaptive.api.policies.PolicyResult.PolicyResult
 import scalaadaptive.api.policies.utilpolicies.DoOncePolicy
 import scalaadaptive.api.policies.utilpolicies.repeatuntil.RepeatUntilRunCountPolicy
-import scalaadaptive.core.functions.statistics.StatisticDataProvider
 
 /**
   * Created by pk250187 on 6/12/17.
