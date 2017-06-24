@@ -3,7 +3,7 @@ package tools.methods
 import tools.wait.WaitMethods
 
 import scalaadaptive.api.options.{Selection, Storage}
-import scalaadaptive.core.functions.policies.LimitedOverheadPolicy
+import scalaadaptive.api.policies.LimitedOverheadPolicy
 
 /**
   * Created by pk250187 on 5/1/17.

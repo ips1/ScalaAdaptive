@@ -6,7 +6,7 @@ import scalaadaptive.api.adaptors.InvocationToken
 import scalaadaptive.api.grouping.{Group, GroupId, NoGroup}
 import scalaadaptive.core.functions.references.{FunctionReference, ReferencedFunction}
 import scalaadaptive.core.runtime.invocationtokens.SimpleInvocationToken
-import scalaadaptive.core.functions.policies.{Policy, PolicyResult}
+import scalaadaptive.api.policies.{Policy, PolicyResult}
 import scalaadaptive.core.functions.statistics.FunctionStatistics
 import scalaadaptive.core.runtime.AdaptiveSelector
 import scalaadaptive.core.functions.adaptors.FunctionConfig

@@ -10,7 +10,7 @@ import scalaadaptive.core.functions.{DefaultFunctionFactory, FunctionFactory}
 import scalaadaptive.core.functions.references.{AlphanumValidator, CustomIdentifierValidator}
 import scalaadaptive.core.runtime.history.historystorage.{HistoryStorage, MapHistoryStorage}
 import scalaadaptive.core.runtime.history.runhistory.{CachedAverageRunHistory, FullRunHistory, LimitedRunHistory}
-import scalaadaptive.core.functions.policies.AlwaysSelectPolicy
+import scalaadaptive.api.policies.AlwaysSelectPolicy
 import scalaadaptive.extensions.Averageable
 
 /**

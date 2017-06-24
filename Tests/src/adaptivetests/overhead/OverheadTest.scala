@@ -7,7 +7,7 @@ import scalaadaptive.api.adaptors.MultiFunction1
 import scalaadaptive.api.options.Storage
 import scalaadaptive.core.configuration.blocks.NoLogger
 import scalaadaptive.core.configuration.defaults.FullHistoryTTestConfiguration
-import scalaadaptive.core.functions.policies.{AlwaysUseLastPolicy, StopSelectingWhenDecidedPolicy}
+import scalaadaptive.api.policies.{AlwaysUseLastPolicy, StopSelectingWhenDecidedPolicy}
 
 /**
   * Created by pk250187 on 6/5/17.

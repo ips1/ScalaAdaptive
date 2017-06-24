@@ -4,7 +4,7 @@ import java.time.Duration
 
 import scalaadaptive.api.options.Selection.Selection
 import scalaadaptive.api.options.Storage.Storage
-import scalaadaptive.core.functions.policies.Policy
+import scalaadaptive.api.policies.Policy
 
 /**
   * Created by pk250187 on 5/8/17.

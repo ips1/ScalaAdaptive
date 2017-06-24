@@ -1,8 +1,8 @@
 package adaptivetests.policybuilder
 
-import scalaadaptive.core.functions.policies.builder.BuilderImplicits
-import scalaadaptive.core.functions.policies.builder.BuilderImplicits.gatherData
-import scalaadaptive.core.functions.policies.{Policy, PolicyResult}
+import scalaadaptive.api.policies.builder.BuilderImplicits
+import scalaadaptive.api.policies.builder.BuilderImplicits.gatherData
+import scalaadaptive.api.policies.{Policy, PolicyResult}
 import scalaadaptive.core.functions.statistics.StatisticDataProvider
 
 /**
@@ -33,7 +33,7 @@ class TestStatistics extends StatisticDataProvider {
 }
 
 object PolicyBuilderTest {
-  import scalaadaptive.core.functions.policies.builder.BuilderImplicits._
+  import scalaadaptive.api.policies.builder.BuilderImplicits._
 
   val myPolicy: Policy = BuilderImplicits produce PolicyResult.UseLast forever
   val myPolicy2: Policy = (

@@ -6,7 +6,7 @@ import scala.util.Random
 import scalaadaptive.api.Adaptive
 import scalaadaptive.core.configuration.blocks.NoLogger
 import scalaadaptive.core.configuration.defaults.FullHistoryTTestConfiguration
-import scalaadaptive.core.functions.policies.StopSelectingWhenDecidedPolicy
+import scalaadaptive.api.policies.StopSelectingWhenDecidedPolicy
 
 /**
   * Created by pk250187 on 6/5/17.

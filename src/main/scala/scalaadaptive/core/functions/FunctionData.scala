@@ -1,6 +1,6 @@
 package scalaadaptive.core.functions
 
-import scalaadaptive.core.functions.policies.Policy
+import scalaadaptive.api.policies.Policy
 import scalaadaptive.core.functions.statistics.FunctionStatistics
 
 /**
