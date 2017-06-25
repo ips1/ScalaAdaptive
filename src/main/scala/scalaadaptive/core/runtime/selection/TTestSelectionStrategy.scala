@@ -5,7 +5,7 @@ import org.apache.commons.math3.stat.inference.TestUtils
 
 import scalaadaptive.core.logging.Logger
 import scalaadaptive.core.runtime.history.runhistory.RunHistory
-import scalaadaptive.math.{MultipleSampleTTest, TwoSampleTTestRunner, TTestResult}
+import scalaadaptive.math.{MultipleSampleTTest, WelchTTestRunner, TTestResult}
 
 /**
   * Created by pk250187 on 5/2/17.

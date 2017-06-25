@@ -2,7 +2,7 @@ package scalaadaptive.math
 
 import org.apache.commons.math3.distribution.TDistribution
 import org.apache.commons.math3.stat.descriptive.StatisticalSummary
-import org.apache.commons.math3.stat.inference.TestUtils
+import org.apache.commons.math3.stat.inference.{TTest, TestUtils}
 
 import scalaadaptive.core.logging.Logger
 import scalaadaptive.math.TTestResult.TTestResult
@@ -10,12 +10,11 @@ import scalaadaptive.math.TTestResult.TTestResult
 /**
   * Created by pk250187 on 5/2/17.
   */
-class TwoSampleTTestRunner(val logger: Logger) extends TwoSampleTTest {
-  private def getQuantile(count1: Long, count2: Long, alpha: Double): Double = {
-    val degreesOfFreedom = count1 + count2 - 2
+class WelchTTestRunner(val logger: Logger) extends TwoSampleTTest {
 
-    val distribution = new TDistribution(degreesOfFreedom)
-    distribution.inverseCumulativeProbability(1 - alpha)
+  private def logSampleDetails(sample: StatisticalSummary): Unit = {
+    logger.log(s"mean: ${sample.getMean}")
+    logger.log(s"variance: ${sample.getVariance}")
   }
 
   /**
@@ -42,22 +41,27 @@ class TwoSampleTTestRunner(val logger: Logger) extends TwoSampleTTest {
       return None
     }
 
-    val tValue = TestUtils.t(sampleStats1, sampleStats2)
-    val quantile = getQuantile(sampleStats1.getN, sampleStats2.getN, alpha)
-
     logger.log(s"Performing test on significance level $alpha")
-    logger.log(s"T-value = $tValue")
-    logger.log(s"Quantile = $quantile")
 
-    if (tValue > quantile) {
-      return Some(TTestResult.HigherMean)
+    logger.log(s"Sample 1")
+    logSampleDetails(sampleStats1)
+    logger.log(s"Sample 2")
+    logSampleDetails(sampleStats2)
+
+    val test = new TTest()
+    // We need to use 2 * alpha for one-sided testing
+    val result = test.tTest(sampleStats1, sampleStats2, alpha * 2)
+
+    if (!result) {
+      // Can't decide about the one-sided alternative
+      logger.log(s"Can't reject")
+      return Some(TTestResult.CantRejectEquality)
     }
-    else if (tValue < -1 * quantile) {
-      return Some(TTestResult.LowerMean)
-    }
 
-    logger.log(s"Can't reject")
-
-    Some(TTestResult.CantRejectEquality)
+    // Equality was rejected, we can accept the one-sided alternative
+    if (sampleStats1.getMean > sampleStats2.getMean)
+      Some(TTestResult.HigherMean)
+    else
+      Some(TTestResult.LowerMean)
   }
 }
