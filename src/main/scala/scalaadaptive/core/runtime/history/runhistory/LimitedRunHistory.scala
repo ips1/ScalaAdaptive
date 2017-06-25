@@ -8,15 +8,22 @@ import scalaadaptive.core.runtime.history.evaluation.data.{EvaluationData, Group
 /**
   * Created by pk250187 on 6/5/17.
   */
-class LimitedRunHistory[TMeasurement](val limit: Long,
-                                      private val internalHistory: RunHistory[TMeasurement])
+class LimitedRunHistory[TMeasurement](val limit: Int,
+                                      private val internalHistory: RunHistory[TMeasurement],
+                                      private val internalHistoryFactory: () => RunHistory[TMeasurement])
   extends RunHistory[TMeasurement] {
 
-  override def applyNewRun(runResult: EvaluationData[TMeasurement]): RunHistory[TMeasurement] =
-    if (internalHistory.runCount < limit)
-      internalHistory.applyNewRun(runResult)
-    else
-      this
+  override def applyNewRun(runResult: EvaluationData[TMeasurement]): RunHistory[TMeasurement] = {
+    if (internalHistory.runCount < limit) {
+      return new LimitedRunHistory(limit, internalHistory.applyNewRun(runResult), internalHistoryFactory)
+    }
+
+    val keep = limit / 2
+    val toKeep = internalHistory.runItems.take(keep)
+    val emptyHistory = internalHistoryFactory()
+    val newHistory = toKeep.foldRight(emptyHistory)((data, h) => h.applyNewRun(data))
+    new LimitedRunHistory(limit, newHistory, internalHistoryFactory)
+  }
 
   // Delegations:
   override def key: HistoryKey = internalHistory.key

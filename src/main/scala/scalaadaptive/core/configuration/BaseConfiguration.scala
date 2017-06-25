@@ -19,11 +19,12 @@ import scalaadaptive.extensions.Averageable
 trait BaseConfiguration extends Configuration {
   protected val num: Averageable[TMeasurement]
   override val createHistoryStorage: () => HistoryStorage[TMeasurement] = () => {
-    new MapHistoryStorage[TMeasurement](key =>
-      new LimitedRunHistory[TMeasurement](20000,
+    new MapHistoryStorage[TMeasurement](key => {
+      val innerHistoryFactory = () =>
         new CachedAverageRunHistory[TMeasurement](
-          new FullRunHistory[TMeasurement](key)(num))(num))
-    )
+          new FullRunHistory[TMeasurement](key)(num))(num)
+      new LimitedRunHistory[TMeasurement](20000, innerHistoryFactory(), innerHistoryFactory)
+    })
   }
   override val createGroupSelector: () => GroupSelector =
     () => new LogarithmGroupSelector
