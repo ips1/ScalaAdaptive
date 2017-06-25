@@ -26,7 +26,6 @@ object SortTest {
   val sort = (
     selectionSort _ or quickSort
     by (x => x.length)
-    groupBy (x => Group(Math.log(x.length).toInt))
     selectUsing Selection.Predictive
     withPolicy new PauseSelectionAfterStreakPolicy(20, 100)
   )

@@ -2,7 +2,7 @@ package scalaadaptive.math
 
 import org.apache.commons.math3.stat.descriptive.StatisticalSummary
 
-import scalaadaptive.math.TTestResult.TTestResult
+import scalaadaptive.math.TestResult.TestResult
 
 /**
   * Created by pk250187 on 6/6/17.
@@ -25,5 +25,5 @@ trait TwoSampleTTest {
     */
   def runTest(sampleStats1: StatisticalSummary,
               sampleStats2: StatisticalSummary,
-              alpha: Double): Option[TTestResult]
+              alpha: Double): Option[TestResult]
 }

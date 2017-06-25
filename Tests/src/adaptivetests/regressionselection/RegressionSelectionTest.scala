@@ -9,7 +9,7 @@ import tools.methods.TestMethods
 
 import scala.util.Random
 import scalaadaptive.api.Adaptive
-import scalaadaptive.core.configuration.blocks.{InterpolationSelection, LimitedRegressionSelection, NoGrouping, NoLogger}
+import scalaadaptive.core.configuration.blocks._
 import scalaadaptive.core.configuration.defaults.FullHistoryTTestConfiguration
 import scalaadaptive.core.runtime.selection.LimitedRegressionSelectionStategy
 
@@ -18,7 +18,7 @@ import scalaadaptive.core.runtime.selection.LimitedRegressionSelectionStategy
   */
 object RegressionSelectionTest {
   def main(args: Array[String]): Unit = {
-    Adaptive.initialize(new FullHistoryTTestConfiguration with LimitedRegressionSelection with NoGrouping)
+    Adaptive.initialize(new FullHistoryTTestConfiguration with RegressionSelection with NoLogger)
     val testMethods = new TestMethods()
     //val runner = new TestRunner()
     //runner.runIncrementalTest(l => testMethods.functionContinuous(l))

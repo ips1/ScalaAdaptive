@@ -5,7 +5,7 @@ import org.apache.commons.math3.stat.descriptive.StatisticalSummary
 import org.apache.commons.math3.stat.inference.{TTest, TestUtils}
 
 import scalaadaptive.core.logging.Logger
-import scalaadaptive.math.TTestResult.TTestResult
+import scalaadaptive.math.TestResult.TestResult
 
 /**
   * Created by pk250187 on 5/2/17.
@@ -34,7 +34,7 @@ class WelchTTestRunner(val logger: Logger) extends TwoSampleTTest {
     */
   override def runTest(sampleStats1: StatisticalSummary,
               sampleStats2: StatisticalSummary,
-              alpha: Double): Option[TTestResult] = {
+              alpha: Double): Option[TestResult] = {
 
     if (alpha < 0.0 || alpha > 1.0) {
       logger.log(s"Invalid alpha provided to TTestRunner: $alpha")
@@ -50,18 +50,25 @@ class WelchTTestRunner(val logger: Logger) extends TwoSampleTTest {
 
     val test = new TTest()
     // We need to use 2 * alpha for one-sided testing
-    val result = test.tTest(sampleStats1, sampleStats2, alpha * 2)
+    val result = try {
+      test.tTest(sampleStats1, sampleStats2, alpha * 2)
+    } catch {
+      case e: Exception => {
+        logger.log(s"Exception during t-test: $e")
+        return None
+      }
+    }
 
     if (!result) {
       // Can't decide about the one-sided alternative
       logger.log(s"Can't reject")
-      return Some(TTestResult.CantRejectEquality)
+      return Some(TestResult.CantRejectEquality)
     }
 
     // Equality was rejected, we can accept the one-sided alternative
     if (sampleStats1.getMean > sampleStats2.getMean)
-      Some(TTestResult.HigherMean)
+      Some(TestResult.ExpectedHigher)
     else
-      Some(TTestResult.LowerMean)
+      Some(TestResult.ExpectedLower)
   }
 }

@@ -5,7 +5,7 @@ import org.apache.commons.math3.stat.inference.TestUtils
 
 import scalaadaptive.core.logging.Logger
 import scalaadaptive.core.runtime.history.runhistory.RunHistory
-import scalaadaptive.math.{MultipleSampleTTest, WelchTTestRunner, TTestResult}
+import scalaadaptive.math.{MultipleSampleTTest, WelchTTestRunner, TestResult}
 
 /**
   * Created by pk250187 on 5/2/17.
@@ -32,7 +32,7 @@ class TTestSelectionStrategy(val logger: Logger,
       })
 
     positiveResults
-      .find(_._2.contains(TTestResult.LowerMean))
+      .find(_._2.contains(TestResult.ExpectedLower))
       .map(_._1)
       .getOrElse(secondarySelector.selectOption(records, inputDescriptor))
   }

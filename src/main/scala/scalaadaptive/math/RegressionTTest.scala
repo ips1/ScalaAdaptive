@@ -3,7 +3,7 @@ package scalaadaptive.math
 import org.apache.commons.math3.stat.regression.SimpleRegression
 
 import scalaadaptive.math.RegressionTTestResult.RegressionTTestResult
-import scalaadaptive.math.TTestResult.TTestResult
+import scalaadaptive.math.TestResult.TestResult
 
 /**
   * Created by pk250187 on 6/7/17.

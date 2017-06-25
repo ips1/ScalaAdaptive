@@ -1,7 +1,7 @@
 package scalaadaptive.math
 import org.apache.commons.math3.stat.descriptive.StatisticalSummary
 
-import scalaadaptive.math.TTestResult.TTestResult
+import scalaadaptive.math.TestResult.TestResult
 
 /**
   * Created by pk250187 on 6/6/17.
@@ -25,7 +25,7 @@ class BonferroniTTestRunner(val simpleTest: TwoSampleTTest) extends MultipleSamp
     */
   override def runTests(firstSampleStats: StatisticalSummary,
                         remainingSampleStats: Seq[StatisticalSummary],
-                        alpha: Double): Option[TTestResult] = {
+                        alpha: Double): Option[TestResult] = {
     // We need to perform one test for each remaining sample
     val numTests = remainingSampleStats.size
 
@@ -38,15 +38,15 @@ class BonferroniTTestRunner(val simpleTest: TwoSampleTTest) extends MultipleSamp
     val testResults = remainingSampleStats
       .map(second => simpleTest.runTest(firstSampleStats, second, oneTestAlpha))
 
-    if (testResults.forall(res => res.contains(TTestResult.HigherMean)))
-      return Some(TTestResult.HigherMean)
+    if (testResults.forall(res => res.contains(TestResult.ExpectedHigher)))
+      return Some(TestResult.ExpectedHigher)
 
-    if (testResults.forall(res => res.contains(TTestResult.LowerMean)))
-      return Some(TTestResult.LowerMean)
+    if (testResults.forall(res => res.contains(TestResult.ExpectedLower)))
+      return Some(TestResult.ExpectedLower)
 
     if (testResults.exists(res => res.isEmpty))
       return None
 
-    Some(TTestResult.CantRejectEquality)
+    Some(TestResult.CantRejectEquality)
   }
 }
