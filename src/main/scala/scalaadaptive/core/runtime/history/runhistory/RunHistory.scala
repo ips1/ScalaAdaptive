@@ -15,7 +15,7 @@ trait RunHistory[TMeasurement] {
   def runCount: Int
   def runStatistics: StatisticalSummary
   def runItems: Iterable[EvaluationData[TMeasurement]]
-  def runAveragesGroupedByDescriptor: Map[Option[Long], GroupedEvaluationData[TMeasurement]]
+  def runAveragesGroupedByDescriptor: Map[Long, GroupedEvaluationData[TMeasurement]]
   def average(): Option[Double]
   def best(): Option[Double]
   def applyNewRun(runResult: EvaluationData[TMeasurement]): RunHistory[TMeasurement]

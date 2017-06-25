@@ -12,7 +12,7 @@ import scalaadaptive.extensions.IntExtensions._
 
 class CachedGroupedRunHistory[TMeasurement] private(override val runCount: Int,
                                                     private val internalHistory: RunHistory[TMeasurement],
-                                                    private val data: Map[Option[Long], GroupedEvaluationData[TMeasurement]])
+                                                    private val data: Map[Long, GroupedEvaluationData[TMeasurement]])
                                                    (implicit override val num: Averageable[TMeasurement]) extends RunHistory[TMeasurement]
   with DefaultStatistics[TMeasurement] {
 
@@ -29,22 +29,31 @@ class CachedGroupedRunHistory[TMeasurement] private(override val runCount: Int,
   }
 
   override def applyNewRun(runResult: EvaluationData[TMeasurement]): RunHistory[TMeasurement] = {
-    val group = data.get(runResult.inputDescriptor)
+    val newInternalHistory = internalHistory.applyNewRun(runResult)
 
-    val newData = group match {
-      case Some(existingGroup) => applyNewRunToTheGroupedRunData(existingGroup, runResult)
-      case None => new GroupedEvaluationData[TMeasurement](runResult.measurement, 1)
+    val updatedData = if (runResult.inputDescriptor.isEmpty)
+      data
+    else {
+      val group = data.get(runResult.inputDescriptor.get)
+
+      val newData = group match {
+        case Some(existingGroup) => applyNewRunToTheGroupedRunData(existingGroup, runResult)
+        case None => new GroupedEvaluationData[TMeasurement](runResult.measurement, 1)
+      }
+
+      data + (runResult.inputDescriptor.get -> newData)
     }
 
-    val newInternalHistory = internalHistory.applyNewRun(runResult)
+
 
     new CachedGroupedRunHistory[TMeasurement](
       runCount + 1,
       newInternalHistory,
-      data + (runResult.inputDescriptor -> newData))
+      updatedData
+    )
   }
 
-  override def runAveragesGroupedByDescriptor: Map[Option[Long], GroupedEvaluationData[TMeasurement]] = data
+  override def runAveragesGroupedByDescriptor: Map[Long, GroupedEvaluationData[TMeasurement]] = data
 
   // Delegations:
   override def runItems: Iterable[EvaluationData[TMeasurement]] = internalHistory.runItems

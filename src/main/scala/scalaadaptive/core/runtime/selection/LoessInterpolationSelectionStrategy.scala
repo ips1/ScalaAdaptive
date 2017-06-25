@@ -22,11 +22,11 @@ class LoessInterpolationSelectionStrategy[TMeasurement](val logger: Logger)(impl
     * @param sortedData
     * @return
     */
-  private def interpolate(sortedData: Seq[(Option[Long], GroupedEvaluationData[TMeasurement])]): Option[PolynomialSplineFunction] = {
+  private def interpolate(sortedData: Seq[(Long, GroupedEvaluationData[TMeasurement])]): Option[PolynomialSplineFunction] = {
     try {
       Some(
         getInterpolator.interpolate(
-          sortedData.map(i => i._1.get.toDouble).toArray,
+          sortedData.map(i => i._1.toDouble).toArray,
           sortedData.map(i => num.toDouble(i._2.averageMeasurement)).toArray
         )
       )
@@ -42,7 +42,6 @@ class LoessInterpolationSelectionStrategy[TMeasurement](val logger: Logger)(impl
       records.map(runHistory => {
         val sortedData = runHistory.runAveragesGroupedByDescriptor
           .toList
-          .filter(i => i._1.isDefined)
           .sortBy(i => i._1)
         (runHistory, interpolate(sortedData))
       })
