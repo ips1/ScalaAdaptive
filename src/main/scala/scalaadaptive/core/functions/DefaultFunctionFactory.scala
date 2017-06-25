@@ -17,8 +17,8 @@ class DefaultFunctionFactory extends FunctionFactory {
       config.closureReferences))
   }
 
-  override def createFunction[TArgType, TRetType](firstOption: ReferencedFunction[TArgType, TRetType]): MultipleImplementationFunction[TArgType, TRetType] =
-    new MultipleImplementationFunction[TArgType, TRetType](updateFunctionsWithConfig(List(firstOption), AdaptiveInternal.getMultiFunctionDefaults),
+  override def createFunction[TArgType, TRetType](firstOption: ReferencedFunction[TArgType, TRetType]): CombinedFunction[TArgType, TRetType] =
+    new CombinedFunction[TArgType, TRetType](updateFunctionsWithConfig(List(firstOption), AdaptiveInternal.getMultiFunctionDefaults),
       None,
       (_) => NoGroup(),
       new StorageBasedSelector(AdaptiveInternal.getMultiFunctionDefaults.storage),
@@ -26,9 +26,9 @@ class DefaultFunctionFactory extends FunctionFactory {
       AdaptiveInternal.getMultiFunctionDefaults
     )
 
-  override def changeFunction[TArgType, TRetType](function: MultipleImplementationFunction[TArgType, TRetType],
-                                                  inputDescriptorSelector: Option[(TArgType) => Long]): MultipleImplementationFunction[TArgType, TRetType] =
-    new MultipleImplementationFunction[TArgType, TRetType](function.functions,
+  override def changeFunction[TArgType, TRetType](function: CombinedFunction[TArgType, TRetType],
+                                                  inputDescriptorSelector: Option[(TArgType) => Long]): CombinedFunction[TArgType, TRetType] =
+    new CombinedFunction[TArgType, TRetType](function.functions,
       inputDescriptorSelector,
       function.groupSelector,
       new StorageBasedSelector(function.functionConfig.storage),
@@ -36,9 +36,9 @@ class DefaultFunctionFactory extends FunctionFactory {
       function.functionConfig
     )
 
-  override def changeFunction[TArgType, TRetType](function: MultipleImplementationFunction[TArgType, TRetType],
-                                                  groupSelector: (TArgType) => GroupId): MultipleImplementationFunction[TArgType, TRetType] =
-    new MultipleImplementationFunction[TArgType, TRetType](function.functions,
+  override def changeFunction[TArgType, TRetType](function: CombinedFunction[TArgType, TRetType],
+                                                  groupSelector: (TArgType) => GroupId): CombinedFunction[TArgType, TRetType] =
+    new CombinedFunction[TArgType, TRetType](function.functions,
       function.inputDescriptorSelector,
       groupSelector,
       new StorageBasedSelector(function.functionConfig.storage),
@@ -47,9 +47,9 @@ class DefaultFunctionFactory extends FunctionFactory {
     )
 
 
-  override def changeFunction[TArgType, TRetType](function: MultipleImplementationFunction[TArgType, TRetType],
-                                                  newConfig: FunctionConfig): MultipleImplementationFunction[TArgType, TRetType] =
-    new MultipleImplementationFunction[TArgType, TRetType](updateFunctionsWithConfig(function.functions, newConfig),
+  override def changeFunction[TArgType, TRetType](function: CombinedFunction[TArgType, TRetType],
+                                                  newConfig: FunctionConfig): CombinedFunction[TArgType, TRetType] =
+    new CombinedFunction[TArgType, TRetType](updateFunctionsWithConfig(function.functions, newConfig),
       function.inputDescriptorSelector,
       function.groupSelector,
       new StorageBasedSelector(newConfig.storage),
@@ -57,9 +57,9 @@ class DefaultFunctionFactory extends FunctionFactory {
       newConfig
     )
 
-  override def mergeFunctions[TArgType, TRetType](firstFunction: MultipleImplementationFunction[TArgType, TRetType],
-                                                  secondFunction: MultipleImplementationFunction[TArgType, TRetType]): MultipleImplementationFunction[TArgType, TRetType] = {
-    new MultipleImplementationFunction[TArgType, TRetType](firstFunction.functions ++ secondFunction.functions,
+  override def mergeFunctions[TArgType, TRetType](firstFunction: CombinedFunction[TArgType, TRetType],
+                                                  secondFunction: CombinedFunction[TArgType, TRetType]): CombinedFunction[TArgType, TRetType] = {
+    new CombinedFunction[TArgType, TRetType](firstFunction.functions ++ secondFunction.functions,
       firstFunction.inputDescriptorSelector,
       firstFunction.groupSelector,
       new StorageBasedSelector(firstFunction.functionConfig.storage),

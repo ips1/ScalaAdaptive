@@ -7,15 +7,15 @@ import scalaadaptive.api.grouping.GroupId
 import scalaadaptive.api.options.Selection.Selection
 import scalaadaptive.api.options.Storage.Storage
 import scalaadaptive.api.policies.Policy
-import scalaadaptive.core.functions.{FunctionFactory, MultipleImplementationFunction}
+import scalaadaptive.core.functions.{FunctionFactory, CombinedFunction}
 import scalaadaptive.core.runtime.AdaptiveInternal
 
 /**
   * Created by pk250187 on 5/27/17.
   */
 abstract class FunctionAdaptorBase[TArgType, TRetType, TFunctionAdaptorType] {
-  protected val function: MultipleImplementationFunction[TArgType, TRetType]
-  protected val createNew: (MultipleImplementationFunction[TArgType, TRetType]) => TFunctionAdaptorType
+  protected val function: CombinedFunction[TArgType, TRetType]
+  protected val createNew: (CombinedFunction[TArgType, TRetType]) => TFunctionAdaptorType
 
   protected def functionFactory: FunctionFactory = AdaptiveInternal.getFunctionFactory
 

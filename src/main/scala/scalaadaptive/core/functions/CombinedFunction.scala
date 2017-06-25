@@ -15,12 +15,12 @@ import scalaadaptive.core.functions.analytics.AnalyticsCollector
 /**
   * Created by pk250187 on 5/21/17.
   */
-class MultipleImplementationFunction[TArgType, TRetType](val functions: Seq[ReferencedFunction[TArgType, TRetType]],
-                                                         val inputDescriptorSelector: Option[(TArgType) => Long],
-                                                         val groupSelector: (TArgType) => GroupId,
-                                                         val selector: AdaptiveSelector,
-                                                         val analytics: AnalyticsCollector,
-                                                         val functionConfig: FunctionConfig) {
+class CombinedFunction[TArgType, TRetType](val functions: Seq[ReferencedFunction[TArgType, TRetType]],
+                                           val inputDescriptorSelector: Option[(TArgType) => Long],
+                                           val groupSelector: (TArgType) => GroupId,
+                                           val selector: AdaptiveSelector,
+                                           val analytics: AnalyticsCollector,
+                                           val functionConfig: FunctionConfig) {
   private def createDefaultPolicy() = functionConfig.startPolicy
   private def createDefaultStatistics() = new FunctionStatistics[TArgType, TRetType](functions.head,
     ref => functions.find(f => f.reference == ref))
@@ -104,7 +104,7 @@ class MultipleImplementationFunction[TArgType, TRetType](val functions: Seq[Refe
         invokeUsingSelectorWithDelayedMeasure(functions, arguments, groupId, markAsGather = false)
       case PolicyResult.GatherData =>
         invokeUsingSelectorWithDelayedMeasure(List(data.statistics.getLeastSelectedFunction), arguments, groupId,
-          markAsGather = false)
+          markAsGather = true)
     }
   }
 

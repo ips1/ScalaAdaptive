@@ -2,16 +2,16 @@ package scalaadaptive.core.functions.adaptors
 
 import scalaadaptive.api.adaptors.{InvocationToken, MultiFunction0}
 import scalaadaptive.api.grouping.GroupId
-import scalaadaptive.core.functions.{FunctionFactory, MultipleImplementationFunction}
+import scalaadaptive.core.functions.{FunctionFactory, CombinedFunction}
 
 /**
   * Created by pk250187 on 3/19/17.
   */
-class FunctionAdaptor0[R](val function: MultipleImplementationFunction[Unit, R])
+class FunctionAdaptor0[R](val function: CombinedFunction[Unit, R])
   extends FunctionAdaptorBase[Unit, R, FunctionAdaptor0[R]]
     with MultiFunction0[R] {
 
-  override protected val createNew: (MultipleImplementationFunction[Unit, R]) => FunctionAdaptor0[R] =
+  override protected val createNew: (CombinedFunction[Unit, R]) => FunctionAdaptor0[R] =
     f => new FunctionAdaptor0[R](f)
 
   override def by(selector: () => Long): MultiFunction0[R] = byTupled((_) => selector())
