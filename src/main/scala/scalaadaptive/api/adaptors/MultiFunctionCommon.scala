@@ -10,7 +10,9 @@ import scalaadaptive.api.policies.Policy
 /**
   * Created by pk250187 on 5/27/17.
   */
-trait MultiFunctionCommon[TArgType, TRetType, TFunctionAdaptorType] {
+trait MultiFunctionCommon[TArgType, TRetType, TFunctionAdaptorType]
+  extends MultiFunctionControl with MultiFunctionAnalytics {
+
   def selectUsing(newSelection: Selection): TFunctionAdaptorType
   def storeUsing(newStorage: Storage): TFunctionAdaptorType
   def limitedTo(newDuration: Duration): TFunctionAdaptorType
@@ -19,10 +21,4 @@ trait MultiFunctionCommon[TArgType, TRetType, TFunctionAdaptorType] {
   def asClosures(closureIdentification: Boolean): TFunctionAdaptorType
 
   def train(data: Seq[TArgType]): Unit
-  def toDebugString: String
-  def flushHistory(): Unit
-  def setPolicy(policy: Policy): Unit
-  def resetPolicy(): Unit
-
-  def getAnalyticsData: Option[AnalyticsData]
 }
