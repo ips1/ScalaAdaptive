@@ -101,20 +101,20 @@ class HistoryBasedAdaptiveSelector[TMeasurement](historyStorage: HistoryStorage[
     (functionToRun(arguments), new MeasuringInvocationToken(this, inputDescriptor, selectedRecord.key, tracker))
   }
 
-  override def runOption[TArgType, TReturnType](options: Seq[ReferencedFunction[TArgType, TReturnType]],
-                                                arguments: TArgType,
-                                                groupId: GroupId,
-                                                inputDescriptor: Option[Long],
-                                                limitedBy: Option[Duration],
-                                                selection: Selection): RunResult[TReturnType] =
+  override def selectAndRun[TArgType, TReturnType](options: Seq[ReferencedFunction[TArgType, TReturnType]],
+                                                   arguments: TArgType,
+                                                   groupId: GroupId,
+                                                   inputDescriptor: Option[Long],
+                                                   limitedBy: Option[Duration],
+                                                   selection: Selection): RunResult[TReturnType] =
     runOption(options, arguments, groupId, inputDescriptor, limitedBy, getStrategyForSelection(selection))
 
-  override def runOptionWithDelayedMeasure[TArgType, TReturnType](options: Seq[ReferencedFunction[TArgType, TReturnType]],
-                                                                  arguments: TArgType,
-                                                                  groupId: GroupId,
-                                                                  inputDescriptor: Option[Long],
-                                                                  limitedBy: Option[Duration],
-                                                                  selection: Selection): (TReturnType, InvocationTokenWithCallbacks) =
+  override def selectAndRunWithDelayedMeasure[TArgType, TReturnType](options: Seq[ReferencedFunction[TArgType, TReturnType]],
+                                                                     arguments: TArgType,
+                                                                     groupId: GroupId,
+                                                                     inputDescriptor: Option[Long],
+                                                                     limitedBy: Option[Duration],
+                                                                     selection: Selection): (TReturnType, InvocationTokenWithCallbacks) =
     runOptionWithDelayedMeasure(options, arguments,groupId, inputDescriptor, limitedBy, getStrategyForSelection(selection))
 
   override def runMeasuredFunction[TArgType, TReturnType](fun: (TArgType) => TReturnType,

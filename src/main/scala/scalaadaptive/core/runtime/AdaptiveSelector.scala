@@ -17,19 +17,19 @@ import scalaadaptive.core.functions.RunResult
   *
   */
 trait AdaptiveSelector {
-  def runOption[TArgType, TReturnType](options: Seq[ReferencedFunction[TArgType, TReturnType]],
-                                       arguments: TArgType,
-                                       groupId: GroupId,
-                                       inputDescriptor: Option[Long],
-                                       limitedBy: Option[Duration],
-                                       selection: Selection): RunResult[TReturnType]
+  def selectAndRun[TArgType, TReturnType](options: Seq[ReferencedFunction[TArgType, TReturnType]],
+                                          arguments: TArgType,
+                                          groupId: GroupId,
+                                          inputDescriptor: Option[Long],
+                                          limitedBy: Option[Duration],
+                                          selection: Selection): RunResult[TReturnType]
 
-  def runOptionWithDelayedMeasure[TArgType, TReturnType](options: Seq[ReferencedFunction[TArgType, TReturnType]],
-                                                         arguments: TArgType,
-                                                         groupId: GroupId,
-                                                         inputDescriptor: Option[Long],
-                                                         limitedBy: Option[Duration],
-                                                         selection: Selection): (TReturnType, InvocationTokenWithCallbacks)
+  def selectAndRunWithDelayedMeasure[TArgType, TReturnType](options: Seq[ReferencedFunction[TArgType, TReturnType]],
+                                                            arguments: TArgType,
+                                                            groupId: GroupId,
+                                                            inputDescriptor: Option[Long],
+                                                            limitedBy: Option[Duration],
+                                                            selection: Selection): (TReturnType, InvocationTokenWithCallbacks)
 
   def gatherData[TArgType, TReturnType](options: Seq[ReferencedFunction[TArgType, TReturnType]],
                                         arguments: TArgType,

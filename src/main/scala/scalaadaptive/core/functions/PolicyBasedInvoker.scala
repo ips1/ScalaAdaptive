@@ -44,7 +44,7 @@ class PolicyBasedInvoker extends CombinedFunctionInvoker {
       if (gather)
         getSelector(function).gatherData(function.functions, arguments, groupId, function.getInputDescriptor(arguments))
       else
-        getSelector(function).runOption(function.functions, arguments, groupId, function.getInputDescriptor(arguments),
+        getSelector(function).selectAndRun(function.functions, arguments, groupId, function.getInputDescriptor(arguments),
           function.functionConfig.duration, function.functionConfig.selection)
 
     processRunData(function, runResult.runData, gather)
@@ -60,7 +60,7 @@ class PolicyBasedInvoker extends CombinedFunctionInvoker {
         getSelector(function).gatherDataWithDelayedMeasure(function.functions, arguments, groupId,
           function.getInputDescriptor(arguments))
       else
-        getSelector(function).runOptionWithDelayedMeasure(function.functions, arguments, groupId,
+        getSelector(function).selectAndRunWithDelayedMeasure(function.functions, arguments, groupId,
           function.getInputDescriptor(arguments), function.functionConfig.duration, function.functionConfig.selection)
     token.setAfterInvocationCallback(data => processRunData(function, data, gather))
 
