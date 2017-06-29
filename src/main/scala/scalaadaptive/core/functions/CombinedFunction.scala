@@ -2,23 +2,20 @@ package scalaadaptive.core.functions
 
 import scala.collection.mutable
 import scalaadaptive.analytics.AnalyticsData
-import scalaadaptive.api.adaptors.InvocationToken
 import scalaadaptive.api.grouping.{Group, GroupId, NoGroup}
-import scalaadaptive.api.options.Storage
-import scalaadaptive.core.functions.references.{FunctionReference, ReferencedFunction}
-import scalaadaptive.core.runtime.invocationtokens.SimpleInvocationToken
-import scalaadaptive.api.policies.{Policy, PolicyResult}
-import scalaadaptive.core.functions.statistics.FunctionStatistics
-import scalaadaptive.core.functions.adaptors.{FunctionConfig, StorageBasedSelector}
+import scalaadaptive.api.policies.Policy
+import scalaadaptive.core.functions.adaptors.FunctionConfig
 import scalaadaptive.core.functions.analytics.AnalyticsCollector
+import scalaadaptive.core.functions.references.{FunctionReference, ReferencedFunction}
+import scalaadaptive.core.functions.statistics.FunctionStatistics
 import scalaadaptive.core.runtime.{AdaptiveInternal, AdaptiveSelector}
 
 /**
   * Created by pk250187 on 5/21/17.
   */
 class CombinedFunction[TArgType, TRetType](val functions: Seq[ReferencedFunction[TArgType, TRetType]],
-                                           val inputDescriptorSelector: Option[(TArgType) => Long],
-                                           val groupSelector: (TArgType) => GroupId,
+                                           private val inputDescriptorSelector: Option[(TArgType) => Long],
+                                           private val groupSelector: (TArgType) => GroupId,
                                            val localSelector: Option[AdaptiveSelector],
                                            val analytics: AnalyticsCollector,
                                            val functionConfig: FunctionConfig) {
@@ -38,8 +35,11 @@ class CombinedFunction[TArgType, TRetType](val functions: Seq[ReferencedFunction
     case Group(id) => groupedData.getOrElseUpdate(id, createDefaultFunctionData())
   }
 
-  def generateInputDescriptor(arguments: TArgType): Option[Long] =
+  def getInputDescriptor(arguments: TArgType): Option[Long] =
     inputDescriptorSelector.map(sel => sel(arguments))
+
+  def getGroup(arguments: TArgType): GroupId =
+    groupSelector(arguments)
 
   def setPolicy(policy: Policy): Unit = {
     ungroupedData.currentPolicy = policy

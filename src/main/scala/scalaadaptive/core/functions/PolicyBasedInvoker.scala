@@ -22,9 +22,9 @@ class PolicyBasedInvoker extends CombinedFunctionInvoker {
 
   private def train[TArgType, TRetType](function: CombinedFunction[TArgType, TRetType],
                                         data: TArgType): Unit = {
-    val groupId = function.groupSelector(data)
+    val groupId = function.getGroup(data)
     function.functions.foreach(f => {
-      getSelector(function).gatherData(List(f), data, groupId, function.generateInputDescriptor(data))
+      getSelector(function).gatherData(List(f), data, groupId, function.getInputDescriptor(data))
     })
   }
 
@@ -42,9 +42,9 @@ class PolicyBasedInvoker extends CombinedFunctionInvoker {
                                                       gather: Boolean): TRetType = {
     val runResult =
       if (gather)
-        getSelector(function).gatherData(function.functions, arguments, groupId, function.generateInputDescriptor(arguments))
+        getSelector(function).gatherData(function.functions, arguments, groupId, function.getInputDescriptor(arguments))
       else
-        getSelector(function).runOption(function.functions, arguments, groupId, function.generateInputDescriptor(arguments),
+        getSelector(function).runOption(function.functions, arguments, groupId, function.getInputDescriptor(arguments),
           function.functionConfig.duration, function.functionConfig.selection)
 
     processRunData(function, runResult.runData, gather)
@@ -58,17 +58,17 @@ class PolicyBasedInvoker extends CombinedFunctionInvoker {
     val (runResult, token) =
       if (gather)
         getSelector(function).gatherDataWithDelayedMeasure(function.functions, arguments, groupId,
-          function.generateInputDescriptor(arguments))
+          function.getInputDescriptor(arguments))
       else
         getSelector(function).runOptionWithDelayedMeasure(function.functions, arguments, groupId,
-          function.generateInputDescriptor(arguments), function.functionConfig.duration, function.functionConfig.selection)
+          function.getInputDescriptor(arguments), function.functionConfig.duration, function.functionConfig.selection)
     token.setAfterInvocationCallback(data => processRunData(function, data, gather))
 
     (runResult, token)
   }
 
   override def invoke[TArgType, TRetType](function: CombinedFunction[TArgType, TRetType], arguments: TArgType): TRetType = {
-    val groupId = function.groupSelector(arguments)
+    val groupId = function.getGroup(arguments)
     val data = function.getData(groupId)
     val (result, newPolicy) = data.currentPolicy.decide(data.statistics)
     data.currentPolicy = newPolicy
@@ -87,7 +87,7 @@ class PolicyBasedInvoker extends CombinedFunctionInvoker {
 
   override def invokeWithDelayedMeasure[TArgType, TRetType](function: CombinedFunction[TArgType, TRetType],
                                                             arguments: TArgType): (TRetType, InvocationToken) = {
-    val groupId = function.groupSelector(arguments)
+    val groupId = function.getGroup(arguments)
     val data = function.getData(groupId)
     val (result, newPolicy) = data.currentPolicy.decide(data.statistics)
     data.currentPolicy = newPolicy
