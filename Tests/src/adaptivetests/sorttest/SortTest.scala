@@ -7,7 +7,7 @@ import scala.collection.mutable.ArrayBuffer
 import scalaadaptive.api.Adaptive
 import scalaadaptive.api.grouping.Group
 import scalaadaptive.api.options.Selection
-import scalaadaptive.core.configuration.blocks.{LimitedRegressionSelection, NoGrouping}
+import scalaadaptive.core.configuration.blocks.LimitedRegressionSelection
 import scalaadaptive.core.configuration.defaults.FullHistoryTTestConfiguration
 import scalaadaptive.api.policies.PauseSelectionAfterStreakPolicy
 
@@ -31,7 +31,7 @@ object SortTest {
   )
 
   def main(args: Array[String]): Unit = {
-    Adaptive.initialize(new FullHistoryTTestConfiguration with LimitedRegressionSelection with NoGrouping)
+    Adaptive.initialize(new FullHistoryTTestConfiguration with LimitedRegressionSelection)
 
     val maxLength = 5000
     val testCount = 300

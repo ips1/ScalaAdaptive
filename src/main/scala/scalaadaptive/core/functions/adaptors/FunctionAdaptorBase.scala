@@ -20,20 +20,20 @@ abstract class FunctionAdaptorBase[TArgType, TRetType, TFunctionAdaptorType] {
   protected def functionFactory: FunctionFactory = AdaptiveInternal.getFunctionFactory
 
   def byTupled(newSelector: (TArgType) => Long): TFunctionAdaptorType =
-    createNew(functionFactory.changeFunction[TArgType, TRetType](function, Some(newSelector)))
+    createNew(function.updateInputDescriptor(Some(newSelector)))
   def groupByTupled(newSelector: (TArgType) => GroupId): TFunctionAdaptorType =
-    createNew(functionFactory.changeFunction[TArgType, TRetType](function, newSelector))
+    createNew(function.updateGroupSelector(newSelector))
 
   def selectUsing(newSelection: Selection): TFunctionAdaptorType =
-    createNew(functionFactory.changeFunction[TArgType, TRetType](function, function.functionConfig.selectUsing(newSelection)))
+    createNew(function.updateFunctionConfig(function.functionConfig.selectUsing(newSelection)))
   def storeUsing(newStorage: Storage): TFunctionAdaptorType =
-    createNew(functionFactory.changeFunction[TArgType, TRetType](function, function.functionConfig.storeUsing(newStorage)))
+    createNew(function.updateFunctionConfig(function.functionConfig.storeUsing(newStorage)))
   def limitedTo(newDuration: Duration): TFunctionAdaptorType =
-    createNew(functionFactory.changeFunction[TArgType, TRetType](function, function.functionConfig.limitedTo(newDuration)))
+    createNew(function.updateFunctionConfig(function.functionConfig.limitedTo(newDuration)))
   def withPolicy(newPolicy: Policy): TFunctionAdaptorType =
-    createNew(functionFactory.changeFunction[TArgType, TRetType](function, function.functionConfig.withPolicy(newPolicy)))
+    createNew(function.updateFunctionConfig(function.functionConfig.withPolicy(newPolicy)))
   def asClosures(closureIdentification: Boolean): TFunctionAdaptorType =
-    createNew(functionFactory.changeFunction[TArgType, TRetType](function, function.functionConfig.asClosures(closureIdentification)))
+    createNew(function.updateFunctionConfig(function.functionConfig.asClosures(closureIdentification)))
 
   def train(data: Seq[TArgType]): Unit = function.train(data)
 

@@ -14,4 +14,7 @@ class ReferencedFunction[TArgType, TReturnType](val fun: (TArgType) => TReturnTy
     this(fun, closureReference, customReference, false)
 
   def reference: FunctionReference = if (useClosures) closureReference else customReference
+
+  def changeUseClosures(newUseClosures: Boolean): ReferencedFunction[TArgType, TReturnType] =
+    new ReferencedFunction[TArgType, TReturnType](fun, closureReference, customReference, newUseClosures)
 }

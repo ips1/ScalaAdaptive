@@ -13,6 +13,3 @@ class FullHistoryBestAverageSelection
     with DefaultPath
     with BufferedSerialization
     with InterpolationSelection
-    // Temporary change:
-  // TODO: Decide
-    with NoGrouping

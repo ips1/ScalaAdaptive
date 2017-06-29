@@ -1,7 +1,6 @@
 package scalaadaptive.core.configuration
 
 import scalaadaptive.analytics.{AnalyticsSerializer, CsvAnalyticsSerializer}
-import scalaadaptive.api.grouping.{GroupSelector, LogarithmGroupSelector}
 import scalaadaptive.core.logging.{ConsoleLogger, Logger}
 import scalaadaptive.core.functions.adaptors.FunctionConfig
 import scalaadaptive.api.options.{Selection, Storage}
@@ -9,7 +8,7 @@ import scalaadaptive.core.functions.analytics.{AnalyticsCollector, BasicAnalytic
 import scalaadaptive.core.functions.{DefaultFunctionFactory, FunctionFactory}
 import scalaadaptive.core.functions.references.{AlphanumValidator, CustomIdentifierValidator}
 import scalaadaptive.core.runtime.history.historystorage.{HistoryStorage, MapHistoryStorage}
-import scalaadaptive.core.runtime.history.runhistory.{CachedAverageRunHistory, FullRunHistory, LimitedRunHistory}
+import scalaadaptive.core.runtime.history.runhistory.{CachedAverageRunHistory, CachedGroupedRunHistory, FullRunHistory, LimitedRunHistory}
 import scalaadaptive.api.policies.AlwaysSelectPolicy
 import scalaadaptive.extensions.Averageable
 
@@ -21,13 +20,10 @@ trait BaseConfiguration extends Configuration {
   override val createHistoryStorage: () => HistoryStorage[TMeasurement] = () => {
     new MapHistoryStorage[TMeasurement](key => {
       val innerHistoryFactory = () =>
-        new CachedAverageRunHistory[TMeasurement](
-          new FullRunHistory[TMeasurement](key)(num))(num)
-      new LimitedRunHistory[TMeasurement](20000, innerHistoryFactory(), innerHistoryFactory)
+        new FullRunHistory[TMeasurement](key)(num)
+      new LimitedRunHistory[TMeasurement](50000, innerHistoryFactory(), innerHistoryFactory)
     })
   }
-  override val createGroupSelector: () => GroupSelector =
-    () => new LogarithmGroupSelector
   override val createLogger: () => Logger =
     () => new ConsoleLogger
   override val createIdentifierValidator: () => CustomIdentifierValidator =

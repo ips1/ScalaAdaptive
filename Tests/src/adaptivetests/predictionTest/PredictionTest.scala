@@ -7,7 +7,7 @@ import scala.util.Random
 import scalaadaptive.api.Adaptive
 import scalaadaptive.api.options.Storage
 import scalaadaptive.core.configuration.Configuration
-import scalaadaptive.core.configuration.blocks.{InterpolationSelection, LimitedRegressionSelection, NoGrouping}
+import scalaadaptive.core.configuration.blocks.{InterpolationSelection, LimitedRegressionSelection}
 import scalaadaptive.core.configuration.defaults.FullHistoryTTestConfiguration
 
 /**
@@ -45,8 +45,8 @@ object PredictionTest {
 
   def main(args: Array[String]): Unit = {
     val configurations = List(
-      new FullHistoryTTestConfiguration with InterpolationSelection with NoGrouping
-      //new FullHistoryTTestConfiguration with NoGrouping
+      new FullHistoryTTestConfiguration with InterpolationSelection
+      //new FullHistoryTTestConfiguration
     )
 
     configurations.foreach(runTestWithConfig)

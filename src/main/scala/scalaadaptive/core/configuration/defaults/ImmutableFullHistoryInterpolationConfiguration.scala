@@ -14,9 +14,7 @@ class ImmutableFullHistoryInterpolationConfiguration
     with RunTimeMeasurement
     with DefaultPath
     with BufferedSerialization
-    with TTestSelection
-    // Temporary change:
-    with NoGrouping {
+    with TTestSelection {
   override val createHistoryStorage: () => HistoryStorage[TMeasurement] = () => {
     new MapHistoryStorage[TMeasurement](key =>
       new CachedAverageRunHistory[TMeasurement](new ImmutableFullRunHistory[TMeasurement](key)(num))(num)

@@ -2,7 +2,7 @@ package scalaadaptive.core.runtime
 
 import java.time.{Duration, Instant}
 
-import scalaadaptive.api.grouping.{GroupId, GroupSelector}
+import scalaadaptive.api.grouping.GroupId
 import scalaadaptive.core.logging.Logger
 import scalaadaptive.api.options.Selection
 import scalaadaptive.api.options.Selection.Selection
@@ -21,10 +21,9 @@ import scalaadaptive.core.functions.{RunData, RunResult}
   * Created by pk250187 on 3/19/17.
   */
 class HistoryBasedAdaptiveSelector[TMeasurement](historyStorage: HistoryStorage[TMeasurement],
-                                                 discreteRunSelector: SelectionStrategy[TMeasurement],
-                                                 continuousRunSelector: SelectionStrategy[TMeasurement],
-                                                 measurementProvider: EvaluationProvider[TMeasurement],
-                                                 bucketSelector: GroupSelector,
+                                                 nonPredictiveStrategy: SelectionStrategy[TMeasurement],
+                                                 predictiveStrategy: SelectionStrategy[TMeasurement],
+                                                 evaluationProvider: EvaluationProvider[TMeasurement],
                                                  logger: Logger) extends AdaptiveSelector with DelayedFunctionRunner {
 
   private def filterHistoryByDuration(history: RunHistory[TMeasurement], duration: Duration) = {
@@ -34,8 +33,8 @@ class HistoryBasedAdaptiveSelector[TMeasurement](historyStorage: HistoryStorage[
   }
 
   private def getSelectorForSelection(selection: Selection) = selection match {
-    case Selection.Predictive => continuousRunSelector
-    case Selection.NonPredictive => discreteRunSelector
+    case Selection.Predictive => predictiveStrategy
+    case Selection.NonPredictive => nonPredictiveStrategy
   }
 
   private def selectRecord[TArgType, TReturnType](options: Seq[ReferencedFunction[TArgType, TReturnType]],
@@ -108,7 +107,7 @@ class HistoryBasedAdaptiveSelector[TMeasurement](historyStorage: HistoryStorage[
     tracker.startTracking()
 
     // Execute the function with evaluation
-    val (result, measurement) = measurementProvider.evaluateFunctionRun(fun, arguments)
+    val (result, measurement) = evaluationProvider.evaluateFunctionRun(fun, arguments)
 
     tracker.addFunctionTime()
     logger.log(s"Performance on $inputDescriptor measured: $measurement")

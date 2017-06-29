@@ -3,7 +3,7 @@
   */
 object AdaptorDefinitions {
   import scalaadaptive.api.Implicits._
-  val fun1 = macroToAdaptor1 { list: List[Int] =>
+  val fun1 = toMultiFunction1 { list: List[Int] =>
     list.sorted
   }
 

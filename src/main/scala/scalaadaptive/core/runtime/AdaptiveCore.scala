@@ -23,7 +23,6 @@ trait AdaptiveCore {
       configuration.createNonPredictiveSelectionStrategy(logger),
       configuration.createPredictiveSelectionStrategy(logger),
       configuration.createPerformanceProvider(),
-      configuration.createGroupSelector(),
       logger)
   }
 
@@ -35,7 +34,6 @@ trait AdaptiveCore {
         configuration.createNonPredictiveSelectionStrategy(logger),
         configuration.createPredictiveSelectionStrategy(logger),
         configuration.createPerformanceProvider(),
-        configuration.createGroupSelector(),
         logger
       )
     )

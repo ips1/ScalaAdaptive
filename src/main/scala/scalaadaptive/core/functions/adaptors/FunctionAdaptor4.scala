@@ -27,5 +27,5 @@ class FunctionAdaptor4[T1, T2, T3, T4, R](val function: CombinedFunction[(T1, T2
     function.invokeWithDelayedMeasure((arg1, arg2, arg3, arg4))
 
   override def orMultiFunction(otherFun: MultiFunction4[T1, T2, T3, T4, R]): FunctionAdaptor4[T1, T2, T3, T4, R] =
-    createNew(functionFactory.mergeFunctions(function, Conversions.toAdaptor(otherFun).function))
+    createNew(function.mergeFunctions(Conversions.toAdaptor(otherFun).function))
 }

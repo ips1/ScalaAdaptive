@@ -8,8 +8,8 @@ import scalaadaptive.core.functions.references.{FunctionReference, ReferencedFun
 import scalaadaptive.core.runtime.invocationtokens.SimpleInvocationToken
 import scalaadaptive.api.policies.{Policy, PolicyResult}
 import scalaadaptive.core.functions.statistics.FunctionStatistics
-import scalaadaptive.core.runtime.AdaptiveSelector
-import scalaadaptive.core.functions.adaptors.FunctionConfig
+import scalaadaptive.core.runtime.{AdaptiveInternal, AdaptiveSelector}
+import scalaadaptive.core.functions.adaptors.{FunctionConfig, StorageBasedSelector}
 import scalaadaptive.core.functions.analytics.AnalyticsCollector
 
 /**
@@ -32,7 +32,7 @@ class CombinedFunction[TArgType, TRetType](val functions: Seq[ReferencedFunction
   val functionReferences: Seq[FunctionReference] =
     functions.map(f => if (functionConfig.closureReferences) f.closureReference else f.reference)
 
-  private def getData(groupId: GroupId) = groupId match {
+  def getData(groupId: GroupId) = groupId match {
     case NoGroup() => ungroupedData
     case Group(id) => groupedData.getOrElseUpdate(id, createDefaultFunctionData())
   }
@@ -120,4 +120,47 @@ class CombinedFunction[TArgType, TRetType](val functions: Seq[ReferencedFunction
   def resetPolicy(): Unit = setPolicy(createDefaultPolicy())
 
   def getAnalyticsData: Option[AnalyticsData] = analytics.getAnalyticsData
+
+  private def updateReferencedFunctionsWithConfig(functions: Seq[ReferencedFunction[TArgType, TRetType]],
+                                                  config: FunctionConfig) = {
+    functions.map(_.changeUseClosures(config.closureReferences))
+  }
+
+  def updateInputDescriptor(inputDescriptorSelector: Option[(TArgType) => Long]): CombinedFunction[TArgType, TRetType] =
+    new CombinedFunction[TArgType, TRetType](functions,
+      inputDescriptorSelector,
+      groupSelector,
+      new StorageBasedSelector(functionConfig.storage),
+      AdaptiveInternal.createAnalytics(),
+      functionConfig
+    )
+
+  def updateGroupSelector(groupSelector: (TArgType) => GroupId): CombinedFunction[TArgType, TRetType] =
+    new CombinedFunction[TArgType, TRetType](functions,
+      inputDescriptorSelector,
+      groupSelector,
+      new StorageBasedSelector(functionConfig.storage),
+      AdaptiveInternal.createAnalytics(),
+      functionConfig
+    )
+
+
+  def updateFunctionConfig(newConfig: FunctionConfig): CombinedFunction[TArgType, TRetType] =
+    new CombinedFunction[TArgType, TRetType](updateReferencedFunctionsWithConfig(functions, newConfig),
+      inputDescriptorSelector,
+      groupSelector,
+      new StorageBasedSelector(newConfig.storage),
+      AdaptiveInternal.createAnalytics(),
+      newConfig
+    )
+
+  def mergeFunctions(secondFunction: CombinedFunction[TArgType, TRetType]): CombinedFunction[TArgType, TRetType] = {
+    new CombinedFunction[TArgType, TRetType](functions ++ secondFunction.functions,
+      inputDescriptorSelector,
+      groupSelector,
+      new StorageBasedSelector(functionConfig.storage),
+      AdaptiveInternal.createAnalytics(),
+      functionConfig
+    )
+  }
 }
