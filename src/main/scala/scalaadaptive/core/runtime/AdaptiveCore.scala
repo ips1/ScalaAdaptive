@@ -1,14 +1,13 @@
 package scalaadaptive.core.runtime
 
-import scalaadaptive.analytics.{AnalyticsSerializer, BasicAnalyticsData, CsvAnalyticsSerializer}
+import scalaadaptive.analytics.AnalyticsSerializer
 import scalaadaptive.api.options.Storage
-import scalaadaptive.core.functions.adaptors.FunctionConfig
 import scalaadaptive.core.configuration.Configuration
 import scalaadaptive.core.configuration.defaults.FullHistoryTTestConfiguration
-import scalaadaptive.core.functions.analytics.{AnalyticsCollector, BasicAnalyticsCollector}
+import scalaadaptive.core.functions.adaptors.FunctionConfig
+import scalaadaptive.core.functions.analytics.AnalyticsCollector
 import scalaadaptive.core.functions.references.CustomIdentifierValidator
-import scalaadaptive.core.runtime.history._
-import scalaadaptive.core.functions.{CombinedFunctionInvoker, DefaultFunctionFactory, FunctionFactory}
+import scalaadaptive.core.functions.{CombinedFunctionInvoker, FunctionFactory}
 
 /**
   * Created by pk250187 on 3/19/17.
@@ -40,27 +39,33 @@ trait AdaptiveCore {
     )
   }
 
-  private var identifierValidator: CustomIdentifierValidator = defaultConfiguration.createIdentifierValidator()
-  private var multiFunctionDefaults: FunctionConfig = defaultConfiguration.createMultiFunctionDefaultConfig()
-  private var functionFactory: FunctionFactory = defaultConfiguration.createFunctionFactory()
-  private var analyticsSerializer: AnalyticsSerializer = defaultConfiguration.createAnalyticsSerializer()
-  private var runner: AdaptiveSelector = initOptionRunner(defaultConfiguration)
-  private var persistentRunner: AdaptiveSelector = initPersistentOptionRunner(defaultConfiguration).getOrElse(runner)
-  private var functionInvoker: CombinedFunctionInvoker = defaultConfiguration.createFunctionInvoker()
+  private def initImplementations(configuration: Configuration): AdaptiveImplementations = {
+    val optionRunner = initOptionRunner(defaultConfiguration)
+    new AdaptiveImplementations(
+      defaultConfiguration.createIdentifierValidator(),
+      defaultConfiguration.createMultiFunctionDefaultConfig(),
+      defaultConfiguration.createFunctionFactory(),
+      defaultConfiguration.createAnalyticsSerializer(),
+      optionRunner,
+      initPersistentOptionRunner(defaultConfiguration).getOrElse(optionRunner),
+      defaultConfiguration.createFunctionInvoker())
+  }
 
-  def getIdentifierValidator: CustomIdentifierValidator = identifierValidator
+  private var adaptiveImplementations: AdaptiveImplementations = initImplementations(defaultConfiguration)
 
-  def getMultiFunctionDefaults: FunctionConfig = multiFunctionDefaults
+  def getIdentifierValidator: CustomIdentifierValidator = adaptiveImplementations.identifierValidator
 
-  def getSharedRunner: AdaptiveSelector = runner
+  def getMultiFunctionDefaults: FunctionConfig = adaptiveImplementations.multiFunctionDefaults
 
-  def getSharedPersistentRunner: AdaptiveSelector = persistentRunner
+  def getSharedRunner: AdaptiveSelector = adaptiveImplementations.runner
 
-  def getFunctionFactory: FunctionFactory = functionFactory
+  def getSharedPersistentRunner: AdaptiveSelector = adaptiveImplementations.persistentRunner
 
-  def getAnalyticsSerializer: AnalyticsSerializer = analyticsSerializer
+  def getFunctionFactory: FunctionFactory = adaptiveImplementations.functionFactory
 
-  def getFunctionInvoker: CombinedFunctionInvoker = functionInvoker
+  def getAnalyticsSerializer: AnalyticsSerializer = adaptiveImplementations.analyticsSerializer
+
+  def getFunctionInvoker: CombinedFunctionInvoker = adaptiveImplementations.functionInvoker
 
   def createAnalytics(): AnalyticsCollector = currentConfiguration.createAnalyticsCollector()
 
@@ -75,13 +80,7 @@ trait AdaptiveCore {
 
   def initialize(configuration: Configuration): Unit = {
     currentConfiguration = configuration
-    runner = initOptionRunner(currentConfiguration)
-    persistentRunner = initPersistentOptionRunner(currentConfiguration).getOrElse(runner)
-    identifierValidator = currentConfiguration.createIdentifierValidator()
-    multiFunctionDefaults = currentConfiguration.createMultiFunctionDefaultConfig()
-    functionFactory = currentConfiguration.createFunctionFactory()
-    analyticsSerializer = currentConfiguration.createAnalyticsSerializer()
-    functionInvoker = currentConfiguration.createFunctionInvoker()
+    adaptiveImplementations = initImplementations(currentConfiguration)
   }
 
   def reset(): Unit = {
