@@ -5,7 +5,7 @@ import scalaadaptive.core.logging.{ConsoleLogger, Logger}
 import scalaadaptive.core.functions.adaptors.FunctionConfig
 import scalaadaptive.api.options.{Selection, Storage}
 import scalaadaptive.core.functions.analytics.{AnalyticsCollector, BasicAnalyticsCollector}
-import scalaadaptive.core.functions.{DefaultFunctionFactory, FunctionFactory}
+import scalaadaptive.core.functions.{CombinedFunctionInvoker, DefaultFunctionFactory, FunctionFactory, PolicyBasedInvoker}
 import scalaadaptive.core.functions.references.{AlphanumValidator, CustomIdentifierValidator}
 import scalaadaptive.core.runtime.history.historystorage.{HistoryStorage, MapHistoryStorage}
 import scalaadaptive.core.runtime.history.runhistory.{CachedAverageRunHistory, CachedGroupedRunHistory, FullRunHistory, LimitedRunHistory}
@@ -34,6 +34,9 @@ trait BaseConfiguration extends Configuration {
     () => new BasicAnalyticsCollector
   override val createAnalyticsSerializer: () => AnalyticsSerializer =
     () => new CsvAnalyticsSerializer
+
+  override val createFunctionInvoker: () => CombinedFunctionInvoker =
+    () => new PolicyBasedInvoker
 
   override val createMultiFunctionDefaultConfig: () => FunctionConfig =
     () => new FunctionConfig(Selection.NonPredictive, Storage.Global, None, false, new AlwaysSelectPolicy)

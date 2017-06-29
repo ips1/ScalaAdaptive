@@ -31,5 +31,15 @@ trait AdaptiveSelector {
                                                          limitedBy: Option[Duration],
                                                          selection: Selection): (TReturnType, InvocationTokenWithCallbacks)
 
+  def gatherData[TArgType, TReturnType](options: Seq[ReferencedFunction[TArgType, TReturnType]],
+                                        arguments: TArgType,
+                                        groupId: GroupId,
+                                        inputDescriptor: Option[Long]): RunResult[TReturnType]
+
+  def gatherDataWithDelayedMeasure[TArgType, TReturnType](options: Seq[ReferencedFunction[TArgType, TReturnType]],
+                                                          arguments: TArgType,
+                                                          groupId: GroupId,
+                                                          inputDescriptor: Option[Long]): (TReturnType, InvocationTokenWithCallbacks)
+
   def flushHistory(reference: FunctionReference)
 }

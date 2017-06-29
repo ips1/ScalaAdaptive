@@ -1,6 +1,6 @@
 package scalaadaptive.core.configuration
 import scalaadaptive.analytics.{AnalyticsSerializer, CsvAnalyticsSerializer}
-import scalaadaptive.core.functions.{DefaultFunctionFactory, FunctionFactory}
+import scalaadaptive.core.functions.{CombinedFunctionInvoker, DefaultFunctionFactory, FunctionFactory}
 import scalaadaptive.core.functions.adaptors.FunctionConfig
 import scalaadaptive.core.functions.analytics.{AnalyticsCollector, BasicAnalyticsCollector}
 import scalaadaptive.core.logging.Logger
@@ -14,6 +14,7 @@ import scalaadaptive.core.runtime.selection.SelectionStrategy
   */
 trait Configuration {
   type TMeasurement
+  val createFunctionInvoker: () => CombinedFunctionInvoker
   val createHistoryStorage: () => HistoryStorage[TMeasurement]
   val createPersistentHistoryStorage: () => Option[HistoryStorage[TMeasurement]]
   val createNonPredictiveSelectionStrategy: (Logger) => SelectionStrategy[TMeasurement]

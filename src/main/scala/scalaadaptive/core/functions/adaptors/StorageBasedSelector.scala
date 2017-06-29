@@ -16,7 +16,7 @@ import scalaadaptive.core.functions.RunResult
   */
 class StorageBasedSelector(val storage: Storage) extends AdaptiveSelector {
   private val runner: AdaptiveSelector = storage match {
-    case Storage.Local => AdaptiveInternal.createNewRunner()
+    case Storage.Local => AdaptiveInternal.createNewSelector()
     case _ => null
   }
 
@@ -46,4 +46,16 @@ class StorageBasedSelector(val storage: Storage) extends AdaptiveSelector {
 
   override def flushHistory(reference: FunctionReference): Unit =
     selectRunner.flushHistory(reference)
+
+  override def gatherData[TArgType, TReturnType](options: Seq[ReferencedFunction[TArgType, TReturnType]],
+                                                 arguments: TArgType,
+                                                 groupId: GroupId,
+                                                 inputDescriptor: Option[Long]): RunResult[TReturnType] =
+    selectRunner.gatherData(options, arguments, groupId, inputDescriptor)
+
+  override def gatherDataWithDelayedMeasure[TArgType, TReturnType](options: Seq[ReferencedFunction[TArgType, TReturnType]],
+                                                                   arguments: TArgType,
+                                                                   groupId: GroupId,
+                                                                   inputDescriptor: Option[Long]): (TReturnType, InvocationTokenWithCallbacks) =
+    selectRunner.gatherDataWithDelayedMeasure(options, arguments, groupId, inputDescriptor)
 }

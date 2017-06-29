@@ -3,11 +3,12 @@ package scalaadaptive.core.functions.adaptors
 import java.time.Duration
 
 import scalaadaptive.analytics.AnalyticsData
+import scalaadaptive.api.adaptors.InvocationToken
 import scalaadaptive.api.grouping.GroupId
 import scalaadaptive.api.options.Selection.Selection
 import scalaadaptive.api.options.Storage.Storage
 import scalaadaptive.api.policies.Policy
-import scalaadaptive.core.functions.{FunctionFactory, CombinedFunction}
+import scalaadaptive.core.functions.{CombinedFunction, CombinedFunctionInvoker, FunctionFactory}
 import scalaadaptive.core.runtime.AdaptiveInternal
 
 /**
@@ -18,6 +19,7 @@ abstract class FunctionAdaptorBase[TArgType, TRetType, TFunctionAdaptorType] {
   protected val createNew: (CombinedFunction[TArgType, TRetType]) => TFunctionAdaptorType
 
   protected def functionFactory: FunctionFactory = AdaptiveInternal.getFunctionFactory
+  private def invoker: CombinedFunctionInvoker = AdaptiveInternal.getFunctionInvoker
 
   def byTupled(newSelector: (TArgType) => Long): TFunctionAdaptorType =
     createNew(function.updateInputDescriptor(Some(newSelector)))
@@ -35,12 +37,16 @@ abstract class FunctionAdaptorBase[TArgType, TRetType, TFunctionAdaptorType] {
   def asClosures(closureIdentification: Boolean): TFunctionAdaptorType =
     createNew(function.updateFunctionConfig(function.functionConfig.asClosures(closureIdentification)))
 
-  def train(data: Seq[TArgType]): Unit = function.train(data)
+  def invoke(args: TArgType): TRetType = invoker.invoke(function, args)
+  def invokeWithDelayedMeasure(args: TArgType): (TRetType, InvocationToken) =
+    invoker.invokeWithDelayedMeasure(function, args)
+
+  def train(data: Seq[TArgType]): Unit = invoker.train(function, data)
 
   def toDebugString: String =
     function.functionReferences.map(r => r.toString).mkString(", ")
 
-  def flushHistory(): Unit = function.flushHistory()
+  def flushHistory(): Unit = invoker.flushHistory(function)
 
   def setPolicy(policy: Policy): Unit = function.setPolicy(policy)
 

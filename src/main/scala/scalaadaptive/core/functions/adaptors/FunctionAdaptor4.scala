@@ -21,10 +21,10 @@ class FunctionAdaptor4[T1, T2, T3, T4, R](val function: CombinedFunction[(T1, T2
     groupByTupled((t: (T1, T2, T3, T4)) => selector(t._1, t._2, t._3, t._4))
 
   override def apply(arg1: T1, arg2: T2, arg3: T3, arg4: T4): R =
-    function.invoke((arg1, arg2, arg3, arg4))
+    invoke((arg1, arg2, arg3, arg4))
 
   override def applyWithoutMeasuring(arg1: T1, arg2: T2, arg3: T3, arg4: T4): (R, InvocationToken) =
-    function.invokeWithDelayedMeasure((arg1, arg2, arg3, arg4))
+    invokeWithDelayedMeasure((arg1, arg2, arg3, arg4))
 
   override def orMultiFunction(otherFun: MultiFunction4[T1, T2, T3, T4, R]): FunctionAdaptor4[T1, T2, T3, T4, R] =
     createNew(function.mergeFunctions(Conversions.toAdaptor(otherFun).function))

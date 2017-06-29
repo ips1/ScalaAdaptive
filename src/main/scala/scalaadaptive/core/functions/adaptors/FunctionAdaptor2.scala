@@ -21,10 +21,10 @@ class FunctionAdaptor2[T1, T2, R](val function: CombinedFunction[(T1, T2), R])
     groupByTupled((t: (T1, T2)) => selector(t._1, t._2))
 
   override def apply(arg1: T1, arg2: T2): R =
-    function.invoke((arg1, arg2))
+    invoke((arg1, arg2))
 
   override def applyWithoutMeasuring(arg1: T1, arg2: T2): (R, InvocationToken) =
-    function.invokeWithDelayedMeasure((arg1, arg2))
+    invokeWithDelayedMeasure((arg1, arg2))
 
   override def orMultiFunction(otherFun: MultiFunction2[T1, T2, R]): FunctionAdaptor2[T1, T2, R] =
     createNew(function.mergeFunctions(Conversions.toAdaptor(otherFun).function))

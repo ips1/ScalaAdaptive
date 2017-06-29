@@ -4,13 +4,14 @@ import scala.collection.mutable
 import scalaadaptive.analytics.AnalyticsData
 import scalaadaptive.api.adaptors.InvocationToken
 import scalaadaptive.api.grouping.{Group, GroupId, NoGroup}
+import scalaadaptive.api.options.Storage
 import scalaadaptive.core.functions.references.{FunctionReference, ReferencedFunction}
 import scalaadaptive.core.runtime.invocationtokens.SimpleInvocationToken
 import scalaadaptive.api.policies.{Policy, PolicyResult}
 import scalaadaptive.core.functions.statistics.FunctionStatistics
-import scalaadaptive.core.runtime.{AdaptiveInternal, AdaptiveSelector}
 import scalaadaptive.core.functions.adaptors.{FunctionConfig, StorageBasedSelector}
 import scalaadaptive.core.functions.analytics.AnalyticsCollector
+import scalaadaptive.core.runtime.{AdaptiveInternal, AdaptiveSelector}
 
 /**
   * Created by pk250187 on 5/21/17.
@@ -18,7 +19,7 @@ import scalaadaptive.core.functions.analytics.AnalyticsCollector
 class CombinedFunction[TArgType, TRetType](val functions: Seq[ReferencedFunction[TArgType, TRetType]],
                                            val inputDescriptorSelector: Option[(TArgType) => Long],
                                            val groupSelector: (TArgType) => GroupId,
-                                           val selector: AdaptiveSelector,
+                                           val localSelector: Option[AdaptiveSelector],
                                            val analytics: AnalyticsCollector,
                                            val functionConfig: FunctionConfig) {
   private def createDefaultPolicy() = functionConfig.startPolicy
@@ -32,85 +33,13 @@ class CombinedFunction[TArgType, TRetType](val functions: Seq[ReferencedFunction
   val functionReferences: Seq[FunctionReference] =
     functions.map(f => if (functionConfig.closureReferences) f.closureReference else f.reference)
 
-  def getData(groupId: GroupId) = groupId match {
+  def getData(groupId: GroupId): FunctionData[TArgType, TRetType] = groupId match {
     case NoGroup() => ungroupedData
     case Group(id) => groupedData.getOrElseUpdate(id, createDefaultFunctionData())
   }
 
-  private def generateInputDescriptor(arguments: TArgType): Option[Long] =
+  def generateInputDescriptor(arguments: TArgType): Option[Long] =
     inputDescriptorSelector.map(sel => sel(arguments))
-
-  private def train(data: TArgType): Unit = {
-    val groupId = groupSelector(data)
-    functions.foreach(f => invokeUsingSelector(List(f), data, groupId, markAsGather = true))
-  }
-
-  private def processRunData(runData: RunData, markAsGather: Boolean): Unit = {
-    analytics.applyRunData(runData)
-    val data = getData(runData.groupId)
-    data.statistics.applyRunData(runData, markAsGather)
-  }
-
-  private def invokeUsingSelector(functions: Seq[ReferencedFunction[TArgType, TRetType]],
-                                  arguments: TArgType,
-                                  groupId: GroupId,
-                                  markAsGather: Boolean): TRetType = {
-    val runResult = selector.runOption(functions, arguments, groupId,
-      generateInputDescriptor(arguments), functionConfig.duration, functionConfig.selection)
-    processRunData(runResult.runData, markAsGather)
-    runResult.value
-  }
-
-  private def invokeUsingSelectorWithDelayedMeasure(functions: Seq[ReferencedFunction[TArgType, TRetType]],
-                                                    arguments: TArgType,
-                                                    groupId: GroupId,
-                                                    markAsGather: Boolean): (TRetType, InvocationToken) = {
-    val (runResult, token) = selector.runOptionWithDelayedMeasure(functions, arguments, groupId,
-      generateInputDescriptor(arguments), functionConfig.duration, functionConfig.selection)
-    token.setAfterInvocationCallback(data => processRunData(data, markAsGather))
-    (runResult, token)
-  }
-
-  def invoke(arguments: TArgType): TRetType = {
-    val groupId = groupSelector(arguments)
-    val data = getData(groupId)
-    val (result, newPolicy) = data.currentPolicy.decide(data.statistics)
-    data.currentPolicy = newPolicy
-    data.statistics.markRun()
-    result match {
-      // Fast results that avoid the RunTracker invocation
-      case PolicyResult.UseLast => data.statistics.getLast.fun(arguments)
-      case PolicyResult.UseMost => data.statistics.getMostSelectedFunction.fun(arguments)
-      // Slow results that use the RunTracker and measure and gather data
-      case PolicyResult.SelectNew =>
-        invokeUsingSelector(functions, arguments, groupId, markAsGather = false)
-      case PolicyResult.GatherData =>
-        invokeUsingSelector(List(data.statistics.getLeastSelectedFunction), arguments, groupId, markAsGather = true)
-    }
-  }
-
-  def invokeWithDelayedMeasure(arguments: TArgType): (TRetType, InvocationToken) = {
-    val groupId = groupSelector(arguments)
-    val data = getData(groupId)
-    val (result, newPolicy) = data.currentPolicy.decide(data.statistics)
-    data.currentPolicy = newPolicy
-    data.statistics.markRun()
-    result match {
-      // Fast results that avoid the RunTracker invocation
-      case PolicyResult.UseLast => (data.statistics.getLast.fun(arguments), new SimpleInvocationToken)
-      case PolicyResult.UseMost => (data.statistics.getMostSelectedFunction.fun(arguments), new SimpleInvocationToken)
-      // Slow results that use the RunTracker and measure and gather data
-      case PolicyResult.SelectNew =>
-        invokeUsingSelectorWithDelayedMeasure(functions, arguments, groupId, markAsGather = false)
-      case PolicyResult.GatherData =>
-        invokeUsingSelectorWithDelayedMeasure(List(data.statistics.getLeastSelectedFunction), arguments, groupId,
-          markAsGather = true)
-    }
-  }
-
-  def train(dataSet: Seq[TArgType]): Unit = dataSet.foreach(d => train(d))
-
-  def flushHistory(): Unit = functions.foreach(f => selector.flushHistory(f.reference))
 
   def setPolicy(policy: Policy): Unit = {
     ungroupedData.currentPolicy = policy
@@ -130,7 +59,7 @@ class CombinedFunction[TArgType, TRetType](val functions: Seq[ReferencedFunction
     new CombinedFunction[TArgType, TRetType](functions,
       inputDescriptorSelector,
       groupSelector,
-      new StorageBasedSelector(functionConfig.storage),
+      AdaptiveInternal.createLocalSelector(functionConfig),
       AdaptiveInternal.createAnalytics(),
       functionConfig
     )
@@ -139,7 +68,7 @@ class CombinedFunction[TArgType, TRetType](val functions: Seq[ReferencedFunction
     new CombinedFunction[TArgType, TRetType](functions,
       inputDescriptorSelector,
       groupSelector,
-      new StorageBasedSelector(functionConfig.storage),
+      AdaptiveInternal.createLocalSelector(functionConfig),
       AdaptiveInternal.createAnalytics(),
       functionConfig
     )
@@ -149,7 +78,7 @@ class CombinedFunction[TArgType, TRetType](val functions: Seq[ReferencedFunction
     new CombinedFunction[TArgType, TRetType](updateReferencedFunctionsWithConfig(functions, newConfig),
       inputDescriptorSelector,
       groupSelector,
-      new StorageBasedSelector(newConfig.storage),
+      AdaptiveInternal.createLocalSelector(newConfig),
       AdaptiveInternal.createAnalytics(),
       newConfig
     )
@@ -158,7 +87,7 @@ class CombinedFunction[TArgType, TRetType](val functions: Seq[ReferencedFunction
     new CombinedFunction[TArgType, TRetType](functions ++ secondFunction.functions,
       inputDescriptorSelector,
       groupSelector,
-      new StorageBasedSelector(functionConfig.storage),
+      AdaptiveInternal.createLocalSelector(functionConfig),
       AdaptiveInternal.createAnalytics(),
       functionConfig
     )

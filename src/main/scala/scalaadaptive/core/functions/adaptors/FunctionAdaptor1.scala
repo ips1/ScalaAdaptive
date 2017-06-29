@@ -17,9 +17,9 @@ class FunctionAdaptor1[T1, R](val function: CombinedFunction[T1, R])
   override def by(selector: (T1) => Long): MultiFunction1[T1, R] = byTupled((arg1: T1) => selector(arg1))
   override def groupBy(selector: (T1) => GroupId): MultiFunction1[T1, R] = groupByTupled((arg1: T1) => selector(arg1))
 
-  override def apply(arg1: T1): R = function.invoke(arg1)
+  override def apply(arg1: T1): R = invoke(arg1)
 
-  override def applyWithoutMeasuring(arg1: T1): (R, InvocationToken) = function.invokeWithDelayedMeasure(arg1)
+  override def applyWithoutMeasuring(arg1: T1): (R, InvocationToken) = invokeWithDelayedMeasure(arg1)
 
   override def orMultiFunction(otherFun: MultiFunction1[T1, R]): FunctionAdaptor1[T1, R] =
     createNew(function.mergeFunctions(Conversions.toAdaptor(otherFun).function))

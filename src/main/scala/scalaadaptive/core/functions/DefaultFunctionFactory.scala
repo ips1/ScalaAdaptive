@@ -14,7 +14,7 @@ class DefaultFunctionFactory extends FunctionFactory {
     new CombinedFunction[TArgType, TRetType](List(firstOption.changeUseClosures(newConfig.closureReferences)),
       None,
       (_) => NoGroup(),
-      new StorageBasedSelector(newConfig.storage),
+      AdaptiveInternal.createLocalSelector(newConfig),
       AdaptiveInternal.createAnalytics(),
       newConfig
     )
