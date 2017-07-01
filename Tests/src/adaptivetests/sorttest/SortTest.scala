@@ -5,7 +5,7 @@ import scala.math
 import scala.collection.mutable
 import scala.collection.mutable.ArrayBuffer
 import scalaadaptive.api.Adaptive
-import scalaadaptive.api.grouping.Group
+import scalaadaptive.api.grouping.GroupId
 import scalaadaptive.api.options.Selection
 import scalaadaptive.core.configuration.blocks.LimitedRegressionSelection
 import scalaadaptive.core.configuration.defaults.FullHistoryTTestConfiguration

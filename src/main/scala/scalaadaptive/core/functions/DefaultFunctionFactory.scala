@@ -1,9 +1,8 @@
 package scalaadaptive.core.functions
 
-import scalaadaptive.api.grouping.{GroupId, NoGroup}
-import scalaadaptive.core.runtime.AdaptiveInternal
-import scalaadaptive.core.functions.adaptors.{FunctionConfig, StorageBasedSelector}
+import scalaadaptive.api.grouping.NoGroup
 import scalaadaptive.core.functions.references.ReferencedFunction
+import scalaadaptive.core.runtime.AdaptiveInternal
 
 /**
   * Created by pk250187 on 5/27/17.

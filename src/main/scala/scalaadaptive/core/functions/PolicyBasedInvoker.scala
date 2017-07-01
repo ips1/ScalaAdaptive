@@ -1,7 +1,7 @@
 package scalaadaptive.core.functions
 
 import scalaadaptive.api.adaptors.InvocationToken
-import scalaadaptive.api.grouping.GroupId
+import scalaadaptive.api.grouping.Group
 import scalaadaptive.api.options.Storage
 import scalaadaptive.api.policies.PolicyResult
 import scalaadaptive.core.runtime.{AdaptiveInternal, AdaptiveSelector}
@@ -15,8 +15,8 @@ class PolicyBasedInvoker extends CombinedFunctionInvoker {
     if (function.localSelector.isDefined)
       function.localSelector.get
     else function.functionConfig.storage match {
-      case Storage.Persistent => AdaptiveInternal.getSharedPersistentRunner
-      case _ => AdaptiveInternal.getSharedRunner
+      case Storage.Persistent => AdaptiveInternal.getSharedPersistentSelector
+      case _ => AdaptiveInternal.getSharedSelector
     }
   }
 
@@ -38,7 +38,7 @@ class PolicyBasedInvoker extends CombinedFunctionInvoker {
 
   private def invokeUsingSelector[TArgType, TRetType](function: CombinedFunction[TArgType, TRetType],
                                                       arguments: TArgType,
-                                                      groupId: GroupId,
+                                                      groupId: Group,
                                                       gather: Boolean): TRetType = {
     val runResult =
       if (gather)
@@ -53,7 +53,7 @@ class PolicyBasedInvoker extends CombinedFunctionInvoker {
 
   private def invokeUsingSelectorWithDelayedMeasure[TArgType, TRetType](function: CombinedFunction[TArgType, TRetType],
                                                                         arguments: TArgType,
-                                                                        groupId: GroupId,
+                                                                        groupId: Group,
                                                                         gather: Boolean): (TRetType, InvocationToken) = {
     val (runResult, token) =
       if (gather)

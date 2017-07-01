@@ -57,9 +57,9 @@ trait AdaptiveCore {
 
   def getMultiFunctionDefaults: FunctionConfig = adaptiveImplementations.multiFunctionDefaults
 
-  def getSharedRunner: AdaptiveSelector = adaptiveImplementations.runner
+  def getSharedSelector: AdaptiveSelector = adaptiveImplementations.runner
 
-  def getSharedPersistentRunner: AdaptiveSelector = adaptiveImplementations.persistentRunner
+  def getSharedPersistentSelector: AdaptiveSelector = adaptiveImplementations.persistentRunner
 
   def getFunctionFactory: FunctionFactory = adaptiveImplementations.functionFactory
 
@@ -69,7 +69,7 @@ trait AdaptiveCore {
 
   def createAnalytics(): AnalyticsCollector = currentConfiguration.createAnalyticsCollector()
 
-  def createNewSelector(): AdaptiveSelector =
+  private def createNewSelector(): AdaptiveSelector =
     initOptionRunner(currentConfiguration)
 
   def createLocalSelector(config: FunctionConfig): Option[AdaptiveSelector] =

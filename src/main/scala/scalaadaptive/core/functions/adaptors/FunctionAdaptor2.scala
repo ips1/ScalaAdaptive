@@ -1,7 +1,7 @@
 package scalaadaptive.core.functions.adaptors
 
 import scalaadaptive.api.adaptors.{InvocationToken, MultiFunction2}
-import scalaadaptive.api.grouping.GroupId
+import scalaadaptive.api.grouping.Group
 import scalaadaptive.core.functions.{FunctionFactory, CombinedFunction}
 
 /**
@@ -17,7 +17,7 @@ class FunctionAdaptor2[T1, T2, R](val function: CombinedFunction[(T1, T2), R])
   override def by(selector: (T1, T2) => Long): MultiFunction2[T1, T2, R] =
     byTupled((t: (T1, T2)) => selector(t._1, t._2))
 
-  override def groupBy(selector: (T1, T2) => GroupId): MultiFunction2[T1, T2, R] =
+  override def groupBy(selector: (T1, T2) => Group): MultiFunction2[T1, T2, R] =
     groupByTupled((t: (T1, T2)) => selector(t._1, t._2))
 
   override def apply(arg1: T1, arg2: T2): R =

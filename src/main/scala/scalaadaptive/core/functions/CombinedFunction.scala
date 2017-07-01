@@ -2,7 +2,7 @@ package scalaadaptive.core.functions
 
 import scala.collection.mutable
 import scalaadaptive.analytics.AnalyticsData
-import scalaadaptive.api.grouping.{Group, GroupId, NoGroup}
+import scalaadaptive.api.grouping.{GroupId, Group, NoGroup}
 import scalaadaptive.api.policies.Policy
 import scalaadaptive.core.functions.adaptors.FunctionConfig
 import scalaadaptive.core.functions.analytics.AnalyticsCollector
@@ -15,7 +15,7 @@ import scalaadaptive.core.runtime.{AdaptiveInternal, AdaptiveSelector}
   */
 class CombinedFunction[TArgType, TRetType](val functions: Seq[ReferencedFunction[TArgType, TRetType]],
                                            private val inputDescriptorSelector: Option[(TArgType) => Long],
-                                           private val groupSelector: (TArgType) => GroupId,
+                                           private val groupSelector: (TArgType) => Group,
                                            val localSelector: Option[AdaptiveSelector],
                                            val analytics: AnalyticsCollector,
                                            val functionConfig: FunctionConfig) {
@@ -30,15 +30,15 @@ class CombinedFunction[TArgType, TRetType](val functions: Seq[ReferencedFunction
   val functionReferences: Seq[FunctionReference] =
     functions.map(f => if (functionConfig.closureReferences) f.closureReference else f.reference)
 
-  def getData(groupId: GroupId): FunctionData[TArgType, TRetType] = groupId match {
+  def getData(groupId: Group): FunctionData[TArgType, TRetType] = groupId match {
     case NoGroup() => ungroupedData
-    case Group(id) => groupedData.getOrElseUpdate(id, createDefaultFunctionData())
+    case GroupId(id) => groupedData.getOrElseUpdate(id, createDefaultFunctionData())
   }
 
   def getInputDescriptor(arguments: TArgType): Option[Long] =
     inputDescriptorSelector.map(sel => sel(arguments))
 
-  def getGroup(arguments: TArgType): GroupId =
+  def getGroup(arguments: TArgType): Group =
     groupSelector(arguments)
 
   def setPolicy(policy: Policy): Unit = {
@@ -64,7 +64,7 @@ class CombinedFunction[TArgType, TRetType](val functions: Seq[ReferencedFunction
       functionConfig
     )
 
-  def updateGroupSelector(groupSelector: (TArgType) => GroupId): CombinedFunction[TArgType, TRetType] =
+  def updateGroupSelector(groupSelector: (TArgType) => Group): CombinedFunction[TArgType, TRetType] =
     new CombinedFunction[TArgType, TRetType](functions,
       inputDescriptorSelector,
       groupSelector,

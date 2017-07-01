@@ -1,6 +1,6 @@
 package scalaadaptive.core.functions
 
-import scalaadaptive.api.grouping.GroupId
+import scalaadaptive.api.grouping.Group
 import scalaadaptive.core.functions.adaptors.FunctionConfig
 import scalaadaptive.core.functions.references.ReferencedFunction
 

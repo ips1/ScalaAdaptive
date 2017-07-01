@@ -2,7 +2,7 @@ package scalaadaptive.core.runtime
 
 import java.time.Duration
 
-import scalaadaptive.api.grouping.GroupId
+import scalaadaptive.api.grouping.Group
 import scalaadaptive.api.options.Selection.Selection
 import scalaadaptive.core.performance.PerformanceTracker
 import scalaadaptive.core.functions.references.{FunctionReference, ReferencedFunction}
@@ -19,26 +19,26 @@ import scalaadaptive.core.functions.RunResult
 trait AdaptiveSelector {
   def selectAndRun[TArgType, TReturnType](options: Seq[ReferencedFunction[TArgType, TReturnType]],
                                           arguments: TArgType,
-                                          groupId: GroupId,
+                                          groupId: Group,
                                           inputDescriptor: Option[Long],
                                           limitedBy: Option[Duration],
                                           selection: Selection): RunResult[TReturnType]
 
   def selectAndRunWithDelayedMeasure[TArgType, TReturnType](options: Seq[ReferencedFunction[TArgType, TReturnType]],
                                                             arguments: TArgType,
-                                                            groupId: GroupId,
+                                                            groupId: Group,
                                                             inputDescriptor: Option[Long],
                                                             limitedBy: Option[Duration],
                                                             selection: Selection): (TReturnType, InvocationTokenWithCallbacks)
 
   def gatherData[TArgType, TReturnType](options: Seq[ReferencedFunction[TArgType, TReturnType]],
                                         arguments: TArgType,
-                                        groupId: GroupId,
+                                        groupId: Group,
                                         inputDescriptor: Option[Long]): RunResult[TReturnType]
 
   def gatherDataWithDelayedMeasure[TArgType, TReturnType](options: Seq[ReferencedFunction[TArgType, TReturnType]],
                                                           arguments: TArgType,
-                                                          groupId: GroupId,
+                                                          groupId: Group,
                                                           inputDescriptor: Option[Long]): (TReturnType, InvocationTokenWithCallbacks)
 
   def flushHistory(reference: FunctionReference)

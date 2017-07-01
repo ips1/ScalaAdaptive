@@ -5,7 +5,7 @@ import com.fasterxml.jackson.module.scala.DefaultScalaModule
 import com.google.gson.GsonBuilder
 import flexjson.JSONDeserializer
 
-import scalaadaptive.api.grouping.Group
+import scalaadaptive.api.grouping.GroupId
 import scalaadaptive.api.options.Selection
 import scalaadaptive.api.policies.PauseSelectionAfterStreakPolicy
 
@@ -33,7 +33,7 @@ class JsonParser[TData] {
 
   val parse = (
     parseWithGson _ or parseWithJackson
-    groupBy ((json, c) => Group(Math.log(json.length).toInt))
+    groupBy ((json, c) => GroupId(Math.log(json.length).toInt))
     selectUsing Selection.NonPredictive
     //withPolicy new PauseSelectionAfterStreakPolicy(10, 200)
   )

@@ -4,7 +4,7 @@ import java.time.Duration
 
 import scalaadaptive.analytics.AnalyticsData
 import scalaadaptive.api.adaptors.InvocationToken
-import scalaadaptive.api.grouping.GroupId
+import scalaadaptive.api.grouping.Group
 import scalaadaptive.api.options.Selection.Selection
 import scalaadaptive.api.options.Storage.Storage
 import scalaadaptive.api.policies.Policy
@@ -23,7 +23,7 @@ abstract class FunctionAdaptorBase[TArgType, TRetType, TFunctionAdaptorType] {
 
   def byTupled(newSelector: (TArgType) => Long): TFunctionAdaptorType =
     createNew(function.updateInputDescriptor(Some(newSelector)))
-  def groupByTupled(newSelector: (TArgType) => GroupId): TFunctionAdaptorType =
+  def groupByTupled(newSelector: (TArgType) => Group): TFunctionAdaptorType =
     createNew(function.updateGroupSelector(newSelector))
 
   def selectUsing(newSelection: Selection): TFunctionAdaptorType =
