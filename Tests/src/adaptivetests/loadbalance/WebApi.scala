@@ -2,6 +2,7 @@ package adaptivetests.loadbalance
 
 import java.time.Duration
 
+import scalaadaptive.api.identifiers.IdentifiedFunction
 import scalaadaptive.api.options.Selection
 import scalaj.http.{Http, HttpOptions, HttpResponse}
 
@@ -26,10 +27,9 @@ class WebApi(val baseUrl: String, val ports: Seq[Int]) {
     }
   }
 
-  import scalaadaptive.api.Implicits._
-
+  private def createRequestFun(port: Int) = IdentifiedFunction(performRequest(buildUrl(port)) _, s"req_port_$port")
   val performBalancedRequest =
-    ports.tail.foldLeft(performRequest(buildUrl(ports.head)) _) { (f, port) =>
-      f.or(performRequest(buildUrl(port)))
+    ports.tail.foldLeft(createRequestFun(ports.head)) { (f, port) =>
+      f.or(createRequestFun(port))
     } selectUsing Selection.NonPredictive limitedTo Duration.ofSeconds(20)
 }
