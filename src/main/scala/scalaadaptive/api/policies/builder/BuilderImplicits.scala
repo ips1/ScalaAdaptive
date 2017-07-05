@@ -23,8 +23,20 @@ object BuilderImplicits {
 
   implicit def createSimpleBuilder(result: PolicyResult): PolicyBuilderNeedLimit = produce(result)
 
+  // Result shortcuts:
   val selectNew = PolicyResult.SelectNew
   val gatherData = PolicyResult.GatherData
   val useMost = PolicyResult.UseMost
   val useLast = PolicyResult.UseLast
+
+  // Extractor predefs:
+  val totalRunCount: (StatisticDataProvider) => Long = (stats: StatisticDataProvider) => stats.getTotalRunCount
+  val lastRunCount: (StatisticDataProvider) => Long = (stats: StatisticDataProvider) => stats.getLastRunCount
+  val mostRunCount: (StatisticDataProvider) => Long = (stats: StatisticDataProvider) => stats.getMostRunCount
+  val streakLength: (StatisticDataProvider) => Long = (stats: StatisticDataProvider) => stats.getStreakLength
+  val totalTime: (StatisticDataProvider) => Long = (stats: StatisticDataProvider) => stats.getTotalTime
+  val totalFunctionTime: (StatisticDataProvider) => Long = (stats: StatisticDataProvider) => stats.getTotalFunctionTime
+  val totalOverheadTime: (StatisticDataProvider) => Long = (stats: StatisticDataProvider) => stats.getTotalOverheadTime
+  val totalGatherTime: (StatisticDataProvider) => Long = (stats: StatisticDataProvider) => stats.getTotalGatherTime
+  val totalGatherCount: (StatisticDataProvider) => Long = (stats: StatisticDataProvider) => stats.getTotalGatherCount
 }

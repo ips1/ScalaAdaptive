@@ -42,8 +42,8 @@ object PolicyBuilderTest {
 
   val useLastForever: Policy = useLast forever
   val conditional: Policy = (
-    gatherData until (((stats: StatisticDataProvider) => stats.getTotalRunCount) growsBy 50)
-    andThen selectNew until (((stats: StatisticDataProvider) => stats.getTotalRunCount) growsBy 100)
+    gatherData until (totalRunCount growsBy 50)
+    andThen selectNew until (totalRunCount growsBy 100)
     andThenIf ((stats: StatisticDataProvider) => stats.getStreakLength >= 20) goTo useLastForever
     andThenRepeat
   )
@@ -60,7 +60,7 @@ object PolicyBuilderTest {
     (
       selectNew until
         (((stats: StatisticDataProvider) => stats.getMostRunCount.toDouble / stats.getTotalRunCount) growsBy 0.1
-        and (((stats: StatisticDataProvider) => stats.getMostRunCount) growsBy 50))
+        and (mostRunCount growsBy 50))
       andThen useMost until ((() => System.nanoTime()) growsBy 10000000)
       andThenRepeat
     )
@@ -181,6 +181,6 @@ object PolicyBuilderTest {
   }
 
   def main(args: Array[String]): Unit = {
-    testAndPolicy()
+    test3()
   }
 }

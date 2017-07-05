@@ -1,8 +1,8 @@
 package scalaadaptive.api.policies.builder
 
-import scalaadaptive.api.policies.Policy
+import scalaadaptive.api.policies.{Policy, StatisticDataProvider}
 import scalaadaptive.api.policies.PolicyResult.PolicyResult
-import scalaadaptive.api.policies.builder.conditions.Condition
+import scalaadaptive.api.policies.builder.conditions.{Condition, SimpleCondition}
 
 class PolicyBuilder(val inner: PolicyBuilderInner) {
   def andThen(result: PolicyResult): PolicyBuilderNeedLimit =
@@ -13,4 +13,6 @@ class PolicyBuilder(val inner: PolicyBuilderInner) {
     inner.generateCyclic()
   def andThenIf(condition: Condition): PolicyBuilderNeedNextPolicy =
     new PolicyBuilderNeedNextPolicy(inner, condition)
+  def andThenIf(cond: (StatisticDataProvider) => Boolean): PolicyBuilderNeedNextPolicy =
+    andThenIf(new SimpleCondition(cond))
 }
