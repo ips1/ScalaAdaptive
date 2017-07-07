@@ -10,30 +10,35 @@ import tools.methods.TestMethods
 import scala.util.Random
 import scalaadaptive.api.Adaptive
 import scalaadaptive.core.configuration.blocks._
-import scalaadaptive.core.configuration.defaults.FullHistoryTTestConfiguration
-import scalaadaptive.core.runtime.selection.LimitedRegressionSelectionStategy
+import scalaadaptive.core.configuration.defaults.{FullHistoryRegressionConfiguration, FullHistoryTTestConfiguration}
+import scalaadaptive.core.runtime.selection.LimitedRegressionSelectionStrategy
 
 /**
   * Created by pk250187 on 6/7/17.
   */
 object RegressionSelectionTest {
-  def main(args: Array[String]): Unit = {
-    Adaptive.initialize(new FullHistoryTTestConfiguration with RegressionSelection with NoLogger)
+  def runTest(data: Seq[Array[Int]]): Unit = {
+    Adaptive.initialize(new FullHistoryRegressionConfiguration with RegressionPredictiveStrategy with NoLogging)
     val testMethods = new TestMethods()
     //val runner = new TestRunner()
     //runner.runIncrementalTest(l => testMethods.functionContinuous(l))
 
-    val testCount = 1000
+    //val testCount = 200
     val maxSize = 5000
     val random = new Random(System.nanoTime)
 
-    Seq.range(0, testCount).foreach(i => {
+    data.foreach(d => {
       val inputSize = random.nextInt(maxSize)
-      val data = Seq.fill(inputSize)(Random.nextInt).toList
+      //val data = Seq.fill(inputSize)(Random.nextInt).toList
       //testMethods.functionContinuous(data)
-      SortTest.sort(data.toArray)
+      SortTest.sort(d)
     })
 
     SortTest.sort.getAnalyticsData.foreach(d => d.saveData(new PrintWriter(System.out)))
+
+  }
+
+  def main(args: Array[String]): Unit = {
+
   }
 }

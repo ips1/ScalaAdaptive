@@ -4,7 +4,7 @@ import adaptivetests.sorting.Sorter
 
 import scala.util.Random
 import scalaadaptive.api.Adaptive
-import scalaadaptive.core.configuration.blocks.NoLogger
+import scalaadaptive.core.configuration.blocks.NoLogging
 import scalaadaptive.core.configuration.defaults.FullHistoryTTestConfiguration
 import scalaadaptive.api.policies.StopSelectingWhenDecidedPolicy
 
@@ -19,7 +19,7 @@ object SortingOverhead {
   val utils = new OverheadUtils()
 
   def main(args: Array[String]): Unit = {
-    Adaptive.initialize(new FullHistoryTTestConfiguration() with NoLogger)
+    Adaptive.initialize(new FullHistoryTTestConfiguration() with NoLogging)
 
     val dataSize = 1000
     val data = customData(1000)
