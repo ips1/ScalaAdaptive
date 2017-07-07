@@ -8,7 +8,7 @@ import scalaadaptive.math.{BonferroniTTestRunner, WelchTTestRunner}
 /**
   * Created by pk250187 on 5/2/17.
   */
-trait TTestSelection extends BaseLongConfiguration {
+trait TTestNonPredictiveStrategy extends BaseLongConfiguration {
   override val createNonPredictiveSelectionStrategy: (Logger) => SelectionStrategy[Long] =
     (log: Logger) => {
       val tTestRunner = new BonferroniTTestRunner(new WelchTTestRunner(log))

@@ -7,7 +7,7 @@ import scalaadaptive.core.runtime.selection._
 /**
   * Created by pk250187 on 5/1/17.
   */
-trait InterpolationSelection extends BaseLongConfiguration {
+trait LoessInterpolationPredictiveStrategy extends BaseLongConfiguration {
   override val createPredictiveSelectionStrategy: (Logger) => SelectionStrategy[Long] =
     (log: Logger) => new LowRunAwareSelectionStrategy[Long](
       log,

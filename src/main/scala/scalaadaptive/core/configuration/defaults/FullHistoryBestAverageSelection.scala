@@ -10,6 +10,6 @@ class FullHistoryBestAverageSelection
   extends BaseLongConfiguration
     with BestAverageSelection
     with RunTimeMeasurement
-    with DefaultPath
+    with DefaultHistoryPath
     with BufferedSerialization
-    with InterpolationSelection
+    with LoessInterpolationPredictiveStrategy
