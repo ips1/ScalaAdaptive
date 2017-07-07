@@ -16,39 +16,36 @@ trait AdaptiveCore {
   private val defaultConfiguration = new FullHistoryTTestConfiguration
   private var currentConfiguration: Configuration = defaultConfiguration
 
-  private def initOptionRunner(configuration: Configuration): AdaptiveSelector = {
+  private def initAdaptiveSelector(configuration: Configuration): AdaptiveSelector = {
     val logger = configuration.createLogger()
-    new HistoryBasedAdaptiveSelector[configuration.TMeasurement](
-      configuration.createHistoryStorage(),
+    configuration.initAdaptiveSelector(configuration.createHistoryStorage(),
       configuration.createNonPredictiveSelectionStrategy(logger),
       configuration.createPredictiveSelectionStrategy(logger),
-      configuration.createPerformanceProvider(),
+      configuration.createEvaluationProvider(),
       logger)
   }
 
-  private def initPersistentOptionRunner(configuration: Configuration): Option[AdaptiveSelector] = {
+  private def initPersistentAdaptiveSelector(configuration: Configuration): Option[AdaptiveSelector] = {
     val logger = configuration.createLogger()
     configuration.createPersistentHistoryStorage().map(persistentStorage =>
-      new HistoryBasedAdaptiveSelector[configuration.TMeasurement](
-        persistentStorage,
+      configuration.initAdaptiveSelector(persistentStorage,
         configuration.createNonPredictiveSelectionStrategy(logger),
         configuration.createPredictiveSelectionStrategy(logger),
-        configuration.createPerformanceProvider(),
-        logger
-      )
+        configuration.createEvaluationProvider(),
+        logger)
     )
   }
 
   private def initImplementations(configuration: Configuration): AdaptiveImplementations = {
-    val optionRunner = initOptionRunner(defaultConfiguration)
+    val adaptiveSelector = initAdaptiveSelector(configuration)
     new AdaptiveImplementations(
-      defaultConfiguration.createIdentifierValidator(),
-      defaultConfiguration.createMultiFunctionDefaultConfig(),
-      defaultConfiguration.createFunctionFactory(),
-      defaultConfiguration.createAnalyticsSerializer(),
-      optionRunner,
-      initPersistentOptionRunner(defaultConfiguration).getOrElse(optionRunner),
-      defaultConfiguration.createFunctionInvoker())
+      configuration.createIdentifierValidator(),
+      configuration.createMultiFunctionDefaultConfig(),
+      configuration.createFunctionFactory(),
+      configuration.createAnalyticsSerializer(),
+      adaptiveSelector,
+      initPersistentAdaptiveSelector(configuration).getOrElse(adaptiveSelector),
+      configuration.createFunctionInvoker())
   }
 
   private var adaptiveImplementations: AdaptiveImplementations = initImplementations(defaultConfiguration)
@@ -70,7 +67,7 @@ trait AdaptiveCore {
   def createAnalytics(): AnalyticsCollector = currentConfiguration.createAnalyticsCollector()
 
   private def createNewSelector(): AdaptiveSelector =
-    initOptionRunner(currentConfiguration)
+    initAdaptiveSelector(currentConfiguration)
 
   def createLocalSelector(config: FunctionConfig): Option[AdaptiveSelector] =
     if (config.storage == Storage.Local)

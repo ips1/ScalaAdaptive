@@ -10,6 +10,9 @@ import scalaadaptive.core.functions.references.{JavaIdentifierValidator, CustomI
 import scalaadaptive.core.runtime.history.historystorage.{HistoryStorage, MapHistoryStorage}
 import scalaadaptive.core.runtime.history.runhistory.{CachedAverageRunHistory, CachedGroupedRunHistory, FullRunHistory, LimitedRunHistory}
 import scalaadaptive.api.policies.AlwaysSelectPolicy
+import scalaadaptive.core.runtime.history.evaluation.EvaluationProvider
+import scalaadaptive.core.runtime.{AdaptiveSelector, HistoryBasedAdaptiveSelector}
+import scalaadaptive.core.runtime.selection.SelectionStrategy
 import scalaadaptive.extensions.Averageable
 
 /**
@@ -40,4 +43,14 @@ trait BaseConfiguration extends Configuration {
 
   override val createMultiFunctionDefaultConfig: () => FunctionConfig =
     () => new FunctionConfig(Selection.NonPredictive, Storage.Global, None, false, new AlwaysSelectPolicy)
+
+  override val initAdaptiveSelector: (HistoryStorage[TMeasurement], SelectionStrategy[TMeasurement],
+    SelectionStrategy[TMeasurement], EvaluationProvider[TMeasurement], Logger) => AdaptiveSelector =
+    (historyStorage, nonPredictiveStrategy, predictiveStrategy, evaluationProvider, logger) =>
+      new HistoryBasedAdaptiveSelector[TMeasurement](
+        historyStorage,
+        nonPredictiveStrategy,
+        predictiveStrategy,
+        evaluationProvider,
+        logger)
 }

@@ -5,6 +5,7 @@ import scalaadaptive.core.functions.adaptors.FunctionConfig
 import scalaadaptive.core.functions.analytics.{AnalyticsCollector, BasicAnalyticsCollector}
 import scalaadaptive.core.logging.Logger
 import scalaadaptive.core.functions.references.CustomIdentifierValidator
+import scalaadaptive.core.runtime.AdaptiveSelector
 import scalaadaptive.core.runtime.history.evaluation.EvaluationProvider
 import scalaadaptive.core.runtime.history.historystorage.HistoryStorage
 import scalaadaptive.core.runtime.selection.SelectionStrategy
@@ -19,11 +20,13 @@ trait Configuration {
   val createPersistentHistoryStorage: () => Option[HistoryStorage[TMeasurement]]
   val createNonPredictiveSelectionStrategy: (Logger) => SelectionStrategy[TMeasurement]
   val createPredictiveSelectionStrategy: (Logger) => SelectionStrategy[TMeasurement]
-  val createPerformanceProvider: () => EvaluationProvider[TMeasurement]
+  val createEvaluationProvider: () => EvaluationProvider[TMeasurement]
   val createLogger: () => Logger
   val createIdentifierValidator: () => CustomIdentifierValidator
   val createMultiFunctionDefaultConfig: () => FunctionConfig
   val createFunctionFactory: () => FunctionFactory
   val createAnalyticsSerializer: () => AnalyticsSerializer
   val createAnalyticsCollector: () => AnalyticsCollector
+  val initAdaptiveSelector: (HistoryStorage[TMeasurement], SelectionStrategy[TMeasurement],
+    SelectionStrategy[TMeasurement], EvaluationProvider[TMeasurement], Logger) => AdaptiveSelector
 }
