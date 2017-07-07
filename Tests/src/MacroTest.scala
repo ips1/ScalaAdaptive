@@ -29,7 +29,8 @@ object MacroTest {
 
 //  val testXXXX = printAst(sort.selectionSort(List()))
 
-//  val testXXX = printAst(classOf[Sorter].getTypeName + ".ahoj")
+  //val etaExp = printAst(getSorter().maximum _)
+  //val testXXX = printAst(classOf[Sorter].getTypeName + ".ahoj")
 
 //  val test = printAst(scalaadaptive.api.Implicits.toAdaptor({
 //    (i: Int) => MacroTest.this.increment(i)

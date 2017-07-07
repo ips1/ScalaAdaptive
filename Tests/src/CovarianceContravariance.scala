@@ -22,14 +22,30 @@ object CovarianceContravariance {
     override def run() = fun(data)
   }
 
-  def fun1(arg: Any): String = ???
-  def fun2(arg: String): Any = ???
-  def fun3(arg: String): String = ???
+  val fun1: (Any) => String = ???
+  val fun2: (String) => Any = ???
+  val fun3: (String) => String = ???
 
-//  val fun4 = fun3 _ or fun2
-//  val fun5 = fun2 _ or fun3
-//  val fun6 = fun3 _ or fun1
-//  val fun7 = fun1 _ or fun3
+  //val fun4 = fun3 or fun2
+  val fun5 = fun2 or fun3
+  val fun6 = fun3 or fun1
+  //val fun7 = fun1 or fun3
+  val generalFun3 = fun1.asInstanceOf[(Any) => Any] or fun2
+  var generalFun2 = fun2 or fun1
+
+  val funInt: (Int) => String = ???
+  val funString: (String) => Int = ???
+  val generalFun = funInt.asInstanceOf[(Int with String) => Any] or funString
+
+  def processData1(data: Iterable[Int]): Int = ???
+  def processData2(data: List[Int]): Int = ???
+
+  def processCombined = processData2 _ or processData1
+
+  def sort1(data: Iterable[Int]): Iterable[Int] = ???
+  def sort2(data: List[Int]): List[Int] = ???
+  val sortCombined = (sort2 _).asInstanceOf[(List[Int]) => Iterable[Int]] or sort1
+
 
   def main(args: Array[String]): Unit = {
     println("Hi")

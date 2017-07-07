@@ -8,6 +8,8 @@ object Methods {
 
       val methodFunction: (String) => String = arg => method(arg)
 
+      val composed: (String) => String = (method _).andThen(method)
+
       def foo() = List("One", "Two", "Three").map(method)
     }
     val obj = new Class()
