@@ -32,11 +32,8 @@ class BonferroniTTestRunner(val simpleTest: TwoSampleTTest) extends MultipleSamp
     if (numTests <= 0)
       None
 
-    // Bonferroni correction applied to the significance level
-    val oneTestAlpha = alpha / numTests
-
     val testResults = remainingSampleStats
-      .map(second => simpleTest.runTest(firstSampleStats, second, oneTestAlpha))
+      .map(second => simpleTest.runTest(firstSampleStats, second, alpha))
 
     if (testResults.forall(res => res.contains(TestResult.ExpectedHigher)))
       return Some(TestResult.ExpectedHigher)

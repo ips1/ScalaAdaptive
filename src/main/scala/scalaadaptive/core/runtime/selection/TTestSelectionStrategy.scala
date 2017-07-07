@@ -16,7 +16,10 @@ class TTestSelectionStrategy(val logger: Logger,
                              val alpha: Double) extends SelectionStrategy[Long] {
 
   override def selectOption(records: Seq[RunHistory[Long]], inputDescriptor: Option[Long]): RunHistory[Long] = {
-    logger.log("Selecting using TTestSelector")
+    logger.log("Selecting using TTestSelectionStrategy")
+
+    // Applying Bonferroni correction
+    val oneTestAlpha = alpha / records.size
 
     // Using Scala's view for lazy mapping and filtering - we need just the first result
     val positiveResults = records
@@ -26,7 +29,7 @@ class TTestSelectionStrategy(val logger: Logger,
           .filter(r => r != elem)
           .map(r => r.runStatistics)
 
-        val result = testRunner.runTests(elem.runStatistics, remaining, alpha)
+        val result = testRunner.runTests(elem.runStatistics, remaining, oneTestAlpha)
 
         (elem, result)
       })
