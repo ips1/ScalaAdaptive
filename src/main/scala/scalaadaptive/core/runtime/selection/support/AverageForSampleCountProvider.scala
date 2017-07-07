@@ -1,16 +1,20 @@
 package scalaadaptive.core.runtime.selection.support
 
+import scalaadaptive.core.runtime.history.runhistory.RunHistory
+
 /**
   * Created by pk250187 on 6/8/17.
   */
-class AverageForSampleCountProvider(val averageSamplesPerWindow: Int) extends WindowSizeProvider {
-  override def selectWindowSize(orderedInputDescriptors: Seq[Long]): Int = {
-    val distances =
-      orderedInputDescriptors.dropRight(1)
-        .zip(orderedInputDescriptors.tail)
-        .map(x => x._2 - x._1)
-    val averageDistance = distances.sum.toDouble / distances.length
+class AverageForSampleCountProvider[TMeasurement](val averageSamplesPerWindow: Int) extends WindowSizeProvider[TMeasurement] {
+  override def selectWindowSize(runHistory: RunHistory[TMeasurement]): Int = {
+    if (runHistory.minDescriptor.isEmpty || runHistory.maxDescriptor.isEmpty) {
+      return Int.MaxValue
+    }
 
-    (averageDistance * averageSamplesPerWindow).toInt
+    val range = runHistory.maxDescriptor.get - runHistory.minDescriptor.get
+
+    val averageDistance = range.toDouble / runHistory.runCount
+
+    Math.max((averageDistance * averageSamplesPerWindow).toInt, 1)
   }
 }

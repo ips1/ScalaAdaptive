@@ -1,8 +1,10 @@
 package scalaadaptive.core.runtime.selection.support
 
+import scalaadaptive.core.runtime.history.runhistory.RunHistory
+
 /**
   * Created by pk250187 on 6/8/17.
   */
-class FixedSizeProvider(val size: Int) extends WindowSizeProvider {
-  override def selectWindowSize(orderedInputDescriptors: Seq[Long]): Int = size
+class FixedSizeProvider[TMeasurement](val size: Int) extends WindowSizeProvider[TMeasurement] {
+  override def selectWindowSize(runHistory: RunHistory[TMeasurement]): Int = size
 }

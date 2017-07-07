@@ -12,11 +12,11 @@ import scalaadaptive.math._
 /**
   * Created by pk250187 on 5/20/17.
   */
-class LimitedRegressionSelectionStategy[TMeasurement](val logger: Logger,
-                                                      val windowSizeSelector: Option[WindowSizeProvider],
-                                                      val testRunner: RegressionConfidenceTest,
-                                                      val secondarySelector: SelectionStrategy[TMeasurement],
-                                                      val alpha: Double)(implicit num: Numeric[TMeasurement])
+class LimitedRegressionSelectionStrategy[TMeasurement](val logger: Logger,
+                                                       val windowSizeSelector: Option[WindowSizeProvider[TMeasurement]],
+                                                       val testRunner: RegressionConfidenceTest,
+                                                       val secondarySelector: SelectionStrategy[TMeasurement],
+                                                       val alpha: Double)(implicit num: Numeric[TMeasurement])
   extends SelectionStrategy[TMeasurement] {
 
   private def createRegression(runData: Seq[EvaluationData[TMeasurement]]): SimpleTestableRegression = {
@@ -31,14 +31,11 @@ class LimitedRegressionSelectionStategy[TMeasurement](val logger: Logger,
                              descriptor: Long): Seq[(RunHistory[TMeasurement], SimpleTestableRegression)] = {
 
     if (windowSizeSelector.isEmpty)
-      records.map(r => {
-        (r, createRegression(r.runItems.filter(i => i.inputDescriptor.isDefined).toList))
-      })
+      records.map(r => (r, r.runRegression))
     else
       records.map(r => {
-        //TODO: Is the keys guaranteed to be sorted?
-        val windowSize = windowSizeSelector.get.selectWindowSize(
-          r.runItems.filter(k => k.inputDescriptor.isDefined).map(k => k.inputDescriptor.get).toList.sorted)
+        val windowSize = windowSizeSelector.get
+          .selectWindowSize(r)
         logger.log(s"Window size for limited selection: $windowSize")
         val maxDifference = windowSize / 2
         val selectedItems = r.runItems
@@ -56,6 +53,7 @@ class LimitedRegressionSelectionStategy[TMeasurement](val logger: Logger,
     }
 
     val regressions = getRegressions(records, descriptor)
+
     val positiveResults = regressions
       .view
       .map(regression => {
