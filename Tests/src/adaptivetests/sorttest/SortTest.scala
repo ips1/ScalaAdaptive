@@ -7,7 +7,7 @@ import scala.collection.mutable.ArrayBuffer
 import scalaadaptive.api.Adaptive
 import scalaadaptive.api.grouping.GroupId
 import scalaadaptive.api.options.Selection
-import scalaadaptive.core.configuration.blocks.LimitedRegressionSelection
+import scalaadaptive.core.configuration.blocks.LimitedRegressionPredictiveStrategy
 import scalaadaptive.core.configuration.defaults.FullHistoryTTestConfiguration
 import scalaadaptive.api.policies.PauseSelectionAfterStreakPolicy
 
@@ -31,10 +31,10 @@ object SortTest {
   )
 
   def main(args: Array[String]): Unit = {
-    Adaptive.initialize(new FullHistoryTTestConfiguration with LimitedRegressionSelection)
+    Adaptive.initialize(new FullHistoryTTestConfiguration with LimitedRegressionPredictiveStrategy)
 
-    val maxLength = 5000
-    val testCount = 300
+    val maxLength = 10000
+    val testCount = 5000
 
     val rand = new Random(System.nanoTime)
 

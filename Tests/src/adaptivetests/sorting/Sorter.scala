@@ -83,7 +83,7 @@ class Sorter {
 
   //val sort = radixSort _ or bubbleSort[Int]
 
-  val sort = standardSort _ or selectionSort by (_.size) selectUsing Selection.Predictive //using Storage.Persistent
+  val sort = standardSort _ or selectionSort by (_.size) selectUsing Selection.Predictive storeUsing Storage.Global
 
   //val sort = selectionSort _ or bubbleSort by (_.size)
 
