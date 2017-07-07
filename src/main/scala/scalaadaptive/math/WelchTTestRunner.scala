@@ -41,7 +41,7 @@ class WelchTTestRunner(val logger: Logger) extends TwoSampleTTest {
       return None
     }
 
-    logger.log(s"Performing test on significance level $alpha")
+    logger.log(s"Performing T-test on significance level $alpha")
 
     logger.log(s"Sample 1")
     logSampleDetails(sampleStats1)
