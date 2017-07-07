@@ -4,6 +4,7 @@ import org.apache.commons.math3.stat.descriptive.{StatisticalSummary, SummarySta
 
 import scalaadaptive.core.runtime.history.HistoryKey
 import scalaadaptive.core.runtime.history.evaluation.data.{EvaluationData, GroupedEvaluationData}
+import scalaadaptive.math.SimpleTestableRegression
 
 /**
   * Created by pk250187 on 6/5/17.
@@ -19,7 +20,7 @@ class LimitedRunHistory[TMeasurement](val limit: Int,
     }
 
     val keep = limit / 2
-    val toKeep = internalHistory.runItems.take(keep)
+    val toKeep = internalHistory.runItems.take(keep).toList
     val emptyHistory = internalHistoryFactory()
     val newHistory = toKeep.foldRight(emptyHistory)((data, h) => h.applyNewRun(data))
     new LimitedRunHistory(limit, newHistory, internalHistoryFactory)
@@ -36,4 +37,9 @@ class LimitedRunHistory[TMeasurement](val limit: Int,
   override def takeWhile(filter: (EvaluationData[TMeasurement]) => Boolean): RunHistory[TMeasurement] =
     internalHistory.takeWhile(filter)
   override def runStatistics: StatisticalSummary = internalHistory.runStatistics
+
+  override def minDescriptor: Option[Long] = internalHistory.minDescriptor
+  override def maxDescriptor: Option[Long] = internalHistory.maxDescriptor
+
+  override def runRegression: SimpleTestableRegression = internalHistory.runRegression
 }

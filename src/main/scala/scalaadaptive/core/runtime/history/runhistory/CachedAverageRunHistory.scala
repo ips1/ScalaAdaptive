@@ -5,6 +5,7 @@ import org.apache.commons.math3.stat.descriptive.StatisticalSummary
 import scalaadaptive.core.runtime.history.HistoryKey
 import scalaadaptive.core.runtime.history.evaluation.data.{EvaluationData, GroupedEvaluationData}
 import scalaadaptive.extensions.Averageable
+import scalaadaptive.math.SimpleTestableRegression
 
 /**
   * Created by pk250187 on 4/25/17.
@@ -32,4 +33,8 @@ class CachedAverageRunHistory[TMeasurement] private (private val internalHistory
   override def runStatistics: StatisticalSummary = internalHistory.runStatistics
   override def takeWhile(filter: (EvaluationData[TMeasurement]) => Boolean): RunHistory[TMeasurement] =
     internalHistory.takeWhile(filter)
+  override def minDescriptor: Option[Long] = internalHistory.minDescriptor
+  override def maxDescriptor: Option[Long] = internalHistory.maxDescriptor
+
+  override def runRegression: SimpleTestableRegression = internalHistory.runRegression
 }

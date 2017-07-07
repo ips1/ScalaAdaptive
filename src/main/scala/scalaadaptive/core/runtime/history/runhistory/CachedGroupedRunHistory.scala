@@ -2,9 +2,9 @@ package scalaadaptive.core.runtime.history.runhistory
 
 import scalaadaptive.core.runtime.history.runhistory.defaults.DefaultStatistics
 import scalaadaptive.core.runtime.history.HistoryKey
-import scalaadaptive.core.runtime.history.evaluation.data.{GroupedEvaluationData, EvaluationData}
+import scalaadaptive.core.runtime.history.evaluation.data.{EvaluationData, GroupedEvaluationData}
 import scalaadaptive.extensions.Averageable
-import scalaadaptive.extensions.IntExtensions._
+import scalaadaptive.math.SimpleTestableRegression
 
 /**
   * Created by pk250187 on 4/25/17.
@@ -62,4 +62,9 @@ class CachedGroupedRunHistory[TMeasurement] private(override val runCount: Int,
   override def takeWhile(filter: (EvaluationData[TMeasurement]) => Boolean): RunHistory[TMeasurement] =
     internalHistory.takeWhile(filter)
   override def key: HistoryKey = internalHistory.key
+
+  override def minDescriptor: Option[Long] = internalHistory.minDescriptor
+  override def maxDescriptor: Option[Long] = internalHistory.maxDescriptor
+
+  override def runRegression: SimpleTestableRegression = internalHistory.runRegression
 }

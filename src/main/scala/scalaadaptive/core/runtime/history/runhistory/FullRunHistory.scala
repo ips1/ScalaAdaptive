@@ -1,7 +1,7 @@
 package scalaadaptive.core.runtime.history.runhistory
 
 import scala.collection.mutable.ArrayBuffer
-import scalaadaptive.core.runtime.history.runhistory.defaults.{DefaultAverage, DefaultBest, DefaultGrouping, DefaultStatistics}
+import scalaadaptive.core.runtime.history.runhistory.defaults._
 import scalaadaptive.core.runtime.history.HistoryKey
 import scalaadaptive.core.runtime.history.evaluation.data.EvaluationData
 import scalaadaptive.extensions.Averageable
@@ -9,27 +9,42 @@ import scalaadaptive.extensions.Averageable
 /**
   * Created by pk250187 on 3/21/17.
   */
-class FullRunHistory[TMeasurement] private (override val key: HistoryKey,
-                                            val internalRunItems: ArrayBuffer[EvaluationData[TMeasurement]])
+class FullRunHistory[TMeasurement] (override val key: HistoryKey)
                                   (implicit override val num: Averageable[TMeasurement])
   extends RunHistory[TMeasurement]
     with DefaultGrouping[TMeasurement]
     with DefaultStatistics[TMeasurement]
     with DefaultBest[TMeasurement]
-    with DefaultAverage[TMeasurement] {
-  def this(key: HistoryKey)(implicit num: Averageable[TMeasurement]) =
-    this(key, new ArrayBuffer[EvaluationData[TMeasurement]]())
+    with DefaultAverage[TMeasurement]
+    with DefaultRegression[TMeasurement] {
+
+  val internalRunItems: ArrayBuffer[EvaluationData[TMeasurement]] = new ArrayBuffer[EvaluationData[TMeasurement]]()
+  private var minDesc: Option[Long] = None
+  private var maxDesc: Option[Long] = None
 
   override def runCount: Int = internalRunItems.size
   override def applyNewRun(runResult: EvaluationData[TMeasurement]): FullRunHistory[TMeasurement] = {
     internalRunItems.append(runResult)
+    runResult.inputDescriptor match {
+      case Some(descriptor) => {
+        if (minDesc.isEmpty || descriptor < minDesc.get) minDesc = Some(descriptor)
+        if (maxDesc.isEmpty || descriptor > maxDesc.get) maxDesc = Some(descriptor)
+      }
+      case None =>
+    }
     this
   }
 
   override def takeWhile(filter: (EvaluationData[TMeasurement]) => Boolean): RunHistory[TMeasurement] = {
     val filteredItems = internalRunItems.reverseIterator.takeWhile(filter).toIterable
-    new ImmutableFullRunHistory[TMeasurement](key, filteredItems)
+    val descriptors = filteredItems.filter(i => i.inputDescriptor.isDefined).map(i => i.inputDescriptor.get)
+    val min = if (descriptors.nonEmpty) Some(descriptors.min) else None
+    val max = if (descriptors.nonEmpty) Some(descriptors.max) else None
+    new ImmutableFullRunHistory[TMeasurement](key, filteredItems, min, max)
   }
 
   override def runItems: Iterable[EvaluationData[TMeasurement]] = internalRunItems.reverseIterator.toIterable
+
+  override def minDescriptor: Option[Long] = minDesc
+  override def maxDescriptor: Option[Long] = maxDesc
 }

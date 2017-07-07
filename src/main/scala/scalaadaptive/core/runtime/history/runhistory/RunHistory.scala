@@ -4,7 +4,8 @@ import org.apache.commons.math3.stat.descriptive.StatisticalSummary
 
 import scalaadaptive.core.functions.references.FunctionReference
 import scalaadaptive.core.runtime.history.HistoryKey
-import scalaadaptive.core.runtime.history.evaluation.data.{GroupedEvaluationData, EvaluationData}
+import scalaadaptive.core.runtime.history.evaluation.data.{EvaluationData, GroupedEvaluationData}
+import scalaadaptive.math.SimpleTestableRegression
 
 /**
   * Created by pk250187 on 3/21/17.
@@ -12,12 +13,22 @@ import scalaadaptive.core.runtime.history.evaluation.data.{GroupedEvaluationData
 trait RunHistory[TMeasurement] {
   def reference: FunctionReference = key.function
   def key: HistoryKey
+
+  // Basic methods:
   def runCount: Int
-  def runStatistics: StatisticalSummary
   def runItems: Iterable[EvaluationData[TMeasurement]]
-  def runAveragesGroupedByDescriptor: Map[Long, GroupedEvaluationData[TMeasurement]]
-  def average(): Option[Double]
-  def best(): Option[Double]
+
+  def minDescriptor: Option[Long]
+  def maxDescriptor: Option[Long]
+
   def applyNewRun(runResult: EvaluationData[TMeasurement]): RunHistory[TMeasurement]
   def takeWhile(filter: EvaluationData[TMeasurement] => Boolean): RunHistory[TMeasurement]
+
+  // Cacheable or computable methods
+  def average(): Option[Double]
+  def best(): Option[Double]
+
+  def runRegression: SimpleTestableRegression
+  def runStatistics: StatisticalSummary
+  def runAveragesGroupedByDescriptor: Map[Long, GroupedEvaluationData[TMeasurement]]
 }
