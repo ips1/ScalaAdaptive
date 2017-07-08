@@ -4,7 +4,7 @@ import scalaadaptive.core.configuration.BaseLongConfiguration
 import scalaadaptive.core.configuration.blocks.helper.{BlockWithAlpha, BlockWithLowRunLimit, BlockWithWindowAverageSize}
 import scalaadaptive.core.logging.Logger
 import scalaadaptive.core.runtime.selection._
-import scalaadaptive.math.RegressionConfidenceTestRunner
+import scalaadaptive.math.PredictionConfidenceTestRunner
 
 /**
   * Created by pk250187 on 5/2/17.
@@ -21,7 +21,7 @@ trait RegressionPredictiveStrategy extends BaseLongConfiguration
         log,
         leastDataSelectionStrategy,
         new RegressionSelectionStrategy[Long](log,
-          new RegressionConfidenceTestRunner(log),
+          new PredictionConfidenceTestRunner(log),
           leastDataSelectionStrategy,
           alpha),
         lowRunLimit)

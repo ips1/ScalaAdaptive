@@ -10,7 +10,7 @@ import scalaadaptive.math.TestResult.TestResult
 /**
   * Created by pk250187 on 5/2/17.
   */
-class WelchTTestRunner(val logger: Logger) extends TwoSampleTTest {
+class WelchTTestRunner(val logger: Logger) extends TTestRunner {
 
   private def logSampleDetails(sample: StatisticalSummary): Unit = {
     logger.log(s"mean: ${sample.getMean}")
@@ -50,8 +50,8 @@ class WelchTTestRunner(val logger: Logger) extends TwoSampleTTest {
 
     val test = new TTest()
     // We need to use 2 * alpha for one-sided testing
-    val result = try {
-      test.tTest(sampleStats1, sampleStats2, alpha * 2)
+    val pValue = try {
+      test.tTest(sampleStats1, sampleStats2)
     } catch {
       case e: Exception => {
         logger.log(s"Exception during t-test: $e")
@@ -59,7 +59,8 @@ class WelchTTestRunner(val logger: Logger) extends TwoSampleTTest {
       }
     }
 
-    if (!result) {
+    // We need to use 2 * alpha for one-sided testing
+    if (pValue > (2 * alpha)) {
       // Can't decide about the one-sided alternative
       logger.log(s"Can't reject")
       return Some(TestResult.CantRejectEquality)
@@ -70,5 +71,46 @@ class WelchTTestRunner(val logger: Logger) extends TwoSampleTTest {
       Some(TestResult.ExpectedHigher)
     else
       Some(TestResult.ExpectedLower)
+  }
+
+
+  /**
+    * Runs a series of T-Tests to determine whether the first sample is from a distribution with significantly higher
+    * or lower mean than all of the other samples.
+    * The significance level specified is accumulated for the entire series.
+    * Possible results:
+    * TestResult.HigherMean - expecting the first sample to have higher mean than all remaining samples,
+    * rejecting the hypothesis that the first sample has lower mean than all the remaining samples
+    * TestResult.LowerMean - expecting the first sample to have lower mean than all remaining samples,
+    * rejecting the hypothesis that the first sample has higher mean than all the remaining samples
+    * TestResult.CantReject - can't reject neither one of the hypothesis
+    *
+    * @param firstSampleStats     First sample data statistics
+    * @param remainingSampleStats Sequence of the remaining sample data statistics
+    * @param alpha                Significance level of the test
+    * @return Test result or None in case of an error
+    */
+  override def runTest(firstSampleStats: StatisticalSummary,
+                        remainingSampleStats: Seq[StatisticalSummary],
+                        alpha: Double): Option[TestResult] = {
+    // We need to perform one test for each remaining sample
+    val numTests = remainingSampleStats.size
+
+    if (numTests <= 0)
+      None
+
+    val testResults = remainingSampleStats
+      .map(second => runTest(firstSampleStats, second, alpha))
+
+    if (testResults.forall(res => res.contains(TestResult.ExpectedHigher)))
+      return Some(TestResult.ExpectedHigher)
+
+    if (testResults.forall(res => res.contains(TestResult.ExpectedLower)))
+      return Some(TestResult.ExpectedLower)
+
+    if (testResults.exists(res => res.isEmpty))
+      return None
+
+    Some(TestResult.CantRejectEquality)
   }
 }

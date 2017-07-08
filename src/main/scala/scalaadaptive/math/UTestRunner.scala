@@ -7,7 +7,7 @@ import scalaadaptive.math.TestResult.TestResult
 /**
   * Created by pk250187 on 7/7/17.
   */
-trait UTest {
+trait UTestRunner {
   /**
     * Runs a simple U-Test with the specified significance level to determine whether the first sample values are
     * from a distribution with higher mean than the second sample.

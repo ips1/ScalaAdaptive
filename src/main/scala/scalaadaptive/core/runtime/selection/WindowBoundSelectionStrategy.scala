@@ -2,7 +2,7 @@ package scalaadaptive.core.runtime.selection
 import scalaadaptive.core.logging.Logger
 import scalaadaptive.core.runtime.history.runhistory.RunHistory
 import scalaadaptive.core.runtime.selection.support.WindowSizeProvider
-import scalaadaptive.math.RegressionConfidenceTest
+import scalaadaptive.math.RegressionConfidenceTestRunner
 
 /**
   * Created by pk250187 on 7/7/17.

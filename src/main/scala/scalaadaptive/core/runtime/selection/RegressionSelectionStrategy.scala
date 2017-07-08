@@ -13,7 +13,7 @@ import scalaadaptive.math._
   * Created by pk250187 on 5/20/17.
   */
 class RegressionSelectionStrategy[TMeasurement](val logger: Logger,
-                                                val testRunner: RegressionConfidenceTest,
+                                                val testRunner: RegressionConfidenceTestRunner,
                                                 val secondarySelector: SelectionStrategy[TMeasurement],
                                                 val alpha: Double)(implicit num: Numeric[TMeasurement])
   extends SelectionStrategy[TMeasurement] {

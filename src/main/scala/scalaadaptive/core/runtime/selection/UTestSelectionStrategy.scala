@@ -5,13 +5,13 @@ import org.apache.commons.math3.stat.inference.TestUtils
 
 import scalaadaptive.core.logging.Logger
 import scalaadaptive.core.runtime.history.runhistory.RunHistory
-import scalaadaptive.math.{MultipleSampleTTest, TestResult, UTest, WelchTTestRunner}
+import scalaadaptive.math.{TestResult, UTestRunner, WelchTTestRunner}
 
 /**
   * Created by pk250187 on 5/2/17.
   */
 class UTestSelectionStrategy(val logger: Logger,
-                             val testRunner: UTest,
+                             val testRunner: UTestRunner,
                              val secondarySelector: SelectionStrategy[Long],
                              val alpha: Double) extends SelectionStrategy[Long] {
 

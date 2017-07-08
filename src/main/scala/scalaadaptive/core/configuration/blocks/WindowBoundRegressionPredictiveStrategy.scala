@@ -5,7 +5,7 @@ import scalaadaptive.core.configuration.blocks.helper.{BlockWithAlpha, BlockWith
 import scalaadaptive.core.logging.Logger
 import scalaadaptive.core.runtime.selection.support.{AverageForSampleCountProvider, FixedSizeProvider}
 import scalaadaptive.core.runtime.selection._
-import scalaadaptive.math.{RegressionConfidenceTestRunner, RegressionTTestRunner}
+import scalaadaptive.math.{PredictionConfidenceTestRunner, RegressionTTestRunner}
 
 /**
   * Created by pk250187 on 6/7/17.
@@ -24,7 +24,7 @@ trait WindowBoundRegressionPredictiveStrategy extends BaseLongConfiguration
         new WindowBoundSelectionStrategy[Long](log,
           Some(new AverageForSampleCountProvider(windowAverageSize)),
           new RegressionSelectionStrategy[Long](log,
-            new RegressionConfidenceTestRunner(log),
+            new PredictionConfidenceTestRunner(log),
             leastDataSelectionStrategy,
             alpha
           )

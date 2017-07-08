@@ -5,18 +5,34 @@ import org.apache.commons.math3.stat.inference.TestUtils
 
 import scalaadaptive.core.logging.Logger
 import scalaadaptive.core.runtime.history.runhistory.RunHistory
-import scalaadaptive.math.{MultipleSampleTTest, WelchTTestRunner, TestResult}
+import scalaadaptive.math.{TTestRunner, TestResult, WelchTTestRunner}
 
 /**
   * Created by pk250187 on 5/2/17.
   */
 class TTestSelectionStrategy(val logger: Logger,
-                             val testRunner: MultipleSampleTTest,
+                             val testRunner: TTestRunner,
                              val secondarySelector: SelectionStrategy[Long],
                              val alpha: Double) extends SelectionStrategy[Long] {
 
-  override def selectOption(records: Seq[RunHistory[Long]], inputDescriptor: Option[Long]): RunHistory[Long] = {
+  private def selectFromTwo(firstRecord: RunHistory[Long],
+                            secondRecord: RunHistory[Long],
+                            inputDescriptor: Option[Long]): RunHistory[Long] = {
+    val result = testRunner.runTest(firstRecord.runStatistics, secondRecord.runStatistics, alpha)
+    result match {
+      case TestResult.ExpectedLower => firstRecord
+      case TestResult.ExpectedHigher => secondRecord
+      case _ => secondarySelector.selectOption(List(firstRecord, secondRecord), inputDescriptor)
+    }
+  }
+
+  override def selectOption(records: Seq[RunHistory[Long]],
+                            inputDescriptor: Option[Long]): RunHistory[Long] = {
     logger.log("Selecting using TTestSelectionStrategy")
+
+    // Fallback to the two sample test
+    if (records.size == 2)
+      return selectFromTwo(records.head, records.last, inputDescriptor)
 
     // Applying Bonferroni correction
     val oneTestAlpha = alpha / records.size
@@ -29,7 +45,7 @@ class TTestSelectionStrategy(val logger: Logger,
           .filter(r => r != elem)
           .map(r => r.runStatistics)
 
-        val result = testRunner.runTests(elem.runStatistics, remaining, oneTestAlpha)
+        val result = testRunner.runTest(elem.runStatistics, remaining, oneTestAlpha)
 
         (elem, result)
       })

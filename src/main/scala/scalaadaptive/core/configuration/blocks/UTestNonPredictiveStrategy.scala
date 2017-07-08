@@ -3,7 +3,7 @@ package scalaadaptive.core.configuration.blocks
 import scalaadaptive.core.configuration.BaseLongConfiguration
 import scalaadaptive.core.logging.Logger
 import scalaadaptive.core.runtime.selection._
-import scalaadaptive.math.{BonferroniTTestRunner, MannWhitneyUTestRunner, WelchTTestRunner}
+import scalaadaptive.math.{MannWhitneyUTestRunner, WelchTTestRunner}
 
 /**
   * Created by pk250187 on 5/2/17.
