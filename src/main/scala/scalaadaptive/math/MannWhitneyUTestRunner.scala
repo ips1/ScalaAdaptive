@@ -53,10 +53,14 @@ class MannWhitneyUTestRunner(val logger: Logger) extends UTestRunner {
     }
 
     // Equality was rejected, we can accept the one-sided alternative
-    if (sample1._2.getMean > sample2._2.getMean)
+    if (sample1._2.getMean > sample2._2.getMean) {
+      logger.log(s"Success with ExpectedHigher result")
       Some(TestResult.ExpectedHigher)
-    else
+    }
+    else {
+      logger.log(s"Success with ExpectedLower result")
       Some(TestResult.ExpectedLower)
+    }
   }
 
   /**

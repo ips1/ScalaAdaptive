@@ -1,5 +1,6 @@
 package scalaadaptive.core.runtime.selection
 import scalaadaptive.core.logging.Logger
+import scalaadaptive.core.runtime.history.HistoryKey
 import scalaadaptive.core.runtime.history.runhistory.RunHistory
 import scalaadaptive.core.runtime.selection.support.WindowSizeProvider
 import scalaadaptive.math.RegressionConfidenceTestRunner
@@ -12,7 +13,7 @@ class WindowBoundSelectionStrategy[TMeasurement](val logger: Logger,
                                                  val innerStrategy: SelectionStrategy[TMeasurement])
                                                 (implicit num: Numeric[TMeasurement]) extends SelectionStrategy[TMeasurement] {
   override def selectOption(records: Seq[RunHistory[TMeasurement]],
-                            inputDescriptor: Option[Long]): RunHistory[TMeasurement] = {
+                            inputDescriptor: Option[Long]): HistoryKey = {
     val windowRecords =
       if (windowSizeSelector.isEmpty || inputDescriptor.isEmpty)
         records
@@ -26,7 +27,6 @@ class WindowBoundSelectionStrategy[TMeasurement](val logger: Logger,
           r.filter(i => i.inputDescriptor.isDefined && Math.abs(i.inputDescriptor.get - descriptor) < maxDifference)
         })
 
-    // TODO: Replace with mapping to original records?
     innerStrategy.selectOption(windowRecords, inputDescriptor)
   }
 }

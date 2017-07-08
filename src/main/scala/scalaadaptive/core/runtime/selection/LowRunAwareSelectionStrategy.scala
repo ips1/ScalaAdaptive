@@ -1,6 +1,7 @@
 package scalaadaptive.core.runtime.selection
 
 import scalaadaptive.core.logging.Logger
+import scalaadaptive.core.runtime.history.HistoryKey
 import scalaadaptive.core.runtime.history.runhistory.RunHistory
 
 /**
@@ -10,7 +11,7 @@ class LowRunAwareSelectionStrategy[TMeasurement](val logger: Logger,
                                                  val lowRunSelector: SelectionStrategy[TMeasurement],
                                                  val normalSelector: SelectionStrategy[TMeasurement],
                                                  val lowRunLimit: Int) extends SelectionStrategy[TMeasurement] {
-  override def selectOption(records: Seq[RunHistory[TMeasurement]], inputDescriptor: Option[Long]): RunHistory[TMeasurement] = {
+  override def selectOption(records: Seq[RunHistory[TMeasurement]], inputDescriptor: Option[Long]): HistoryKey = {
     logger.log("Selecting using LowRunAwareSelector")
 
     val lowRunOptions = records.filter(_.runCount < lowRunLimit)

@@ -43,7 +43,7 @@ class HistoryBasedAdaptiveSelector[TMeasurement](historyStorage: HistoryStorage[
                                                   runSelector: SelectionStrategy[TMeasurement],
                                                   groupId: Group,
                                                   inputDescriptor: Option[Long],
-                                                  limitedBy: Option[Duration]) = {
+                                                  limitedBy: Option[Duration]): HistoryKey = {
     logger.log(s"Target group: $groupId, byValue: $inputDescriptor")
 
     val allHistories = options.map(f => historyStorage.getHistory(HistoryKey(f.reference, groupId)))
@@ -57,9 +57,9 @@ class HistoryBasedAdaptiveSelector[TMeasurement](historyStorage: HistoryStorage[
       if (histories.length > 1)
         runSelector.selectOption(histories, inputDescriptor)
       else
-        histories.head
+        histories.head.key
 
-    logger.log(s"Selected option: ${selectedRecord.reference}")
+    logger.log(s"Selected option: ${selectedRecord.function}")
     selectedRecord
   }
 
@@ -73,13 +73,13 @@ class HistoryBasedAdaptiveSelector[TMeasurement](historyStorage: HistoryStorage[
     tracker.startTracking()
 
     // Select function to run
-    val selectedRecord = selectRecord(options, strategy, groupId, inputDescriptor, limitedBy)
-    val functionToRun = options.find(_.reference == selectedRecord.reference).get.fun
+    val selectedKey = selectRecord(options, strategy, groupId, inputDescriptor, limitedBy)
+    val functionToRun = options.find(_.reference == selectedKey.function).get.fun
 
     tracker.addSelectionTime()
 
     // Execute the function
-    runMeasuredFunction(functionToRun, arguments, selectedRecord.key, inputDescriptor, tracker)
+    runMeasuredFunction(functionToRun, arguments, selectedKey, inputDescriptor, tracker)
   }
 
   private def selectAndRunWithDelayedMeasure[TArgType, TReturnType](options: Seq[ReferencedFunction[TArgType, TReturnType]],
@@ -92,13 +92,13 @@ class HistoryBasedAdaptiveSelector[TMeasurement](historyStorage: HistoryStorage[
     tracker.startTracking()
 
     // Select function to run
-    val selectedRecord = selectRecord(options, strategy, groupId, inputDescriptor, limitedBy)
-    val functionToRun = options.find(_.reference == selectedRecord.reference).get.fun
+    val selectedKey = selectRecord(options, strategy, groupId, inputDescriptor, limitedBy)
+    val functionToRun = options.find(_.reference == selectedKey.function).get.fun
 
     tracker.addSelectionTime()
 
     // Execute the function
-    (functionToRun(arguments), new MeasuringInvocationToken(this, inputDescriptor, selectedRecord.key, tracker))
+    (functionToRun(arguments), new MeasuringInvocationToken(this, inputDescriptor, selectedKey, tracker))
   }
 
   override def selectAndRun[TArgType, TReturnType](options: Seq[ReferencedFunction[TArgType, TReturnType]],

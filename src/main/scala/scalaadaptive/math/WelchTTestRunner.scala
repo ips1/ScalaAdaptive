@@ -67,10 +67,14 @@ class WelchTTestRunner(val logger: Logger) extends TTestRunner {
     }
 
     // Equality was rejected, we can accept the one-sided alternative
-    if (sampleStats1.getMean > sampleStats2.getMean)
+    if (sampleStats1.getMean > sampleStats2.getMean) {
+      logger.log(s"Success with ExpectedHigher result")
       Some(TestResult.ExpectedHigher)
-    else
+    }
+    else {
+      logger.log(s"Success with ExpectedLower result")
       Some(TestResult.ExpectedLower)
+    }
   }
 
 

@@ -5,6 +5,7 @@ import org.apache.commons.math3.analysis.polynomials.PolynomialSplineFunction
 import org.apache.commons.math3.exception.NumberIsTooSmallException
 
 import scalaadaptive.core.logging.Logger
+import scalaadaptive.core.runtime.history.HistoryKey
 import scalaadaptive.core.runtime.history.evaluation.data.GroupedEvaluationData
 import scalaadaptive.core.runtime.history.runhistory.RunHistory
 
@@ -37,7 +38,7 @@ class LoessInterpolationSelectionStrategy[TMeasurement](val logger: Logger)(impl
   }
 
   private def selectUsingInterpolation(records: Seq[RunHistory[TMeasurement]],
-                                       descriptor: Long) = {
+                                       descriptor: Long): HistoryKey = {
     val polynomials =
       records.map(runHistory => {
         val sortedData = runHistory.runAveragesGroupedByDescriptor
@@ -51,16 +52,16 @@ class LoessInterpolationSelectionStrategy[TMeasurement](val logger: Logger)(impl
       logger.log("Invalid point!")
       -1
     } else p._2.get.value(descriptor))
-    min._1
+    min._1.key
   }
 
   override def selectOption(records: Seq[RunHistory[TMeasurement]],
-                            inputDescriptor: Option[Long]): RunHistory[TMeasurement] = {
+                            inputDescriptor: Option[Long]): HistoryKey = {
     logger.log("Selecting using InterpolationSelector")
 
     val descriptor = inputDescriptor match {
       case Some(d) => d
-      case _ => return records.head
+      case _ => return records.head.key
     }
 
     selectUsingInterpolation(records, descriptor)

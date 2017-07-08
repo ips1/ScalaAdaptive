@@ -4,6 +4,7 @@ import org.apache.commons.math3.stat.regression.SimpleRegression
 
 import scalaadaptive.core.functions.RunData
 import scalaadaptive.core.logging.Logger
+import scalaadaptive.core.runtime.history.HistoryKey
 import scalaadaptive.core.runtime.history.evaluation.data.EvaluationData
 import scalaadaptive.core.runtime.history.runhistory.RunHistory
 import scalaadaptive.core.runtime.selection.support.{ClosestProvider, WindowSizeProvider}
@@ -26,12 +27,12 @@ class RegressionSelectionStrategy[TMeasurement](val logger: Logger,
     regression
   }
 
-  override def selectOption(records: Seq[RunHistory[TMeasurement]], inputDescriptor: Option[Long]): RunHistory[TMeasurement] = {
+  override def selectOption(records: Seq[RunHistory[TMeasurement]], inputDescriptor: Option[Long]): HistoryKey = {
     logger.log("Selecting using WindowBoundRegressionSelectionStrategy")
 
     val descriptor = inputDescriptor match {
       case Some(d) => d
-      case _ => return records.head
+      case _ => return records.head.key
     }
 
     val regressions = records.map(r => (r, r.runRegression))
@@ -50,7 +51,7 @@ class RegressionSelectionStrategy[TMeasurement](val logger: Logger,
 
     positiveResults
       .find(_._2.contains(TestResult.ExpectedLower))
-      .map(_._1._1)
+      .map(_._1._1.key)
       .getOrElse(secondarySelector.selectOption(records, inputDescriptor))
   }
 }
