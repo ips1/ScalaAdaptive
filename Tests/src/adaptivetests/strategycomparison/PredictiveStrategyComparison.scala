@@ -51,7 +51,7 @@ object PredictiveStrategyComparison {
     val configs = List(
       new ComparisonConfiguration
         with WindowBoundTTestPredictiveStrategy {
-        override val alpha: Double = 1
+        override val alpha: Double = 0.05
       },
       new ComparisonConfiguration
         with RegressionPredictiveStrategy {
@@ -91,7 +91,7 @@ object PredictiveStrategyComparison {
 
     val errorFactors = List(0.01, 0.1, 0.2, 0.5, 1.0, 3.0)
 
-    val testCount = 5
+    val testCount = 50
     val runCount = 200
     val minVal = 10
     val maxVal = 500
