@@ -36,6 +36,8 @@ class LimitedRunHistory[TMeasurement](val limit: Int,
   override def average(): Option[Double] = internalHistory.average()
   override def takeWhile(filter: (EvaluationData[TMeasurement]) => Boolean): RunHistory[TMeasurement] =
     internalHistory.takeWhile(filter)
+  override def filter(filter: (EvaluationData[TMeasurement]) => Boolean): RunHistory[TMeasurement] =
+    internalHistory.filter(filter)
   override def runStatistics: StatisticalSummary = internalHistory.runStatistics
 
   override def minDescriptor: Option[Long] = internalHistory.minDescriptor

@@ -46,6 +46,8 @@ class CachedRegressionRunHistory[TMeasurement]private (private val internalHisto
   override def average(): Option[Double] = internalHistory.average()
   override def takeWhile(filter: (EvaluationData[TMeasurement]) => Boolean): RunHistory[TMeasurement] =
     internalHistory.takeWhile(filter)
+  override def filter(filter: (EvaluationData[TMeasurement]) => Boolean): RunHistory[TMeasurement] =
+    internalHistory.filter(filter)
 
   override def minDescriptor: Option[Long] = internalHistory.minDescriptor
   override def maxDescriptor: Option[Long] = internalHistory.maxDescriptor

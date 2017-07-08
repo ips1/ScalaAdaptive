@@ -11,12 +11,13 @@ import scalaadaptive.extensions.Averageable
   */
 class FullRunHistory[TMeasurement] (override val key: HistoryKey)
                                   (implicit override val num: Averageable[TMeasurement])
-  extends RunHistory[TMeasurement]
+  extends DefaultFilterRunHistory[TMeasurement]
     with DefaultGrouping[TMeasurement]
     with DefaultStatistics[TMeasurement]
     with DefaultBest[TMeasurement]
     with DefaultAverage[TMeasurement]
-    with DefaultRegression[TMeasurement] {
+    with DefaultRegression[TMeasurement]
+    with DefaultMakeHistory[TMeasurement] {
 
   val internalRunItems: ArrayBuffer[EvaluationData[TMeasurement]] = new ArrayBuffer[EvaluationData[TMeasurement]]()
   private var minDesc: Option[Long] = None
@@ -33,14 +34,6 @@ class FullRunHistory[TMeasurement] (override val key: HistoryKey)
       case None =>
     }
     this
-  }
-
-  override def takeWhile(filter: (EvaluationData[TMeasurement]) => Boolean): RunHistory[TMeasurement] = {
-    val filteredItems = internalRunItems.reverseIterator.takeWhile(filter).toIterable
-    val descriptors = filteredItems.filter(i => i.inputDescriptor.isDefined).map(i => i.inputDescriptor.get)
-    val min = if (descriptors.nonEmpty) Some(descriptors.min) else None
-    val max = if (descriptors.nonEmpty) Some(descriptors.max) else None
-    new ImmutableFullRunHistory[TMeasurement](key, filteredItems, min, max)
   }
 
   override def runItems: Iterable[EvaluationData[TMeasurement]] = internalRunItems.reverseIterator.toIterable

@@ -9,7 +9,7 @@ import scalaadaptive.core.configuration.blocks._
 class DefaultConfiguration extends BaseLongConfiguration
   with RunTimeMeasurement
   with TTestNonPredictiveStrategy
-  with LimitedRegressionPredictiveStrategy
+  with WindowBoundRegressionPredictiveStrategy
   with CachedStatisticsStorage
   with DefaultHistoryPath
   with BufferedSerialization

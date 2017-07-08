@@ -1,26 +1,35 @@
 package scalaadaptive.core.configuration.blocks
 
 import scalaadaptive.core.configuration.BaseLongConfiguration
+import scalaadaptive.core.configuration.blocks.helper.{BlockWithAlpha, BlockWithLowRunLimit, BlockWithWindowAverageSize}
 import scalaadaptive.core.logging.Logger
 import scalaadaptive.core.runtime.selection.support.{AverageForSampleCountProvider, FixedSizeProvider}
-import scalaadaptive.core.runtime.selection.{LeastDataSelectionStrategy, LimitedRegressionSelectionStrategy, LowRunAwareSelectionStrategy, SelectionStrategy}
+import scalaadaptive.core.runtime.selection._
 import scalaadaptive.math.{RegressionConfidenceTestRunner, RegressionTTestRunner}
 
 /**
   * Created by pk250187 on 6/7/17.
   */
-trait LimitedRegressionPredictiveStrategy extends BaseLongConfiguration {
+trait WindowBoundRegressionPredictiveStrategy extends BaseLongConfiguration
+  with BlockWithWindowAverageSize
+  with BlockWithAlpha
+  with BlockWithLowRunLimit {
+
   override val createPredictiveSelectionStrategy: (Logger) => SelectionStrategy[Long] =
     (log: Logger) => {
       val leastDataSelectionStrategy = new LeastDataSelectionStrategy[Long](log)
       new LowRunAwareSelectionStrategy[Long](
         log,
         leastDataSelectionStrategy,
-        new LimitedRegressionSelectionStrategy[Long](log,
-          Some(new AverageForSampleCountProvider(25)),
-          new RegressionConfidenceTestRunner(log),
-          leastDataSelectionStrategy,
-          0.05),
-        30)
+        new WindowBoundSelectionStrategy[Long](log,
+          Some(new AverageForSampleCountProvider(windowAverageSize)),
+          new RegressionSelectionStrategy[Long](log,
+            new RegressionConfidenceTestRunner(log),
+            leastDataSelectionStrategy,
+            alpha
+          )
+        ),
+        lowRunLimit
+      )
     }
 }

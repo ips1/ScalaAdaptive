@@ -13,12 +13,13 @@ class ImmutableFullRunHistory[TMeasurement] (override val key: HistoryKey,
                                              override val minDescriptor: Option[Long],
                                              override val maxDescriptor: Option[Long])
                                            (implicit override val num: Averageable[TMeasurement])
-  extends RunHistory[TMeasurement]
+  extends DefaultFilterRunHistory[TMeasurement]
     with DefaultGrouping[TMeasurement]
     with DefaultAverage[TMeasurement]
     with DefaultBest[TMeasurement]
     with DefaultStatistics[TMeasurement]
-    with DefaultRegression[TMeasurement] {
+    with DefaultRegression[TMeasurement]
+    with DefaultMakeHistory[TMeasurement] {
 
   def this(key: HistoryKey)(implicit num: Averageable[TMeasurement]) =
     this(key, List(), None, None)
@@ -37,13 +38,5 @@ class ImmutableFullRunHistory[TMeasurement] (override val key: HistoryKey,
       case None => maxDescriptor
     }
     new ImmutableFullRunHistory[TMeasurement](key, newItems, newMinDescriptor, newMaxDescriptor)
-  }
-
-  override def takeWhile(filter: (EvaluationData[TMeasurement]) => Boolean): RunHistory[TMeasurement] = {
-    val filteredItems = runItems.takeWhile(filter)
-    val descriptors = filteredItems.filter(i => i.inputDescriptor.isDefined).map(i => i.inputDescriptor.get)
-    val min = if (descriptors.nonEmpty) Some(descriptors.min) else None
-    val max = if (descriptors.nonEmpty) Some(descriptors.max) else None
-    new ImmutableFullRunHistory[TMeasurement](key, filteredItems, min, max)
   }
 }

@@ -23,6 +23,7 @@ trait RunHistory[TMeasurement] {
 
   def applyNewRun(runResult: EvaluationData[TMeasurement]): RunHistory[TMeasurement]
   def takeWhile(filter: EvaluationData[TMeasurement] => Boolean): RunHistory[TMeasurement]
+  def filter(filter: EvaluationData[TMeasurement] => Boolean): RunHistory[TMeasurement]
 
   // Cacheable or computable methods
   def average(): Option[Double]

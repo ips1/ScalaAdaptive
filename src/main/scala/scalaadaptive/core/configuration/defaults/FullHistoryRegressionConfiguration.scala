@@ -12,4 +12,4 @@ class FullHistoryRegressionConfiguration
     with RunTimeMeasurement
     with DefaultHistoryPath
     with BufferedSerialization
-    with LimitedRegressionPredictiveStrategy
+    with WindowBoundRegressionPredictiveStrategy
