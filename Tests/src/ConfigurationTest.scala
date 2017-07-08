@@ -11,7 +11,7 @@ object ConfigurationTest {
     val config = new BaseLongConfiguration
       with RunTimeMeasurement
       with TTestNonPredictiveStrategy
-      with LimitedRegressionPredictiveStrategy
+      with WindowBoundRegressionPredictiveStrategy
       with DefaultHistoryPath
       with BufferedSerialization
       with NoLogging

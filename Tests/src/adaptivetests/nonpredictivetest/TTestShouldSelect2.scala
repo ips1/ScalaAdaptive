@@ -1,4 +1,4 @@
-package adaptivetests.ttesttest
+package adaptivetests.nonpredictivetest
 
 import tools.methods.TestMethods
 

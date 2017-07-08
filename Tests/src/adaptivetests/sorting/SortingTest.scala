@@ -51,7 +51,7 @@ object SortingTest {
     val config = new BaseLongConfiguration
       with RunTimeMeasurement
       with TTestNonPredictiveStrategy
-      with LimitedRegressionPredictiveStrategy
+      with WindowBoundRegressionPredictiveStrategy
       //with RegressionPredictiveStrategy
       //with LoessInterpolationPredictiveStrategy
       with CachedRegressionAndStatisticsStorage

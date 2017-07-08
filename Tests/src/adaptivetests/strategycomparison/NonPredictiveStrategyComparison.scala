@@ -14,8 +14,8 @@ object NonPredictiveStrategyComparison {
   val methods = new Methods
 
   def performTest(testData: Iterable[Int], slowerBy: Double): TestRunResult = {
-    val slowerFun = methods.createSlower(slowerBy)
-    val normalFun = methods.createNormal
+    val slowerFun = methods.createSlowerLinear(slowerBy)
+    val normalFun = methods.createNormalLinear
 
     val slowerName = slowerFun.getClass.getTypeName
 
@@ -49,7 +49,7 @@ object NonPredictiveStrategyComparison {
       new BaseLongConfiguration
         with RunTimeMeasurement
         with TTestNonPredictiveStrategy
-        with LimitedRegressionPredictiveStrategy
+        with WindowBoundRegressionPredictiveStrategy
         with CachedRegressionAndStatisticsStorage
         with DefaultHistoryPath
         with BufferedSerialization

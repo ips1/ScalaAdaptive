@@ -7,7 +7,7 @@ import scala.util.Random
 import scalaadaptive.api.Adaptive
 import scalaadaptive.api.options.Storage
 import scalaadaptive.core.configuration.Configuration
-import scalaadaptive.core.configuration.blocks.{LoessInterpolationPredictiveStrategy, LimitedRegressionPredictiveStrategy}
+import scalaadaptive.core.configuration.blocks.{LoessInterpolationPredictiveStrategy, WindowBoundRegressionPredictiveStrategy}
 import scalaadaptive.core.configuration.defaults.FullHistoryTTestConfiguration
 
 /**

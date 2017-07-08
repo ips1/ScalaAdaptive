@@ -13,8 +13,8 @@ import scalaadaptive.core.configuration.BaseLongConfiguration
 import scalaadaptive.core.configuration.blocks._
 import scalaadaptive.core.logging.Logger
 import scalaadaptive.core.runtime.selection.support.AverageForSampleCountProvider
-import scalaadaptive.core.runtime.selection.{LeastDataSelectionStrategy, LimitedRegressionSelectionStrategy, LowRunAwareSelectionStrategy, SelectionStrategy}
-import scalaadaptive.math.RegressionConfidenceTestRunner
+import scalaadaptive.core.runtime.selection.{LeastDataSelectionStrategy, RegressionSelectionStrategy, LowRunAwareSelectionStrategy, SelectionStrategy}
+import scalaadaptive.math.PredictionConfidenceTestRunner
 
 /**
   * Created by pk250187 on 7/3/17.
@@ -105,22 +105,11 @@ object MatrixMultiplicationTest {
     val config = new BaseLongConfiguration
       with RunTimeMeasurement
       with TTestNonPredictiveStrategy
+      with WindowBoundRegressionPredictiveStrategy
       with CachedRegressionAndStatisticsStorage
       with DefaultHistoryPath
       with BufferedSerialization {
-      override val createPredictiveSelectionStrategy: (Logger) => SelectionStrategy[Long] =
-        (log: Logger) => {
-          val leastDataSelectionStrategy = new LeastDataSelectionStrategy[Long](log)
-          new LowRunAwareSelectionStrategy[Long](
-            log,
-            leastDataSelectionStrategy,
-            new LimitedRegressionSelectionStrategy[Long](log,
-              Some(new AverageForSampleCountProvider(25)),
-              new RegressionConfidenceTestRunner(log),
-              leastDataSelectionStrategy,
-              0.05),
-            5)
-        }
+      override val lowRunLimit = 5
     }
 
     Adaptive.initialize(config)
