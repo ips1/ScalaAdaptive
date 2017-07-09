@@ -58,24 +58,16 @@ object NonPredictiveStrategyComparison {
         override val alpha: Double = 0.25
       },
       new ComparisonConfiguration
-        with TTestNonPredictiveStrategy {
-        override val alpha: Double = 1
-      },
-      new ComparisonConfiguration
         with UTestNonPredictiveStrategy {
         override val alpha: Double = 0.05
       },
       new ComparisonConfiguration
         with UTestNonPredictiveStrategy {
         override val alpha: Double = 0.25
-      },
-      new ComparisonConfiguration
-        with UTestNonPredictiveStrategy {
-        override val alpha: Double = 1
       }
     )
 
-    val errorFactors = List(0.01, 0.1, 0.2, 0.5, 1.0, 3.0)
+    val errorFactors = List(0.01, 0.1, 0.2, 0.5, 1.0)
 
     val testCount = 100
     val runCount = 200
