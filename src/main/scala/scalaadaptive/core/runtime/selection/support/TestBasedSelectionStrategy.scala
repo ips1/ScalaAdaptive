@@ -13,14 +13,15 @@ import scalaadaptive.math.TestResult.TestResult
 trait TestBasedSelectionStrategy[TMeasurement] extends SelectionStrategy[TMeasurement] {
   protected val logger: Logger
   protected val secondarySelector: SelectionStrategy[TMeasurement]
-  protected val runTest: (RunHistory[TMeasurement], Iterable[RunHistory[TMeasurement]], Double) => Option[TestResult]
+  protected val runTestTwo: (RunHistory[TMeasurement], RunHistory[TMeasurement], Double) => Option[TestResult]
+  protected val runTestMultiple: (RunHistory[TMeasurement], Iterable[RunHistory[TMeasurement]], Double) => Option[TestResult]
   protected val alpha: Double
   protected val name: String
 
   private def selectFromTwo(firstRecord: RunHistory[TMeasurement],
                             secondRecord: RunHistory[TMeasurement],
                             inputDescriptor: Option[Long]): HistoryKey = {
-    val result = runTest(firstRecord, List(secondRecord), alpha)
+    val result = runTestTwo(firstRecord, secondRecord, alpha)
     result match {
       case Some(TestResult.ExpectedLower) => firstRecord.key
       case Some(TestResult.ExpectedHigher) => secondRecord.key
@@ -46,7 +47,7 @@ trait TestBasedSelectionStrategy[TMeasurement] extends SelectionStrategy[TMeasur
         val remaining = records
           .filter(r => r != elem)
 
-        val result = runTest(elem, remaining, oneTestAlpha)
+        val result = runTestMultiple(elem, remaining, oneTestAlpha)
 
         (elem, result)
       })
