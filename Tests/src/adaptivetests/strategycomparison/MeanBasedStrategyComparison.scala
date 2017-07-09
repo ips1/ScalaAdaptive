@@ -10,7 +10,7 @@ import scalaadaptive.core.functions.references.ClosureNameReference
 /**
   * Created by pk250187 on 6/24/17.
   */
-object NonPredictiveStrategyComparison {
+object MeanBasedStrategyComparison {
   val methods = new Methods
 
   def performTest(runCount: Int, arg: Int, slowerBy: Double): TestRunResult = {

@@ -13,7 +13,7 @@ import scalaadaptive.core.runtime.selection.{LeastDataSelectionStrategy, LoessIn
 /**
   * Created by pk250187 on 6/24/17.
   */
-object PredictiveStrategyComparison {
+object InputBasedStrategyComparison {
   val methods = new Methods
 
   def performTest(testData: Iterable[Int], slowerBy: Double): TestRunResult = {
@@ -49,42 +49,42 @@ object PredictiveStrategyComparison {
 
   def main(args: Array[String]): Unit = {
     val configs = List(
-//      new ComparisonConfiguration
-//        with WindowBoundTTestPredictiveStrategy {
-//        override val alpha: Double = 0.05
-//      },
-//      new ComparisonConfiguration
-//        with RegressionPredictiveStrategy {
-//        override val alpha: Double = 0.05
-//      },
-//      new ComparisonConfiguration
-//        with WindowBoundRegressionPredictiveStrategy {
-//        override val alpha: Double = 0.05
-//      },
-//      new ComparisonConfiguration
-//        with WindowBoundTTestPredictiveStrategy {
-//        override val alpha: Double = 0.25
-//      },
-//      new ComparisonConfiguration
-//        with RegressionPredictiveStrategy {
-//        override val alpha: Double = 0.25
-//      },
-//      new ComparisonConfiguration
-//        with WindowBoundRegressionPredictiveStrategy {
-//        override val alpha: Double = 0.25
-//      },
-//      new ComparisonConfiguration
-//        with WindowBoundTTestPredictiveStrategy {
-//        override val alpha: Double = 1
-//      },
-//      new ComparisonConfiguration
-//        with RegressionPredictiveStrategy {
-//        override val alpha: Double = 1
-//      },
-//      new ComparisonConfiguration
-//        with WindowBoundRegressionPredictiveStrategy {
-//        override val alpha: Double = 1
-//      },
+      new ComparisonConfiguration
+        with WindowBoundTTestInputBasedStrategy {
+        override val alpha: Double = 0.05
+      },
+      new ComparisonConfiguration
+        with LinearRegressionInputBasedStrategy {
+        override val alpha: Double = 0.05
+      },
+      new ComparisonConfiguration
+        with WindowBoundRegressionInputBasedStrategy {
+        override val alpha: Double = 0.05
+      },
+      new ComparisonConfiguration
+        with WindowBoundTTestInputBasedStrategy {
+        override val alpha: Double = 0.25
+      },
+      new ComparisonConfiguration
+        with LinearRegressionInputBasedStrategy {
+        override val alpha: Double = 0.25
+      },
+      new ComparisonConfiguration
+        with WindowBoundRegressionInputBasedStrategy {
+        override val alpha: Double = 0.25
+      },
+      new ComparisonConfiguration
+        with WindowBoundTTestInputBasedStrategy {
+        override val alpha: Double = 1
+      },
+      new ComparisonConfiguration
+        with LinearRegressionInputBasedStrategy {
+        override val alpha: Double = 1
+      },
+      new ComparisonConfiguration
+        with WindowBoundRegressionInputBasedStrategy {
+        override val alpha: Double = 1
+      },
       new ComparisonConfiguration
         with LoessInterpolationInputBasedStrategy
     )
