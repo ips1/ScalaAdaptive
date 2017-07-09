@@ -13,18 +13,21 @@ import scalaadaptive.core.functions.references.ClosureNameReference
 object NonPredictiveStrategyComparison {
   val methods = new Methods
 
-  def performTest(testData: Iterable[Int], slowerBy: Double): TestRunResult = {
-    val slowerFun = methods.createSlowerLinear(slowerBy)
-    val normalFun = methods.createNormalLinear
+  def performTest(runCount: Int, arg: Int, slowerBy: Double): TestRunResult = {
+    val slowerHelper = methods.createSlowerLinear(slowerBy)
+    val normalHelper = methods.createNormalLinear
+
+    val slowerFun = () => slowerHelper(arg)
+    val normalFun = () => normalHelper(arg)
 
     val slowerName = slowerFun.getClass.getTypeName
 
     import scalaadaptive.api.Implicits._
-    val fun = slowerFun or normalFun by (i => i) selectUsing Selection.Predictive
+    val fun = slowerFun or normalFun selectUsing Selection.NonPredictive
 
-    testData.foreach(n => {
+    Seq.range(0, runCount).foreach(i => {
       val startTime = System.nanoTime
-      val res = fun(n)
+      val res = fun()
       val duration = System.nanoTime - startTime
     })
 
@@ -36,49 +39,71 @@ object NonPredictiveStrategyComparison {
     new TestRunResult(fun.getAnalyticsData.get, wrongSelected)
   }
 
+  abstract class ComparisonConfiguration extends BaseLongConfiguration
+    with RunTimeMeasurement
+    with RegressionPredictiveStrategy
+    with CachedGroupStorage
+    with DefaultHistoryPath
+    with BufferedSerialization
+    with NoLogging
+
   def main(args: Array[String]): Unit = {
     val configs = List(
-      new BaseLongConfiguration
-        with RunTimeMeasurement
-        with TTestNonPredictiveStrategy
-        with RegressionPredictiveStrategy
-        with CachedGroupStorage
-        with DefaultHistoryPath
-        with BufferedSerialization
-        with NoLogging,
-      new BaseLongConfiguration
-        with RunTimeMeasurement
-        with TTestNonPredictiveStrategy
-        with WindowBoundRegressionPredictiveStrategy
-        with CachedRegressionAndStatisticsStorage
-        with DefaultHistoryPath
-        with BufferedSerialization
-        with NoLogging,
-      new BaseLongConfiguration
-        with RunTimeMeasurement
-        with TTestNonPredictiveStrategy
-        with LoessInterpolationPredictiveStrategy
-        with CachedGroupStorage
-        with DefaultHistoryPath
-        with BufferedSerialization
-        with NoLogging
+      new ComparisonConfiguration
+        with TTestNonPredictiveStrategy {
+        override val alpha: Double = 0.05
+      },
+      new ComparisonConfiguration
+        with TTestNonPredictiveStrategy {
+        override val alpha: Double = 0.25
+      },
+      new ComparisonConfiguration
+        with TTestNonPredictiveStrategy {
+        override val alpha: Double = 1
+      },
+      new ComparisonConfiguration
+        with UTestNonPredictiveStrategy {
+        override val alpha: Double = 0.05
+      },
+      new ComparisonConfiguration
+        with UTestNonPredictiveStrategy {
+        override val alpha: Double = 0.25
+      },
+      new ComparisonConfiguration
+        with UTestNonPredictiveStrategy {
+        override val alpha: Double = 1
+      }
     )
 
-    val testCount = 5
+    val errorFactors = List(0.01, 0.1, 0.2, 0.5, 1.0, 3.0)
+
+    val testCount = 100
     val runCount = 200
-    val minVal = 0
-    val maxVal = 500000
+    val arg = 200000
 
-    val inputs = Seq.fill(testCount)(Seq.fill(runCount)(Random.nextInt(maxVal - minVal) + minVal).toList)
+    val resByError = errorFactors.map(err => {
+      println(s"--- NEW ERROR: $err ---")
+      val resByError = configs.map(cfg => {
+        println("--- NEW CFG ---")
+        val results = Seq.range(0, testCount).map(i => {
+          Adaptive.initialize(cfg)
+          val res = performTest(runCount, arg, err)
+          println(res.wrongSelected)
+          res
+        })
 
-    configs.foreach(cfg => {
-      println("--- NEW CFG ---")
-      val results = inputs.map(data => {
-        Adaptive.initialize(cfg)
-        val res = performTest(data, 1.2)
-        println(res.wrongSelected)
-        res
+        results.map(_.wrongSelected)
       })
+      resByError
+    })
+
+    Seq.range(0, testCount).foreach(i => {
+      val lineParts = resByError.map(byErr => {
+        val innerResults = byErr.map(l => l(i))
+        innerResults.mkString(",")
+      })
+      val line = lineParts.mkString(",,")
+      println(line)
     })
   }
 }
