@@ -17,25 +17,10 @@ class WelchTTestRunner(val logger: Logger) extends TTestRunner {
     logger.log(s"variance: ${sample.getVariance}")
   }
 
-  /**
-    * Runs a simple T-Test with the specified significance level to determine whether the first sample values are
-    * from a distribution with higher mean than the second sample.
-    * Possible results:
-    * TestResult.HigherMean - expecting the first sample to have higher mean, rejecting the hypothesis
-    * that the first sample has lower mean
-    * TestResult.LowerMean - expecting the first sample to have lower mean, rejecting the hypothesis
-    * that the first sample has higher mean
-    * TestResult.CantReject - can't reject neither one of the hypothesis
-    *
-    * @param sampleStats1 First sample data statistics
-    * @param sampleStats2 Second sample data statistics
-    * @param alpha        Significance level of the test
-    * @return Test result or None in case of an Error
-    */
-  override def runTest(sampleStats1: StatisticalSummary,
-              sampleStats2: StatisticalSummary,
-              alpha: Double): Option[TestResult] = {
-
+  private def runTestInternal(sampleStats1: StatisticalSummary,
+                              sampleStats2: StatisticalSummary,
+                              oneSided: Boolean,
+                              alpha: Double): Option[TestResult] = {
     if (alpha < 0.0 || alpha > 1.0) {
       logger.log(s"Invalid alpha provided to TTestRunner: $alpha")
       return None
@@ -49,7 +34,6 @@ class WelchTTestRunner(val logger: Logger) extends TTestRunner {
     logSampleDetails(sampleStats2)
 
     val test = new TTest()
-    // We need to use 2 * alpha for one-sided testing
     val pValue = try {
       test.tTest(sampleStats1, sampleStats2)
     } catch {
@@ -60,7 +44,8 @@ class WelchTTestRunner(val logger: Logger) extends TTestRunner {
     }
 
     // We need to use 2 * alpha for one-sided testing
-    if (pValue > (2 * alpha)) {
+    val realAlpha = if (oneSided) alpha * 2 else alpha
+    if (pValue > realAlpha) {
       // Can't decide about the one-sided alternative
       logger.log(s"Can't reject")
       return Some(TestResult.CantRejectEquality)
@@ -77,15 +62,32 @@ class WelchTTestRunner(val logger: Logger) extends TTestRunner {
     }
   }
 
+  /**
+    * Runs a simple two-sided T-Test with the specified significance level to determine whether the first sample values are
+    * from a distribution with higher mean than the second sample.
+    * Possible results:
+    * TestResult.HigherMean - expecting the first sample to have higher mean, rejecting the hypothesis
+    * that the first sample has lower mean
+    * TestResult.LowerMean - expecting the first sample to have lower mean, rejecting the hypothesis
+    * that the first sample has higher mean
+    * TestResult.CantReject - can't reject neither one of the hypothesis
+    *
+    * @param sampleStats1 First sample data statistics
+    * @param sampleStats2 Second sample data statistics
+    * @param alpha        Significance level of the test
+    * @return Test result or None in case of an Error
+    */
+  override def runTest(sampleStats1: StatisticalSummary,
+              sampleStats2: StatisticalSummary,
+              alpha: Double): Option[TestResult] =
+    runTestInternal(sampleStats1, sampleStats2, oneSided = false, alpha)
 
   /**
-    * Runs a series of T-Tests to determine whether the first sample is from a distribution with significantly higher
-    * or lower mean than all of the other samples.
+    * Runs a series of T-Tests to determine whether the first sample is from a distribution with significantly
+    * lower mean than all of the other samples. The test is one-sided!
     * The significance level specified is accumulated for the entire series.
     * Possible results:
-    * TestResult.HigherMean - expecting the first sample to have higher mean than all remaining samples,
-    * rejecting the hypothesis that the first sample has lower mean than all the remaining samples
-    * TestResult.LowerMean - expecting the first sample to have lower mean than all remaining samples,
+    * TestResult.ExpectedLower - expecting the first sample to have lower mean than all remaining samples,
     * rejecting the hypothesis that the first sample has higher mean than all the remaining samples
     * TestResult.CantReject - can't reject neither one of the hypothesis
     *
@@ -95,8 +97,8 @@ class WelchTTestRunner(val logger: Logger) extends TTestRunner {
     * @return Test result or None in case of an error
     */
   override def runTest(firstSampleStats: StatisticalSummary,
-                        remainingSampleStats: Seq[StatisticalSummary],
-                        alpha: Double): Option[TestResult] = {
+                       remainingSampleStats: Seq[StatisticalSummary],
+                       alpha: Double): Option[TestResult] = {
     // We need to perform one test for each remaining sample
     val numTests = remainingSampleStats.size
 
@@ -104,10 +106,7 @@ class WelchTTestRunner(val logger: Logger) extends TTestRunner {
       None
 
     val testResults = remainingSampleStats
-      .map(second => runTest(firstSampleStats, second, alpha))
-
-    if (testResults.forall(res => res.contains(TestResult.ExpectedHigher)))
-      return Some(TestResult.ExpectedHigher)
+      .map(second => runTestInternal(firstSampleStats, second, oneSided = true, alpha))
 
     if (testResults.forall(res => res.contains(TestResult.ExpectedLower)))
       return Some(TestResult.ExpectedLower)

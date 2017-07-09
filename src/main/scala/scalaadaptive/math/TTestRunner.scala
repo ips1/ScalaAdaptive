@@ -9,12 +9,12 @@ import scalaadaptive.math.TestResult.TestResult
   */
 trait TTestRunner {
   /**
-    * Runs a simple T-Test with the specified significance level to determine whether the first sample values are
-    * from a distribution with higher mean than the second sample.
+    * Runs a simple two-sided T-Test with the specified significance level to determine whether the first sample values are
+    * from a distribution with higher or lower mean than the second sample.
     * Possible results:
-    * TestResult.HigherMean - expecting the first sample to have higher mean, rejecting the hypothesis
+    * TestResult.ExpectedHigher - expecting the first sample to have higher mean, rejecting the hypothesis
     * that the first sample has lower mean
-    * TestResult.LowerMean - expecting the first sample to have lower mean, rejecting the hypothesis
+    * TestResult.ExpectedLower - expecting the first sample to have lower mean, rejecting the hypothesis
     * that the first sample has higher mean
     * TestResult.CantReject - can't reject neither one of the hypothesis
     *
@@ -28,13 +28,11 @@ trait TTestRunner {
               alpha: Double): Option[TestResult]
 
   /**
-    * Runs a series of T-Tests to determine whether the first sample is from a distribution with significantly higher
-    * or lower mean than all of the other samples.
+    * Runs a series of T-Tests to determine whether the first sample is from a distribution with significantly
+    * lower mean than all of the other samples. The test is one-sided!
     * The significance level specified is accumulated for the entire series.
     * Possible results:
-    * TestResult.HigherMean - expecting the first sample to have higher mean than all remaining samples,
-    * rejecting the hypothesis that the first sample has lower mean than all the remaining samples
-    * TestResult.LowerMean - expecting the first sample to have lower mean than all remaining samples,
+    * TestResult.ExpectedLower - expecting the first sample to have lower mean than all remaining samples,
     * rejecting the hypothesis that the first sample has higher mean than all the remaining samples
     * TestResult.CantReject - can't reject neither one of the hypothesis
     *
