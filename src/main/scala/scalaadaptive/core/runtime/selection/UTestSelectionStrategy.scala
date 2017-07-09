@@ -21,8 +21,11 @@ class UTestSelectionStrategy(val logger: Logger,
   private def getTestData(history: RunHistory[Long]): (Iterable[Double], StatisticalSummary) =
     (history.runItems.map(_.measurement.toDouble), history.runStatistics)
 
-  override protected val runTest: (RunHistory[Long], Iterable[RunHistory[Long]], Double) => Option[TestResult] =
+  override protected val runTestMultiple: (RunHistory[Long], Iterable[RunHistory[Long]], Double) => Option[TestResult] =
     (firstHistory, remaining, alpha) =>
       testRunner.runTest(getTestData(firstHistory), remaining.map(getTestData).toList, alpha)
+  override protected val runTestTwo: (RunHistory[Long], RunHistory[Long], Double) => Option[TestResult] =
+    (firstHistory, secondHistory, alpha) =>
+      testRunner.runTest(getTestData(firstHistory), getTestData(secondHistory), alpha)
   override protected val name: String = "UTestSelectionStrategy"
 }

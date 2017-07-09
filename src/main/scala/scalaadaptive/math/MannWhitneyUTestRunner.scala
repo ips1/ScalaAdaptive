@@ -91,9 +91,6 @@ class MannWhitneyUTestRunner(val logger: Logger) extends UTestRunner {
     val testResults = otherSamples
       .map(second => runTestInternal(firstSample, second, oneSided = true, alpha))
 
-    if (testResults.forall(res => res.contains(TestResult.ExpectedHigher)))
-      return Some(TestResult.ExpectedHigher)
-
     if (testResults.forall(res => res.contains(TestResult.ExpectedLower)))
       return Some(TestResult.ExpectedLower)
 
