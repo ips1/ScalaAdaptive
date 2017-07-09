@@ -68,7 +68,7 @@ class MannWhitneyUTestRunner(val logger: Logger) extends UTestRunner {
   override def runTest(sample1: (Iterable[Double], StatisticalSummary),
                        sample2: (Iterable[Double], StatisticalSummary),
                        alpha: Double): Option[TestResult] =
-    runTestInternal(sample1, sample1, oneSided = false, alpha)
+    runTestInternal(sample1, sample2, oneSided = false, alpha)
 
   /**
     * Runs a series of U-tests to determine whether the first sample is from a distribution with significantly
