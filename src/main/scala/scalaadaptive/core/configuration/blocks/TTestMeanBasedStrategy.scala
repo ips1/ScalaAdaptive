@@ -9,7 +9,7 @@ import scalaadaptive.math.WelchTTestRunner
 /**
   * Created by pk250187 on 5/2/17.
   */
-trait TTestNonPredictiveStrategy extends BaseLongConfiguration
+trait TTestMeanBasedStrategy extends BaseLongConfiguration
   with BlockWithLowRunLimit
   with BlockWithAlpha {
   override val createNonPredictiveSelectionStrategy: (Logger) => SelectionStrategy[Long] =

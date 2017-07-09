@@ -12,4 +12,4 @@ class FullHistoryBestAverageSelection
     with RunTimeMeasurement
     with DefaultHistoryPath
     with BufferedSerialization
-    with LoessInterpolationPredictiveStrategy
+    with LoessInterpolationInputBasedStrategy

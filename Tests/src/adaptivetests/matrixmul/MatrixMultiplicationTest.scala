@@ -104,8 +104,8 @@ object MatrixMultiplicationTest {
   def main(args: Array[String]): Unit = {
     val config = new BaseLongConfiguration
       with RunTimeMeasurement
-      with TTestNonPredictiveStrategy
-      with WindowBoundRegressionPredictiveStrategy
+      with TTestMeanBasedStrategy
+      with WindowBoundRegressionInputBasedStrategy
       with CachedRegressionAndStatisticsStorage
       with DefaultHistoryPath
       with BufferedSerialization {

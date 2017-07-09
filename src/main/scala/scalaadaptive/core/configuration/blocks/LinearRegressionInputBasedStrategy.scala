@@ -9,7 +9,7 @@ import scalaadaptive.math.PredictionConfidenceTestRunner
 /**
   * Created by pk250187 on 5/2/17.
   */
-trait RegressionPredictiveStrategy extends BaseLongConfiguration
+trait LinearRegressionInputBasedStrategy extends BaseLongConfiguration
   with BlockWithWindowAverageSize
   with BlockWithAlpha
   with BlockWithLowRunLimit {

@@ -40,9 +40,9 @@ object OverheadMeasure {
 
     val config = new BaseLongConfiguration
       with RunTimeMeasurement
-      with TTestNonPredictiveStrategy
+      with TTestMeanBasedStrategy
       //with LimitedRegressionPredictiveStrategy
-      with RegressionPredictiveStrategy
+      with LinearRegressionInputBasedStrategy
       //with LoessInterpolationPredictiveStrategy
       //with CachedRegressionAndStatisticsStorage
       //with CachedGroupStorage

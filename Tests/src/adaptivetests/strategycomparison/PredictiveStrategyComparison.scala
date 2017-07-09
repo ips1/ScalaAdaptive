@@ -17,8 +17,8 @@ object PredictiveStrategyComparison {
   val methods = new Methods
 
   def performTest(testData: Iterable[Int], slowerBy: Double): TestRunResult = {
-    val slowerFun = methods.createSlowerQuadratic(slowerBy)
-    val normalFun = methods.createNormalQuadratic
+    val slowerFun = methods.createSlowerLinear(slowerBy)
+    val normalFun = methods.createNormalLinear
 
     val slowerName = slowerFun.getClass.getTypeName
 
@@ -41,7 +41,7 @@ object PredictiveStrategyComparison {
 
   abstract class ComparisonConfiguration extends BaseLongConfiguration
     with RunTimeMeasurement
-    with TTestNonPredictiveStrategy
+    with TTestMeanBasedStrategy
     with CachedGroupStorage
     with DefaultHistoryPath
     with BufferedSerialization
@@ -49,52 +49,53 @@ object PredictiveStrategyComparison {
 
   def main(args: Array[String]): Unit = {
     val configs = List(
+//      new ComparisonConfiguration
+//        with WindowBoundTTestPredictiveStrategy {
+//        override val alpha: Double = 0.05
+//      },
+//      new ComparisonConfiguration
+//        with RegressionPredictiveStrategy {
+//        override val alpha: Double = 0.05
+//      },
+//      new ComparisonConfiguration
+//        with WindowBoundRegressionPredictiveStrategy {
+//        override val alpha: Double = 0.05
+//      },
+//      new ComparisonConfiguration
+//        with WindowBoundTTestPredictiveStrategy {
+//        override val alpha: Double = 0.25
+//      },
+//      new ComparisonConfiguration
+//        with RegressionPredictiveStrategy {
+//        override val alpha: Double = 0.25
+//      },
+//      new ComparisonConfiguration
+//        with WindowBoundRegressionPredictiveStrategy {
+//        override val alpha: Double = 0.25
+//      },
+//      new ComparisonConfiguration
+//        with WindowBoundTTestPredictiveStrategy {
+//        override val alpha: Double = 1
+//      },
+//      new ComparisonConfiguration
+//        with RegressionPredictiveStrategy {
+//        override val alpha: Double = 1
+//      },
+//      new ComparisonConfiguration
+//        with WindowBoundRegressionPredictiveStrategy {
+//        override val alpha: Double = 1
+//      },
       new ComparisonConfiguration
-        with WindowBoundTTestPredictiveStrategy {
-        override val alpha: Double = 0.05
-      },
-      new ComparisonConfiguration
-        with RegressionPredictiveStrategy {
-        override val alpha: Double = 0.05
-      },
-      new ComparisonConfiguration
-        with WindowBoundRegressionPredictiveStrategy {
-        override val alpha: Double = 0.05
-      },
-      new ComparisonConfiguration
-        with WindowBoundTTestPredictiveStrategy {
-        override val alpha: Double = 0.25
-      },
-      new ComparisonConfiguration
-        with RegressionPredictiveStrategy {
-        override val alpha: Double = 0.25
-      },
-      new ComparisonConfiguration
-        with WindowBoundRegressionPredictiveStrategy {
-        override val alpha: Double = 0.25
-      },
-      new ComparisonConfiguration
-        with WindowBoundTTestPredictiveStrategy {
-        override val alpha: Double = 1
-      },
-      new ComparisonConfiguration
-        with RegressionPredictiveStrategy {
-        override val alpha: Double = 1
-      },
-      new ComparisonConfiguration
-        with WindowBoundRegressionPredictiveStrategy {
-        override val alpha: Double = 1
-      },
-      new ComparisonConfiguration
-        with LoessInterpolationPredictiveStrategy
+        with LoessInterpolationInputBasedStrategy
     )
 
-    val errorFactors = List(0.01, 0.1, 0.2, 0.5, 1.0, 3.0)
+    //val errorFactors = List(0.01, 0.1, 0.2, 0.5, 1.0, 3.0)
+    val errorFactors = List(0.5, 1.0, 3.0)
 
     val testCount = 50
     val runCount = 200
-    val minVal = 10
-    val maxVal = 500
+    val minVal = 100000
+    val maxVal = 500000
 
     val inputs = Seq.fill(testCount)(Seq.fill(runCount)(Random.nextInt(maxVal - minVal) + minVal).toList)
 

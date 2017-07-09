@@ -9,7 +9,7 @@ import scalaadaptive.math.{MannWhitneyUTestRunner, WelchTTestRunner}
 /**
   * Created by pk250187 on 5/2/17.
   */
-trait UTestNonPredictiveStrategy extends BaseLongConfiguration
+trait UTestMeanBasedStrategy extends BaseLongConfiguration
   with BlockWithLowRunLimit
   with BlockWithAlpha {
   override val createNonPredictiveSelectionStrategy: (Logger) => SelectionStrategy[Long] =

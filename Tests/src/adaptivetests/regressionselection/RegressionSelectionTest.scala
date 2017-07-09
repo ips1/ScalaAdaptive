@@ -18,7 +18,7 @@ import scalaadaptive.core.runtime.selection.RegressionSelectionStrategy
   */
 object RegressionSelectionTest {
   def runTest(data: Seq[Array[Int]]): Unit = {
-    Adaptive.initialize(new FullHistoryRegressionConfiguration with RegressionPredictiveStrategy with NoLogging)
+    Adaptive.initialize(new FullHistoryRegressionConfiguration with LinearRegressionInputBasedStrategy with NoLogging)
     val testMethods = new TestMethods()
     //val runner = new TestRunner()
     //runner.runIncrementalTest(l => testMethods.functionContinuous(l))
