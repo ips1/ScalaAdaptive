@@ -58,7 +58,7 @@ object MeanBasedStrategyComparison {
         override val alpha: Double = 0.25
       },
       new ComparisonConfiguration
-        with UTestNonPredictiveStrategy {
+        with UTestMeanBasedStrategy {
         override val alpha: Double = 0.05
       },
       new ComparisonConfiguration

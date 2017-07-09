@@ -89,10 +89,10 @@ object InputBasedStrategyComparison {
         with LoessInterpolationInputBasedStrategy
     )
 
-    //val errorFactors = List(0.01, 0.1, 0.2, 0.5, 1.0, 3.0)
-    val errorFactors = List(0.5, 1.0, 3.0)
+    val errorFactors = List(0.01, 0.1, 0.2, 0.5, 1.0, 3.0)
+    //val errorFactors = List(0.5, 1.0, 3.0)
 
-    val testCount = 50
+    val testCount = 100
     val runCount = 200
     val minVal = 100000
     val maxVal = 500000
