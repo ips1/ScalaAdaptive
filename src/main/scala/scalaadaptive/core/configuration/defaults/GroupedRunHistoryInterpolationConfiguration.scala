@@ -10,9 +10,9 @@ import scalaadaptive.core.runtime.history.runhistory.{CachedGroupedRunHistory, I
   */
 class GroupedRunHistoryInterpolationConfiguration
   extends BaseLongConfiguration
-  with LoessInterpolationPredictiveStrategy
+  with LoessInterpolationInputBasedStrategy
   with RunTimeMeasurement
   with DefaultHistoryPath
   with BufferedSerialization
-  with TTestNonPredictiveStrategy
+  with TTestMeanBasedStrategy
   with CachedGroupStorage

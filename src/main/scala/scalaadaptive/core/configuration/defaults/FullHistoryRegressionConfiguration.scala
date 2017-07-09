@@ -8,8 +8,8 @@ import scalaadaptive.core.configuration.blocks._
   */
 class FullHistoryRegressionConfiguration
   extends BaseLongConfiguration
-    with TTestNonPredictiveStrategy
+    with TTestMeanBasedStrategy
     with RunTimeMeasurement
     with DefaultHistoryPath
     with BufferedSerialization
-    with WindowBoundRegressionPredictiveStrategy
+    with WindowBoundRegressionInputBasedStrategy

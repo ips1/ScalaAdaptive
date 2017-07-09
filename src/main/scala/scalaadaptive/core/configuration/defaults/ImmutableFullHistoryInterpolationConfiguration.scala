@@ -10,11 +10,11 @@ import scalaadaptive.core.runtime.history.runhistory.{CachedAverageRunHistory, I
   */
 class ImmutableFullHistoryInterpolationConfiguration
   extends BaseLongConfiguration
-    with LoessInterpolationPredictiveStrategy
+    with LoessInterpolationInputBasedStrategy
     with RunTimeMeasurement
     with DefaultHistoryPath
     with BufferedSerialization
-    with TTestNonPredictiveStrategy {
+    with TTestMeanBasedStrategy {
   override val createHistoryStorage: () => HistoryStorage[TMeasurement] = () => {
     new MapHistoryStorage[TMeasurement](key =>
       new CachedAverageRunHistory[TMeasurement](new ImmutableFullRunHistory[TMeasurement](key)(num))(num)

@@ -15,7 +15,7 @@ import scalaadaptive.core.runtime.history.runhistory.RunHistory
 class LoessInterpolationSelectionStrategy[TMeasurement](val logger: Logger)(implicit num: Numeric[TMeasurement])
   extends SelectionStrategy[TMeasurement] {
 
-  private def getInterpolator = new LoessInterpolator()
+  private def getInterpolator = new LoessInterpolator(0.5, 2)
 
   /**
     * Interpolates polynomial, returns the function in case of success, returns None if there is not enough data
@@ -50,7 +50,13 @@ class LoessInterpolationSelectionStrategy[TMeasurement](val logger: Logger)(impl
       // TODO: Add more logging!!!
       logger.log("Invalid point!")
       -1
-    } else p._2.get.value(descriptor))
+    } else {
+      val point = p._2.get.value(descriptor)
+      if (point.isNaN)
+        -1
+      else
+        point
+    })
     min._1.key
   }
 

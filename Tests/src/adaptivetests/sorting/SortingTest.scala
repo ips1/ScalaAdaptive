@@ -34,9 +34,9 @@ object SortingTest {
   private def initRegression() = {
     val config = new BaseLongConfiguration
       with RunTimeMeasurement
-      with TTestNonPredictiveStrategy
+      with TTestMeanBasedStrategy
       //with LimitedRegressionPredictiveStrategy
-      with RegressionPredictiveStrategy
+      with LinearRegressionInputBasedStrategy
       //with LoessInterpolationPredictiveStrategy
       with CachedRegressionAndStatisticsStorage
       //with CachedGroupStorage
@@ -50,8 +50,8 @@ object SortingTest {
   private def initLimitedRegression() = {
     val config = new BaseLongConfiguration
       with RunTimeMeasurement
-      with TTestNonPredictiveStrategy
-      with WindowBoundRegressionPredictiveStrategy
+      with TTestMeanBasedStrategy
+      with WindowBoundRegressionInputBasedStrategy
       //with RegressionPredictiveStrategy
       //with LoessInterpolationPredictiveStrategy
       with CachedRegressionAndStatisticsStorage
@@ -66,10 +66,10 @@ object SortingTest {
   private def initLoess() = {
     val config = new BaseLongConfiguration
       with RunTimeMeasurement
-      with TTestNonPredictiveStrategy
+      with TTestMeanBasedStrategy
       //with LimitedRegressionPredictiveStrategy
       //with RegressionPredictiveStrategy
-      with LoessInterpolationPredictiveStrategy
+      with LoessInterpolationInputBasedStrategy
       //with CachedRegressionAndStatisticsStorage
       with CachedGroupStorage
       with DefaultHistoryPath

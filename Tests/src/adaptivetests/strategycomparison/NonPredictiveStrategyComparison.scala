@@ -41,7 +41,7 @@ object NonPredictiveStrategyComparison {
 
   abstract class ComparisonConfiguration extends BaseLongConfiguration
     with RunTimeMeasurement
-    with RegressionPredictiveStrategy
+    with LinearRegressionInputBasedStrategy
     with CachedGroupStorage
     with DefaultHistoryPath
     with BufferedSerialization
@@ -50,11 +50,11 @@ object NonPredictiveStrategyComparison {
   def main(args: Array[String]): Unit = {
     val configs = List(
       new ComparisonConfiguration
-        with TTestNonPredictiveStrategy {
+        with TTestMeanBasedStrategy {
         override val alpha: Double = 0.05
       },
       new ComparisonConfiguration
-        with TTestNonPredictiveStrategy {
+        with TTestMeanBasedStrategy {
         override val alpha: Double = 0.25
       },
       new ComparisonConfiguration
@@ -62,7 +62,7 @@ object NonPredictiveStrategyComparison {
         override val alpha: Double = 0.05
       },
       new ComparisonConfiguration
-        with UTestNonPredictiveStrategy {
+        with UTestMeanBasedStrategy {
         override val alpha: Double = 0.25
       }
     )

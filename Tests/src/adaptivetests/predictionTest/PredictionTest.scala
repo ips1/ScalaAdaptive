@@ -7,7 +7,7 @@ import scala.util.Random
 import scalaadaptive.api.Adaptive
 import scalaadaptive.api.options.Storage
 import scalaadaptive.core.configuration.Configuration
-import scalaadaptive.core.configuration.blocks.{LoessInterpolationPredictiveStrategy, WindowBoundRegressionPredictiveStrategy}
+import scalaadaptive.core.configuration.blocks.{LoessInterpolationInputBasedStrategy, WindowBoundRegressionInputBasedStrategy}
 import scalaadaptive.core.configuration.defaults.FullHistoryTTestConfiguration
 
 /**
@@ -45,7 +45,7 @@ object PredictionTest {
 
   def main(args: Array[String]): Unit = {
     val configurations = List(
-      new FullHistoryTTestConfiguration with LoessInterpolationPredictiveStrategy
+      new FullHistoryTTestConfiguration with LoessInterpolationInputBasedStrategy
       //new FullHistoryTTestConfiguration
     )
 

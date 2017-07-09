@@ -8,9 +8,9 @@ import scalaadaptive.core.configuration.blocks._
   */
 class FullHistoryTTestConfiguration
   extends BaseLongConfiguration
-    with TTestNonPredictiveStrategy
+    with TTestMeanBasedStrategy
     with RunTimeMeasurement
     with DefaultHistoryPath
     with BufferedSerialization
-    with LoessInterpolationPredictiveStrategy
+    with LoessInterpolationInputBasedStrategy
     with CachedStatisticsStorage
