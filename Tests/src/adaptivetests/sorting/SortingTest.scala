@@ -1,6 +1,7 @@
 package adaptivetests.sorting
 
 import adaptivetests.sorttest.SortTest
+import adaptivetests.strategycomparison.TestConfiguration
 
 import scala.util.Random
 import scalaadaptive.api.Adaptive
@@ -27,55 +28,25 @@ object SortingTest {
                val combinedTime: Long,
                val quickTime: Long,
                val selectionTime: Long)
-//  ,
-//               val totalOverhead: Long,
-//               val selectedFun: String)
 
   private def initRegression() = {
-    val config = new BaseLongConfiguration
-      with RunTimeMeasurement
-      with TTestMeanBasedStrategy
-      //with LimitedRegressionPredictiveStrategy
+    val config = new TestConfiguration
       with LinearRegressionInputBasedStrategy
-      //with LoessInterpolationPredictiveStrategy
       with CachedRegressionAndStatisticsStorage
-      //with CachedGroupStorage
-      with DefaultHistoryPath
-      with BufferedSerialization
-      with NoLogging
-
     Adaptive.initialize(config)
   }
 
   private def initLimitedRegression() = {
-    val config = new BaseLongConfiguration
-      with RunTimeMeasurement
-      with TTestMeanBasedStrategy
+    val config = new TestConfiguration
       with WindowBoundRegressionInputBasedStrategy
-      //with RegressionPredictiveStrategy
-      //with LoessInterpolationPredictiveStrategy
       with CachedRegressionAndStatisticsStorage
-      //with CachedGroupStorage
-      with DefaultHistoryPath
-      with BufferedSerialization
-      with NoLogging
-
     Adaptive.initialize(config)
   }
 
   private def initLoess() = {
-    val config = new BaseLongConfiguration
-      with RunTimeMeasurement
-      with TTestMeanBasedStrategy
-      //with LimitedRegressionPredictiveStrategy
-      //with RegressionPredictiveStrategy
+    val config = new TestConfiguration
       with LoessInterpolationInputBasedStrategy
-      //with CachedRegressionAndStatisticsStorage
       with CachedGroupStorage
-      with DefaultHistoryPath
-      with BufferedSerialization
-      with NoLogging
-
     Adaptive.initialize(config)
   }
 

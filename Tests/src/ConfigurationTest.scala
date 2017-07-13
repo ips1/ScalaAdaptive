@@ -19,6 +19,18 @@ object ConfigurationTest {
     val config2 = new DefaultConfiguration
       with ConsoleLogging
 
+    val config3 = new BaseLongConfiguration
+      with DefaultHistoryPath
+      with RunTimeMeasurement
+      with WindowBoundRegressionInputBasedStrategy
+      with UTestMeanBasedStrategy
+      with CachedRegressionAndStatisticsStorage
+      with FileLogging {
+      override val maximumNumberOfRecords = 20000
+      override val alpha = 0.25
+      override val logFilePath = "./adaptive/log.txt"
+    }
+
     Adaptive.initialize(config)
   }
 }

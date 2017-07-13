@@ -39,29 +39,21 @@ object MeanBasedStrategyComparison {
     new TestRunResult(fun.getAnalyticsData.get, wrongSelected)
   }
 
-  abstract class ComparisonConfiguration extends BaseLongConfiguration
-    with RunTimeMeasurement
-    with LinearRegressionInputBasedStrategy
-    with CachedGroupStorage
-    with DefaultHistoryPath
-    with BufferedSerialization
-    with NoLogging
-
   def main(args: Array[String]): Unit = {
     val configs = List(
-      new ComparisonConfiguration
+      new TestConfiguration
         with TTestMeanBasedStrategy {
         override val alpha: Double = 0.05
       },
-      new ComparisonConfiguration
+      new TestConfiguration
         with TTestMeanBasedStrategy {
         override val alpha: Double = 0.25
       },
-      new ComparisonConfiguration
+      new TestConfiguration
         with UTestMeanBasedStrategy {
         override val alpha: Double = 0.05
       },
-      new ComparisonConfiguration
+      new TestConfiguration
         with UTestMeanBasedStrategy {
         override val alpha: Double = 0.25
       }
@@ -69,7 +61,7 @@ object MeanBasedStrategyComparison {
 
     val errorFactors = List(0.01, 0.1, 0.2, 0.5, 1.0)
 
-    val testCount = 100
+    val testCount = 10
     val runCount = 200
     val arg = 200000
 

@@ -39,53 +39,45 @@ object InputBasedStrategyComparison {
     new TestRunResult(fun.getAnalyticsData.get, wrongSelected)
   }
 
-  abstract class ComparisonConfiguration extends BaseLongConfiguration
-    with RunTimeMeasurement
-    with TTestMeanBasedStrategy
-    with CachedGroupStorage
-    with DefaultHistoryPath
-    with BufferedSerialization
-    with NoLogging
-
   def main(args: Array[String]): Unit = {
     val configs = List(
-      new ComparisonConfiguration
+      new TestConfiguration
         with WindowBoundTTestInputBasedStrategy {
         override val alpha: Double = 0.05
       },
-      new ComparisonConfiguration
+      new TestConfiguration
         with LinearRegressionInputBasedStrategy {
         override val alpha: Double = 0.05
       },
-      new ComparisonConfiguration
+      new TestConfiguration
         with WindowBoundRegressionInputBasedStrategy {
         override val alpha: Double = 0.05
       },
-      new ComparisonConfiguration
+      new TestConfiguration
         with WindowBoundTTestInputBasedStrategy {
         override val alpha: Double = 0.25
       },
-      new ComparisonConfiguration
+      new TestConfiguration
         with LinearRegressionInputBasedStrategy {
         override val alpha: Double = 0.25
       },
-      new ComparisonConfiguration
+      new TestConfiguration
         with WindowBoundRegressionInputBasedStrategy {
         override val alpha: Double = 0.25
       },
-      new ComparisonConfiguration
+      new TestConfiguration
         with WindowBoundTTestInputBasedStrategy {
         override val alpha: Double = 1
       },
-      new ComparisonConfiguration
+      new TestConfiguration
         with LinearRegressionInputBasedStrategy {
         override val alpha: Double = 1
       },
-      new ComparisonConfiguration
+      new TestConfiguration
         with WindowBoundRegressionInputBasedStrategy {
         override val alpha: Double = 1
       },
-      new ComparisonConfiguration
+      new TestConfiguration
         with LoessInterpolationInputBasedStrategy
     )
 
