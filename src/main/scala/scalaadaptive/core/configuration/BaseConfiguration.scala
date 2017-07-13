@@ -20,11 +20,14 @@ import scalaadaptive.extensions.Averageable
   */
 trait BaseConfiguration extends Configuration {
   protected val num: Averageable[TMeasurement]
+
+  protected val maximumNumberOfRecords: Int = 50000
+
   override val createHistoryStorage: () => HistoryStorage[TMeasurement] = () => {
     new MapHistoryStorage[TMeasurement](key => {
       val innerHistoryFactory = () =>
         new FullRunHistory[TMeasurement](key)(num)
-      new LimitedRunHistory[TMeasurement](50000, innerHistoryFactory(), innerHistoryFactory)
+      new LimitedRunHistory[TMeasurement](maximumNumberOfRecords, innerHistoryFactory(), innerHistoryFactory)
     })
   }
   override val createLogger: () => Logger =

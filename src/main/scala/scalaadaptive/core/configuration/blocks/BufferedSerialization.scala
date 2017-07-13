@@ -8,6 +8,8 @@ import scalaadaptive.core.runtime.history.serialization._
   * Created by pk250187 on 5/1/17.
   */
 trait BufferedSerialization extends BaseLongConfiguration {
+  protected val serializationBufferSize: Int = 15
+
   override val createPersistentHistoryStorage: () => Option[PersistentHistoryStorage[TMeasurement]] = () =>
     Some(new PersistentHistoryStorage[TMeasurement](
       createHistoryStorage(),
@@ -17,6 +19,6 @@ trait BufferedSerialization extends BaseLongConfiguration {
           new BasicFileNameForKeyProvider,
           new LongRunDataSerializer(','),
           createLogger()),
-        15)
+        serializationBufferSize)
     ))
 }

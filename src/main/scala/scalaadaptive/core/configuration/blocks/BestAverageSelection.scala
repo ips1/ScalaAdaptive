@@ -13,5 +13,5 @@ trait BestAverageSelection extends BaseLongConfiguration {
       log,
       new LeastDataSelectionStrategy[Long](log),
       new BestAverageSelectionStrategy(log),
-      20)
+      30)
 }
