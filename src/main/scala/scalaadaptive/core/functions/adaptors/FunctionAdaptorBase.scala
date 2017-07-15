@@ -44,7 +44,7 @@ abstract class FunctionAdaptorBase[TArgType, TRetType, TFunctionAdaptorType] {
   def train(data: Seq[TArgType]): Unit = invoker.train(function, data)
 
   def toDebugString: String =
-    function.functionReferences.map(r => r.toString).mkString(", ")
+    function.functionIdentifiers.map(r => r.toString).mkString(", ")
 
   def flushHistory(): Unit = invoker.flushHistory(function)
 

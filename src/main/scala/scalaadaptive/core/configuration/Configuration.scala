@@ -4,7 +4,7 @@ import scalaadaptive.core.functions.{CombinedFunctionInvoker, DefaultFunctionFac
 import scalaadaptive.core.functions.adaptors.FunctionConfig
 import scalaadaptive.core.functions.analytics.{AnalyticsCollector, BasicAnalyticsCollector}
 import scalaadaptive.core.logging.Logger
-import scalaadaptive.core.functions.references.CustomIdentifierValidator
+import scalaadaptive.core.functions.identifiers.CustomIdentifierValidator
 import scalaadaptive.core.runtime.AdaptiveSelector
 import scalaadaptive.core.runtime.history.evaluation.EvaluationProvider
 import scalaadaptive.core.runtime.history.historystorage.HistoryStorage

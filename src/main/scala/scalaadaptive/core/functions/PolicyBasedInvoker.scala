@@ -108,5 +108,5 @@ class PolicyBasedInvoker extends CombinedFunctionInvoker {
     dataSet.foreach(d => train(function, d))
 
   override def flushHistory[TArgType, TRetType](function: CombinedFunction[TArgType, TRetType]): Unit =
-    function.functions.foreach(f => getSelector(function).flushHistory(f.reference))
+    function.functions.foreach(f => getSelector(function).flushHistory(f.identifier))
 }

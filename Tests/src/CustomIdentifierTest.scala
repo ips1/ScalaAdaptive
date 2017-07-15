@@ -7,7 +7,7 @@ import scalaadaptive.api.options.Storage
 /**
   * Created by pk250187 on 4/29/17.
   */
-object CustomReferenceTest {
+object CustomIdentifierTest {
   import scalaadaptive.api.Implicits._
   val runner = new TestRunner()
 

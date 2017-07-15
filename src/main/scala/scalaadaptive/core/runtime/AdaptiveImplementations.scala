@@ -3,7 +3,7 @@ package scalaadaptive.core.runtime
 import scalaadaptive.analytics.AnalyticsSerializer
 import scalaadaptive.core.functions.{CombinedFunctionInvoker, FunctionFactory}
 import scalaadaptive.core.functions.adaptors.FunctionConfig
-import scalaadaptive.core.functions.references.CustomIdentifierValidator
+import scalaadaptive.core.functions.identifiers.CustomIdentifierValidator
 
 /**
   * Created by pk250187 on 6/29/17.

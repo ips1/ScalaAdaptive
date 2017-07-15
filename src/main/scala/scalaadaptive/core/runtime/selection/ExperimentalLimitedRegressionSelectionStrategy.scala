@@ -69,7 +69,7 @@ class ExperimentalLimitedRegressionSelectionStrategy[TMeasurement](val logger: L
 
     if (insignificantResults.nonEmpty) {
       val first = insignificantResults.head._1
-      logger.log(s"Not enough data to predict ${first.key.function}")
+      logger.log(s"Not enough data to predict ${first.key.functionId}")
       return secondarySelector.selectOption(records, inputDescriptor)
     }
 

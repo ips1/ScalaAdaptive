@@ -34,7 +34,7 @@ object MacroTest {
 
 //  val test = printAst(scalaadaptive.api.Implicits.toAdaptor({
 //    (i: Int) => MacroTest.this.increment(i)
-//  }, scalaadaptive.core.functions.references.MethodNameReference.apply("MacroTest.this.increment")))
+//  }, scalaadaptive.core.functions.identifiers.MethodNameIdentifier.apply("MacroTest.this.increment")))
 
   val incFun1 = incrementSlow _ or increment
   val incFun2 = incrementSlow _ or increment

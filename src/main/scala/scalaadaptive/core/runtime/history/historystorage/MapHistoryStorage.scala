@@ -1,7 +1,7 @@
 package scalaadaptive.core.runtime.history.historystorage
 
 import scala.collection.mutable
-import scalaadaptive.core.functions.references.FunctionReference
+import scalaadaptive.core.functions.identifiers.FunctionIdentifier
 import scalaadaptive.core.runtime.history.runhistory.RunHistory
 import scalaadaptive.core.runtime.history.HistoryKey
 import scalaadaptive.core.runtime.history.evaluation.data.EvaluationData
@@ -24,8 +24,8 @@ class MapHistoryStorage[TMeasurement](val newHistoryFactory: (HistoryKey) => Run
     histories.update(key, oldHistory.applyNewRun(run))
   }
 
-  override def getKeysForFunction(function: FunctionReference): Iterable[HistoryKey] =
-    histories.keys.filter(p => p.function == function)
+  override def getKeysForFunction(function: FunctionIdentifier): Iterable[HistoryKey] =
+    histories.keys.filter(p => p.functionId == function)
 
   /** Removes all runs corresponding to the history key */
   override def flushHistory(key: HistoryKey): Unit =

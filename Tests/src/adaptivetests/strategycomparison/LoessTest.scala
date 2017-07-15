@@ -8,7 +8,7 @@ import scalaadaptive.api.options.Selection
 import scalaadaptive.core.configuration.BaseLongConfiguration
 import scalaadaptive.core.configuration.blocks._
 import scalaadaptive.core.configuration.defaults.FullHistoryTTestConfiguration
-import scalaadaptive.core.functions.references.ClosureNameReference
+import scalaadaptive.core.functions.identifiers.ClosureIdentifier
 import scalaadaptive.core.logging.Logger
 import scalaadaptive.core.runtime.selection.{LeastDataSelectionStrategy, LoessInterpolationSelectionStrategy, LowRunAwareSelectionStrategy, SelectionStrategy}
 
@@ -34,7 +34,7 @@ object LoessTest {
     })
 
     val wrongSelected = fun.getAnalyticsData.get.getAllRunInfo.count(r => r.function match {
-      case ClosureNameReference(name) => name == slowerName
+      case ClosureIdentifier(name) => name == slowerName
       case _ => false
     })
 

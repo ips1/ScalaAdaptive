@@ -6,7 +6,7 @@ import scalaadaptive.core.functions.adaptors.FunctionConfig
 import scalaadaptive.api.options.{Selection, Storage}
 import scalaadaptive.core.functions.analytics.{AnalyticsCollector, BasicAnalyticsCollector}
 import scalaadaptive.core.functions.{CombinedFunctionInvoker, DefaultFunctionFactory, FunctionFactory, PolicyBasedInvoker}
-import scalaadaptive.core.functions.references.{JavaIdentifierValidator, CustomIdentifierValidator}
+import scalaadaptive.core.functions.identifiers.{JavaIdentifierValidator, CustomIdentifierValidator}
 import scalaadaptive.core.runtime.history.historystorage.{HistoryStorage, MapHistoryStorage}
 import scalaadaptive.core.runtime.history.runhistory.{CachedAverageRunHistory, CachedGroupedRunHistory, FullRunHistory, LimitedRunHistory}
 import scalaadaptive.api.policies.AlwaysSelectPolicy

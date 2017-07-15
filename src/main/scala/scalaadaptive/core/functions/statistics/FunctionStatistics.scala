@@ -5,17 +5,17 @@ import java.time.Instant
 import scala.collection.mutable
 import scala.collection.mutable.ArrayBuffer
 import scalaadaptive.analytics.AnalyticsRecord
-import scalaadaptive.core.functions.references.{FunctionReference, ReferencedFunction}
+import scalaadaptive.core.functions.identifiers.{FunctionIdentifier, IdentifiedFunction}
 import scalaadaptive.core.functions.RunData
 
 /**
   * Created by pk250187 on 5/20/17.
   */
-class FunctionStatistics[TArgType, TRetType](defaultLast: ReferencedFunction[TArgType, TRetType],
-                                             val referenceResolver: (FunctionReference) => Option[ReferencedFunction[TArgType,TRetType]])
+class FunctionStatistics[TArgType, TRetType](defaultLast: IdentifiedFunction[TArgType, TRetType],
+                                             val functionResolver: (FunctionIdentifier) => Option[IdentifiedFunction[TArgType,TRetType]])
   extends StatisticsHolder[TArgType, TRetType] {
-  val timesSelected: mutable.HashMap[FunctionReference, Long] = new mutable.HashMap[FunctionReference, Long]
-  private var last: ReferencedFunction[TArgType, TRetType] = defaultLast
+  val timesSelected: mutable.HashMap[FunctionIdentifier, Long] = new mutable.HashMap[FunctionIdentifier, Long]
+  private var last: IdentifiedFunction[TArgType, TRetType] = defaultLast
   private var streakLength: Long = 0
   private var totalRunCount: Long = 0
   private var totalSelectCount: Long = 0
@@ -24,7 +24,7 @@ class FunctionStatistics[TArgType, TRetType](defaultLast: ReferencedFunction[TAr
   private var totalOverheadTime: Long = 0
   private var totalGatherTime: Long = 0
 
-  private def getMostSelectedRecord: (FunctionReference, Long) =
+  private def getMostSelectedRecord: (FunctionIdentifier, Long) =
     timesSelected.maxBy(_._2)
 
   override def applyRunData(data: RunData, markAsGather: Boolean): Unit = {
@@ -33,11 +33,11 @@ class FunctionStatistics[TArgType, TRetType](defaultLast: ReferencedFunction[TAr
     if (!markAsGather) {
       val timesBefore: Long = timesSelected.getOrElse(data.selectedFunction, 0)
       timesSelected.put(data.selectedFunction, timesBefore + 1)
-      if (last.reference == data.selectedFunction) {
+      if (last.identifier == data.selectedFunction) {
         streakLength += 1
       }
       else {
-        last = referenceResolver(data.selectedFunction).getOrElse(defaultLast)
+        last = functionResolver(data.selectedFunction).getOrElse(defaultLast)
         streakLength = 1
       }
       totalSelectCount += 1
@@ -56,24 +56,24 @@ class FunctionStatistics[TArgType, TRetType](defaultLast: ReferencedFunction[TAr
     totalRunCount += 1
   }
 
-  override def getLast: ReferencedFunction[TArgType, TRetType] = last
+  override def getLast: IdentifiedFunction[TArgType, TRetType] = last
   override def getStreakLength: Long = streakLength
   override def getTotalOverheadTime: Long = totalOverheadTime
 
-  override def getMostSelectedFunction: ReferencedFunction[TArgType, TRetType] =
+  override def getMostSelectedFunction: IdentifiedFunction[TArgType, TRetType] =
     if (timesSelected.isEmpty)
       defaultLast
     else
-      referenceResolver(getMostSelectedRecord._1).getOrElse(defaultLast)
+      functionResolver(getMostSelectedRecord._1).getOrElse(defaultLast)
 
-  override def getLeastSelectedFunction: ReferencedFunction[TArgType, TRetType] =
+  override def getLeastSelectedFunction: IdentifiedFunction[TArgType, TRetType] =
     if (timesSelected.isEmpty)
       defaultLast
     else
-      referenceResolver(timesSelected.minBy(_._2)._1).getOrElse(defaultLast)
+      functionResolver(timesSelected.minBy(_._2)._1).getOrElse(defaultLast)
 
   override def getTotalRunCount: Long = totalRunCount
-  override def getLastRunCount: Long = timesSelected.getOrElse(last.reference, 0)
+  override def getLastRunCount: Long = timesSelected.getOrElse(last.identifier, 0)
   override def getMostRunCount: Long = if (timesSelected.isEmpty) 0 else getMostSelectedRecord._2
   override def getTotalGatherTime: Long = totalGatherTime
   override def getTotalTime: Long = totalFunctionTime + totalOverheadTime

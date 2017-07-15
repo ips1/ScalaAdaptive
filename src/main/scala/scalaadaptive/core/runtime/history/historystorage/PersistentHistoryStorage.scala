@@ -1,6 +1,6 @@
 package scalaadaptive.core.runtime.history.historystorage
 
-import scalaadaptive.core.functions.references.FunctionReference
+import scalaadaptive.core.functions.identifiers.FunctionIdentifier
 import scalaadaptive.core.runtime.history.runhistory.RunHistory
 import scalaadaptive.core.runtime.history.serialization.HistorySerializer
 import scalaadaptive.core.runtime.history.HistoryKey
@@ -37,7 +37,7 @@ class PersistentHistoryStorage[TMeasurement](private val localHistory: HistorySt
 
   override def hasHistory(key: HistoryKey): Boolean = localHistory.hasHistory(key)
 
-  override def getKeysForFunction(function: FunctionReference): Iterable[HistoryKey] =
+  override def getKeysForFunction(function: FunctionIdentifier): Iterable[HistoryKey] =
     localHistory.getKeysForFunction(function)
 
   /** Removes all runs corresponding to the history key */

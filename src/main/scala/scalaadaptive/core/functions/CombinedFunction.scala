@@ -6,14 +6,14 @@ import scalaadaptive.api.grouping.{GroupId, Group, NoGroup}
 import scalaadaptive.api.policies.Policy
 import scalaadaptive.core.functions.adaptors.FunctionConfig
 import scalaadaptive.core.functions.analytics.AnalyticsCollector
-import scalaadaptive.core.functions.references.{FunctionReference, ReferencedFunction}
+import scalaadaptive.core.functions.identifiers.{FunctionIdentifier, IdentifiedFunction}
 import scalaadaptive.core.functions.statistics.FunctionStatistics
 import scalaadaptive.core.runtime.{AdaptiveInternal, AdaptiveSelector}
 
 /**
   * Created by pk250187 on 5/21/17.
   */
-class CombinedFunction[TArgType, TRetType](val functions: Seq[ReferencedFunction[TArgType, TRetType]],
+class CombinedFunction[TArgType, TRetType](val functions: Seq[IdentifiedFunction[TArgType, TRetType]],
                                            private val inputDescriptorSelector: Option[(TArgType) => Long],
                                            private val groupSelector: (TArgType) => Group,
                                            val localSelector: Option[AdaptiveSelector],
@@ -21,14 +21,14 @@ class CombinedFunction[TArgType, TRetType](val functions: Seq[ReferencedFunction
                                            val functionConfig: FunctionConfig) {
   private def createDefaultPolicy() = functionConfig.startPolicy
   private def createDefaultStatistics() = new FunctionStatistics[TArgType, TRetType](functions.head,
-    ref => functions.find(f => f.reference == ref))
+    ref => functions.find(f => f.identifier == ref))
   private def createDefaultFunctionData() = new FunctionData(createDefaultStatistics(), createDefaultPolicy())
 
   private val ungroupedData = createDefaultFunctionData()
   private val groupedData = new mutable.HashMap[Long, FunctionData[TArgType, TRetType]]
 
-  val functionReferences: Seq[FunctionReference] =
-    functions.map(f => if (functionConfig.closureReferences) f.closureReference else f.reference)
+  val functionIdentifiers: Seq[FunctionIdentifier] =
+    functions.map(f => if (functionConfig.closureIdentifier) f.closureIdentifier else f.identifier)
 
   def getData(groupId: Group): FunctionData[TArgType, TRetType] = groupId match {
     case NoGroup() => ungroupedData
@@ -50,9 +50,9 @@ class CombinedFunction[TArgType, TRetType](val functions: Seq[ReferencedFunction
 
   def getAnalyticsData: Option[AnalyticsData] = analytics.getAnalyticsData
 
-  private def updateReferencedFunctionsWithConfig(functions: Seq[ReferencedFunction[TArgType, TRetType]],
+  private def updateIdentifiedFunctionsWithConfig(functions: Seq[IdentifiedFunction[TArgType, TRetType]],
                                                   config: FunctionConfig) = {
-    functions.map(_.changeUseClosures(config.closureReferences))
+    functions.map(_.changeUseClosures(config.closureIdentifier))
   }
 
   def updateInputDescriptor(inputDescriptorSelector: Option[(TArgType) => Long]): CombinedFunction[TArgType, TRetType] =
@@ -75,7 +75,7 @@ class CombinedFunction[TArgType, TRetType](val functions: Seq[ReferencedFunction
 
 
   def updateFunctionConfig(newConfig: FunctionConfig): CombinedFunction[TArgType, TRetType] =
-    new CombinedFunction[TArgType, TRetType](updateReferencedFunctionsWithConfig(functions, newConfig),
+    new CombinedFunction[TArgType, TRetType](updateIdentifiedFunctionsWithConfig(functions, newConfig),
       inputDescriptorSelector,
       groupSelector,
       AdaptiveInternal.createLocalSelector(newConfig),

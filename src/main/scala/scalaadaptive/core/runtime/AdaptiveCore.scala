@@ -6,7 +6,7 @@ import scalaadaptive.core.configuration.Configuration
 import scalaadaptive.core.configuration.defaults.FullHistoryTTestConfiguration
 import scalaadaptive.core.functions.adaptors.FunctionConfig
 import scalaadaptive.core.functions.analytics.AnalyticsCollector
-import scalaadaptive.core.functions.references.CustomIdentifierValidator
+import scalaadaptive.core.functions.identifiers.CustomIdentifierValidator
 import scalaadaptive.core.functions.{CombinedFunctionInvoker, FunctionFactory}
 
 /**

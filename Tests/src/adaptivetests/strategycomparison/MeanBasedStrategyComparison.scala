@@ -7,7 +7,7 @@ import scalaadaptive.api.Adaptive
 import scalaadaptive.api.options.Selection
 import scalaadaptive.core.configuration.BaseLongConfiguration
 import scalaadaptive.core.configuration.blocks._
-import scalaadaptive.core.functions.references.ClosureNameReference
+import scalaadaptive.core.functions.identifiers.ClosureIdentifier
 
 /**
   * Created by pk250187 on 6/24/17.
@@ -34,7 +34,7 @@ object MeanBasedStrategyComparison {
     })
 
     val wrongSelected = fun.getAnalyticsData.get.getAllRunInfo.count(r => r.function match {
-      case ClosureNameReference(name) => name == slowerName
+      case ClosureIdentifier(name) => name == slowerName
       case _ => false
     })
 

@@ -2,7 +2,7 @@ package scalaadaptive.core.runtime.history.runhistory
 
 import org.apache.commons.math3.stat.descriptive.StatisticalSummary
 
-import scalaadaptive.core.functions.references.FunctionReference
+import scalaadaptive.core.functions.identifiers.FunctionIdentifier
 import scalaadaptive.core.runtime.history.HistoryKey
 import scalaadaptive.core.runtime.history.evaluation.data.{EvaluationData, GroupedEvaluationData}
 import scalaadaptive.math.SimpleTestableRegression
@@ -11,7 +11,7 @@ import scalaadaptive.math.SimpleTestableRegression
   * Created by pk250187 on 3/21/17.
   */
 trait RunHistory[TMeasurement] {
-  def reference: FunctionReference = key.function
+  def identifier: FunctionIdentifier = key.functionId
   def key: HistoryKey
 
   // Basic methods:

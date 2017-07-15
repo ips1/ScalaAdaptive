@@ -4,7 +4,7 @@ import scala.reflect.macros.blackbox
 import scala.reflect.macros.blackbox.Context
 import scalaadaptive.api.Implicits
 import scalaadaptive.core.functions.adaptors.Conversions
-import scalaadaptive.core.functions.references.MethodNameReference
+import scalaadaptive.core.functions.identifiers.MethodNameIdentifier
 
 /**
   * Created by pk250187 on 4/30/17.
@@ -32,9 +32,9 @@ class EtaExpansionConverter[C <: blackbox.Context](val c: C) {
     treeBuilder.buildMethodCallChain(methodTarget, methods, arguments)
   }
 
-  private def generateMethodReference(fullNameExpression: Tree) = {
-    val methodNameReferenceType = getObjectName(MethodNameReference)
-    treeBuilder.buildMethodCall(methodNameReferenceType, "apply", List(fullNameExpression))
+  private def generateMethodIdentifier(fullNameExpression: Tree) = {
+    val methodNameIdentifierType = getObjectName(MethodNameIdentifier)
+    treeBuilder.buildMethodCall(methodNameIdentifierType, "apply", List(fullNameExpression))
   }
 
   private def generateConversionWithArguments(arguments: List[Tree]) = {
@@ -55,8 +55,8 @@ class EtaExpansionConverter[C <: blackbox.Context](val c: C) {
       methodName <- extractor.extractMethodName(tree)
 
       fullMethodNameExpr <- Some(generateNameExpr(methodTarget, methodName))
-      methodReference <- Some(generateMethodReference(fullMethodNameExpr))
-      conversion <- Some(generateConversionWithArguments(List(functionLiteral, methodReference)))
+      methodIdentifier <- Some(generateMethodIdentifier(fullMethodNameExpr))
+      conversion <- Some(generateConversionWithArguments(List(functionLiteral, methodIdentifier)))
       block <- Some(reconstructBlock(blockStatements, conversion))
     } yield block
 

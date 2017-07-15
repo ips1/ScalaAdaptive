@@ -1,6 +1,6 @@
 package scalaadaptive.core.runtime.history.serialization
 
-import scalaadaptive.core.functions.references.FunctionReference
+import scalaadaptive.core.functions.identifiers.FunctionIdentifier
 import scalaadaptive.core.runtime.history.HistoryKey
 import scalaadaptive.core.runtime.history.evaluation.data.EvaluationData
 

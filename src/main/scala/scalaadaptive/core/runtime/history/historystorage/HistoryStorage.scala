@@ -1,6 +1,6 @@
 package scalaadaptive.core.runtime.history.historystorage
 
-import scalaadaptive.core.functions.references.FunctionReference
+import scalaadaptive.core.functions.identifiers.FunctionIdentifier
 import scalaadaptive.core.runtime.history.runhistory.RunHistory
 import scalaadaptive.core.runtime.history.HistoryKey
 import scalaadaptive.core.runtime.history.evaluation.data.EvaluationData
@@ -13,7 +13,7 @@ trait HistoryStorage[TMeasurement] {
   def getHistory(key: HistoryKey): RunHistory[TMeasurement]
 
   /** Retrieves all history keys present in the storage that contain the specified function. */
-  def getKeysForFunction(function: FunctionReference): Iterable[HistoryKey]
+  def getKeysForFunction(function: FunctionIdentifier): Iterable[HistoryKey]
 
   /** Finds out whether the specified history exists in the storage */
   def hasHistory(key: HistoryKey): Boolean
@@ -25,5 +25,5 @@ trait HistoryStorage[TMeasurement] {
   def flushHistory(key: HistoryKey): Unit
 
   /** Removes all runs corresponding to the function */
-  def flushHistory(function: FunctionReference): Unit = getKeysForFunction(function).foreach(flushHistory)
+  def flushHistory(function: FunctionIdentifier): Unit = getKeysForFunction(function).foreach(flushHistory)
 }

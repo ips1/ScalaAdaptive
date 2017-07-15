@@ -1,4 +1,4 @@
-package scalaadaptive.core.functions.references
+package scalaadaptive.core.functions.identifiers
 
 /**
   * Created by pk250187 on 4/29/17.

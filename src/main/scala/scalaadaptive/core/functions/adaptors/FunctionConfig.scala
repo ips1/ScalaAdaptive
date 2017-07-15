@@ -12,11 +12,11 @@ import scalaadaptive.api.policies.Policy
 class FunctionConfig(val selection: Selection,
                      val storage: Storage,
                      val duration: Option[Duration],
-                     val closureReferences: Boolean,
+                     val closureIdentifier: Boolean,
                      val startPolicy: Policy) {
-  def selectUsing(newSelection: Selection) = new FunctionConfig(newSelection, storage, duration, closureReferences, startPolicy)
-  def storeUsing(newStorage: Storage) = new FunctionConfig(selection, newStorage, duration, closureReferences, startPolicy)
-  def limitedTo(newDuration: Duration) = new FunctionConfig(selection, storage, Some(newDuration), closureReferences, startPolicy)
-  def asClosures(newClosureReferences: Boolean) = new FunctionConfig(selection, storage, duration, newClosureReferences, startPolicy)
-  def withPolicy(newPolicy: Policy) = new FunctionConfig(selection, storage, duration, closureReferences, newPolicy)
+  def selectUsing(newSelection: Selection) = new FunctionConfig(newSelection, storage, duration, closureIdentifier, startPolicy)
+  def storeUsing(newStorage: Storage) = new FunctionConfig(selection, newStorage, duration, closureIdentifier, startPolicy)
+  def limitedTo(newDuration: Duration) = new FunctionConfig(selection, storage, Some(newDuration), closureIdentifier, startPolicy)
+  def asClosures(newClosureIdentifier: Boolean) = new FunctionConfig(selection, storage, duration, newClosureIdentifier, startPolicy)
+  def withPolicy(newPolicy: Policy) = new FunctionConfig(selection, storage, duration, closureIdentifier, newPolicy)
 }

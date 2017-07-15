@@ -1,10 +1,10 @@
 import scalaadaptive.core.functions.adaptors.Conversions
-import scalaadaptive.core.functions.references.MethodNameReference
+import scalaadaptive.core.functions.identifiers.MethodNameIdentifier
 
 /**
   * Created by pk250187 on 6/29/17.
   */
-object ReferenceTest {
+object IdentifierTest {
   def method(): Unit = println("HelloWorld")
 
   class TestClass {
@@ -30,7 +30,7 @@ object ReferenceTest {
 
     val combined3 = Implicits.toMultiFunction0({ () => target.method() }) or function2
 
-    val combined4 = Conversions.toAdaptor({ () => target.method() }, MethodNameReference(this.getClass.getName + ".method")) or function2
+    val combined4 = Conversions.toAdaptor({ () => target.method() }, MethodNameIdentifier(this.getClass.getName + ".method")) or function2
 
     println(function1 == function2)
   }
