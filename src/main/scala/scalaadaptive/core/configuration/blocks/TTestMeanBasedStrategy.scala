@@ -12,7 +12,7 @@ import scalaadaptive.math.WelchTTestRunner
 trait TTestMeanBasedStrategy extends BaseLongConfiguration
   with BlockWithLowRunLimit
   with BlockWithAlpha {
-  override val createInputBasedStrategy: (Logger) => SelectionStrategy[Long] =
+  override val createMeanBasedStrategy: (Logger) => SelectionStrategy[Long] =
     (log: Logger) => {
       val tTestRunner = new WelchTTestRunner(log)
       val leastDataSelector = new LeastDataSelectionStrategy[Long](log)

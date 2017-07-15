@@ -2,7 +2,9 @@ package scalaadaptive.core.functions
 
 import scala.collection.mutable
 import scalaadaptive.analytics.AnalyticsData
-import scalaadaptive.api.grouping.{GroupId, Group, NoGroup}
+import scalaadaptive.api.grouping.{Group, GroupId, NoGroup}
+import scalaadaptive.api.options.Selection
+import scalaadaptive.api.options.Selection.Selection
 import scalaadaptive.api.policies.Policy
 import scalaadaptive.core.functions.adaptors.FunctionConfig
 import scalaadaptive.core.functions.analytics.AnalyticsCollector
@@ -14,7 +16,7 @@ import scalaadaptive.core.runtime.{AdaptiveInternal, AdaptiveSelector}
   * Created by pk250187 on 5/21/17.
   */
 class CombinedFunction[TArgType, TRetType](val functions: Seq[IdentifiedFunction[TArgType, TRetType]],
-                                           private val inputDescriptorSelector: Option[(TArgType) => Long],
+                                           private val descriptorFunction: Option[(TArgType) => Long],
                                            private val groupSelector: (TArgType) => Group,
                                            val localSelector: Option[AdaptiveSelector],
                                            val analytics: AnalyticsCollector,
@@ -36,10 +38,14 @@ class CombinedFunction[TArgType, TRetType](val functions: Seq[IdentifiedFunction
   }
 
   def getInputDescriptor(arguments: TArgType): Option[Long] =
-    inputDescriptorSelector.map(sel => sel(arguments))
+    descriptorFunction.map(sel => sel(arguments))
 
   def getGroup(arguments: TArgType): Group =
     groupSelector(arguments)
+
+  def getSelection: Selection = functionConfig.selection.getOrElse {
+    if (descriptorFunction.isDefined) Selection.InputBased else Selection.MeanBased
+  }
 
   def setPolicy(policy: Policy): Unit = {
     ungroupedData.currentPolicy = policy
@@ -55,9 +61,9 @@ class CombinedFunction[TArgType, TRetType](val functions: Seq[IdentifiedFunction
     functions.map(_.changeUseClosures(config.closureIdentifier))
   }
 
-  def updateInputDescriptor(inputDescriptorSelector: Option[(TArgType) => Long]): CombinedFunction[TArgType, TRetType] =
+  def updateDescriptorFunction(descriptorFunction: Option[(TArgType) => Long]): CombinedFunction[TArgType, TRetType] =
     new CombinedFunction[TArgType, TRetType](functions,
-      inputDescriptorSelector,
+      descriptorFunction,
       groupSelector,
       AdaptiveInternal.createLocalSelector(functionConfig),
       AdaptiveInternal.createAnalytics(),
@@ -66,7 +72,7 @@ class CombinedFunction[TArgType, TRetType](val functions: Seq[IdentifiedFunction
 
   def updateGroupSelector(groupSelector: (TArgType) => Group): CombinedFunction[TArgType, TRetType] =
     new CombinedFunction[TArgType, TRetType](functions,
-      inputDescriptorSelector,
+      descriptorFunction,
       groupSelector,
       AdaptiveInternal.createLocalSelector(functionConfig),
       AdaptiveInternal.createAnalytics(),
@@ -76,7 +82,7 @@ class CombinedFunction[TArgType, TRetType](val functions: Seq[IdentifiedFunction
 
   def updateFunctionConfig(newConfig: FunctionConfig): CombinedFunction[TArgType, TRetType] =
     new CombinedFunction[TArgType, TRetType](updateIdentifiedFunctionsWithConfig(functions, newConfig),
-      inputDescriptorSelector,
+      descriptorFunction,
       groupSelector,
       AdaptiveInternal.createLocalSelector(newConfig),
       AdaptiveInternal.createAnalytics(),
@@ -85,7 +91,7 @@ class CombinedFunction[TArgType, TRetType](val functions: Seq[IdentifiedFunction
 
   def mergeFunctions(secondFunction: CombinedFunction[TArgType, TRetType]): CombinedFunction[TArgType, TRetType] = {
     new CombinedFunction[TArgType, TRetType](functions ++ secondFunction.functions,
-      inputDescriptorSelector,
+      descriptorFunction,
       groupSelector,
       AdaptiveInternal.createLocalSelector(functionConfig),
       AdaptiveInternal.createAnalytics(),

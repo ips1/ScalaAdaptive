@@ -45,7 +45,7 @@ trait BaseConfiguration extends Configuration {
     () => new PolicyBasedInvoker
 
   override val createMultiFunctionDefaultConfig: () => FunctionConfig =
-    () => new FunctionConfig(Selection.MeanBased, Storage.Global, None, false, new AlwaysSelectPolicy)
+    () => new FunctionConfig(None, Storage.Global, None, false, new AlwaysSelectPolicy)
 
   override val initAdaptiveSelector: (HistoryStorage[TMeasurement], SelectionStrategy[TMeasurement],
     SelectionStrategy[TMeasurement], EvaluationProvider[TMeasurement], Logger) => AdaptiveSelector =

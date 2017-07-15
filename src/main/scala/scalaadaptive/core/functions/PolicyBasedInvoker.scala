@@ -40,12 +40,13 @@ class PolicyBasedInvoker extends CombinedFunctionInvoker {
                                                       arguments: TArgType,
                                                       groupId: Group,
                                                       gather: Boolean): TRetType = {
+    val inputDescriptor = function.getInputDescriptor(arguments)
     val runResult =
       if (gather)
-        getSelector(function).gatherData(function.functions, arguments, groupId, function.getInputDescriptor(arguments))
+        getSelector(function).gatherData(function.functions, arguments, groupId, inputDescriptor)
       else
-        getSelector(function).selectAndRun(function.functions, arguments, groupId, function.getInputDescriptor(arguments),
-          function.functionConfig.duration, function.functionConfig.selection)
+        getSelector(function).selectAndRun(function.functions, arguments, groupId, inputDescriptor,
+          function.functionConfig.duration, function.getSelection)
 
     processRunData(function, runResult.runData, gather)
     runResult.value
@@ -55,13 +56,14 @@ class PolicyBasedInvoker extends CombinedFunctionInvoker {
                                                                         arguments: TArgType,
                                                                         groupId: Group,
                                                                         gather: Boolean): (TRetType, InvocationToken) = {
+    val inputDescriptor = function.getInputDescriptor(arguments)
     val (runResult, token) =
       if (gather)
         getSelector(function).gatherDataWithDelayedMeasure(function.functions, arguments, groupId,
-          function.getInputDescriptor(arguments))
+          inputDescriptor)
       else
         getSelector(function).selectAndRunWithDelayedMeasure(function.functions, arguments, groupId,
-          function.getInputDescriptor(arguments), function.functionConfig.duration, function.functionConfig.selection)
+          inputDescriptor, function.functionConfig.duration, function.getSelection)
     token.setAfterInvocationCallback(data => processRunData(function, data, gather))
 
     (runResult, token)

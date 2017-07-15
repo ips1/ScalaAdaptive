@@ -22,7 +22,7 @@ abstract class FunctionAdaptorBase[TArgType, TRetType, TFunctionAdaptorType] {
   private def invoker: CombinedFunctionInvoker = AdaptiveInternal.getFunctionInvoker
 
   def byTupled(newSelector: (TArgType) => Long): TFunctionAdaptorType =
-    createNew(function.updateInputDescriptor(Some(newSelector)))
+    createNew(function.updateDescriptorFunction(Some(newSelector)))
   def groupByTupled(newSelector: (TArgType) => Group): TFunctionAdaptorType =
     createNew(function.updateGroupSelector(newSelector))
 

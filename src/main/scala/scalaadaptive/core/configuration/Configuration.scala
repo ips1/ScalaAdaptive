@@ -18,8 +18,8 @@ trait Configuration {
   val createFunctionInvoker: () => CombinedFunctionInvoker
   val createHistoryStorage: () => HistoryStorage[TMeasurement]
   val createPersistentHistoryStorage: () => Option[HistoryStorage[TMeasurement]]
-  val createInputBasedStrategy: (Logger) => SelectionStrategy[TMeasurement]
   val createMeanBasedStrategy: (Logger) => SelectionStrategy[TMeasurement]
+  val createInputBasedStrategy: (Logger) => SelectionStrategy[TMeasurement]
   val createEvaluationProvider: () => EvaluationProvider[TMeasurement]
   val createLogger: () => Logger
   val createIdentifierValidator: () => CustomIdentifierValidator
