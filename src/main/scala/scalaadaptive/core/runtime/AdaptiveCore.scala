@@ -19,8 +19,8 @@ trait AdaptiveCore {
   private def initAdaptiveSelector(configuration: Configuration): AdaptiveSelector = {
     val logger = configuration.createLogger()
     configuration.initAdaptiveSelector(configuration.createHistoryStorage(),
-      configuration.createNonPredictiveSelectionStrategy(logger),
-      configuration.createPredictiveSelectionStrategy(logger),
+      configuration.createInputBasedStrategy(logger),
+      configuration.createMeanBasedStrategy(logger),
       configuration.createEvaluationProvider(),
       logger)
   }
@@ -29,8 +29,8 @@ trait AdaptiveCore {
     val logger = configuration.createLogger()
     configuration.createPersistentHistoryStorage().map(persistentStorage =>
       configuration.initAdaptiveSelector(persistentStorage,
-        configuration.createNonPredictiveSelectionStrategy(logger),
-        configuration.createPredictiveSelectionStrategy(logger),
+        configuration.createInputBasedStrategy(logger),
+        configuration.createMeanBasedStrategy(logger),
         configuration.createEvaluationProvider(),
         logger)
     )

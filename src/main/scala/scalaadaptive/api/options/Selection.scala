@@ -5,6 +5,6 @@ package scalaadaptive.api.options
   */
 object Selection extends Enumeration {
   type Selection = Value
-  val NonPredictive = Value("NonPredictive")
-  val Predictive = Value("Predictive")
+  val MeanBased = Value("MeanBased")
+  val InputBased = Value("InputBased")
 }

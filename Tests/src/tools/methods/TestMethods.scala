@@ -97,14 +97,14 @@ class TestMethods {
   val functionDiscrete = (
     linearHighConstant _ or quadraticMinConstant
     by (x => x.size)
-    selectUsing Selection.NonPredictive
+    selectUsing Selection.MeanBased
     storeUsing Storage.Persistent
   )
 
   val functionContinuous = (
     linearHighConstant _ or quadraticMinConstant
       by (x => x.size)
-      selectUsing Selection.Predictive
+      selectUsing Selection.InputBased
       storeUsing Storage.Persistent
       //withPolicy new StopSelectingWhenDecidedPolicy(80, 0.6)
     )
@@ -112,7 +112,7 @@ class TestMethods {
   val linearFunctionsContinuous = (
     linearHighConstant _ or linearMinConstant
       by (x => x.size)
-      selectUsing Selection.Predictive
+      selectUsing Selection.InputBased
       storeUsing Storage.Persistent
     //withPolicy new StopSelectingWhenDecidedPolicy(80, 0.6)
     )

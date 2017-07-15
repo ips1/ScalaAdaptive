@@ -25,7 +25,7 @@ object MeanBasedStrategyComparison {
     val slowerName = slowerFun.getClass.getTypeName
 
     import scalaadaptive.api.Implicits._
-    val fun = slowerFun or normalFun selectUsing Selection.NonPredictive
+    val fun = slowerFun or normalFun selectUsing Selection.MeanBased
 
     Seq.range(0, runCount).foreach(i => {
       val startTime = System.nanoTime

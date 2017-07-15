@@ -16,8 +16,8 @@ object SelectionSettingTest {
   import scalaadaptive.api.Implicits._
 
   val testMethods = new TestMethods()
-  val discreteFunc = testMethods.slowMethod _ or testMethods.fastMethod selectUsing Selection.NonPredictive
-  val continuousFunc = testMethods.linearHighConstant _ or testMethods.quadraticMinConstant by { _.size } selectUsing Selection.Predictive
+  val discreteFunc = testMethods.slowMethod _ or testMethods.fastMethod selectUsing Selection.MeanBased
+  val continuousFunc = testMethods.linearHighConstant _ or testMethods.quadraticMinConstant by { _.size } selectUsing Selection.InputBased
 
   val runner = new TestRunner()
 

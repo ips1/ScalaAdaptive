@@ -10,7 +10,7 @@ import scalaadaptive.core.runtime.selection._
   */
 trait LoessInterpolationInputBasedStrategy extends BaseLongConfiguration
   with BlockWithLowRunLimit {
-  override val createPredictiveSelectionStrategy: (Logger) => SelectionStrategy[Long] =
+  override val createMeanBasedStrategy: (Logger) => SelectionStrategy[Long] =
     (log: Logger) => new LowRunAwareSelectionStrategy[Long](
       log,
       new LeastDataSelectionStrategy[Long](log),

@@ -82,7 +82,7 @@ object MatrixMultiplicationTest {
   val customMultiply = (
     normalMultiply _ or strassenMultiply
       by ((m1, m2) => m1.getRows)
-      selectUsing Selection.Predictive
+      selectUsing Selection.InputBased
     )
 
 

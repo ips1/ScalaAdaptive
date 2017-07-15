@@ -26,7 +26,7 @@ object SortTest {
   val sort = (
     selectionSort _ or quickSort
     by (x => x.length)
-    selectUsing Selection.Predictive
+    selectUsing Selection.InputBased
     withPolicy new PauseSelectionAfterStreakPolicy(20, 100)
   )
 

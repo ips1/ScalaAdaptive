@@ -1,4 +1,4 @@
-package adaptivetests.nonpredictivetest
+package adaptivetests.meanbasedtest
 
 import tools.methods.TestMethods
 
@@ -16,7 +16,7 @@ object TTestShouldSelectLastOne {
     Adaptive.initialize(new FullHistoryTTestConfiguration)
 
     import scalaadaptive.api.Implicits._
-    val function = methods.slowMethod _ or methods.slowestMethod or methods.fastMethod selectUsing Selection.NonPredictive
+    val function = methods.slowMethod _ or methods.slowestMethod or methods.fastMethod selectUsing Selection.MeanBased
 
     val testRuns = 200
     Seq.range(0, testRuns).foreach(i => {

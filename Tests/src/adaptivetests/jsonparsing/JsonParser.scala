@@ -34,7 +34,7 @@ class JsonParser[TData] {
   val parse = (
     parseWithGson _ or parseWithJackson
     groupBy ((json, c) => GroupId(Math.log(json.length).toInt))
-    selectUsing Selection.NonPredictive
+    selectUsing Selection.MeanBased
     //withPolicy new PauseSelectionAfterStreakPolicy(10, 200)
   )
 }

@@ -14,7 +14,7 @@ object DelayedTest {
   def getFastConfig(): DelayedConfig = FastConfig()
   def getSlowConfig(): DelayedConfig = SlowConfig()
   val getConfig: () => DelayedConfig = (getFastConfig _ or getSlowConfig
-    selectUsing Selection.NonPredictive
+    selectUsing Selection.MeanBased
     storeUsing Storage.Persistent)
 
   def run(config: DelayedConfig) = {

@@ -35,7 +35,7 @@ object SortingTest {
     val customSort = (
       SortTest.quickSort _ or SortTest.selectionSort
         by (_.length) groupBy (d => GroupId(Math.log(d.length.toDouble).toInt))
-        selectUsing Selection.Predictive
+        selectUsing Selection.InputBased
         withPolicy new PauseSelectionAfterStreakPolicy(20, 20)
       )
 

@@ -25,7 +25,7 @@ object InputBasedStrategyComparison {
     val slowerName = slowerFun.getClass.getTypeName
 
     import scalaadaptive.api.Implicits._
-    val fun = slowerFun or normalFun by (i => i) selectUsing Selection.Predictive
+    val fun = slowerFun or normalFun by (i => i) selectUsing Selection.InputBased
 
     testData.foreach(n => {
       val startTime = System.nanoTime

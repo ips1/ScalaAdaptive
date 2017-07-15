@@ -21,8 +21,8 @@ import scalaadaptive.core.functions.{RunData, RunResult}
   * Created by pk250187 on 3/19/17.
   */
 class HistoryBasedAdaptiveSelector[TMeasurement](historyStorage: HistoryStorage[TMeasurement],
-                                                 nonPredictiveStrategy: SelectionStrategy[TMeasurement],
-                                                 predictiveStrategy: SelectionStrategy[TMeasurement],
+                                                 meanBasedStrategy: SelectionStrategy[TMeasurement],
+                                                 inputBasedStrategy: SelectionStrategy[TMeasurement],
                                                  evaluationProvider: EvaluationProvider[TMeasurement],
                                                  logger: Logger) extends AdaptiveSelector with DelayedFunctionRunner {
 
@@ -33,8 +33,8 @@ class HistoryBasedAdaptiveSelector[TMeasurement](historyStorage: HistoryStorage[
   }
 
   private def getStrategyForSelection(selection: Selection) = selection match {
-    case Selection.Predictive => predictiveStrategy
-    case Selection.NonPredictive => nonPredictiveStrategy
+    case Selection.InputBased => inputBasedStrategy
+    case Selection.MeanBased => meanBasedStrategy
   }
 
   private def getStrategyForGather = new LeastDataSelectionStrategy[TMeasurement](logger)

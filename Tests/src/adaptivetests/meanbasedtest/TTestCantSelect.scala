@@ -1,23 +1,23 @@
-package adaptivetests.nonpredictivetest
+package adaptivetests.meanbasedtest
 
 import tools.methods.TestMethods
 
 import scalaadaptive.api.Adaptive
 import scalaadaptive.api.options.Selection
-import scalaadaptive.core.configuration.blocks.{ConsoleLogging, UTestMeanBasedStrategy}
+import scalaadaptive.core.configuration.blocks.{ConsoleLogging, TTestMeanBasedStrategy}
 import scalaadaptive.core.configuration.defaults.{DefaultConfiguration, FullHistoryTTestConfiguration}
 
 /**
-  * Created by pk250187 on 7/8/17.
+  * Created by pk250187 on 6/6/17.
   */
-object UTestShouldSelect1 {
+object TTestCantSelect {
   def main(args: Array[String]): Unit = {
     val methods = new TestMethods
 
-    Adaptive.initialize(new DefaultConfiguration with UTestMeanBasedStrategy with ConsoleLogging)
+    Adaptive.initialize(new DefaultConfiguration with TTestMeanBasedStrategy with ConsoleLogging)
 
     import scalaadaptive.api.Implicits._
-    val function = methods.fastMethod _ or methods.slowMethod or methods.slowestMethod selectUsing Selection.NonPredictive
+    val function = methods.fastMethod _ or methods.anotherFastMethod or methods.slowMethod selectUsing Selection.MeanBased
 
     val testRuns = 200
     Seq.range(0, testRuns).foreach(i => {

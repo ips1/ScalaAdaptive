@@ -45,15 +45,15 @@ trait BaseConfiguration extends Configuration {
     () => new PolicyBasedInvoker
 
   override val createMultiFunctionDefaultConfig: () => FunctionConfig =
-    () => new FunctionConfig(Selection.NonPredictive, Storage.Global, None, false, new AlwaysSelectPolicy)
+    () => new FunctionConfig(Selection.MeanBased, Storage.Global, None, false, new AlwaysSelectPolicy)
 
   override val initAdaptiveSelector: (HistoryStorage[TMeasurement], SelectionStrategy[TMeasurement],
     SelectionStrategy[TMeasurement], EvaluationProvider[TMeasurement], Logger) => AdaptiveSelector =
-    (historyStorage, nonPredictiveStrategy, predictiveStrategy, evaluationProvider, logger) =>
+    (historyStorage, meanBasedStrategy, inputBasedStrategy, evaluationProvider, logger) =>
       new HistoryBasedAdaptiveSelector[TMeasurement](
         historyStorage,
-        nonPredictiveStrategy,
-        predictiveStrategy,
+        meanBasedStrategy,
+        inputBasedStrategy,
         evaluationProvider,
         logger)
 }

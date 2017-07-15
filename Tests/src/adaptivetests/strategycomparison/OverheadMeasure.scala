@@ -66,22 +66,22 @@ object OverheadMeasure {
     val configs = List(
       (new TestConfiguration
       with TTestMeanBasedStrategy
-      with CachedRegressionAndStatisticsStorage, Selection.NonPredictive),
+      with CachedRegressionAndStatisticsStorage, Selection.MeanBased),
       (new TestConfiguration
-        with TTestMeanBasedStrategy, Selection.NonPredictive),
+        with TTestMeanBasedStrategy, Selection.MeanBased),
       (new TestConfiguration
-        with UTestMeanBasedStrategy, Selection.NonPredictive),
+        with UTestMeanBasedStrategy, Selection.MeanBased),
       (new TestConfiguration
         with LinearRegressionInputBasedStrategy
-        with CachedRegressionAndStatisticsStorage, Selection.Predictive),
+        with CachedRegressionAndStatisticsStorage, Selection.InputBased),
       (new TestConfiguration
-        with LinearRegressionInputBasedStrategy, Selection.Predictive),
+        with LinearRegressionInputBasedStrategy, Selection.InputBased),
       (new TestConfiguration
-        with WindowBoundRegressionInputBasedStrategy, Selection.Predictive),
+        with WindowBoundRegressionInputBasedStrategy, Selection.InputBased),
       (new TestConfiguration
-        with WindowBoundTTestInputBasedStrategy, Selection.Predictive),
+        with WindowBoundTTestInputBasedStrategy, Selection.InputBased),
       (new TestConfiguration
-        with LoessInterpolationInputBasedStrategy, Selection.Predictive)
+        with LoessInterpolationInputBasedStrategy, Selection.InputBased)
     )
 
     val results = configs.map(cfg => runTest(cfg))
