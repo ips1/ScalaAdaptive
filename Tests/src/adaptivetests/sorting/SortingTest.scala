@@ -1,7 +1,7 @@
 package adaptivetests.sorting
 
+import adaptivetests.{TestConfiguration, TestSetup}
 import adaptivetests.sorttest.SortTest
-import adaptivetests.strategycomparison.TestConfiguration
 
 import scala.util.Random
 import scalaadaptive.api.Adaptive
@@ -29,34 +29,14 @@ object SortingTest {
                val quickTime: Long,
                val selectionTime: Long)
 
-  private def initRegression() = {
-    val config = new TestConfiguration
-      with LinearRegressionInputBasedStrategy
-      with CachedRegressionAndStatisticsStorage
-    Adaptive.initialize(config)
-  }
-
-  private def initLimitedRegression() = {
-    val config = new TestConfiguration
-      with WindowBoundRegressionInputBasedStrategy
-      with CachedRegressionAndStatisticsStorage
-    Adaptive.initialize(config)
-  }
-
-  private def initLoess() = {
-    val config = new TestConfiguration
-      with LoessInterpolationInputBasedStrategy
-      with CachedGroupStorage
-    Adaptive.initialize(config)
-  }
-
 
   private def run(data: Seq[(Int, Array[Int])]): Seq[Result] = {
     import scalaadaptive.api.Implicits._
     val customSort = (
       SortTest.quickSort _ or SortTest.selectionSort
         by (_.length) groupBy (d => GroupId(Math.log(d.length.toDouble).toInt))
-        selectUsing Selection.Predictive withPolicy new PauseSelectionAfterStreakPolicy(20, 20)
+        selectUsing Selection.Predictive
+        withPolicy new PauseSelectionAfterStreakPolicy(20, 20)
       )
 
     data.map(in => {
@@ -67,6 +47,24 @@ object SortingTest {
       val overhead = combinedTime - lastRecord.runTime
       val selectedFun = lastRecord.function.toString
       new Result(in._2.length, combinedTime, quickTime, selectionTime)//, overhead, selectedFun)
+    })
+  }
+
+  private def runTests(setups: Seq[TestSetup], inputs: Seq[(Int, Array[Int])]): Unit = {
+    val results = setups.map(s => {
+      Adaptive.initialize(s.config)
+      val result = run(inputs)
+      (s.name, result)
+    })
+
+    results.foreach(res => {
+      println(s"Results of ${res._1}")
+      res._2.sortBy(_.inputSize).foreach(printResult)
+    })
+
+    results.foreach(res => {
+      println(s"Sum of ${res._1}")
+      printSum(res._2)
     })
   }
 
@@ -83,26 +81,39 @@ object SortingTest {
       (i, Seq.fill(size)(Random.nextInt).toArray)
     })
 
+    val setups = List(
+      new TestSetup("LOESS", new TestConfiguration
+        with LoessInterpolationInputBasedStrategy
+        with CachedGroupStorage),
+      new TestSetup("LR", new TestConfiguration
+        with LinearRegressionInputBasedStrategy
+        with CachedRegressionAndStatisticsStorage),
+      new TestSetup("WBLR", new TestConfiguration
+        with WindowBoundRegressionInputBasedStrategy
+        with CachedRegressionAndStatisticsStorage),
+      new TestSetup("WBTT", new TestConfiguration
+        with WindowBoundTTestInputBasedStrategy
+        with CachedRegressionAndStatisticsStorage)
+    )
+
+
     // Dummy run to fill caches etc.
-    initLoess()
-    run(inputs)
+    runTests(setups, inputs)
 
-    initLoess()
-    val resultsLoess = run(inputs)
-    initRegression()
-    val resultsRegression = run(inputs)
-    initLimitedRegression()
-    val resultsLimitedRegression = run(inputs)
+    // Real run
+    runTests(setups, inputs)
 
-    resultsRegression.sortBy(_.inputSize).foreach(printResult)
-    resultsLimitedRegression.sortBy(_.inputSize).foreach(printResult)
-    resultsLoess.sortBy(_.inputSize).foreach(printResult)
+    val quickSortRes = inputs.map(i => {
+      measureExecTime({ () => SortTest.quickSort(i._2) })
+    })
 
-    println("Loess sums:")
-    printSum(resultsLoess)
-    println("Regression sums:")
-    printSum(resultsRegression)
-    println("Limited regression sums:")
-    printSum(resultsLimitedRegression)
+    val selectSortRes = inputs.map(i => {
+      measureExecTime({ () => SortTest.selectionSort(i._2) })
+    })
+
+    println("Quick sort:")
+    println(quickSortRes.sum)
+    println("Selection sort:")
+    println(selectSortRes.sum)
   }
 }

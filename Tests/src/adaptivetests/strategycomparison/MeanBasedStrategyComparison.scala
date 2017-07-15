@@ -1,5 +1,7 @@
 package adaptivetests.strategycomparison
 
+import adaptivetests.TestConfiguration
+
 import scala.util.Random
 import scalaadaptive.api.Adaptive
 import scalaadaptive.api.options.Selection

@@ -1,4 +1,4 @@
-package adaptivetests.strategycomparison
+package adaptivetests
 
 import scalaadaptive.core.configuration.BaseLongConfiguration
 import scalaadaptive.core.configuration.blocks._
