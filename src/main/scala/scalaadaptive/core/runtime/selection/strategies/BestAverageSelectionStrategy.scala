@@ -6,10 +6,15 @@ import scalaadaptive.core.runtime.history.runhistory.RunHistory
 
 /**
   * Created by Petr Kubat on 3/19/17.
+  *
+  * A strategy that selects the function according to the best mean
+  *
+  * @param logger Logger used to log the selection process.
+  *
   */
 class BestAverageSelectionStrategy(val logger: Logger) extends SelectionStrategy[Long] {
   override def selectOption(records: Seq[RunHistory[Long]], inputDescriptor: Option[Long]): HistoryKey = {
     logger.log("Selecting using BestAverageSelector")
-    records.minBy(x => x.average()).key
+    records.minBy(x => x.mean).key
   }
 }

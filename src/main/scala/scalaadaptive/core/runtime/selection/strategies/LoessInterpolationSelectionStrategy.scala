@@ -11,6 +11,12 @@ import scalaadaptive.core.runtime.history.runhistory.RunHistory
 
 /**
   * Created by Petr Kubat on 4/23/17.
+  *
+  * An input based selection strategy that selects from multiple functions using predictions fetched from a LOESS
+  * interpolation model. For more information see the original thesis text.
+  *
+  * @param logger Logger used to log the selection process.
+  *
   */
 class LoessInterpolationSelectionStrategy[TMeasurement](val logger: Logger)(implicit num: Numeric[TMeasurement])
   extends SelectionStrategy[TMeasurement] {
@@ -19,8 +25,6 @@ class LoessInterpolationSelectionStrategy[TMeasurement](val logger: Logger)(impl
 
   /**
     * Interpolates polynomial, returns the function in case of success, returns None if there is not enough data
-    * @param sortedData
-    * @return
     */
   private def interpolate(sortedData: Seq[(Long, GroupedEvaluationData[TMeasurement])]): Option[PolynomialSplineFunction] = {
     try {

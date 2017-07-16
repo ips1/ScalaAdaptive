@@ -7,6 +7,21 @@ import scalaadaptive.math._
 
 /**
   * Created by Petr Kubat on 5/20/17.
+  *
+  * An input based selection strategy that selects from multiple functions using predictions fetched from a linear
+  * regression model. For more information see the original thesis text.
+  *
+  * Apart from the common fallback strategy contains a mean-based strategy that is used when the regression model
+  * of all the functions is built only from one value (even though with a lot of observations). This situation
+  * indicates wrong use of the input based strategy, so this mean-based fallback limits the impact of the error.
+  *
+  * @param logger Logger used to log the selection process.
+  * @param testRunner The runner that is used to test confidence intervals of linear regression predictions.
+  * @param secondaryStrategy The strategy that is used when the confidence intervals overlap and this strategy can't
+  *                          decide.
+  * @param meanBasedStrategy The strategy that is used when all the inputs in all the regression models are the same.
+  * @param alpha The significance level of the selection - its only approximation, as multiple tests are performed.
+  *
   */
 class RegressionSelectionStrategy[TMeasurement](val logger: Logger,
                                                 val testRunner: RegressionConfidenceTestRunner,

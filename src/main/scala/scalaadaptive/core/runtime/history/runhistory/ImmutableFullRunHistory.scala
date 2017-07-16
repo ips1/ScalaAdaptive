@@ -15,8 +15,6 @@ class ImmutableFullRunHistory[TMeasurement] (override val key: HistoryKey,
                                            (implicit override val num: Averageable[TMeasurement])
   extends DefaultFilterRunHistory[TMeasurement]
     with DefaultGrouping[TMeasurement]
-    with DefaultAverage[TMeasurement]
-    with DefaultBest[TMeasurement]
     with DefaultStatistics[TMeasurement]
     with DefaultRegression[TMeasurement]
     with DefaultMakeHistory[TMeasurement] {

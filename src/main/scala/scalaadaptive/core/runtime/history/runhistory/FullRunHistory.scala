@@ -14,8 +14,6 @@ class FullRunHistory[TMeasurement] (override val key: HistoryKey)
   extends DefaultFilterRunHistory[TMeasurement]
     with DefaultGrouping[TMeasurement]
     with DefaultStatistics[TMeasurement]
-    with DefaultBest[TMeasurement]
-    with DefaultAverage[TMeasurement]
     with DefaultRegression[TMeasurement]
     with DefaultMakeHistory[TMeasurement] {
 

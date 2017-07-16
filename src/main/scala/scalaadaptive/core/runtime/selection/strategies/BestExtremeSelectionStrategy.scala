@@ -10,6 +10,6 @@ import scalaadaptive.core.runtime.history.runhistory.RunHistory
 class BestExtremeSelectionStrategy(val logger: Logger) extends SelectionStrategy[Long] {
   override def selectOption(records: Seq[RunHistory[Long]], inputDescriptor: Option[Long]): HistoryKey = {
     logger.log("Selecting using BestExtremeSelector")
-    records.minBy(x => x.best()).key
+    records.minBy(x => x.max).key
   }
 }

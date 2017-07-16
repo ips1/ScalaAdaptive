@@ -10,10 +10,19 @@ import scalaadaptive.math.UTestRunner
 
 /**
   * Created by Petr Kubat on 5/2/17.
+  *
+  * A mean based selection strategy that selects from multiple functions using a simple Mann-Whitney U-Test. For more
+  * information see the original thesis text.
+  *
+  * @param logger Logger used to log the selection process.
+  * @param testRunner The runner that is used to perform Mann-Whitney U-Test
+  * @param secondaryStrategy The strategy that is used when the test can't decide for one option with given certainty
+  * @param alpha The significance level of the selection - its only approximation, as multiple tests are performed
+  *
   */
 class UTestSelectionStrategy(val logger: Logger,
                              val testRunner: UTestRunner,
-                             val secondarySelector: SelectionStrategy[Long],
+                             val secondaryStrategy: SelectionStrategy[Long],
                              val alpha: Double) extends TestBasedSelectionStrategy[Long] {
 
   private def getTestData(history: RunHistory[Long]): (Iterable[Double], StatisticalSummary) =

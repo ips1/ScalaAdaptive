@@ -26,8 +26,9 @@ trait RunHistory[TMeasurement] {
   def filter(filter: EvaluationData[TMeasurement] => Boolean): RunHistory[TMeasurement]
 
   // Cacheable or computable methods
-  def average(): Option[Double]
-  def best(): Option[Double]
+  import scalaadaptive.extensions.DoubleExtensions._
+  def mean: Option[Double] = runStatistics.getMean.asOption
+  def max: Option[Double] = runStatistics.getMax.asOption
 
   def runRegression: SimpleTestableRegression
   def runStatistics: StatisticalSummary
