@@ -45,7 +45,7 @@ object SortingTest {
       val selectionTime = measureExecTime(() => SortTest.selectionSort(in._2))
       val lastRecord = customSort.getAnalyticsData.get.getAllRunInfo.last
       val overhead = combinedTime - lastRecord.runTime
-      val selectedFun = lastRecord.function.toString
+      val selectedFun = lastRecord.selectedFunction.toString
       new Result(in._2.length, combinedTime, quickTime, selectionTime)//, overhead, selectedFun)
     })
   }

@@ -33,7 +33,7 @@ object LoessTest {
       val duration = System.nanoTime - startTime
     })
 
-    val wrongSelected = fun.getAnalyticsData.get.getAllRunInfo.count(r => r.function match {
+    val wrongSelected = fun.getAnalyticsData.get.getAllRunInfo.count(r => r.selectedFunction match {
       case ClosureIdentifier(name) => name == slowerName
       case _ => false
     })

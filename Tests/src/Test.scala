@@ -1,3 +1,5 @@
+import java.io.File
+
 import adaptivetests.TestRunner
 import adaptivetests.sorting.Sorter
 import tools.methods.TestMethods
@@ -30,6 +32,14 @@ object Test {
       runner.runIncrementalTest(l => testMethods.functionContinuousWithLimitedOverhead(l))
       //runner.runTest(l => sorter.sort(l))
       //runner.runTest(l => testMethods.function(l))
+
+      val testFunction = testMethods.function
+
+      val analytics = testFunction.getAnalyticsData.get
+      analytics.saveData(new File("analytics.txt"))
+      analytics.getAllRunInfo.foreach(r => {
+        if (r.overheadPercentage > 0.5) logRun(r)
+      })
     })
   }
 }

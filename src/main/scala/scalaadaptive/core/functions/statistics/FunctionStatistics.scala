@@ -4,7 +4,7 @@ import java.time.Instant
 
 import scala.collection.mutable
 import scala.collection.mutable.ArrayBuffer
-import scalaadaptive.analytics.AnalyticsRecord
+import scalaadaptive.analytics.AnalyticsRunRecord
 import scalaadaptive.core.functions.identifiers.{FunctionIdentifier, IdentifiedFunction}
 import scalaadaptive.core.functions.RunData
 
