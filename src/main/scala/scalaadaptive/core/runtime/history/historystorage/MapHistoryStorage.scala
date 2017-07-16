@@ -8,6 +8,10 @@ import scalaadaptive.core.runtime.history.evaluation.data.EvaluationData
 
 /**
   * Created by Petr Kubat on 3/21/17.
+  *
+  * An implementation of [[HistoryStorage]] that uses mutable map to store the
+  * [[scalaadaptive.core.runtime.history.runhistory.RunHistory]] instances.
+  *
   */
 class MapHistoryStorage[TMeasurement](val newHistoryFactory: (HistoryKey) => RunHistory[TMeasurement])
   extends HistoryStorage[TMeasurement] {

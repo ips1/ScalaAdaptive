@@ -8,6 +8,15 @@ import scalaadaptive.core.runtime.history.evaluation.data.EvaluationData
 
 /**
   * Created by Petr Kubat on 4/23/17.
+  *
+  * A wrapper of [[HistoryStorage]] that uses a [[scalaadaptive.core.runtime.history.serialization.HistorySerializer]]
+  * instance to to serialize all newly added runs before delegating the call to the internal [[HistoryStorage]].
+  *
+  * In addition, when retrieving a history, checks first whether a local history exists in the internal
+  * [[HistoryStorage]] and if not, tries to deserialize it using the
+  * [[scalaadaptive.core.runtime.history.serialization.HistorySerializer]]. If that fails too, delegates the call to
+  * the internal [[HistoryStorage]], which should create the record.
+  *
   */
 class PersistentHistoryStorage[TMeasurement](private val localHistory: HistoryStorage[TMeasurement],
                                              private val historySerializer: HistorySerializer[TMeasurement])
