@@ -8,7 +8,7 @@ import scalaadaptive.core.runtime.history.HistoryKey
 import scalaadaptive.core.runtime.history.runhistory.RunHistory
 
 /**
-  * Created by pk250187 on 5/20/17.
+  * Created by Petr Kubat on 5/20/17.
   */
 class LeastDataSelectionStrategy[TMeasurement](val logger: Logger) extends SelectionStrategy[TMeasurement] {
   override def selectOption(records: Seq[RunHistory[TMeasurement]], inputDescriptor: Option[Long]): HistoryKey = {

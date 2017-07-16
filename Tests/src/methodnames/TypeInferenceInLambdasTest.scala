@@ -1,7 +1,7 @@
 package methodnames
 
 /**
-  * Created by pk250187 on 5/1/17.
+  * Created by Petr Kubat on 5/1/17.
   */
 object TypeInferenceInLambdasTest {
   def method(i: Int): Int = ???

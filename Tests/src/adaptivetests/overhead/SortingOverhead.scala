@@ -9,7 +9,7 @@ import scalaadaptive.core.configuration.defaults.FullHistoryTTestConfiguration
 import scalaadaptive.api.policies.StopSelectingWhenDecidedPolicy
 
 /**
-  * Created by pk250187 on 6/5/17.
+  * Created by Petr Kubat on 6/5/17.
   */
 object SortingOverhead {
   def customData(size: Int): List[Int] = Seq.fill(size)(Random.nextInt).toList

@@ -11,7 +11,7 @@ import scalaadaptive.core.runtime.invocationtokens.InvocationTokenWithCallbacks
 import scalaadaptive.core.functions.RunResult
 
 /**
-  * Created by pk250187 on 3/26/17.
+  * Created by Petr Kubat on 3/26/17.
   *
   * Used to run one of multiple options passed in based on a history of previous runs of the options.
   *

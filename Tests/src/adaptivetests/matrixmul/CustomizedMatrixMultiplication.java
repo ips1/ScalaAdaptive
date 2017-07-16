@@ -3,7 +3,7 @@ package adaptivetests.matrixmul;
 import org.jlinalg.MatrixMultiplication;
 
 /**
- * Created by pk250187 on 7/3/17.
+ * Created by Petr Kubat on 7/3/17.
  */
 public class CustomizedMatrixMultiplication extends MatrixMultiplication {
     static {

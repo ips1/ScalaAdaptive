@@ -1,7 +1,7 @@
 import scalaadaptive.api.options.Storage
 
 /**
-  * Created by pk250187 on 4/29/17.
+  * Created by Petr Kubat on 4/29/17.
   */
 object WrongUse {
   import scalaadaptive.api.Implicits._

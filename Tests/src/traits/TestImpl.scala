@@ -1,7 +1,7 @@
 package traits
 
 /**
-  * Created by pk250187 on 4/5/17.
+  * Created by Petr Kubat on 4/5/17.
   */
 class TestImpl extends TestTrait {
   import scalaadaptive.api.Implicits._

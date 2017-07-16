@@ -7,7 +7,7 @@ import scalaadaptive.extensions.Averageable
 import scalaadaptive.math.SimpleTestableRegression
 
 /**
-  * Created by pk250187 on 4/25/17.
+  * Created by Petr Kubat on 4/25/17.
   */
 
 class CachedGroupedRunHistory[TMeasurement] private(override val runCount: Int,

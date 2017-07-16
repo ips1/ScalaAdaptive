@@ -10,7 +10,7 @@ import scalaadaptive.core.configuration.blocks.NoLogging
 import scalaadaptive.core.configuration.defaults.FullHistoryTTestConfiguration
 
 /**
-  * Created by pk250187 on 6/19/17.
+  * Created by Petr Kubat on 6/19/17.
   */
 object ComparisonTest {
   private def measureParserRun(parser: (String, Class[PersonList]) => PersonList,

@@ -16,7 +16,7 @@ import scalaadaptive.core.runtime.selection.SelectionStrategy
 import scalaadaptive.extensions.Averageable
 
 /**
-  * Created by pk250187 on 4/22/17.
+  * Created by Petr Kubat on 4/22/17.
   */
 trait BaseConfiguration extends Configuration {
   protected val num: Averageable[TMeasurement]

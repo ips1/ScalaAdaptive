@@ -3,7 +3,7 @@ package scalaadaptive.math
 import scalaadaptive.math.TestResult.Value
 
 /**
-  * Created by pk250187 on 6/7/17.
+  * Created by Petr Kubat on 6/7/17.
   */
 object RegressionTTestResult extends Enumeration {
   type RegressionTTestResult = Value

@@ -5,7 +5,7 @@ import java.io.PrintWriter
 import scalaadaptive.core.runtime.AdaptiveInternal
 
 /**
-  * Created by pk250187 on 6/5/17.
+  * Created by Petr Kubat on 6/5/17.
   */
 class BasicAnalyticsData(val records: Seq[AnalyticsRecord]) extends AnalyticsData {
   private def serializer: AnalyticsSerializer = AdaptiveInternal.getAnalyticsSerializer

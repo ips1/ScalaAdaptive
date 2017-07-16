@@ -4,7 +4,7 @@ import scalaadaptive.api.policies.StatisticDataProvider
 import scalaadaptive.api.policies.builder.conditions.Condition
 
 /**
-  * Created by pk250187 on 6/24/17.
+  * Created by Petr Kubat on 6/24/17.
   */
 class GrowsByCondition[T: Numeric](extractor: (StatisticDataProvider) => T, amount: T) extends Condition {
   override def generate(currentStatistics: StatisticDataProvider): (StatisticDataProvider) => Boolean = {

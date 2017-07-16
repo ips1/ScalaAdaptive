@@ -14,7 +14,7 @@ import scalaadaptive.core.configuration.defaults.{FullHistoryRegressionConfigura
 import scalaadaptive.core.runtime.selection.RegressionSelectionStrategy
 
 /**
-  * Created by pk250187 on 6/7/17.
+  * Created by Petr Kubat on 6/7/17.
   */
 object RegressionSelectionTest {
   def runTest(data: Seq[Array[Int]]): Unit = {

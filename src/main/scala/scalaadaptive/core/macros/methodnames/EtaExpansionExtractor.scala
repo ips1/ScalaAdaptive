@@ -3,7 +3,7 @@ package scalaadaptive.core.macros.methodnames
 import scala.reflect.macros.blackbox
 
 /**
-  * Created by pk250187 on 4/30/17.
+  * Created by Petr Kubat on 4/30/17.
   */
 class EtaExpansionExtractor[C <: blackbox.Context](val c: C) {
   import c.universe._

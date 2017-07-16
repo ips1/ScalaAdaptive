@@ -3,7 +3,7 @@ package adaptivetests.loadbalance
 import scalaj.http.{Http, HttpOptions, HttpResponse}
 
 /**
-  * Created by pk250187 on 5/14/17.
+  * Created by Petr Kubat on 5/14/17.
   */
 class LoadBalanceTestController {
   val ports = List(3123, 3124)

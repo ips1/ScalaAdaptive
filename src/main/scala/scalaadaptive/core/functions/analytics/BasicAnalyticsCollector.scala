@@ -7,7 +7,7 @@ import scalaadaptive.analytics.{AnalyticsData, AnalyticsRecord, BasicAnalyticsDa
 import scalaadaptive.core.functions.RunData
 
 /**
-  * Created by pk250187 on 6/5/17.
+  * Created by Petr Kubat on 6/5/17.
   */
 class BasicAnalyticsCollector extends AnalyticsCollector {
   private val records: ArrayBuffer[AnalyticsRecord] = new ArrayBuffer[AnalyticsRecord]()

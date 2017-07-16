@@ -1,7 +1,7 @@
 import scala.collection.mutable
 
 /**
-  * Created by pk250187 on 4/2/17.
+  * Created by Petr Kubat on 4/2/17.
   */
 object ImplicitsTest {
 

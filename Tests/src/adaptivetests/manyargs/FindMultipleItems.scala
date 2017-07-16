@@ -1,7 +1,7 @@
 package adaptivetests.manyargs
 
 /**
-  * Created by pk250187 on 6/5/17.
+  * Created by Petr Kubat on 6/5/17.
   */
 object FindMultipleItems {
   def findViaFilter(list: Seq[(Int, String)], items: Seq[Int]): Seq[(Int, String)] =

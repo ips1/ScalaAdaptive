@@ -8,7 +8,7 @@ import scalaadaptive.extensions.Averageable
 import scalaadaptive.math.SimpleTestableRegression
 
 /**
-  * Created by pk250187 on 4/25/17.
+  * Created by Petr Kubat on 4/25/17.
   */
 class CachedAverageRunHistory[TMeasurement] private (private val internalHistory: RunHistory[TMeasurement],
                                                      private val internalAverage: Option[TMeasurement])

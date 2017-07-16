@@ -5,7 +5,7 @@ import scalaadaptive.core.runtime.history.HistoryKey
 import scalaadaptive.core.runtime.history.evaluation.data.EvaluationData
 
 /**
-  * Created by pk250187 on 4/23/17.
+  * Created by Petr Kubat on 4/23/17.
   */
 trait HistorySerializer[TMeasurement] {
   def serializeNewRun(key: HistoryKey, run: EvaluationData[TMeasurement]): Unit =

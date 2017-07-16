@@ -9,7 +9,7 @@ import scala.util.Random
 import scalaadaptive.math.{RegressionTTestResult, RegressionTTestRunner}
 
 /**
-  * Created by pk250187 on 6/10/17.
+  * Created by Petr Kubat on 6/10/17.
   */
 object RegressionPlot {
   def quadraticFunctionWithError(size: Int): Unit = {

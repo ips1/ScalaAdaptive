@@ -5,7 +5,7 @@ import org.apache.commons.math3.stat.descriptive.StatisticalSummary
 import scalaadaptive.math.TestResult.TestResult
 
 /**
-  * Created by pk250187 on 6/6/17.
+  * Created by Petr Kubat on 6/6/17.
   */
 trait TTestRunner {
   /**

@@ -3,7 +3,7 @@ import adaptivetests.sorting.Sorter
 import scalaadaptive.core.functions.adaptors.FunctionAdaptor1
 
 /**
-  * Created by pk250187 on 4/9/17.
+  * Created by Petr Kubat on 4/9/17.
   */
 object MacroTest {
   import scalaadaptive.core.macros.MacroUtils._

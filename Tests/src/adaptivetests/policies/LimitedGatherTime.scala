@@ -5,7 +5,7 @@ import tools.methods.TestMethods
 import scalaadaptive.api.policies.LimitedGatherTimePolicy
 
 /**
-  * Created by pk250187 on 6/5/17.
+  * Created by Petr Kubat on 6/5/17.
   */
 object LimitedGatherTime {
   def main(args: Array[String]): Unit = {

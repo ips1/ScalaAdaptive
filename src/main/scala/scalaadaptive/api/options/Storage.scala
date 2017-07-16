@@ -1,7 +1,7 @@
 package scalaadaptive.api.options
 
 /**
-  * Created by pk250187 on 4/22/17.
+  * Created by Petr Kubat on 4/22/17.
   */
 object Storage extends Enumeration {
   type Storage = Value

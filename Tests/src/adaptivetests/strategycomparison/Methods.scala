@@ -3,7 +3,7 @@ package adaptivetests.strategycomparison
 import scala.util.Random
 
 /**
-  * Created by pk250187 on 6/24/17.
+  * Created by Petr Kubat on 6/24/17.
   */
 class Methods {
   def createSlowerLinear(by: Double): (Int) => Long =

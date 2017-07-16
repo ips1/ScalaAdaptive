@@ -1,7 +1,7 @@
 package adaptivetests.manyargs
 
 /**
- * Created by pk250187 on 6/5/17.
+ * Created by Petr Kubat on 6/5/17.
  */
 class ThreeArgsMethods {
   def findViaFilter(list: Seq[(Int, String)], item1: Int, item2: Int): Seq[(Int, String)] =

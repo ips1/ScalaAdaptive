@@ -9,7 +9,7 @@ import scalaadaptive.core.configuration.defaults.FullHistoryTTestConfiguration
 import scalaadaptive.api.Adaptive
 
 /**
-  * Created by pk250187 on 5/8/17.
+  * Created by Petr Kubat on 5/8/17.
   */
 object ClosureSettingsTest {
   import scalaadaptive.api.Implicits._

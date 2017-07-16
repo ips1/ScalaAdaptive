@@ -5,7 +5,7 @@ import scala.reflect.macros.blackbox
 import scalaadaptive.core.macros.methodnames.{EtaExpansionConverter, TreeBuilder}
 
 /**
-  * Created by pk250187 on 4/9/17.
+  * Created by Petr Kubat on 4/9/17.
   */
 class AdaptiveMacrosHelper[C <: blackbox.Context](val c: C) {
   import c.universe._

@@ -4,7 +4,7 @@ import scalaadaptive.api.policies.{Policy, PolicyResult, StatisticDataProvider}
 import scalaadaptive.api.policies.PolicyResult.PolicyResult
 
 /**
-  * Created by pk250187 on 6/1/17.
+  * Created by Petr Kubat on 6/1/17.
   *
   * A policy that will keep producing given result until the real time in nanoseconds (fetched by System.nanoTime())
   * reaches given limit. Whenever this happens, it immediately lets the nextPolicy do the decision.

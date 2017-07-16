@@ -8,7 +8,7 @@ import scalaadaptive.core.configuration.blocks.{ConsoleLogging, TTestMeanBasedSt
 import scalaadaptive.core.configuration.defaults.DefaultConfiguration
 
 /**
-  * Created by pk250187 on 7/8/17.
+  * Created by Petr Kubat on 7/8/17.
   */
 object UTestCantSelect {
   def main(args: Array[String]): Unit = {

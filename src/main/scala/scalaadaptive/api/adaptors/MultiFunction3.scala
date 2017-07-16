@@ -5,7 +5,7 @@ import scalaadaptive.api.grouping.Group
 import scalaadaptive.core.macros.OrMacroImpl
 
 /**
-  * Created by pk250187 on 5/27/17.
+  * Created by Petr Kubat on 5/27/17.
   */
 trait MultiFunction3[T1, T2, T3, R]
   extends MultiFunctionCommon[(T1, T2, T3), R, MultiFunction3[T1, T2, T3, R]]

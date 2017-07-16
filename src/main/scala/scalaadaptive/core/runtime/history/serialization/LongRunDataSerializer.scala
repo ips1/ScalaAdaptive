@@ -6,7 +6,7 @@ import scalaadaptive.core.runtime.history.evaluation.data.EvaluationData
 import scalaadaptive.extensions.OptionSerializer
 
 /**
-  * Created by pk250187 on 4/23/17.
+  * Created by Petr Kubat on 4/23/17.
   */
 class LongRunDataSerializer(private val separator: Char) extends RunDataSerializer[Long] {
   override def serializeRunData(run: EvaluationData[Long]): String = {

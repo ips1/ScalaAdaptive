@@ -3,7 +3,7 @@ package adaptivetests.strategycomparison
 import org.apache.commons.math3.analysis.interpolation.LoessInterpolator
 
 /**
-  * Created by pk250187 on 7/9/17.
+  * Created by Petr Kubat on 7/9/17.
   */
 object LoessPlotter {
   def main(args: Array[String]): Unit = {

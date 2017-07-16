@@ -7,7 +7,7 @@ import scalaadaptive.core.configuration.defaults.{GroupedRunHistoryInterpolation
 import scalaadaptive.api.Adaptive
 
 /**
-  * Created by pk250187 on 5/7/17.
+  * Created by Petr Kubat on 5/7/17.
   */
 object TrainingTest {
   def main(args: Array[String]): Unit = {

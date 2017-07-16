@@ -1,7 +1,7 @@
 package scalaadaptive.core.functions.identifiers
 
 /**
-  * Created by pk250187 on 5/21/17.
+  * Created by Petr Kubat on 5/21/17.
   */
 class IdentifiedFunction[TArgType, TReturnType](val fun: (TArgType) => TReturnType,
                                                 val closureIdentifier: ClosureIdentifier,

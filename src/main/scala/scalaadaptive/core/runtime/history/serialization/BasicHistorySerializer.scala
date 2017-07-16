@@ -10,7 +10,7 @@ import scalaadaptive.core.logging.Logger
 import scalaadaptive.core.runtime.history.evaluation.data.EvaluationData
 
 /**
-  * Created by pk250187 on 4/23/17.
+  * Created by Petr Kubat on 4/23/17.
   */
 class BasicHistorySerializer(private val rootPath: Path,
                              private val fileNameForKeyProvider: FileNameForKeyProvider,

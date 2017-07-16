@@ -6,7 +6,7 @@ import scalaadaptive.api.options.{Selection, Storage}
 import scalaadaptive.api.policies.LimitedOverheadPolicy
 
 /**
-  * Created by pk250187 on 5/1/17.
+  * Created by Petr Kubat on 5/1/17.
   */
 class TestMethods {
   import scalaadaptive.api.Implicits._

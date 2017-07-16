@@ -11,7 +11,7 @@ import scalaadaptive.math.TestResult.TestResult
 import scalaadaptive.math.{TestResult, UTestRunner, WelchTTestRunner}
 
 /**
-  * Created by pk250187 on 5/2/17.
+  * Created by Petr Kubat on 5/2/17.
   */
 class UTestSelectionStrategy(val logger: Logger,
                              val testRunner: UTestRunner,

@@ -6,7 +6,7 @@ import scalaadaptive.core.runtime.history.evaluation.data.EvaluationData
 import scalaadaptive.extensions.Averageable
 
 /**
-  * Created by pk250187 on 5/1/17.
+  * Created by Petr Kubat on 5/1/17.
   */
 class ImmutableFullRunHistory[TMeasurement] (override val key: HistoryKey,
                                              override val runItems: Iterable[EvaluationData[TMeasurement]],

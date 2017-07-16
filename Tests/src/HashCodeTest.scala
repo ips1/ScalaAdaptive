@@ -1,5 +1,5 @@
 /**
-  * Created by pk250187 on 7/12/17.
+  * Created by Petr Kubat on 7/12/17.
   */
 object HashCodeTest {
   def createAdder(n: Int): Function1[Int, Int] = (i) => i + n

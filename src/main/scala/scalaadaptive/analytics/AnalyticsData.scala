@@ -3,7 +3,7 @@ package scalaadaptive.analytics
 import java.io.{File, FileOutputStream, PrintWriter}
 
 /**
-  * Created by pk250187 on 6/5/17.
+  * Created by Petr Kubat on 6/5/17.
   */
 trait AnalyticsData {
   /**

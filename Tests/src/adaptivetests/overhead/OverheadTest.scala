@@ -10,7 +10,7 @@ import scalaadaptive.core.configuration.defaults.FullHistoryTTestConfiguration
 import scalaadaptive.api.policies.{AlwaysUseLastPolicy, StopSelectingWhenDecidedPolicy}
 
 /**
-  * Created by pk250187 on 6/5/17.
+  * Created by Petr Kubat on 6/5/17.
   */
 object OverheadTest {
   val methods = new TestMethods()

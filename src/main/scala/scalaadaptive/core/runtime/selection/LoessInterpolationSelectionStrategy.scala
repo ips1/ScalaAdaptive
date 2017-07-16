@@ -10,7 +10,7 @@ import scalaadaptive.core.runtime.history.evaluation.data.GroupedEvaluationData
 import scalaadaptive.core.runtime.history.runhistory.RunHistory
 
 /**
-  * Created by pk250187 on 4/23/17.
+  * Created by Petr Kubat on 4/23/17.
   */
 class LoessInterpolationSelectionStrategy[TMeasurement](val logger: Logger)(implicit num: Numeric[TMeasurement])
   extends SelectionStrategy[TMeasurement] {

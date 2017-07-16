@@ -1,7 +1,7 @@
 package scalaadaptive.core.runtime.selection.support
 
 /**
-  * Created by pk250187 on 6/11/17.
+  * Created by Petr Kubat on 6/11/17.
   */
 class ClosestProvider[T](val sortedArray: Array[T], val selector: (T) => Long, val value: Long) {
   private var start = sortedArray.indexWhere(n => selector(n) > value)

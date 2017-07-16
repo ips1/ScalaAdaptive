@@ -7,7 +7,7 @@ import scalaadaptive.api.options.Selection
 import scalaj.http.{Http, HttpOptions, HttpResponse}
 
 /**
-  * Created by pk250187 on 5/14/17.
+  * Created by Petr Kubat on 5/14/17.
   */
 class WebApi(val baseUrl: String, val ports: Seq[Int]) {
   val route = "request"

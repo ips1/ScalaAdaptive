@@ -1,7 +1,7 @@
 package scalaadaptive.core.runtime.history.evaluation
 
 /**
-  * Created by pk250187 on 3/19/17.
+  * Created by Petr Kubat on 3/19/17.
   */
 class RunTimeProvider extends EvaluationProvider[Long] {
   override def evaluateFunctionRun[TArgType, TReturnType](fun: (TArgType) => TReturnType,

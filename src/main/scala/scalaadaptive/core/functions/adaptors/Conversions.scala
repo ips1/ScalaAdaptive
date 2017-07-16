@@ -5,7 +5,7 @@ import scalaadaptive.core.runtime.AdaptiveInternal
 import scalaadaptive.core.functions.FunctionFactory
 
 /**
-  * Created by pk250187 on 5/27/17.
+  * Created by Petr Kubat on 5/27/17.
   */
 object Conversions {
   private def functionFactory: FunctionFactory = AdaptiveInternal.getFunctionFactory

@@ -1,7 +1,7 @@
 package scalaadaptive.extensions
 
 /**
-  * Created by pk250187 on 5/8/17.
+  * Created by Petr Kubat on 5/8/17.
   */
 object OptionSerializer {
   def serializeOption[T](option: Option[T]): String = option match {

@@ -8,7 +8,7 @@ import scalaadaptive.core.runtime.{AdaptiveInternal, AdaptiveSelector}
 import scalaadaptive.core.runtime.invocationtokens.SimpleInvocationToken
 
 /**
-  * Created by pk250187 on 6/29/17.
+  * Created by Petr Kubat on 6/29/17.
   */
 class PolicyBasedInvoker extends CombinedFunctionInvoker {
   private def getSelector[TArgType, TRetType](function: CombinedFunction[TArgType, TRetType]): AdaptiveSelector = {

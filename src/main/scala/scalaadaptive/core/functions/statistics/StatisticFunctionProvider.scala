@@ -3,7 +3,7 @@ package scalaadaptive.core.functions.statistics
 import scalaadaptive.core.functions.identifiers.{FunctionIdentifier, IdentifiedFunction}
 
 /**
-  * Created by pk250187 on 5/21/17.
+  * Created by Petr Kubat on 5/21/17.
   */
 trait StatisticFunctionProvider[TArgType, TRetType] {
   def getLast: IdentifiedFunction[TArgType, TRetType]

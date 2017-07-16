@@ -4,7 +4,7 @@ import scalaadaptive.api.policies.{Policy, StatisticDataProvider}
 import scalaadaptive.api.policies.PolicyResult.PolicyResult
 
 /**
-  * Created by pk250187 on 6/23/17.
+  * Created by Petr Kubat on 6/23/17.
   *
   * General type of cyclic policy. It will build the entire policy chain upon decision (the factory functions
   * can work with the statistics at the moment of chaining and should correctly set the nextPolicy of all the

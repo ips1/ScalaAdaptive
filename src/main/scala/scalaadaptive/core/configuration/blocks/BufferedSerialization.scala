@@ -5,7 +5,7 @@ import scalaadaptive.core.runtime.history.historystorage.PersistentHistoryStorag
 import scalaadaptive.core.runtime.history.serialization._
 
 /**
-  * Created by pk250187 on 5/1/17.
+  * Created by Petr Kubat on 5/1/17.
   */
 trait BufferedSerialization extends BaseLongConfiguration {
   protected val serializationBufferSize: Int = 15

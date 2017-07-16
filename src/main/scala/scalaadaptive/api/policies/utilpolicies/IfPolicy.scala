@@ -4,7 +4,7 @@ import scalaadaptive.api.policies.{Policy, StatisticDataProvider}
 import scalaadaptive.api.policies.PolicyResult.PolicyResult
 
 /**
-  * Created by pk250187 on 6/24/17.
+  * Created by Petr Kubat on 6/24/17.
   *
   * A policy that evaluates policy1 if condition holds, policy 2 otherwise.
   *

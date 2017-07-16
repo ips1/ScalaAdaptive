@@ -7,7 +7,7 @@ import scalaadaptive.api.options.Storage.Storage
 import scalaadaptive.api.policies.Policy
 
 /**
-  * Created by pk250187 on 5/8/17.
+  * Created by Petr Kubat on 5/8/17.
   */
 class FunctionConfig(val selection: Option[Selection],
                      val storage: Storage,

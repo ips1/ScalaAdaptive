@@ -6,7 +6,7 @@ import scalaadaptive.core.functions.identifiers.{CustomIdentifierValidator, Cust
 import scalaadaptive.core.runtime.AdaptiveInternal
 
 /**
-  * Created by pk250187 on 4/29/17.
+  * Created by Petr Kubat on 4/29/17.
   */
 object IdentifiedFunction {
   val validator: CustomIdentifierValidator = AdaptiveInternal.getIdentifierValidator

@@ -5,7 +5,7 @@ import scalaadaptive.api.policies.PolicyResult.PolicyResult
 import scalaadaptive.api.policies.builder.conditions.{Condition, SimpleCondition}
 
 /**
-  * Created by pk250187 on 6/24/17.
+  * Created by Petr Kubat on 6/24/17.
   */
 class PolicyBuilderNeedLimit(val inner: PolicyBuilderInner, val lastResult: PolicyResult) {
   val once: PolicyBuilder = new PolicyBuilder(inner.addOncePolicy(lastResult))

@@ -5,7 +5,7 @@ import scalaadaptive.core.logging.Logger
 import scalaadaptive.core.runtime.selection._
 
 /**
-  * Created by pk250187 on 5/1/17.
+  * Created by Petr Kubat on 5/1/17.
   */
 trait BestAverageSelection extends BaseLongConfiguration {
   override val createMeanBasedStrategy: (Logger) => SelectionStrategy[Long] =

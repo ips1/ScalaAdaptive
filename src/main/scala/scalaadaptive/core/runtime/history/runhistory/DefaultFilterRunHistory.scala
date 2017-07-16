@@ -3,7 +3,7 @@ package scalaadaptive.core.runtime.history.runhistory
 import scalaadaptive.core.runtime.history.evaluation.data.EvaluationData
 
 /**
-  * Created by pk250187 on 7/7/17.
+  * Created by Petr Kubat on 7/7/17.
   */
 trait DefaultFilterRunHistory[TMeasurement] extends RunHistory[TMeasurement] {
   protected def makeHistoryFromFilteredItems(items: Iterable[EvaluationData[TMeasurement]]): RunHistory[TMeasurement]

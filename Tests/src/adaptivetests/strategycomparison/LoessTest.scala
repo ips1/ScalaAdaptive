@@ -13,7 +13,7 @@ import scalaadaptive.core.logging.Logger
 import scalaadaptive.core.runtime.selection.{LeastDataSelectionStrategy, LoessInterpolationSelectionStrategy, LowRunAwareSelectionStrategy, SelectionStrategy}
 
 /**
-  * Created by pk250187 on 6/24/17.
+  * Created by Petr Kubat on 6/24/17.
   */
 object LoessTest {
   val methods = new Methods

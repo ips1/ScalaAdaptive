@@ -5,7 +5,7 @@ import scalaadaptive.api.policies.builder.BuilderImplicits.gatherData
 import scalaadaptive.api.policies.{Policy, PolicyResult, StatisticDataProvider}
 
 /**
-  * Created by pk250187 on 6/23/17.
+  * Created by Petr Kubat on 6/23/17.
   */
 class TestStatistics extends StatisticDataProvider {
   var totalRunCount = 0

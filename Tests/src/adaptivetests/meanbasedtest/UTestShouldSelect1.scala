@@ -8,7 +8,7 @@ import scalaadaptive.core.configuration.blocks.{ConsoleLogging, UTestMeanBasedSt
 import scalaadaptive.core.configuration.defaults.{DefaultConfiguration, FullHistoryTTestConfiguration}
 
 /**
-  * Created by pk250187 on 7/8/17.
+  * Created by Petr Kubat on 7/8/17.
   */
 object UTestShouldSelect1 {
   def main(args: Array[String]): Unit = {

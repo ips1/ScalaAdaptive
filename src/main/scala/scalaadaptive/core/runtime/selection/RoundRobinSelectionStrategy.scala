@@ -9,7 +9,7 @@ import scalaadaptive.core.logging.Logger
 import scalaadaptive.core.runtime.history.runhistory.RunHistory
 
 /**
-  * Created by pk250187 on 4/29/17.
+  * Created by Petr Kubat on 4/29/17.
   */
 class RoundRobinSelectionStrategy[TMeasurement](val logger: Logger) extends SelectionStrategy[TMeasurement] {
   private def currentTime = ZonedDateTime.now.toInstant

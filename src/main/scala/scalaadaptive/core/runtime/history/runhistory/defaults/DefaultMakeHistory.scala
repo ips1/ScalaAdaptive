@@ -5,7 +5,7 @@ import scalaadaptive.core.runtime.history.runhistory.{DefaultFilterRunHistory, I
 import scalaadaptive.extensions.Averageable
 
 /**
-  * Created by pk250187 on 7/7/17.
+  * Created by Petr Kubat on 7/7/17.
   */
 trait DefaultMakeHistory[TMeasurement] extends DefaultFilterRunHistory[TMeasurement] {
   protected val num: Averageable[TMeasurement]

@@ -13,7 +13,7 @@ import scalaadaptive.core.functions.statistics.FunctionStatistics
 import scalaadaptive.core.runtime.{AdaptiveInternal, AdaptiveSelector}
 
 /**
-  * Created by pk250187 on 5/21/17.
+  * Created by Petr Kubat on 5/21/17.
   */
 class CombinedFunction[TArgType, TRetType](val functions: Seq[IdentifiedFunction[TArgType, TRetType]],
                                            private val descriptorFunction: Option[(TArgType) => Long],

@@ -12,7 +12,7 @@ import scalaadaptive.core.configuration.BaseLongConfiguration
 import scalaadaptive.core.configuration.blocks._
 
 /**
-  * Created by pk250187 on 7/3/17.
+  * Created by Petr Kubat on 7/3/17.
   */
 object SortingTest {
   val runCount = 500

@@ -7,7 +7,7 @@ import scalaadaptive.core.configuration.defaults._
 import scalaadaptive.api.Adaptive
 
 /**
-  * Created by pk250187 on 3/19/17.
+  * Created by Petr Kubat on 3/19/17.
   */
 object Test {
   def main(args: Array[String]): Unit = {

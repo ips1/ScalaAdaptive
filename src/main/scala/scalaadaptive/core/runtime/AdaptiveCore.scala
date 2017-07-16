@@ -10,7 +10,7 @@ import scalaadaptive.core.functions.identifiers.CustomIdentifierValidator
 import scalaadaptive.core.functions.{CombinedFunctionInvoker, FunctionFactory}
 
 /**
-  * Created by pk250187 on 3/19/17.
+  * Created by Petr Kubat on 3/19/17.
   */
 trait AdaptiveCore {
   private val defaultConfiguration = new FullHistoryTTestConfiguration

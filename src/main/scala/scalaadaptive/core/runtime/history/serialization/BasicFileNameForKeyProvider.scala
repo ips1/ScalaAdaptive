@@ -5,7 +5,7 @@ import scalaadaptive.core.functions.identifiers.{ClosureIdentifier, CustomIdenti
 import scalaadaptive.core.runtime.history.HistoryKey
 
 /**
-  * Created by pk250187 on 4/23/17.
+  * Created by Petr Kubat on 4/23/17.
   */
 class BasicFileNameForKeyProvider extends FileNameForKeyProvider {
   private def getFunctionString(function: FunctionIdentifier): String = function match {

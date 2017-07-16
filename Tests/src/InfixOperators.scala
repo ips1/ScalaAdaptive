@@ -1,5 +1,5 @@
 /**
-  * Created by pk250187 on 4/22/17.
+  * Created by Petr Kubat on 4/22/17.
   */
 object InfixOperators {
   class RichInt {

@@ -8,7 +8,7 @@ import scalaadaptive.core.runtime.selection.support.AverageForSampleCountProvide
 import scalaadaptive.math.WelchTTestRunner
 
 /**
-  * Created by pk250187 on 7/8/17.
+  * Created by Petr Kubat on 7/8/17.
   */
 trait WindowBoundTTestInputBasedStrategy extends BaseLongConfiguration
   with BlockWithWindowAverageSize

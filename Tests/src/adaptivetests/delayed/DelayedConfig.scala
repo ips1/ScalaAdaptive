@@ -1,7 +1,7 @@
 package adaptivetests.delayed
 
 /**
-  * Created by pk250187 on 4/23/17.
+  * Created by Petr Kubat on 4/23/17.
   */
 abstract class DelayedConfig
 

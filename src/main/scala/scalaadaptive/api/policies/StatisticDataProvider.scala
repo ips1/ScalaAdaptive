@@ -1,7 +1,7 @@
 package scalaadaptive.api.policies
 
 /**
-  * Created by pk250187 on 5/27/17.
+  * Created by Petr Kubat on 5/27/17.
   */
 trait StatisticDataProvider {
   def getTotalRunCount: Long

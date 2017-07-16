@@ -7,7 +7,7 @@ import scalaadaptive.core.runtime.selection._
 import scalaadaptive.math.WelchTTestRunner
 
 /**
-  * Created by pk250187 on 5/2/17.
+  * Created by Petr Kubat on 5/2/17.
   */
 trait TTestMeanBasedStrategy extends BaseLongConfiguration
   with BlockWithLowRunLimit

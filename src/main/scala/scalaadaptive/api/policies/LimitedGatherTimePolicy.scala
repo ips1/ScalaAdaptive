@@ -4,7 +4,7 @@ import scalaadaptive.api.policies.PolicyResult.PolicyResult
 import scalaadaptive.api.policies.utilpolicies.repeatuntil._
 
 /**
-  * Created by pk250187 on 6/5/17.
+  * Created by Petr Kubat on 6/5/17.
   */
 class LimitedGatherTimePolicy(val resetPeriod: Long,
                               val allowedGatherTimePerPeriod: Long,

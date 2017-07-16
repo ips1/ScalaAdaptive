@@ -11,7 +11,7 @@ import scalaadaptive.core.configuration.blocks.{LoessInterpolationInputBasedStra
 import scalaadaptive.core.configuration.defaults.FullHistoryTTestConfiguration
 
 /**
-  * Created by pk250187 on 6/7/17.
+  * Created by Petr Kubat on 6/7/17.
   */
 object PredictionTest {
   def generateRandomDataOfRandomSize(maxSize: Int): List[Int] =

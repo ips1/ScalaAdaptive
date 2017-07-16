@@ -1,7 +1,7 @@
 package scalaadaptive.core.performance
 
 /**
-  * Created by pk250187 on 5/20/17.
+  * Created by Petr Kubat on 5/20/17.
   */
 trait PerformanceProvider {
   def getFunctionTime: Long

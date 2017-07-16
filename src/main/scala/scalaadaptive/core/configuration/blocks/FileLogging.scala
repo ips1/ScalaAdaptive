@@ -4,7 +4,7 @@ import scalaadaptive.core.configuration.Configuration
 import scalaadaptive.core.logging.{ConsoleLogger, FileLogger, Logger}
 
 /**
-  * Created by pk250187 on 7/10/17.
+  * Created by Petr Kubat on 7/10/17.
   */
 trait FileLogging extends Configuration {
   protected val logFilePath: String = "./scalaadaptive.log"

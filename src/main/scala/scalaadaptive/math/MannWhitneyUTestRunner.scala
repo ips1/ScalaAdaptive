@@ -6,7 +6,7 @@ import scalaadaptive.core.logging.Logger
 import scalaadaptive.math.TestResult.TestResult
 
 /**
-  * Created by pk250187 on 7/7/17.
+  * Created by Petr Kubat on 7/7/17.
   */
 class MannWhitneyUTestRunner(val logger: Logger) extends UTestRunner {
   private def runTestInternal(sample1: (Iterable[Double], StatisticalSummary),

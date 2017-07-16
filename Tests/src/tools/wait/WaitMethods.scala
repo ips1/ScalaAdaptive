@@ -1,7 +1,7 @@
 package tools.wait
 
 /**
-  * Created by pk250187 on 6/10/17.
+  * Created by Petr Kubat on 6/10/17.
   */
 object WaitMethods {
   def waitForNanos(nanos: Long): Unit = {

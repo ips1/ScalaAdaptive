@@ -1,7 +1,7 @@
 package scalaadaptive.extensions
 
 /**
-  * Created by pk250187 on 4/25/17.
+  * Created by Petr Kubat on 4/25/17.
   */
 
 object IntExtensions {

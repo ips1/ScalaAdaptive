@@ -11,7 +11,7 @@ import scalaadaptive.core.runtime.history.historystorage.HistoryStorage
 import scalaadaptive.core.runtime.selection.SelectionStrategy
 
 /**
-  * Created by pk250187 on 3/26/17.
+  * Created by Petr Kubat on 3/26/17.
   */
 trait Configuration {
   type TMeasurement

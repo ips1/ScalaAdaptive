@@ -4,7 +4,7 @@ import scalaadaptive.api.policies.{Policy, StatisticDataProvider}
 import scalaadaptive.api.policies.PolicyResult.PolicyResult
 
 /**
-  * Created by pk250187 on 6/23/17.
+  * Created by Petr Kubat on 6/23/17.
   *
   * A policy that will always produce given result and return itself as the next policy.
   *

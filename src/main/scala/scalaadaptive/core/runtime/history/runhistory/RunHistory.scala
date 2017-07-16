@@ -8,7 +8,7 @@ import scalaadaptive.core.runtime.history.evaluation.data.{EvaluationData, Group
 import scalaadaptive.math.SimpleTestableRegression
 
 /**
-  * Created by pk250187 on 3/21/17.
+  * Created by Petr Kubat on 3/21/17.
   */
 trait RunHistory[TMeasurement] {
   def identifier: FunctionIdentifier = key.functionId

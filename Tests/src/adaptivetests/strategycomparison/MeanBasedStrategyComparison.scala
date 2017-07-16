@@ -10,7 +10,7 @@ import scalaadaptive.core.configuration.blocks._
 import scalaadaptive.core.functions.identifiers.ClosureIdentifier
 
 /**
-  * Created by pk250187 on 6/24/17.
+  * Created by Petr Kubat on 6/24/17.
   */
 object MeanBasedStrategyComparison {
   val methods = new Methods

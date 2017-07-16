@@ -4,7 +4,7 @@ import scalaadaptive.api.policies.PolicyResult.PolicyResult
 import scalaadaptive.api.policies.utilpolicies.repeatuntil.{RepeatUntilOverheadPolicy, RepeatUntilResetTimePolicy}
 
 /**
-  * Created by pk250187 on 6/1/17.
+  * Created by Petr Kubat on 6/1/17.
   */
 class LimitedOverheadPolicy(val resetPeriod: Long,
                             val allowedOverheadPerPeriod: Long) extends Policy {

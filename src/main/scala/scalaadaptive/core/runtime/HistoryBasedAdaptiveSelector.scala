@@ -18,7 +18,7 @@ import scalaadaptive.core.runtime.selection.{LeastDataSelectionStrategy, Selecti
 import scalaadaptive.core.functions.{RunData, RunResult}
 
 /**
-  * Created by pk250187 on 3/19/17.
+  * Created by Petr Kubat on 3/19/17.
   */
 class HistoryBasedAdaptiveSelector[TMeasurement](historyStorage: HistoryStorage[TMeasurement],
                                                  meanBasedStrategy: SelectionStrategy[TMeasurement],

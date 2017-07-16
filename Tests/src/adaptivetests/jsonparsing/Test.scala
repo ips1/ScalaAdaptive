@@ -6,7 +6,7 @@ import scala.io.Source
 import data.PersonList
 
 /**
-  * Created by pk250187 on 6/1/17.
+  * Created by Petr Kubat on 6/1/17.
   */
 object Test {
   def main(args: Array[String]): Unit = {

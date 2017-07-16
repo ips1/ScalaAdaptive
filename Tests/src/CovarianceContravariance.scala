@@ -4,7 +4,7 @@ class A
 class B
 
 /**
-  * Created by pk250187 on 4/1/17.
+  * Created by Petr Kubat on 4/1/17.
   */
 object CovarianceContravariance {
 //  def fun1(arg: AnyRef): String = "I say nuttin!"

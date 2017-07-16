@@ -4,7 +4,7 @@ import scalaadaptive.api.policies.{Policy, StatisticDataProvider}
 import scalaadaptive.api.policies.PolicyResult.PolicyResult
 
 /**
-  * Created by pk250187 on 6/5/17.
+  * Created by Petr Kubat on 6/5/17.
   *
   * A policy that will keep producing given result until a condition based on the StatisticsDataProvider is
   * fulfilled. Whenever this happens, it immediately lets the nextPolicy do the decision.

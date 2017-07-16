@@ -9,7 +9,7 @@ import scalaadaptive.core.runtime.history.historystorage.PersistentHistoryStorag
 import scalaadaptive.extensions.AverageableImplicits.LongIsAverageable
 
 /**
-  * Created by pk250187 on 4/22/17.
+  * Created by Petr Kubat on 4/22/17.
   */
 trait BaseLongConfiguration extends BaseConfiguration {
   type TMeasurement = Long

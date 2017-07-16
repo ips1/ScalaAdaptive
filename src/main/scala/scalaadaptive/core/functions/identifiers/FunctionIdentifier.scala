@@ -1,7 +1,7 @@
 package scalaadaptive.core.functions.identifiers
 
 /**
-  * Created by pk250187 on 3/19/17.
+  * Created by Petr Kubat on 3/19/17.
   */
 abstract class FunctionIdentifier
 

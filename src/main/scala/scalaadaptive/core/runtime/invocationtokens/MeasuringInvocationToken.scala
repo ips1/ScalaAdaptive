@@ -6,7 +6,7 @@ import scalaadaptive.core.runtime.history.HistoryKey
 import scalaadaptive.core.functions.RunData
 
 /**
-  * Created by pk250187 on 4/23/17.
+  * Created by Petr Kubat on 4/23/17.
   */
 class MeasuringInvocationToken(private val runner: DelayedFunctionRunner,
                                private val inputDescriptor: Option[Long],

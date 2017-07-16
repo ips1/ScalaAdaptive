@@ -1,7 +1,7 @@
 package scalaadaptive.core.performance
 
 /**
-  * Created by pk250187 on 5/1/17.
+  * Created by Petr Kubat on 5/1/17.
   */
 trait PerformanceTracker {
   def addStoringTime(time: Long)

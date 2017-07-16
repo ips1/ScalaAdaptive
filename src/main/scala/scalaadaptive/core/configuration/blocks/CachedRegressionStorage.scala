@@ -5,7 +5,7 @@ import scalaadaptive.core.runtime.history.historystorage.{HistoryStorage, MapHis
 import scalaadaptive.core.runtime.history.runhistory.{CachedRegressionRunHistory, CachedStatisticsRunHistory, FullRunHistory}
 
 /**
-  * Created by pk250187 on 7/1/17.
+  * Created by Petr Kubat on 7/1/17.
   */
 trait CachedRegressionStorage extends BaseLongConfiguration  {
   override val createHistoryStorage: () => HistoryStorage[TMeasurement] = () => {

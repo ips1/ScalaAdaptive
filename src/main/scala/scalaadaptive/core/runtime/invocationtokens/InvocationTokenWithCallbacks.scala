@@ -5,7 +5,7 @@ import scalaadaptive.core.performance.PerformanceProvider
 import scalaadaptive.core.functions.RunData
 
 /**
-  * Created by pk250187 on 5/21/17.
+  * Created by Petr Kubat on 5/21/17.
   */
 /**
   * Measurement token interface that allows binding a callback after the invocation is finished.

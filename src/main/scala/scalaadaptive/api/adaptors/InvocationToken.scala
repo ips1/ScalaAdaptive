@@ -1,7 +1,7 @@
 package scalaadaptive.api.adaptors
 
 /**
-  * Created by pk250187 on 4/23/17.
+  * Created by Petr Kubat on 4/23/17.
   */
 trait InvocationToken {
   def apply[TReturnValue](fun: () => TReturnValue): TReturnValue = runMeasuredFunction(fun)

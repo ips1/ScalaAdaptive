@@ -1,7 +1,7 @@
 package scalaadaptive.math
 
 /**
-  * Created by pk250187 on 5/2/17.
+  * Created by Petr Kubat on 5/2/17.
   */
 object TestResult extends Enumeration {
   type TestResult = Value

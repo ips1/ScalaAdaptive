@@ -6,7 +6,7 @@ import scalaadaptive.core.functions.adaptors.FunctionConfig
 import scalaadaptive.core.functions.identifiers.CustomIdentifierValidator
 
 /**
-  * Created by pk250187 on 6/29/17.
+  * Created by Petr Kubat on 6/29/17.
   */
 class AdaptiveImplementations(val identifierValidator: CustomIdentifierValidator,
                               val multiFunctionDefaults: FunctionConfig,

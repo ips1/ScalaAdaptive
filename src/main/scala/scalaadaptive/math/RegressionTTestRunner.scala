@@ -5,7 +5,7 @@ import org.apache.commons.math3.stat.regression.SimpleRegression
 import scalaadaptive.math.RegressionTTestResult.RegressionTTestResult
 
 /**
-  * Created by pk250187 on 6/7/17.
+  * Created by Petr Kubat on 6/7/17.
   */
 class RegressionTTestRunner extends RegressionTTest {
   private def getQuantile(count: Long, alpha: Double): Double = {

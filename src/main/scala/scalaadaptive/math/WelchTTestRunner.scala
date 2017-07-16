@@ -8,7 +8,7 @@ import scalaadaptive.core.logging.Logger
 import scalaadaptive.math.TestResult.TestResult
 
 /**
-  * Created by pk250187 on 5/2/17.
+  * Created by Petr Kubat on 5/2/17.
   */
 class WelchTTestRunner(val logger: Logger) extends TTestRunner {
 

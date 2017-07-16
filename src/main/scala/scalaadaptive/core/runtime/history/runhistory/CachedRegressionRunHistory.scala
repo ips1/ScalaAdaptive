@@ -9,7 +9,7 @@ import scalaadaptive.extensions.Averageable
 import scalaadaptive.math.SimpleTestableRegression
 
 /**
-  * Created by pk250187 on 7/1/17.
+  * Created by Petr Kubat on 7/1/17.
   *
   * A RunHistory wrapper that computes linear regression of all the runs added.
   *

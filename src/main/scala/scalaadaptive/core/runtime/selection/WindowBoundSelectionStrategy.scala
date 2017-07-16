@@ -6,7 +6,7 @@ import scalaadaptive.core.runtime.selection.support.WindowSizeProvider
 import scalaadaptive.math.RegressionConfidenceTestRunner
 
 /**
-  * Created by pk250187 on 7/7/17.
+  * Created by Petr Kubat on 7/7/17.
   *
   * A wrapper selection strategy that will filter the history records, limiting them only to records with input
   * descriptors in specified "window" around current input descriptor value. Then, it will pass the filtered

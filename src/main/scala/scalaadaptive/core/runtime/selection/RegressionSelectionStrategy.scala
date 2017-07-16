@@ -11,7 +11,7 @@ import scalaadaptive.core.runtime.selection.support.{ClosestProvider, WindowSize
 import scalaadaptive.math._
 
 /**
-  * Created by pk250187 on 5/20/17.
+  * Created by Petr Kubat on 5/20/17.
   */
 class RegressionSelectionStrategy[TMeasurement](val logger: Logger,
                                                 val testRunner: RegressionConfidenceTestRunner,

@@ -1,7 +1,7 @@
 package scalaadaptive.core.configuration
 
 /**
-  * Created by pk250187 on 3/21/17.
+  * Created by Petr Kubat on 3/21/17.
   */
 object Grouping extends Enumeration {
   // TODO: What with this?

@@ -12,7 +12,7 @@ import scalaadaptive.core.configuration.{BaseLongConfiguration, Configuration}
 import scalaadaptive.core.configuration.blocks._
 
 /**
-  * Created by pk250187 on 7/1/17.
+  * Created by Petr Kubat on 7/1/17.
   */
 object OverheadMeasure {
   val runCount = 20000

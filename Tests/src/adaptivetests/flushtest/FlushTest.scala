@@ -8,7 +8,7 @@ import scalaadaptive.api.options.Storage
 import scalaadaptive.api.Adaptive
 
 /**
-  * Created by pk250187 on 5/14/17.
+  * Created by Petr Kubat on 5/14/17.
   */
 object FlushTest {
   def main(args: Array[String]): Unit = {

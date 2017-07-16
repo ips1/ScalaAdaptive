@@ -2,7 +2,7 @@ package scalaadaptive.core.functions
 import scalaadaptive.api.adaptors.InvocationToken
 
 /**
-  * Created by pk250187 on 6/29/17.
+  * Created by Petr Kubat on 6/29/17.
   */
 trait CombinedFunctionInvoker {
 

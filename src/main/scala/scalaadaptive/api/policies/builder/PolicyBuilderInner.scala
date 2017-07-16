@@ -7,7 +7,7 @@ import scalaadaptive.api.policies.utilpolicies.repeatuntil.RepeatUntilCondition
 import scalaadaptive.api.policies.utilpolicies.{AlwaysDoPolicy, CyclicPolicy, DoOncePolicy, IfPolicy}
 
 /**
-  * Created by pk250187 on 6/24/17.
+  * Created by Petr Kubat on 6/24/17.
   */
 class PolicyBuilderInner(val policyFactories: List[(Policy, StatisticDataProvider) => Policy]) {
   def addOncePolicy(result: PolicyResult): PolicyBuilderInner = {

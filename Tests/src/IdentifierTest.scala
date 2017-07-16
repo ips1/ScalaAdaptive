@@ -2,7 +2,7 @@ import scalaadaptive.core.functions.adaptors.Conversions
 import scalaadaptive.core.functions.identifiers.MethodNameIdentifier
 
 /**
-  * Created by pk250187 on 6/29/17.
+  * Created by Petr Kubat on 6/29/17.
   */
 object IdentifierTest {
   def method(): Unit = println("HelloWorld")

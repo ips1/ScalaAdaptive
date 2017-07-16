@@ -3,7 +3,7 @@ package scalaadaptive.api.policies
 import scalaadaptive.api.policies.PolicyResult.PolicyResult
 
 /**
-  * Created by pk250187 on 6/1/17.
+  * Created by Petr Kubat on 6/1/17.
   */
 class StopSelectingWhenDecidedPolicy(val minRuns: Long = 50, val minPercentage: Double = 0.75) extends Policy {
   /**

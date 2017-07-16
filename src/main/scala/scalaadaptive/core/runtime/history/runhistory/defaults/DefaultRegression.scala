@@ -5,7 +5,7 @@ import scalaadaptive.extensions.Averageable
 import scalaadaptive.math.SimpleTestableRegression
 
 /**
-  * Created by pk250187 on 7/1/17.
+  * Created by Petr Kubat on 7/1/17.
   */
 trait DefaultRegression[TMeasurement] extends RunHistory[TMeasurement] {
   protected val num: Averageable[TMeasurement]

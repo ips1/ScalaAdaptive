@@ -9,7 +9,7 @@ import scalaadaptive.core.functions.identifiers.{FunctionIdentifier, IdentifiedF
 import scalaadaptive.core.functions.RunData
 
 /**
-  * Created by pk250187 on 5/20/17.
+  * Created by Petr Kubat on 5/20/17.
   */
 class FunctionStatistics[TArgType, TRetType](defaultLast: IdentifiedFunction[TArgType, TRetType],
                                              val functionResolver: (FunctionIdentifier) => Option[IdentifiedFunction[TArgType,TRetType]])

@@ -3,7 +3,7 @@ package adaptivetests.manyargs
 import scala.util.Random
 
 /**
-  * Created by pk250187 on 6/5/17.
+  * Created by Petr Kubat on 6/5/17.
   */
 class DataGenerator {
   private def nextString(rand: Random, length: Int): String =

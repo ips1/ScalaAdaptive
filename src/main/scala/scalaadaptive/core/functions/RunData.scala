@@ -5,7 +5,7 @@ import scalaadaptive.core.performance.PerformanceProvider
 import scalaadaptive.core.functions.identifiers.FunctionIdentifier
 
 /**
-  * Created by pk250187 on 5/27/17.
+  * Created by Petr Kubat on 5/27/17.
   */
 class RunData(val selectedFunction: FunctionIdentifier,
               val groupId: Group,

@@ -7,7 +7,7 @@ import scalaadaptive.api.options.{Selection, Storage}
 import scalaadaptive.api.Adaptive
 
 /**
-  * Created by pk250187 on 4/23/17.
+  * Created by Petr Kubat on 4/23/17.
   */
 object DelayedTest {
   import scalaadaptive.api.Implicits._

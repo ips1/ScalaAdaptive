@@ -1,7 +1,7 @@
 package scalaadaptive.core.performance
 
 /**
-  * Created by pk250187 on 6/6/17.
+  * Created by Petr Kubat on 6/6/17.
   */
 class PerformanceData(val functionTime: Long,
                       val selectionTime: Long,

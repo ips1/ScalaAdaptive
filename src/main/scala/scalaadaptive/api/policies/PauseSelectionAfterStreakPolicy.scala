@@ -5,7 +5,7 @@ import scalaadaptive.api.policies.utilpolicies.DoOncePolicy
 import scalaadaptive.api.policies.utilpolicies.repeatuntil.RepeatUntilRunCountPolicy
 
 /**
-  * Created by pk250187 on 6/12/17.
+  * Created by Petr Kubat on 6/12/17.
   */
 class PauseSelectionAfterStreakPolicy(val streakSize: Int, val retryEvery: Int) extends Policy {
   /**

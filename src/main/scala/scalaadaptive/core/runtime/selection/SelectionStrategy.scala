@@ -4,7 +4,7 @@ import scalaadaptive.core.runtime.history.HistoryKey
 import scalaadaptive.core.runtime.history.runhistory.RunHistory
 
 /**
-  * Created by pk250187 on 3/19/17.
+  * Created by Petr Kubat on 3/19/17.
   *
   * The trait representing a strategy for selecting the most suitable function given a set of historical
   * measurements ([[RunHistory]]) and an input descriptor. The goal is to select the function with best expected

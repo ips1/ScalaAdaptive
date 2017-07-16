@@ -4,7 +4,7 @@ import scala.reflect.macros.blackbox
 import scala.reflect.macros.blackbox.Context
 
 /**
-  * Created by pk250187 on 4/30/17.
+  * Created by Petr Kubat on 4/30/17.
   */
 class TreeBuilder[C <: blackbox.Context](val c: C) {
   import c.universe._

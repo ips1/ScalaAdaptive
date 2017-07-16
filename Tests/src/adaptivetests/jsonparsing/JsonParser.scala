@@ -10,7 +10,7 @@ import scalaadaptive.api.options.Selection
 import scalaadaptive.api.policies.PauseSelectionAfterStreakPolicy
 
 /**
-  * Created by pk250187 on 6/1/17.
+  * Created by Petr Kubat on 6/1/17.
   */
 class JsonParser[TData] {
   def parseWithFlexjson(json: String, targetClass: Class[TData]): TData = {

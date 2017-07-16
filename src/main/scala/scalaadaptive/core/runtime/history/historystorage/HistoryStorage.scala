@@ -6,7 +6,7 @@ import scalaadaptive.core.runtime.history.HistoryKey
 import scalaadaptive.core.runtime.history.evaluation.data.EvaluationData
 
 /**
-  * Created by pk250187 on 3/21/17.
+  * Created by Petr Kubat on 3/21/17.
   */
 trait HistoryStorage[TMeasurement] {
   /** Retrieves run history from the storage for a specified key */

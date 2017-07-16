@@ -5,7 +5,7 @@ import scalaadaptive.api.identifiers.IdentifiedFunction
 import scalaadaptive.api.options.Storage
 
 /**
-  * Created by pk250187 on 4/29/17.
+  * Created by Petr Kubat on 4/29/17.
   */
 object CustomIdentifierTest {
   import scalaadaptive.api.Implicits._

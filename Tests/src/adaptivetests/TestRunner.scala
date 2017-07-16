@@ -3,7 +3,7 @@ package adaptivetests
 import scala.util.Random
 
 /**
-  * Created by pk250187 on 4/29/17.
+  * Created by Petr Kubat on 4/29/17.
   */
 class TestRunner(val testRunCount: Int = 2) {
   val bigDataSize = 100

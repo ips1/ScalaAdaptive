@@ -3,7 +3,7 @@ package scalaadaptive.core.logging
 import java.io.{BufferedWriter, File, FileWriter, PrintWriter}
 
 /**
-  * Created by pk250187 on 4/1/17.
+  * Created by Petr Kubat on 4/1/17.
   */
 class FileLogger(fileName: String) extends Logger {
   // TODO: Create the path first?

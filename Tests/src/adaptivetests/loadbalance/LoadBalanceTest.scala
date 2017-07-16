@@ -5,7 +5,7 @@ import scalaadaptive.api.Adaptive
 import scalaadaptive.core.configuration.blocks.{ConsoleLogging, NoLogging}
 
 /**
-  * Created by pk250187 on 5/14/17.
+  * Created by Petr Kubat on 5/14/17.
   */
 object LoadBalanceTest {
   val stageRunCount = 50

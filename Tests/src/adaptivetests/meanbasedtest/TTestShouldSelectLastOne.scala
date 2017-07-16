@@ -7,7 +7,7 @@ import scalaadaptive.api.options.Selection
 import scalaadaptive.core.configuration.defaults.FullHistoryTTestConfiguration
 
 /**
-  * Created by pk250187 on 6/6/17.
+  * Created by Petr Kubat on 6/6/17.
   */
 object TTestShouldSelectLastOne {
   def main(args: Array[String]): Unit = {

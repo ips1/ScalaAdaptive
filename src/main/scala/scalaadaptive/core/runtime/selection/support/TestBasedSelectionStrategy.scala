@@ -1,7 +1,7 @@
 package scalaadaptive.core.runtime.selection.support
 
 /**
-  * Created by pk250187 on 7/8/17.
+  * Created by Petr Kubat on 7/8/17.
   */
 import scalaadaptive.core.logging.Logger
 import scalaadaptive.core.runtime.history.HistoryKey

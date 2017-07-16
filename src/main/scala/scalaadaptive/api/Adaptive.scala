@@ -4,7 +4,7 @@ import scalaadaptive.core.configuration.Configuration
 import scalaadaptive.core.runtime.{AdaptiveCore, AdaptiveInternal}
 
 /**
-  * Created by pk250187 on 6/3/17.
+  * Created by Petr Kubat on 6/3/17.
   */
 /**
   * Global API object that allows the library user to initialize the entire framework.

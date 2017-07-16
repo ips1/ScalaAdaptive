@@ -5,7 +5,7 @@ import scalaadaptive.core.runtime.history.evaluation.data.EvaluationData
 import scalaadaptive.core.runtime.history.runhistory.RunHistory
 
 /**
-  * Created by pk250187 on 7/7/17.
+  * Created by Petr Kubat on 7/7/17.
   */
 class WindowFilter(logger: Logger) {
   def filterRecords[TMeasurement](records: Seq[RunHistory[TMeasurement]],

@@ -8,7 +8,7 @@ import scalaadaptive.core.runtime.selection._
 import scalaadaptive.math.{PredictionConfidenceTestRunner, RegressionTTestRunner}
 
 /**
-  * Created by pk250187 on 6/7/17.
+  * Created by Petr Kubat on 6/7/17.
   */
 trait WindowBoundRegressionInputBasedStrategy extends BaseLongConfiguration
   with BlockWithWindowAverageSize

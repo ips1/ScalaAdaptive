@@ -7,7 +7,7 @@ import scalaadaptive.core.runtime.history.HistoryKey
 import scalaadaptive.core.runtime.history.evaluation.data.EvaluationData
 
 /**
-  * Created by pk250187 on 3/21/17.
+  * Created by Petr Kubat on 3/21/17.
   */
 class MapHistoryStorage[TMeasurement](val newHistoryFactory: (HistoryKey) => RunHistory[TMeasurement])
   extends HistoryStorage[TMeasurement] {

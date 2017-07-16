@@ -5,7 +5,7 @@ import scalaadaptive.core.functions.adaptors.FunctionConfig
 import scalaadaptive.core.functions.identifiers.IdentifiedFunction
 
 /**
-  * Created by pk250187 on 5/27/17.
+  * Created by Petr Kubat on 5/27/17.
   */
 trait FunctionFactory {
   def createFunction[TArgType, TRetType](firstOption: IdentifiedFunction[TArgType, TRetType]): CombinedFunction[TArgType, TRetType]

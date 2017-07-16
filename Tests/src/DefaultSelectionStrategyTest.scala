@@ -7,7 +7,7 @@ import scalaadaptive.core.configuration.blocks.ConsoleLogging
 import scalaadaptive.core.configuration.defaults.DefaultConfiguration
 
 /**
-  * Created by pk250187 on 7/16/17.
+  * Created by Petr Kubat on 7/16/17.
   */
 object DefaultSelectionStrategyTest {
   Adaptive.initialize(new DefaultConfiguration with ConsoleLogging)

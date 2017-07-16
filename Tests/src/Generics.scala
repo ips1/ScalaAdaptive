@@ -1,5 +1,5 @@
 /**
-  * Created by pk250187 on 4/8/17.
+  * Created by Petr Kubat on 4/8/17.
   */
 object Generics {
   import scalaadaptive.api.Implicits._

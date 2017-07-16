@@ -5,7 +5,7 @@ import scalaadaptive.core.macros.OrMacroImpl
 import scalaadaptive.api.grouping.Group
 
 /**
-  * Created by pk250187 on 5/27/17.
+  * Created by Petr Kubat on 5/27/17.
   */
 trait MultiFunction0[R] extends MultiFunctionCommon[Unit, R, MultiFunction0[R]] with Function0[R] {
   def or(fun: () => R): MultiFunction0[R] = macro OrMacroImpl.or_impl[() => R, MultiFunction0[R]]

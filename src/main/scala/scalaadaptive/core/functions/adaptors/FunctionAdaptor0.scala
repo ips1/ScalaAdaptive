@@ -5,7 +5,7 @@ import scalaadaptive.api.grouping.Group
 import scalaadaptive.core.functions.{FunctionFactory, CombinedFunction}
 
 /**
-  * Created by pk250187 on 3/19/17.
+  * Created by Petr Kubat on 3/19/17.
   */
 class FunctionAdaptor0[R](val function: CombinedFunction[Unit, R])
   extends FunctionAdaptorBase[Unit, R, FunctionAdaptor0[R]]

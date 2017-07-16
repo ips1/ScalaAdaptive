@@ -17,7 +17,7 @@ import scalaadaptive.core.runtime.selection.{LeastDataSelectionStrategy, Regress
 import scalaadaptive.math.PredictionConfidenceTestRunner
 
 /**
-  * Created by pk250187 on 7/3/17.
+  * Created by Petr Kubat on 7/3/17.
   */
 object MatrixMultiplicationTest {
   val runCount = 40

@@ -1,5 +1,5 @@
 /**
-  * Created by pk250187 on 4/5/17.
+  * Created by Petr Kubat on 4/5/17.
   */
 
 import adaptivetests.sorting.Sorter
