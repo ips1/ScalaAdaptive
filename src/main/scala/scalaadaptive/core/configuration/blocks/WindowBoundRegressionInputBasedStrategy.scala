@@ -22,7 +22,7 @@ trait WindowBoundRegressionInputBasedStrategy extends BaseLongConfiguration
         log,
         leastDataSelectionStrategy,
         new WindowBoundSelectionStrategy[Long](log,
-          Some(new AverageForSampleCountProvider(windowAverageSize)),
+          new AverageForSampleCountProvider(windowAverageSize),
           new RegressionSelectionStrategy[Long](log,
             new PredictionConfidenceTestRunner(log),
             leastDataSelectionStrategy,

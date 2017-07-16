@@ -24,7 +24,7 @@ trait WindowBoundTTestInputBasedStrategy extends BaseLongConfiguration
         leastDataSelector,
         new WindowBoundSelectionStrategy[Long](
           log,
-          Some(new AverageForSampleCountProvider(windowAverageSize)),
+          new AverageForSampleCountProvider(windowAverageSize),
           new TTestSelectionStrategy(log, tTestRunner, leastDataSelector, alpha)
         ),
         lowRunLimit
