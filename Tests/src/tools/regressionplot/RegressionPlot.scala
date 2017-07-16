@@ -1,12 +1,10 @@
 package tools.regressionplot
 
 import adaptivetests.sorttest.SortTest
-import org.apache.commons.math3.stat.regression
 import org.apache.commons.math3.stat.regression.SimpleRegression
 import tools.wait.WaitMethods
 
 import scala.util.Random
-import scalaadaptive.math.{RegressionTTestResult, RegressionTTestRunner}
 
 /**
   * Created by Petr Kubat on 6/10/17.
@@ -50,17 +48,18 @@ object RegressionPlot {
         println(s"$inputSize,$duration")
       })
 
-      val testRunner = new RegressionTTestRunner
+      //val testRunner = new RegressionTTestRunner
       val alpha = 0.05
 
-      val result = testRunner.runTest(regression, alpha)
+      // TODO: NOT WORKING!
+      //val result = testRunner.runTest(regression, alpha)
 
       println(regression.getRSquare)
       println(regression.getR)
 
-      if (result.contains(RegressionTTestResult.CantRejectNoRelationship)) {
-        cantRejectCount += 1
-      }
+//      if (result.contains(RegressionTTestResult.CantRejectNoRelationship)) {
+//        cantRejectCount += 1
+//      }
     })
 
     println(s"$cantRejectCount / $sampleCount : ${(cantRejectCount.toDouble / sampleCount) * 100}")

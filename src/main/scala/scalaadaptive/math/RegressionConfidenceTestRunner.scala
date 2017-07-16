@@ -1,12 +1,13 @@
 package scalaadaptive.math
 
-import org.apache.commons.math3.stat.regression.SimpleRegression
-
-import scalaadaptive.math.RegressionTTestResult.RegressionTTestResult
 import scalaadaptive.math.TestResult.TestResult
 
 /**
   * Created by Petr Kubat on 6/25/17.
+  *
+  * A test for comparing predictions of multiple regression models using confidence intervals for predictions.
+  * For more information see the original thesis text.
+  *
   */
 trait RegressionConfidenceTestRunner {
   /**

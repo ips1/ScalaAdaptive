@@ -15,10 +15,10 @@ import scalaadaptive.core.runtime.selection.AdaptiveSelector
   * Created by Petr Kubat on 3/19/17.
   *
   * The core of the ScalaAdaptive framework - a type that holds all instances of the important modules and can create
-  * them using a [[Configuration]] instance.
+  * them using a [[scalaadaptive.core.configuration.Configuration]] instance.
   *
-  * Requires a default [[Configuration]] from its implementation, which will be used at construction time to initialize
-  * the implementations with default values.
+  * Requires a default [[scalaadaptive.core.configuration.Configuration]] from its implementation, which will be used
+  * at construction time to initialize the implementations with default values.
   *
   * In current usage in ScalaAdaptive, it is used via a singleton [[AdaptiveInternal]] object. The functionality is
   * extracted into the trait in order to be able to use it multiple times not only in singletons in the future.
@@ -71,12 +71,13 @@ trait AdaptiveCore {
   /** Retrieves the default [[scalaadaptive.core.functions.adaptors.FunctionConfig]]. */
   def getMultiFunctionDefaults: FunctionConfig = adaptiveImplementations.multiFunctionDefaults
 
-  /** Retrieves the shared implementation of [[AdaptiveSelector]] working with global storage. */
+  /** Retrieves the shared implementation of [[scalaadaptive.core.runtime.selection.AdaptiveSelector]] working with
+    * global storage. */
   def getSharedSelector: AdaptiveSelector = adaptiveImplementations.runner
 
-  /** Retrieves the shared implementation of [[AdaptiveSelector]] working with persistent
-    * storage (note that it returns the same instance as [[getSharedSelector]] if persistent storage is not supported
-    * by the configuration). */
+  /** Retrieves the shared implementation of [[scalaadaptive.core.runtime.selection.AdaptiveSelector]] working with
+    * persistent storage (note that it returns the same instance as [[getSharedSelector]] if persistent storage is not
+    * supported by the configuration). */
   def getSharedPersistentSelector: AdaptiveSelector = adaptiveImplementations.persistentRunner
 
   /** Retrieves the implementation of [[scalaadaptive.core.functions.FunctionFactory]]. */
@@ -94,7 +95,7 @@ trait AdaptiveCore {
   private def createNewSelector(): AdaptiveSelector =
     initAdaptiveSelector(currentConfiguration)
 
-  /** Creates a new instance of [[AdaptiveSelector]] to hold local history storage.
+  /** Creates a new instance of [[scalaadaptive.core.runtime.selection.AdaptiveSelector]] to hold local history storage.
     * Returns None in case the function configuration does not allow the local history storage. */
   def createLocalSelector(config: FunctionConfig): Option[AdaptiveSelector] =
     if (config.storage == Storage.Local)

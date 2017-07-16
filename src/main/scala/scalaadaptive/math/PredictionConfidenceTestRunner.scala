@@ -8,6 +8,9 @@ import scalaadaptive.math.TestResult.TestResult
 
 /**
   * Created by Petr Kubat on 6/25/17.
+  *
+  * A basic implementation of [[RegressionConfidenceTestRunner]].
+  *
   */
 class PredictionConfidenceTestRunner(val logger: Logger) extends RegressionConfidenceTestRunner {
 

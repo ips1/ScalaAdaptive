@@ -1,20 +1,13 @@
 package adaptivetests.matrixmul
 
-import adaptivetests.sorttest.SortTest
 import org.jlinalg.doublewrapper.DoubleWrapper
 import org.jlinalg.{Matrix, MatrixMultiplication}
 
 import scala.util.Random
 import scalaadaptive.api.Adaptive
-import scalaadaptive.api.grouping.GroupId
 import scalaadaptive.api.options.Selection
-import scalaadaptive.api.policies.PauseSelectionAfterStreakPolicy
 import scalaadaptive.core.configuration.BaseLongConfiguration
 import scalaadaptive.core.configuration.blocks._
-import scalaadaptive.core.logging.Logger
-import scalaadaptive.core.runtime.selection.strategies.support.AverageForSampleCountProvider
-import scalaadaptive.core.runtime.selection.strategies.LeastDataSelectionStrategy
-import scalaadaptive.math.PredictionConfidenceTestRunner
 
 /**
   * Created by Petr Kubat on 7/3/17.

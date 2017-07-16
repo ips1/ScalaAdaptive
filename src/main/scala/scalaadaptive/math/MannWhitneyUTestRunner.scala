@@ -7,6 +7,10 @@ import scalaadaptive.math.TestResult.TestResult
 
 /**
   * Created by Petr Kubat on 7/7/17.
+  *
+  * An implementation of [[UTestRunner]] that uses the default Mann-Whitney U-test.
+  * For more information see the original thesis text.
+  *
   */
 class MannWhitneyUTestRunner(val logger: Logger) extends UTestRunner {
   private def runTestInternal(sample1: (Iterable[Double], StatisticalSummary),

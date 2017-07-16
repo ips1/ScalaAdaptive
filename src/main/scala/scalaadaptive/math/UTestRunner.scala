@@ -6,6 +6,9 @@ import scalaadaptive.math.TestResult.TestResult
 
 /**
   * Created by Petr Kubat on 7/7/17.
+  *
+  * A U-Test provider representation.
+  *
   */
 trait UTestRunner {
   /**

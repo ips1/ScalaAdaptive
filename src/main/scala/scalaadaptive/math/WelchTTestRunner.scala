@@ -9,6 +9,11 @@ import scalaadaptive.math.TestResult.TestResult
 
 /**
   * Created by Petr Kubat on 5/2/17.
+  *
+  * An implementation of [[TTestRunner]] that uses the Welch's T-test. Student's T-test can't be used due to unequal
+  * variances of the samples.
+  * For more information see the original thesis text.
+  *
   */
 class WelchTTestRunner(val logger: Logger) extends TTestRunner {
 
