@@ -39,23 +39,20 @@ class HistoryBasedAdaptiveSelector[TMeasurement](historyStorage: HistoryStorage[
 
   private def getStrategyForGather = new LeastDataSelectionStrategy[TMeasurement](logger)
 
-  private def selectRecord[TArgType, TReturnType](options: Seq[IdentifiedFunction[TArgType, TReturnType]],
-                                                  runSelector: SelectionStrategy[TMeasurement],
-                                                  groupId: Group,
-                                                  inputDescriptor: Option[Long],
-                                                  limitedBy: Option[Duration]): HistoryKey = {
-    logger.log(s"Target group: $groupId, byValue: $inputDescriptor")
+  private def selectRecord[TArgType, TReturnType](input: SelectionInput[TArgType, TReturnType],
+                                                  strategy: SelectionStrategy[TMeasurement]): HistoryKey = {
+    logger.log(s"Target group: ${input.groupId}, byValue: ${input.inputDescriptor}")
 
-    val allHistories = options.map(f => historyStorage.getHistory(HistoryKey(f.identifier, groupId)))
+    val allHistories = input.options.map(f => historyStorage.getHistory(HistoryKey(f.identifier, input.groupId)))
 
-    val histories = limitedBy match {
+    val histories = input.limitedBy match {
       case Some(duration) => allHistories.map(h => filterHistoryByDuration(h, duration))
       case _ => allHistories
     }
 
     val selectedRecord =
       if (histories.length > 1)
-        runSelector.selectOption(histories, inputDescriptor)
+        strategy.selectOption(histories, input.inputDescriptor)
       else
         histories.head.key
 
@@ -63,59 +60,41 @@ class HistoryBasedAdaptiveSelector[TMeasurement](historyStorage: HistoryStorage[
     selectedRecord
   }
 
-  private def selectAndRun[TArgType, TReturnType](options: Seq[IdentifiedFunction[TArgType, TReturnType]],
-                                                  arguments: TArgType,
-                                                  groupId: Group,
-                                                  inputDescriptor: Option[Long],
-                                                  limitedBy: Option[Duration],
+  private def selectAndRun[TArgType, TReturnType](input: SelectionInput[TArgType, TReturnType],
                                                   strategy: SelectionStrategy[TMeasurement]): RunResult[TReturnType] = {
     val tracker = new BasicPerformanceTracker
     tracker.startTracking()
 
     // Select function to run
-    val selectedKey = selectRecord(options, strategy, groupId, inputDescriptor, limitedBy)
-    val functionToRun = options.find(_.identifier == selectedKey.functionId).get.fun
+    val selectedKey = selectRecord(input, strategy)
+    val functionToRun = input.options.find(_.identifier == selectedKey.functionId).get.fun
 
     tracker.addSelectionTime()
 
     // Execute the function
-    runMeasuredFunction(functionToRun, arguments, selectedKey, inputDescriptor, tracker)
+    runMeasuredFunction(functionToRun, input.arguments, selectedKey, input.inputDescriptor, tracker)
   }
 
-  private def selectAndRunWithDelayedMeasure[TArgType, TReturnType](options: Seq[IdentifiedFunction[TArgType, TReturnType]],
-                                                                    arguments: TArgType,
-                                                                    groupId: Group,
-                                                                    inputDescriptor: Option[Long],
-                                                                    limitedBy: Option[Duration],
+  private def selectAndRunWithDelayedMeasure[TArgType, TReturnType](input: SelectionInput[TArgType, TReturnType],
                                                                     strategy: SelectionStrategy[TMeasurement]): (TReturnType, InvocationTokenWithCallbacks) = {
     val tracker = new BasicPerformanceTracker
     tracker.startTracking()
 
     // Select function to run
-    val selectedKey = selectRecord(options, strategy, groupId, inputDescriptor, limitedBy)
-    val functionToRun = options.find(_.identifier == selectedKey.functionId).get.fun
+    val selectedKey = selectRecord(input, strategy)
+    val functionToRun = input.options.find(_.identifier == selectedKey.functionId).get.fun
 
     tracker.addSelectionTime()
 
     // Execute the function
-    (functionToRun(arguments), new MeasuringInvocationToken(this, inputDescriptor, selectedKey, tracker))
+    (functionToRun(input.arguments), new MeasuringInvocationToken(this, input.inputDescriptor, selectedKey, tracker))
   }
 
-  override def selectAndRun[TArgType, TReturnType](options: Seq[IdentifiedFunction[TArgType, TReturnType]],
-                                                   arguments: TArgType,
-                                                   groupId: Group,
-                                                   inputDescriptor: Option[Long],
-                                                   limitedBy: Option[Duration],
-                                                   selection: Selection): RunResult[TReturnType] =
-    selectAndRun(options, arguments, groupId, inputDescriptor, limitedBy, getStrategyForSelection(selection))
+  override def selectAndRun[TArgType, TReturnType](input: SelectionInput[TArgType, TReturnType]): RunResult[TReturnType] =
+    selectAndRun(input, getStrategyForSelection(input.selection))
 
-  override def selectAndRunWithDelayedMeasure[TArgType, TReturnType](options: Seq[IdentifiedFunction[TArgType, TReturnType]],
-                                                                     arguments: TArgType,
-                                                                     groupId: Group,
-                                                                     inputDescriptor: Option[Long],
-                                                                     limitedBy: Option[Duration],
-                                                                     selection: Selection): (TReturnType, InvocationTokenWithCallbacks) =
-    selectAndRunWithDelayedMeasure(options, arguments,groupId, inputDescriptor, limitedBy, getStrategyForSelection(selection))
+  override def selectAndRunWithDelayedMeasure[TArgType, TReturnType](input: SelectionInput[TArgType, TReturnType]): (TReturnType, InvocationTokenWithCallbacks) =
+    selectAndRunWithDelayedMeasure(input, getStrategyForSelection(input.selection))
 
   override def runMeasuredFunction[TArgType, TReturnType](fun: (TArgType) => TReturnType,
                                                           arguments: TArgType,
@@ -145,17 +124,11 @@ class HistoryBasedAdaptiveSelector[TMeasurement](historyStorage: HistoryStorage[
   override def flushHistory(function: FunctionIdentifier): Unit =
     historyStorage.flushHistory(function)
 
-  override def gatherData[TArgType, TReturnType](options: Seq[IdentifiedFunction[TArgType, TReturnType]],
-                                                 arguments: TArgType,
-                                                 groupId: Group,
-                                                 inputDescriptor: Option[Long]): RunResult[TReturnType] = {
-    selectAndRun(options, arguments, groupId, inputDescriptor, None, getStrategyForGather)
+  override def gatherData[TArgType, TReturnType](input: SelectionInput[TArgType, TReturnType]): RunResult[TReturnType] = {
+    selectAndRun(input, getStrategyForGather)
   }
 
-  override def gatherDataWithDelayedMeasure[TArgType, TReturnType](options: Seq[IdentifiedFunction[TArgType, TReturnType]],
-                                                                   arguments: TArgType,
-                                                                   groupId: Group,
-                                                                   inputDescriptor: Option[Long]): (TReturnType, InvocationTokenWithCallbacks) = {
-    selectAndRunWithDelayedMeasure(options, arguments, groupId, inputDescriptor, None, getStrategyForGather)
+  override def gatherDataWithDelayedMeasure[TArgType, TReturnType](input: SelectionInput[TArgType, TReturnType]): (TReturnType, InvocationTokenWithCallbacks) = {
+    selectAndRunWithDelayedMeasure(input, getStrategyForGather)
   }
 }

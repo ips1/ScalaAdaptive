@@ -11,33 +11,49 @@ import scalaadaptive.core.runtime.invocationtokens.InvocationTokenWithCallbacks
 /**
   * Created by Petr Kubat on 3/26/17.
   *
-  * Used to run one of multiple options passed in based on a history of previous runs of the options.
+  * A module that is used to select and invoke one of multiple options passed in.
   *
   */
 trait AdaptiveSelector {
-  def selectAndRun[TArgType, TReturnType](options: Seq[IdentifiedFunction[TArgType, TReturnType]],
-                                          arguments: TArgType,
-                                          groupId: Group,
-                                          inputDescriptor: Option[Long],
-                                          limitedBy: Option[Duration],
-                                          selection: Selection): RunResult[TReturnType]
+  /**
+    * Selects and invokes one of given function options. Evaluates its run.
+    *
+    * @param input The input of the selection process, see [[SelectionInput]]
+    * @return The result of the invocation containing the return value, see [[RunResult]]
+    */
+  def selectAndRun[TArgType, TReturnType](input: SelectionInput[TArgType, TReturnType]): RunResult[TReturnType]
 
-  def selectAndRunWithDelayedMeasure[TArgType, TReturnType](options: Seq[IdentifiedFunction[TArgType, TReturnType]],
-                                                            arguments: TArgType,
-                                                            groupId: Group,
-                                                            inputDescriptor: Option[Long],
-                                                            limitedBy: Option[Duration],
-                                                            selection: Selection): (TReturnType, InvocationTokenWithCallbacks)
+  /**
+    * Selects and invokes one of given function options with delayed measure. Does not evaluate the function run
+    * and return an [[scalaadaptive.api.functions.InvocationToken]] with a backward link to the selection instead.
+    *
+    * @param input The input of the selection process, see [[SelectionInput]]
+    * @return The result of the invocation containing the return value, see [[RunResult]], and an [[scalaadaptive.api.functions.InvocationToken]]
+    *         to be used for feedback measurements of the function that was influenced by the selection.
+    */
+  def selectAndRunWithDelayedMeasure[TArgType, TReturnType](input: SelectionInput[TArgType, TReturnType]): (TReturnType, InvocationTokenWithCallbacks)
 
-  def gatherData[TArgType, TReturnType](options: Seq[IdentifiedFunction[TArgType, TReturnType]],
-                                        arguments: TArgType,
-                                        groupId: Group,
-                                        inputDescriptor: Option[Long]): RunResult[TReturnType]
+  /**
+    * Invokes the function with least data records available. Evaluates its run.
+    *
+    * @param input The input data, only fields relevant to the gathering are used, see [[SelectionInput]]
+    * @return The result of the invocation containing the return value, see [[RunResult]]
+    */
+  def gatherData[TArgType, TReturnType](input: SelectionInput[TArgType, TReturnType]): RunResult[TReturnType]
 
-  def gatherDataWithDelayedMeasure[TArgType, TReturnType](options: Seq[IdentifiedFunction[TArgType, TReturnType]],
-                                                          arguments: TArgType,
-                                                          groupId: Group,
-                                                          inputDescriptor: Option[Long]): (TReturnType, InvocationTokenWithCallbacks)
+  /**
+    * Invokes the function with least data records available. Does not evaluate the function run
+    * and return an [[scalaadaptive.api.functions.InvocationToken]] with a backward link to the gathering instead.
+    *
+    * @param input The input data, only fields relevant to the gathering are used, see [[SelectionInput]]
+    * @return The result of the invocation containing the return value, see [[RunResult]], and an [[scalaadaptive.api.functions.InvocationToken]]
+    *         to be used for feedback measurements of the function that was influenced by the gathering.
+    */
+  def gatherDataWithDelayedMeasure[TArgType, TReturnType](input: SelectionInput[TArgType, TReturnType]): (TReturnType, InvocationTokenWithCallbacks)
 
+  /**
+    * Flushes the entire run history for a function with given identifier.
+    * @param function The identifier of the function.
+    */
   def flushHistory(function: FunctionIdentifier)
 }

@@ -7,7 +7,7 @@ import scalaadaptive.api.policies.PolicyResult
 import scalaadaptive.core.functions.{CombinedFunction, RunData}
 import scalaadaptive.core.runtime.invocationtokens.SimpleInvocationToken
 import scalaadaptive.core.runtime.AdaptiveInternal
-import scalaadaptive.core.runtime.selection.AdaptiveSelector
+import scalaadaptive.core.runtime.selection.{AdaptiveSelector, SelectionInput}
 
 /**
   * Created by Petr Kubat on 6/29/17.
@@ -22,11 +22,19 @@ class PolicyBasedInvoker extends CombinedFunctionInvoker {
     }
   }
 
+  private def generateSelectionInput[TArgType, TRetType](function: CombinedFunction[TArgType, TRetType],
+                                                         arguments: TArgType,
+                                                         groupId: Group,
+                                                         inputDescriptor: Option[Long]): SelectionInput[TArgType, TRetType] =
+    new SelectionInput(function.functions, arguments, groupId, inputDescriptor,
+      function.functionConfig.duration, function.getSelection)
+
   private def train[TArgType, TRetType](function: CombinedFunction[TArgType, TRetType],
                                         data: TArgType): Unit = {
     val groupId = function.getGroup(data)
     function.functions.foreach(f => {
-      getSelector(function).gatherData(List(f), data, groupId, function.getInputDescriptor(data))
+      getSelector(function).gatherData(new SelectionInput(List(f), data, groupId, function.getInputDescriptor(data),
+        function.functionConfig.duration, function.getSelection))
     })
   }
 
@@ -43,12 +51,12 @@ class PolicyBasedInvoker extends CombinedFunctionInvoker {
                                                       groupId: Group,
                                                       gather: Boolean): TRetType = {
     val inputDescriptor = function.getInputDescriptor(arguments)
+    val selectionInput = generateSelectionInput(function, arguments, groupId, inputDescriptor)
     val runResult =
       if (gather)
-        getSelector(function).gatherData(function.functions, arguments, groupId, inputDescriptor)
+        getSelector(function).gatherData(selectionInput)
       else
-        getSelector(function).selectAndRun(function.functions, arguments, groupId, inputDescriptor,
-          function.functionConfig.duration, function.getSelection)
+        getSelector(function).selectAndRun(selectionInput)
 
     processRunData(function, runResult.runData, gather)
     runResult.value
@@ -59,13 +67,13 @@ class PolicyBasedInvoker extends CombinedFunctionInvoker {
                                                                         groupId: Group,
                                                                         gather: Boolean): (TRetType, InvocationToken) = {
     val inputDescriptor = function.getInputDescriptor(arguments)
+    val selectionInput = generateSelectionInput(function, arguments, groupId, inputDescriptor)
     val (runResult, token) =
       if (gather)
-        getSelector(function).gatherDataWithDelayedMeasure(function.functions, arguments, groupId,
-          inputDescriptor)
+        getSelector(function).gatherDataWithDelayedMeasure(selectionInput)
       else
-        getSelector(function).selectAndRunWithDelayedMeasure(function.functions, arguments, groupId,
-          inputDescriptor, function.functionConfig.duration, function.getSelection)
+        getSelector(function).selectAndRunWithDelayedMeasure(selectionInput)
+
     token.setAfterInvocationCallback(data => processRunData(function, data, gather))
 
     (runResult, token)
@@ -97,7 +105,7 @@ class PolicyBasedInvoker extends CombinedFunctionInvoker {
     data.currentPolicy = newPolicy
     data.statistics.markRun()
     result match {
-      // Fast results that avoid the RunTracker invocation
+      // Fast results that avoid the AdaptiveSelector invocation
       case PolicyResult.UseLast => (data.statistics.getLast.fun(arguments), new SimpleInvocationToken)
       case PolicyResult.UseMost => (data.statistics.getMostSelectedFunction.fun(arguments), new SimpleInvocationToken)
       // Slow results that use the RunTracker and measure and gather data
