@@ -73,8 +73,8 @@ class FunctionStatistics[TArgType, TRetType](defaultLast: IdentifiedFunction[TAr
       functionResolver(timesSelected.minBy(_._2)._1).getOrElse(defaultLast)
 
   override def getTotalRunCount: Long = totalRunCount
-  override def getLastRunCount: Long = timesSelected.getOrElse(last.identifier, 0)
-  override def getMostRunCount: Long = if (timesSelected.isEmpty) 0 else getMostSelectedRecord._2
+  override def getLastSelectCount: Long = timesSelected.getOrElse(last.identifier, 0)
+  override def getMostSelectCount: Long = if (timesSelected.isEmpty) 0 else getMostSelectedRecord._2
   override def getTotalGatherTime: Long = totalGatherTime
   override def getTotalTime: Long = totalFunctionTime + totalOverheadTime
   override def getTotalFunctionTime: Long = totalFunctionTime

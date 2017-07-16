@@ -6,6 +6,12 @@ import scalaadaptive.api.policies.utilpolicies.repeatuntil.RepeatUntilRunCountPo
 
 /**
   * Created by Petr Kubat on 6/12/17.
+  *
+  * A policy that emits [[PolicyResult.SelectNew]] until a [[StatisticDataProvider.getStreakLength]] reaches streakSize.
+  * Afterwards, the [[PolicyResult.UseLast]] is emitted, with [[PolicyResult.SelectNew]] every retryEvery attempts.
+  * Then, the [[StatisticDataProvider.getStreakLength]] is checked again, either getting back to [[PolicyResult.SelectNew]]
+  * when it drops below streakSize, or continuing with [[PolicyResult.UseLast]] otherwise.
+  *
   */
 class PauseSelectionAfterStreakPolicy(val streakSize: Int, val retryEvery: Int) extends Policy {
   /**

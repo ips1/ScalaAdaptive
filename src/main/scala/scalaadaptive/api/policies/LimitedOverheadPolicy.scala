@@ -5,6 +5,12 @@ import scalaadaptive.api.policies.utilpolicies.repeatuntil.{RepeatUntilOverheadP
 
 /**
   * Created by Petr Kubat on 6/1/17.
+  *
+  * A policy that works in loops and for each loop will emmit:
+  * - [[PolicyResult.SelectNew]] until [[StatisticDataProvider.getTotalOverheadTime]] reaches allowedOverheadPerPeriod
+  * - then [[PolicyResult.UseMost]] until the resetPeriod elapses
+  * - afterwards, the loop is reset
+  *
   */
 class LimitedOverheadPolicy(val resetPeriod: Long,
                             val allowedOverheadPerPeriod: Long) extends Policy {

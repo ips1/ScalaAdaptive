@@ -5,6 +5,14 @@ import scalaadaptive.api.policies.utilpolicies.repeatuntil._
 
 /**
   * Created by Petr Kubat on 6/5/17.
+  *
+  * A policy that works in loops and for each loop will emmit:
+  * - [[PolicyResult.GatherData]] until [[StatisticDataProvider.getTotalGatherTime]] reaches allowedGatherTimePerPeriod
+  * - then [[PolicyResult.SelectNew]] until [[StatisticDataProvider.getTotalTime]] reaches
+  * allowedSelectionTimePerPeriod + allowedGatherTimePerPeriod
+  * - then [[PolicyResult.UseMost]] until the resetPeriod elapses
+  * - afterwards, the loop is reset
+  *
   */
 class LimitedGatherTimePolicy(val resetPeriod: Long,
                               val allowedGatherTimePerPeriod: Long,

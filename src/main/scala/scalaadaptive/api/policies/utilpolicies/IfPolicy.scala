@@ -6,7 +6,7 @@ import scalaadaptive.api.policies.PolicyResult.PolicyResult
 /**
   * Created by Petr Kubat on 6/24/17.
   *
-  * A policy that evaluates policy1 if condition holds, policy 2 otherwise.
+  * A policy that evaluates policy1 if condition holds, policy2 otherwise.
   *
   */
 class IfPolicy(val condition: (StatisticDataProvider) => Boolean, policy1: Policy, val policy2: Policy) extends Policy {

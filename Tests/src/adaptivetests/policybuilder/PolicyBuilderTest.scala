@@ -27,8 +27,8 @@ class TestStatistics extends StatisticDataProvider {
   override def getTotalFunctionTime: Long = totalFunctionTime
   override def getTotalOverheadTime: Long = totalOverheadTime
   override def getTotalGatherTime: Long = totalGatherTime
-  override def getLastRunCount: Long = lastRunCount
-  override def getMostRunCount: Long = mostRunCount
+  override def getLastSelectCount: Long = lastRunCount
+  override def getMostSelectCount: Long = mostRunCount
 }
 
 object PolicyBuilderTest {
@@ -52,14 +52,14 @@ object PolicyBuilderTest {
     (
       (selectNew once)
         andThenIf ((stats: StatisticDataProvider) => stats.getStreakLength >= 20) goTo (useLast forever)
-        andThenIf ((stats: StatisticDataProvider) => stats.getMostRunCount.toDouble / stats.getTotalRunCount >= 0.8) goTo (useMost forever)
+        andThenIf ((stats: StatisticDataProvider) => stats.getMostSelectCount.toDouble / stats.getTotalRunCount >= 0.8) goTo (useMost forever)
       andThenRepeat
     )
 
   val andPolicy: Policy = {
     (
       selectNew until
-        (((stats: StatisticDataProvider) => stats.getMostRunCount.toDouble / stats.getTotalRunCount) growsBy 0.1
+        (((stats: StatisticDataProvider) => stats.getMostSelectCount.toDouble / stats.getTotalRunCount) growsBy 0.1
         and (mostRunCount growsBy 50))
       andThen useMost until ((() => System.nanoTime()) growsBy 10000000)
       andThenRepeat

@@ -4,6 +4,9 @@ import scalaadaptive.core.functions.statistics.StatisticFunctionProvider
 
 /**
   * Created by Petr Kubat on 5/21/17.
+  *
+  * A policy that will emmit the [[PolicyResult.SelectNew]] forever.
+  *
   */
 class AlwaysSelectPolicy extends Policy {
   /**
