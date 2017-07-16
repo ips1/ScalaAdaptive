@@ -21,6 +21,7 @@ trait Configuration {
   val createPersistentHistoryStorage: () => Option[HistoryStorage[TMeasurement]]
   val createMeanBasedStrategy: (Logger) => SelectionStrategy[TMeasurement]
   val createInputBasedStrategy: (Logger) => SelectionStrategy[TMeasurement]
+  val createGatherDataStrategy: (Logger) => SelectionStrategy[TMeasurement]
   val createEvaluationProvider: () => EvaluationProvider[TMeasurement]
   val createLogger: () => Logger
   val createIdentifierValidator: () => CustomIdentifierValidator
@@ -29,5 +30,6 @@ trait Configuration {
   val createAnalyticsSerializer: () => AnalyticsSerializer
   val createAnalyticsCollector: () => AnalyticsCollector
   val initAdaptiveSelector: (HistoryStorage[TMeasurement], SelectionStrategy[TMeasurement],
-    SelectionStrategy[TMeasurement], EvaluationProvider[TMeasurement], Logger) => AdaptiveSelector
+    SelectionStrategy[TMeasurement], SelectionStrategy[TMeasurement], EvaluationProvider[TMeasurement],
+    Logger) => AdaptiveSelector
 }

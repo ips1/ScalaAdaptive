@@ -19,10 +19,30 @@ import scalaadaptive.core.runtime.selection.strategies.{LeastDataSelectionStrate
 
 /**
   * Created by Petr Kubat on 3/19/17.
+  *
+  * An [[AdaptiveSelector]] that holds a history storage ([[HistoryStorage]]) containing evaluation histories of all
+  * runs of all functions that were selected and invoked using this selector.
+  *
+  * Holds three instances of [[SelectionStrategy]] that it uses to select functions:
+  * - meanBasedStrategy for selection with [[Selection.MeanBased]]
+  * - inputBasedStrategy for selection with [[Selection.InputBased]]
+  * - gatherDataStrategy for gather data action
+  *
+  * The evaluation represented by the [[TMeasurement]] type is provided by an [[EvaluationProvider]] instance.
+  *
+  * The whole selection process is logged using a [[Logger]] instance.
+  *
+  * The run times of certain phases of the selection, execution and storing process are tracked independently on the
+  * function evaluation using a [[BasicPerformanceTracker]].
+  *
+  * By extending the [[DelayedFunctionRunner]] trait can handle the measurement of executions connected to functions
+  * with delayed measurement (using an [[scalaadaptive.api.functions.InvocationToken]].
+  *
   */
 class HistoryBasedAdaptiveSelector[TMeasurement](historyStorage: HistoryStorage[TMeasurement],
                                                  meanBasedStrategy: SelectionStrategy[TMeasurement],
                                                  inputBasedStrategy: SelectionStrategy[TMeasurement],
+                                                 gatherDataStrategy: SelectionStrategy[TMeasurement],
                                                  evaluationProvider: EvaluationProvider[TMeasurement],
                                                  logger: Logger) extends AdaptiveSelector with DelayedFunctionRunner {
 
@@ -36,8 +56,6 @@ class HistoryBasedAdaptiveSelector[TMeasurement](historyStorage: HistoryStorage[
     case Selection.InputBased => inputBasedStrategy
     case Selection.MeanBased => meanBasedStrategy
   }
-
-  private def getStrategyForGather = new LeastDataSelectionStrategy[TMeasurement](logger)
 
   private def selectRecord[TArgType, TReturnType](input: SelectionInput[TArgType, TReturnType],
                                                   strategy: SelectionStrategy[TMeasurement]): HistoryKey = {
@@ -125,10 +143,10 @@ class HistoryBasedAdaptiveSelector[TMeasurement](historyStorage: HistoryStorage[
     historyStorage.flushHistory(function)
 
   override def gatherData[TArgType, TReturnType](input: SelectionInput[TArgType, TReturnType]): RunResult[TReturnType] = {
-    selectAndRun(input, getStrategyForGather)
+    selectAndRun(input, gatherDataStrategy)
   }
 
   override def gatherDataWithDelayedMeasure[TArgType, TReturnType](input: SelectionInput[TArgType, TReturnType]): (TReturnType, InvocationTokenWithCallbacks) = {
-    selectAndRunWithDelayedMeasure(input, getStrategyForGather)
+    selectAndRunWithDelayedMeasure(input, gatherDataStrategy)
   }
 }

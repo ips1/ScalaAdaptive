@@ -13,7 +13,7 @@ import scalaadaptive.api.policies.AlwaysSelectPolicy
 import scalaadaptive.core.runtime.history.evaluation.EvaluationProvider
 import scalaadaptive.core.runtime.invocation.{CombinedFunctionInvoker, PolicyBasedInvoker}
 import scalaadaptive.core.runtime.selection.HistoryBasedAdaptiveSelector
-import scalaadaptive.core.runtime.selection.strategies.SelectionStrategy
+import scalaadaptive.core.runtime.selection.strategies.{LeastDataSelectionStrategy, SelectionStrategy}
 import scalaadaptive.core.runtime.selection.{AdaptiveSelector, HistoryBasedAdaptiveSelector}
 import scalaadaptive.extensions.Averageable
 
@@ -43,6 +43,9 @@ trait BaseConfiguration extends Configuration {
   override val createAnalyticsSerializer: () => AnalyticsSerializer =
     () => new CsvAnalyticsSerializer
 
+  override val createGatherDataStrategy: (Logger) => SelectionStrategy[TMeasurement] =
+    (logger) => new LeastDataSelectionStrategy[TMeasurement](logger)
+
   override val createFunctionInvoker: () => CombinedFunctionInvoker =
     () => new PolicyBasedInvoker
 
@@ -50,12 +53,14 @@ trait BaseConfiguration extends Configuration {
     () => new FunctionConfig(None, Storage.Global, None, false, new AlwaysSelectPolicy)
 
   override val initAdaptiveSelector: (HistoryStorage[TMeasurement], SelectionStrategy[TMeasurement],
-    SelectionStrategy[TMeasurement], EvaluationProvider[TMeasurement], Logger) => AdaptiveSelector =
-    (historyStorage, meanBasedStrategy, inputBasedStrategy, evaluationProvider, logger) =>
+    SelectionStrategy[TMeasurement], SelectionStrategy[TMeasurement], EvaluationProvider[TMeasurement],
+    Logger) => AdaptiveSelector =
+    (historyStorage, meanBasedStrategy, inputBasedStrategy, gatherDataStrategy, evaluationProvider, logger) =>
       new HistoryBasedAdaptiveSelector[TMeasurement](
         historyStorage,
         meanBasedStrategy,
         inputBasedStrategy,
+        gatherDataStrategy,
         evaluationProvider,
         logger)
 }

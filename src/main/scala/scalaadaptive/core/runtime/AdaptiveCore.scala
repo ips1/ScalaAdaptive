@@ -34,6 +34,7 @@ trait AdaptiveCore {
     configuration.initAdaptiveSelector(configuration.createHistoryStorage(),
       configuration.createMeanBasedStrategy(logger),
       configuration.createInputBasedStrategy(logger),
+      configuration.createGatherDataStrategy(logger),
       configuration.createEvaluationProvider(),
       logger)
   }
@@ -44,6 +45,7 @@ trait AdaptiveCore {
       configuration.initAdaptiveSelector(persistentStorage,
         configuration.createMeanBasedStrategy(logger),
         configuration.createInputBasedStrategy(logger),
+        configuration.createGatherDataStrategy(logger),
         configuration.createEvaluationProvider(),
         logger)
     )
