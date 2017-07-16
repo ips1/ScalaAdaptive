@@ -3,7 +3,7 @@ package scalaadaptive.core.functions.adaptors
 import java.time.Duration
 
 import scalaadaptive.analytics.AnalyticsData
-import scalaadaptive.api.adaptors.InvocationToken
+import scalaadaptive.api.functions.InvocationToken
 import scalaadaptive.api.grouping.Group
 import scalaadaptive.api.options.Selection.Selection
 import scalaadaptive.api.options.Storage.Storage

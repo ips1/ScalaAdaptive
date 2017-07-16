@@ -5,7 +5,7 @@ import adaptivetests.sorting.Sorter
 
 import scala.util.Random
 import scalaadaptive.api.Adaptive
-import scalaadaptive.api.adaptors.MultiFunction1
+import scalaadaptive.api.functions.AdaptiveFunction1
 import scalaadaptive.api.options.Selection.Selection
 import scalaadaptive.api.options.{Selection, Storage}
 import scalaadaptive.core.configuration.{BaseLongConfiguration, Configuration}
@@ -29,7 +29,7 @@ object OverheadMeasure {
     System.nanoTime - start
   }
 
-  private def performTestStep(input: List[Int], sort: MultiFunction1[List[Int], List[Int]]): RunMeasure = {
+  private def performTestStep(input: List[Int], sort: AdaptiveFunction1[List[Int], List[Int]]): RunMeasure = {
     val externalTime = measureExecTime(() => sort(input))
     val lastRecord = sort.getAnalyticsData.get.getAllRunInfo.last
     new RunMeasure(externalTime, lastRecord.runTime, lastRecord.overheadTime)

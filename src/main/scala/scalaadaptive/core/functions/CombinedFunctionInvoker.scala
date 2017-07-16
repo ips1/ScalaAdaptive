@@ -1,5 +1,5 @@
 package scalaadaptive.core.functions
-import scalaadaptive.api.adaptors.InvocationToken
+import scalaadaptive.api.functions.InvocationToken
 
 /**
   * Created by Petr Kubat on 6/29/17.

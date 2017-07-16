@@ -1,6 +1,6 @@
 package scalaadaptive.core.runtime.invocationtokens
 
-import scalaadaptive.api.adaptors.InvocationToken
+import scalaadaptive.api.functions.InvocationToken
 
 /**
   * Created by Petr Kubat on 5/21/17.

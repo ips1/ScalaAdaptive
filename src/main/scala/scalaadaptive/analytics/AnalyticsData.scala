@@ -5,7 +5,7 @@ import java.io.{File, FileOutputStream, PrintWriter}
 /**
   * Created by Petr Kubat on 6/5/17.
   *
-  * A collection of analytics data from a single combined function ([[scalaadaptive.api.adaptors.MultiFunction0]] and
+  * A collection of analytics data from a single combined function ([[scalaadaptive.api.functions.AdaptiveFunction0]] and
   * corresponding types). Allows accessing the data or saving them into a file in a fixed format.
   *
   */

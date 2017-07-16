@@ -7,7 +7,7 @@ package scalaadaptive
   *
   * The most important type is the [[scalaadaptive.analytics.AnalyticsRunRecord]], which contains observations of
   * one run of the combined function. The records are made accessible using [[scalaadaptive.analytics.AnalyticsData]]
-  * type, which can be retrieved from the [[scalaadaptive.api.adaptors.MultiFunction0]] and corresponding combined
+  * type, which can be retrieved from the [[scalaadaptive.api.functions.AdaptiveFunction0]] and corresponding combined
   * function traits.
   *
   * The analytics collection is done by the type [[scalaadaptive.core.functions.analytics.AnalyticsCollector]], which

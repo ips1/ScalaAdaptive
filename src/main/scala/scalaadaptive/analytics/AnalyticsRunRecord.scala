@@ -7,7 +7,7 @@ import scalaadaptive.core.functions.identifiers.FunctionIdentifier
 /**
   * Created by Petr Kubat on 5/20/17.
   *
-  * A record representing one run of the combined function ([[scalaadaptive.api.adaptors.MultiFunction0]] and
+  * A record representing one run of the combined function ([[scalaadaptive.api.functions.AdaptiveFunction0]] and
   * corresponding types).
   *
   * @param created A timestamp of record creation (i.e. function invocation)

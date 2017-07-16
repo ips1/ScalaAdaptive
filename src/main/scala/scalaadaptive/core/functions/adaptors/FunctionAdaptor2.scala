@@ -1,6 +1,6 @@
 package scalaadaptive.core.functions.adaptors
 
-import scalaadaptive.api.adaptors.{InvocationToken, MultiFunction2}
+import scalaadaptive.api.functions.{InvocationToken, AdaptiveFunction2}
 import scalaadaptive.api.grouping.Group
 import scalaadaptive.core.functions.{FunctionFactory, CombinedFunction}
 
@@ -9,15 +9,15 @@ import scalaadaptive.core.functions.{FunctionFactory, CombinedFunction}
   */
 class FunctionAdaptor2[T1, T2, R](val function: CombinedFunction[(T1, T2), R])
   extends FunctionAdaptorBase[(T1, T2), R, FunctionAdaptor2[T1, T2, R]]
-    with MultiFunction2[T1, T2, R] {
+    with AdaptiveFunction2[T1, T2, R] {
 
   override protected val createNew: (CombinedFunction[(T1, T2), R]) => FunctionAdaptor2[T1, T2, R] =
     f => new FunctionAdaptor2[T1, T2, R](f)
 
-  override def by(selector: (T1, T2) => Long): MultiFunction2[T1, T2, R] =
+  override def by(selector: (T1, T2) => Long): AdaptiveFunction2[T1, T2, R] =
     byTupled((t: (T1, T2)) => selector(t._1, t._2))
 
-  override def groupBy(selector: (T1, T2) => Group): MultiFunction2[T1, T2, R] =
+  override def groupBy(selector: (T1, T2) => Group): AdaptiveFunction2[T1, T2, R] =
     groupByTupled((t: (T1, T2)) => selector(t._1, t._2))
 
   override def apply(arg1: T1, arg2: T2): R =
@@ -26,6 +26,6 @@ class FunctionAdaptor2[T1, T2, R](val function: CombinedFunction[(T1, T2), R])
   override def applyWithoutMeasuring(arg1: T1, arg2: T2): (R, InvocationToken) =
     invokeWithDelayedMeasure((arg1, arg2))
 
-  override def orMultiFunction(otherFun: MultiFunction2[T1, T2, R]): FunctionAdaptor2[T1, T2, R] =
+  override def orMultiFunction(otherFun: AdaptiveFunction2[T1, T2, R]): FunctionAdaptor2[T1, T2, R] =
     createNew(function.mergeFunctions(Conversions.toAdaptor(otherFun).function))
 }

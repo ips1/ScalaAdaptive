@@ -3,7 +3,7 @@ package adaptivetests.overhead
 import tools.methods.TestMethods
 
 import scalaadaptive.api.Adaptive
-import scalaadaptive.api.adaptors.MultiFunction1
+import scalaadaptive.api.functions.AdaptiveFunction1
 import scalaadaptive.api.options.Storage
 import scalaadaptive.core.configuration.blocks.NoLogging
 import scalaadaptive.core.configuration.defaults.FullHistoryTTestConfiguration

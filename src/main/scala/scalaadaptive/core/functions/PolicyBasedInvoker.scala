@@ -1,6 +1,6 @@
 package scalaadaptive.core.functions
 
-import scalaadaptive.api.adaptors.InvocationToken
+import scalaadaptive.api.functions.InvocationToken
 import scalaadaptive.api.grouping.Group
 import scalaadaptive.api.options.Storage
 import scalaadaptive.api.policies.PolicyResult
