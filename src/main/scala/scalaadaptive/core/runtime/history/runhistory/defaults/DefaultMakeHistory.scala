@@ -6,6 +6,13 @@ import scalaadaptive.extensions.Averageable
 
 /**
   * Created by Petr Kubat on 7/7/17.
+  *
+  * Mixin with default implementation of the makeHistoryFromFilteredItems method.
+  *
+  * Creates an [[scalaadaptive.core.runtime.history.runhistory.ImmutableFullRunHistory]] from the data. It can be used
+  * basically with any [[scalaadaptive.core.runtime.history.runhistory.RunHistory]], because the history after filtering
+  * will not be modified anywhere, so the internal representation does not matter.
+  *
   */
 trait DefaultMakeHistory[TMeasurement] extends DefaultFilterRunHistory[TMeasurement] {
   protected val num: Averageable[TMeasurement]

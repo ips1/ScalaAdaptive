@@ -7,6 +7,20 @@ import scalaadaptive.extensions.Averageable
 
 /**
   * Created by Petr Kubat on 5/1/17.
+  *
+  * An implementation of [[RunHistory]] that stores the data in an immutable [[List]].
+  * Adding new data causes new instances of [[ImmutableFullRunHistory]] to be created, which might be a little slower.
+  *
+  * The implementation is thread-safe.
+  *
+  * All the additional data methods are implemented using mixins that count the values. For caching the data, wrap the
+  * history into a caching wrapper (see [[CachedGroupedRunHistory]], [[CachedRegressionRunHistory]],
+  * [[CachedStatisticsRunHistory]])
+  *
+  * @param key The key of the function.
+  * @param runItems All the evaluation items.
+  * @param minDescriptor Minimal run descriptor from the historical data.
+  * @param maxDescriptor Maximal run descriptor from the historical data.
   */
 class ImmutableFullRunHistory[TMeasurement] (override val key: HistoryKey,
                                              override val runItems: Iterable[EvaluationData[TMeasurement]],

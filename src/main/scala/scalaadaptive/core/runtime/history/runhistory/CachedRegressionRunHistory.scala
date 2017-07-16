@@ -11,12 +11,14 @@ import scalaadaptive.math.SimpleTestableRegression
 /**
   * Created by Petr Kubat on 7/1/17.
   *
-  * A RunHistory wrapper that computes linear regression of all the runs added.
+  * A wrapper for [[RunHistory]] which caches the linear regression from all the data.
   *
   * The implementation is mutable, applyNewRun() changes the original object.
   * (The reason is that the SimpleRegression class does not have a suitable copy / clone method and has inaccessible
   * state).
   *
+  * @param internalHistory The internal history that the calls get delegated to.
+  * @param internalRegression The cached linear regression (mutable).
   */
 class CachedRegressionRunHistory[TMeasurement]private (private val internalHistory: RunHistory[TMeasurement],
                                                        private val internalRegression: SimpleTestableRegression)

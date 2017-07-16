@@ -6,6 +6,9 @@ import scalaadaptive.extensions.Averageable
 
 /**
   * Created by Petr Kubat on 5/1/17.
+  *
+  * Mixin with default implementation of computing the grouped averages.
+  *
   */
 trait DefaultGrouping[TMeasurement] extends RunHistory[TMeasurement] {
   protected val num: Averageable[TMeasurement]

@@ -8,6 +8,13 @@ import scalaadaptive.math.SimpleTestableRegression
 
 /**
   * Created by Petr Kubat on 6/5/17.
+  *
+  * A wrapper for [[RunHistory]] that has a maximum number of records that can be present. After reaching that number,
+  * adding a new record will cause throwing the older half of records away.
+  *
+  * @param limit The maximum number of records.
+  * @param internalHistory The internal history that the calls are delegated to.
+  * @param internalHistoryFactory A factory method that can be used to create new instances of the internal history.
   */
 class LimitedRunHistory[TMeasurement](val limit: Int,
                                       private val internalHistory: RunHistory[TMeasurement],

@@ -7,6 +7,9 @@ import scalaadaptive.extensions.Averageable
 
 /**
   * Created by Petr Kubat on 5/2/17.
+  *
+  * Mixin with default statistics data computation implementation.
+  *
   */
 trait DefaultStatistics[TMeasurement] extends RunHistory[TMeasurement] {
   protected val num: Averageable[TMeasurement]

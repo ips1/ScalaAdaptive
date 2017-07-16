@@ -9,6 +9,14 @@ import scalaadaptive.math.SimpleTestableRegression
 
 /**
   * Created by Petr Kubat on 5/2/17.
+  *
+  * A wrapper for [[RunHistory]] which caches the statistical data.
+  *
+  * The implementation is immutable and thread-safe (as long as the internal implementation is).
+  * Adding new data creates a new instance from the wrapper.
+  *
+  * @param internalHistory The internal history that the calls get delegated to.
+  * @param internalStatistics The cached statistics.
   */
 class CachedStatisticsRunHistory[TMeasurement] private (private val internalHistory: RunHistory[TMeasurement],
                                                      private val internalStatistics: SummaryStatistics)

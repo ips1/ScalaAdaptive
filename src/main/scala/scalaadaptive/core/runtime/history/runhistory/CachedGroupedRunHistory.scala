@@ -7,9 +7,17 @@ import scalaadaptive.extensions.Averageable
 import scalaadaptive.math.SimpleTestableRegression
 
 /**
-  * Created by Petr Kubat on 4/25/17.
+  * Created by Petr Kubat on 5/2/17.
+  *
+  * A wrapper for [[RunHistory]] which caches the grouped averages.
+  *
+  * The implementation is immutable and thread-safe (as long as the internal implementation is).
+  * Adding new data creates a new instance from the wrapper.
+  *
+  * @param runCount Number of all the runs in the history.
+  * @param internalHistory The internal history that the calls get delegated to.
+  * @param data The grouped data stored in an immutable map.
   */
-
 class CachedGroupedRunHistory[TMeasurement] private(override val runCount: Int,
                                                     private val internalHistory: RunHistory[TMeasurement],
                                                     private val data: Map[Long, GroupedEvaluationData[TMeasurement]])
@@ -43,8 +51,6 @@ class CachedGroupedRunHistory[TMeasurement] private(override val runCount: Int,
 
       data + (runResult.inputDescriptor.get -> newData)
     }
-
-
 
     new CachedGroupedRunHistory[TMeasurement](
       runCount + 1,
