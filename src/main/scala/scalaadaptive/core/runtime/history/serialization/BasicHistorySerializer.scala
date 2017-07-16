@@ -11,10 +11,17 @@ import scalaadaptive.core.runtime.history.evaluation.data.EvaluationData
 
 /**
   * Created by Petr Kubat on 4/23/17.
+  *
+  * Basic implementation of [[HistorySerializer]]. Serializes and persists all records immediately into a file.
+  *
+  * @param rootPath The path of the directory where to store the data.
+  * @param fileNameForKeyProvider The file name provider.
+  * @param runDataSerializer The serializer which is used to transform [[EvaluationData]] to and from strings.
+  * @param logger The logger to report serialization failures.
   */
 class BasicHistorySerializer(private val rootPath: Path,
                              private val fileNameForKeyProvider: FileNameForKeyProvider,
-                             private val runDataSerializer: RunDataSerializer[Long],
+                             private val runDataSerializer: EvaluationDataSerializer[Long],
                              private val logger: Logger)
   extends HistorySerializer[Long] {
 
@@ -27,7 +34,7 @@ class BasicHistorySerializer(private val rootPath: Path,
     try {
       file.getParentFile.mkdirs()
       val writer = new PrintWriter(new FileOutputStream(file, true))
-      runs.foreach(r => writer.println(runDataSerializer.serializeRunData(r)))
+      runs.foreach(r => writer.println(runDataSerializer.serializeEvaluationData(r)))
       writer.close()
     } catch {
       case e: Exception => logger.log(s"Failed to serialize run result: ${e.getMessage}")
@@ -44,7 +51,7 @@ class BasicHistorySerializer(private val rootPath: Path,
 
     try {
       for (line <- Source.fromFile(file).getLines()) {
-        runDataSerializer.deserializeRunData(line) match {
+        runDataSerializer.deserializeEvaluationData(line) match {
           case Some(runData) => history.append(runData)
           case _ =>
         }

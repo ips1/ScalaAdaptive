@@ -7,16 +7,20 @@ import scalaadaptive.extensions.OptionSerializer
 
 /**
   * Created by Petr Kubat on 4/23/17.
+  *
+  * An implementation of [[EvaluationDataSerializer]] that serializes the data as csv records using specified separator.
+  * Works with Long measurement type.
+  *
   */
-class LongRunDataSerializer(private val separator: Char) extends RunDataSerializer[Long] {
-  override def serializeRunData(run: EvaluationData[Long]): String = {
+class LongEvaluationDataSerializer(private val separator: Char) extends EvaluationDataSerializer[Long] {
+  override def serializeEvaluationData(run: EvaluationData[Long]): String = {
     val timeString = run.time.toString
     val descriptorString = OptionSerializer.serializeOption(run.inputDescriptor)
 
     s"$timeString$separator$descriptorString$separator${run.measurement}"
   }
 
-  override def deserializeRunData(string: String): Option[EvaluationData[Long]] = {
+  override def deserializeEvaluationData(string: String): Option[EvaluationData[Long]] = {
     val parts = string.split(separator)
     if (parts.length != 3) {
       return None

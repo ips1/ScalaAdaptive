@@ -6,6 +6,14 @@ import scalaadaptive.core.runtime.history.evaluation.data.EvaluationData
 
 /**
   * Created by Petr Kubat on 5/1/17.
+  *
+  * A [[HistorySerializer]] wrapper that buffer the items until buffer size is reached and then serializes them all
+  * at once using the internal serializer.
+  *
+  * @param innerSerializer The internal serializer used to serialize buffered batches of evaluation data.
+  * @param bufferLimit The size limit of the buffer, after reaching it, the buffer is flushed and all the data
+  *                    serialized.
+  *
   */
 class BufferedHistorySerializer[TMeasurement](val innerSerializer: HistorySerializer[TMeasurement],
                                               val bufferLimit: Int)

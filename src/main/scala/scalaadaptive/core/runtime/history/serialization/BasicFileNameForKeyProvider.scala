@@ -6,6 +6,10 @@ import scalaadaptive.core.runtime.history.HistoryKey
 
 /**
   * Created by Petr Kubat on 4/23/17.
+  *
+  * Basic implementation of [[FileNameForKeyProvider]]. Uses underscores to divide parts of the file name, which is
+  * composed from the function identifier (each type has different prefix) and the group ID.
+  *
   */
 class BasicFileNameForKeyProvider extends FileNameForKeyProvider {
   private def getFunctionString(function: FunctionIdentifier): String = function match {

@@ -3,7 +3,7 @@ package scalaadaptive.core.configuration
 import java.nio.file.{Path, Paths}
 
 import scalaadaptive.core.runtime.history._
-import scalaadaptive.core.runtime.history.serialization.{BasicFileNameForKeyProvider, BasicHistorySerializer, HistorySerializer, LongRunDataSerializer}
+import scalaadaptive.core.runtime.history.serialization.{BasicFileNameForKeyProvider, BasicHistorySerializer, HistorySerializer, LongEvaluationDataSerializer}
 import scala.collection.mutable.ArrayBuffer
 import scalaadaptive.core.runtime.history.historystorage.PersistentHistoryStorage
 import scalaadaptive.extensions.AverageableImplicits.LongIsAverageable
@@ -22,7 +22,7 @@ trait BaseLongConfiguration extends BaseConfiguration {
         new BasicHistorySerializer(
           rootPath,
           new BasicFileNameForKeyProvider,
-          new LongRunDataSerializer(','),
+          new LongEvaluationDataSerializer(','),
           createLogger())
     ))
 }

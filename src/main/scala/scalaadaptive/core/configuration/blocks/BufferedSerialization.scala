@@ -17,7 +17,7 @@ trait BufferedSerialization extends BaseLongConfiguration {
         new BasicHistorySerializer(
           rootPath,
           new BasicFileNameForKeyProvider,
-          new LongRunDataSerializer(','),
+          new LongEvaluationDataSerializer(','),
           createLogger()),
         serializationBufferSize)
     ))
