@@ -28,7 +28,7 @@ object IdentifierTest {
 
     val combined2 = { () => target.method() } or function2
 
-    val combined3 = Implicits.toMultiFunction0({ () => target.method() }) or function2
+    val combined3 = Implicits.toAdaptiveFunction0({ () => target.method() }) or function2
 
     val combined4 = Conversions.toAdaptor({ () => target.method() }, MethodNameIdentifier(this.getClass.getName + ".method")) or function2
 
