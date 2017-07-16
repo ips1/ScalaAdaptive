@@ -4,6 +4,7 @@ import scalaadaptive.core.configuration.BaseLongConfiguration
 import scalaadaptive.core.configuration.blocks.helper.{BlockWithAlpha, BlockWithLowRunLimit}
 import scalaadaptive.core.logging.Logger
 import scalaadaptive.core.runtime.selection._
+import scalaadaptive.core.runtime.selection.strategies.{LeastDataSelectionStrategy, LowRunAwareSelectionStrategy, SelectionStrategy, UTestSelectionStrategy}
 import scalaadaptive.math.{MannWhitneyUTestRunner, WelchTTestRunner}
 
 /**

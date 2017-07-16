@@ -1,8 +1,5 @@
-package scalaadaptive.core.runtime.selection
+package scalaadaptive.core.runtime.selection.strategies
 
-import java.time.{Instant, ZonedDateTime}
-
-import scala.collection.mutable
 import scalaadaptive.core.logging.Logger
 import scalaadaptive.core.runtime.history.HistoryKey
 import scalaadaptive.core.runtime.history.runhistory.RunHistory

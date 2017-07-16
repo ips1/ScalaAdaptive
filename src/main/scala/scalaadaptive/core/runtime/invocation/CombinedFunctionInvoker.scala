@@ -1,5 +1,7 @@
-package scalaadaptive.core.functions
+package scalaadaptive.core.runtime.invocation
+
 import scalaadaptive.api.functions.InvocationToken
+import scalaadaptive.core.functions.CombinedFunction
 
 /**
   * Created by Petr Kubat on 6/29/17.

@@ -1,9 +1,9 @@
 package scalaadaptive.core.runtime.invocationtokens
 
 import scalaadaptive.core.performance.{PerformanceProvider, PerformanceTracker}
-import scalaadaptive.core.runtime.DelayedFunctionRunner
 import scalaadaptive.core.runtime.history.HistoryKey
 import scalaadaptive.core.functions.RunData
+import scalaadaptive.core.runtime.selection.DelayedFunctionRunner
 
 /**
   * Created by Petr Kubat on 4/23/17.

@@ -1,4 +1,4 @@
-package scalaadaptive.core.runtime.selection.support
+package scalaadaptive.core.runtime.selection.strategies.support
 
 import scalaadaptive.core.runtime.history.runhistory.RunHistory
 

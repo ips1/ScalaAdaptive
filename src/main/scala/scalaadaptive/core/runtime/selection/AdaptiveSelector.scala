@@ -1,14 +1,12 @@
-package scalaadaptive.core.runtime
+package scalaadaptive.core.runtime.selection
 
 import java.time.Duration
 
 import scalaadaptive.api.grouping.Group
 import scalaadaptive.api.options.Selection.Selection
-import scalaadaptive.core.performance.PerformanceTracker
-import scalaadaptive.core.functions.identifiers.{FunctionIdentifier, IdentifiedFunction}
-import scalaadaptive.core.runtime.history.HistoryKey
-import scalaadaptive.core.runtime.invocationtokens.InvocationTokenWithCallbacks
 import scalaadaptive.core.functions.RunResult
+import scalaadaptive.core.functions.identifiers.{FunctionIdentifier, IdentifiedFunction}
+import scalaadaptive.core.runtime.invocationtokens.InvocationTokenWithCallbacks
 
 /**
   * Created by Petr Kubat on 3/26/17.

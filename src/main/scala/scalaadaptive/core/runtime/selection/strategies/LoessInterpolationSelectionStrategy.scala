@@ -1,6 +1,6 @@
-package scalaadaptive.core.runtime.selection
+package scalaadaptive.core.runtime.selection.strategies
 
-import org.apache.commons.math3.analysis.interpolation.{LinearInterpolator, LoessInterpolator}
+import org.apache.commons.math3.analysis.interpolation.LoessInterpolator
 import org.apache.commons.math3.analysis.polynomials.PolynomialSplineFunction
 import org.apache.commons.math3.exception.NumberIsTooSmallException
 

@@ -1,14 +1,10 @@
-package scalaadaptive.core.runtime.selection
-
-import org.apache.commons.math3.stat.descriptive.{DescriptiveStatistics, SummaryStatistics}
-import org.apache.commons.math3.stat.inference.TestUtils
+package scalaadaptive.core.runtime.selection.strategies
 
 import scalaadaptive.core.logging.Logger
-import scalaadaptive.core.runtime.history.HistoryKey
 import scalaadaptive.core.runtime.history.runhistory.RunHistory
-import scalaadaptive.core.runtime.selection.support.TestBasedSelectionStrategy
+import scalaadaptive.core.runtime.selection.strategies.support.TestBasedSelectionStrategy
+import scalaadaptive.math.TTestRunner
 import scalaadaptive.math.TestResult.TestResult
-import scalaadaptive.math.{TTestRunner, TestResult, WelchTTestRunner}
 
 /**
   * Created by Petr Kubat on 5/2/17.

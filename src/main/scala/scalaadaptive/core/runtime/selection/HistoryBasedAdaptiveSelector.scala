@@ -1,21 +1,21 @@
-package scalaadaptive.core.runtime
+package scalaadaptive.core.runtime.selection
 
 import java.time.{Duration, Instant}
 
 import scalaadaptive.api.grouping.Group
-import scalaadaptive.core.logging.Logger
 import scalaadaptive.api.options.Selection
 import scalaadaptive.api.options.Selection.Selection
-import scalaadaptive.core.performance.{BasicPerformanceTracker, PerformanceTracker}
 import scalaadaptive.core.functions.identifiers.{FunctionIdentifier, IdentifiedFunction}
-import scalaadaptive.core.runtime.history.historystorage.HistoryStorage
+import scalaadaptive.core.functions.{RunData, RunResult}
+import scalaadaptive.core.logging.Logger
+import scalaadaptive.core.performance.{BasicPerformanceTracker, PerformanceTracker}
 import scalaadaptive.core.runtime.history.HistoryKey
 import scalaadaptive.core.runtime.history.evaluation.EvaluationProvider
 import scalaadaptive.core.runtime.history.evaluation.data.EvaluationData
+import scalaadaptive.core.runtime.history.historystorage.HistoryStorage
 import scalaadaptive.core.runtime.history.runhistory.RunHistory
 import scalaadaptive.core.runtime.invocationtokens.{InvocationTokenWithCallbacks, MeasuringInvocationToken}
-import scalaadaptive.core.runtime.selection.{LeastDataSelectionStrategy, SelectionStrategy}
-import scalaadaptive.core.functions.{RunData, RunResult}
+import scalaadaptive.core.runtime.selection.strategies.{LeastDataSelectionStrategy, SelectionStrategy}
 
 /**
   * Created by Petr Kubat on 3/19/17.

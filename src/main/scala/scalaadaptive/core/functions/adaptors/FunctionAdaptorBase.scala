@@ -8,8 +8,9 @@ import scalaadaptive.api.grouping.Group
 import scalaadaptive.api.options.Selection.Selection
 import scalaadaptive.api.options.Storage.Storage
 import scalaadaptive.api.policies.Policy
-import scalaadaptive.core.functions.{CombinedFunction, CombinedFunctionInvoker, FunctionFactory}
+import scalaadaptive.core.functions.{CombinedFunction, FunctionFactory}
 import scalaadaptive.core.runtime.AdaptiveInternal
+import scalaadaptive.core.runtime.invocation.CombinedFunctionInvoker
 
 /**
   * Created by Petr Kubat on 5/27/17.

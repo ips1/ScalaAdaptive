@@ -6,6 +6,7 @@ import scalaadaptive.analytics.AnalyticsData
 import scalaadaptive.api.options.Selection.Selection
 import scalaadaptive.api.options.Storage.Storage
 import scalaadaptive.api.policies.Policy
+import scalaadaptive.core.runtime.selection.strategies.SelectionStrategy
 
 /**
   * Created by Petr Kubat on 5/27/17.
@@ -21,7 +22,7 @@ trait AdaptiveFunctionCommon[TArgType, TRetType, TAdaptiveFunctionType]
   extends AdaptiveFunctionControl with AdaptiveFunctionAnalytics {
 
   /**
-    * Creates a new adaptive function with the [[Selection]] configuration updated. The corresponding [[scalaadaptive.core.runtime.selection.SelectionStrategy]]
+    * Creates a new adaptive function with the [[Selection]] configuration updated. The corresponding [[SelectionStrategy]]
     * from the [[scalaadaptive.core.configuration.Configuration]] will be used.
     * @param newSelection The new value for the [[Selection]] configuration.
     * @return A completely new instance of [[TAdaptiveFunctionType]] with the configuration updated.

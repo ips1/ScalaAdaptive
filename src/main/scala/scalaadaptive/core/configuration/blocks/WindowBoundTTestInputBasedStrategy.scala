@@ -4,7 +4,8 @@ import scalaadaptive.core.configuration.BaseLongConfiguration
 import scalaadaptive.core.configuration.blocks.helper.{BlockWithAlpha, BlockWithLowRunLimit, BlockWithWindowAverageSize}
 import scalaadaptive.core.logging.Logger
 import scalaadaptive.core.runtime.selection._
-import scalaadaptive.core.runtime.selection.support.AverageForSampleCountProvider
+import scalaadaptive.core.runtime.selection.strategies._
+import scalaadaptive.core.runtime.selection.strategies.support.AverageForSampleCountProvider
 import scalaadaptive.math.WelchTTestRunner
 
 /**

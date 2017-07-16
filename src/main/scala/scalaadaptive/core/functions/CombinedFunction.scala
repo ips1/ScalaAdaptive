@@ -10,7 +10,8 @@ import scalaadaptive.core.functions.adaptors.FunctionConfig
 import scalaadaptive.core.functions.analytics.AnalyticsCollector
 import scalaadaptive.core.functions.identifiers.{FunctionIdentifier, IdentifiedFunction}
 import scalaadaptive.core.functions.statistics.FunctionStatistics
-import scalaadaptive.core.runtime.{AdaptiveInternal, AdaptiveSelector}
+import scalaadaptive.core.runtime.AdaptiveInternal
+import scalaadaptive.core.runtime.selection.AdaptiveSelector
 
 /**
   * Created by Petr Kubat on 5/21/17.

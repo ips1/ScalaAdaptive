@@ -1,4 +1,4 @@
-package scalaadaptive.core.runtime.selection
+package scalaadaptive.core.runtime.selection.strategies
 
 import scalaadaptive.core.logging.Logger
 import scalaadaptive.core.runtime.history.HistoryKey

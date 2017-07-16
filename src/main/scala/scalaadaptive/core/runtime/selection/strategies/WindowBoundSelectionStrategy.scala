@@ -1,9 +1,9 @@
-package scalaadaptive.core.runtime.selection
+package scalaadaptive.core.runtime.selection.strategies
+
 import scalaadaptive.core.logging.Logger
 import scalaadaptive.core.runtime.history.HistoryKey
 import scalaadaptive.core.runtime.history.runhistory.RunHistory
-import scalaadaptive.core.runtime.selection.support.WindowSizeProvider
-import scalaadaptive.math.RegressionConfidenceTestRunner
+import scalaadaptive.core.runtime.selection.strategies.support.WindowSizeProvider
 
 /**
   * Created by Petr Kubat on 7/7/17.

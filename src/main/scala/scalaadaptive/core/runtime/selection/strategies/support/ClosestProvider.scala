@@ -1,4 +1,4 @@
-package scalaadaptive.core.runtime.selection.support
+package scalaadaptive.core.runtime.selection.strategies.support
 
 /**
   * Created by Petr Kubat on 6/11/17.

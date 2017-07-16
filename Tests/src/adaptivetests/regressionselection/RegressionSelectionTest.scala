@@ -11,7 +11,7 @@ import scala.util.Random
 import scalaadaptive.api.Adaptive
 import scalaadaptive.core.configuration.blocks._
 import scalaadaptive.core.configuration.defaults.{FullHistoryRegressionConfiguration, FullHistoryTTestConfiguration}
-import scalaadaptive.core.runtime.selection.RegressionSelectionStrategy
+import scalaadaptive.core.runtime.selection.strategies.RegressionSelectionStrategy
 
 /**
   * Created by Petr Kubat on 6/7/17.

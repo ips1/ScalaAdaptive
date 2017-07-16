@@ -1,13 +1,12 @@
-package scalaadaptive.core.runtime.selection
+package scalaadaptive.core.runtime.selection.strategies
 
 import org.apache.commons.math3.stat.regression.SimpleRegression
 
-import scalaadaptive.core.functions.RunData
 import scalaadaptive.core.logging.Logger
 import scalaadaptive.core.runtime.history.HistoryKey
 import scalaadaptive.core.runtime.history.evaluation.data.EvaluationData
 import scalaadaptive.core.runtime.history.runhistory.RunHistory
-import scalaadaptive.core.runtime.selection.support.{ClosestProvider, WindowSizeProvider}
+import scalaadaptive.core.runtime.selection.strategies.support.{ClosestProvider, WindowSizeProvider}
 import scalaadaptive.math.{RegressionTTest, RegressionTTestResult}
 
 /**

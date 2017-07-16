@@ -3,6 +3,7 @@ package scalaadaptive.core.configuration.blocks
 import scalaadaptive.core.configuration.BaseLongConfiguration
 import scalaadaptive.core.logging.Logger
 import scalaadaptive.core.runtime.selection._
+import scalaadaptive.core.runtime.selection.strategies.{BestAverageSelectionStrategy, LeastDataSelectionStrategy, LowRunAwareSelectionStrategy, SelectionStrategy}
 
 /**
   * Created by Petr Kubat on 5/1/17.

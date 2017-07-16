@@ -1,11 +1,13 @@
-package scalaadaptive.core.functions
+package scalaadaptive.core.runtime.invocation
 
 import scalaadaptive.api.functions.InvocationToken
 import scalaadaptive.api.grouping.Group
 import scalaadaptive.api.options.Storage
 import scalaadaptive.api.policies.PolicyResult
-import scalaadaptive.core.runtime.{AdaptiveInternal, AdaptiveSelector}
+import scalaadaptive.core.functions.{CombinedFunction, RunData}
 import scalaadaptive.core.runtime.invocationtokens.SimpleInvocationToken
+import scalaadaptive.core.runtime.AdaptiveInternal
+import scalaadaptive.core.runtime.selection.AdaptiveSelector
 
 /**
   * Created by Petr Kubat on 6/29/17.

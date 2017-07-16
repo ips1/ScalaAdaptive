@@ -5,12 +5,8 @@ import adaptivetests.TestConfiguration
 import scala.util.Random
 import scalaadaptive.api.Adaptive
 import scalaadaptive.api.options.Selection
-import scalaadaptive.core.configuration.BaseLongConfiguration
 import scalaadaptive.core.configuration.blocks._
-import scalaadaptive.core.configuration.defaults.FullHistoryTTestConfiguration
 import scalaadaptive.core.functions.identifiers.ClosureIdentifier
-import scalaadaptive.core.logging.Logger
-import scalaadaptive.core.runtime.selection.{LeastDataSelectionStrategy, LoessInterpolationSelectionStrategy, LowRunAwareSelectionStrategy, SelectionStrategy}
 
 /**
   * Created by Petr Kubat on 6/24/17.

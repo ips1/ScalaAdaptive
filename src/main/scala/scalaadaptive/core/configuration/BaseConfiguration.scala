@@ -5,14 +5,16 @@ import scalaadaptive.core.logging.{ConsoleLogger, Logger}
 import scalaadaptive.core.functions.adaptors.FunctionConfig
 import scalaadaptive.api.options.{Selection, Storage}
 import scalaadaptive.core.functions.analytics.{AnalyticsCollector, BasicAnalyticsCollector}
-import scalaadaptive.core.functions.{CombinedFunctionInvoker, DefaultFunctionFactory, FunctionFactory, PolicyBasedInvoker}
-import scalaadaptive.core.functions.identifiers.{JavaIdentifierValidator, CustomIdentifierValidator}
+import scalaadaptive.core.functions.{DefaultFunctionFactory, FunctionFactory}
+import scalaadaptive.core.functions.identifiers.{CustomIdentifierValidator, JavaIdentifierValidator}
 import scalaadaptive.core.runtime.history.historystorage.{HistoryStorage, MapHistoryStorage}
 import scalaadaptive.core.runtime.history.runhistory.{CachedAverageRunHistory, CachedGroupedRunHistory, FullRunHistory, LimitedRunHistory}
 import scalaadaptive.api.policies.AlwaysSelectPolicy
 import scalaadaptive.core.runtime.history.evaluation.EvaluationProvider
-import scalaadaptive.core.runtime.{AdaptiveSelector, HistoryBasedAdaptiveSelector}
-import scalaadaptive.core.runtime.selection.SelectionStrategy
+import scalaadaptive.core.runtime.invocation.{CombinedFunctionInvoker, PolicyBasedInvoker}
+import scalaadaptive.core.runtime.selection.HistoryBasedAdaptiveSelector
+import scalaadaptive.core.runtime.selection.strategies.SelectionStrategy
+import scalaadaptive.core.runtime.selection.{AdaptiveSelector, HistoryBasedAdaptiveSelector}
 import scalaadaptive.extensions.Averageable
 
 /**

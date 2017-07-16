@@ -12,8 +12,8 @@ import scalaadaptive.api.policies.PauseSelectionAfterStreakPolicy
 import scalaadaptive.core.configuration.BaseLongConfiguration
 import scalaadaptive.core.configuration.blocks._
 import scalaadaptive.core.logging.Logger
-import scalaadaptive.core.runtime.selection.support.AverageForSampleCountProvider
-import scalaadaptive.core.runtime.selection.{LeastDataSelectionStrategy, RegressionSelectionStrategy, LowRunAwareSelectionStrategy, SelectionStrategy}
+import scalaadaptive.core.runtime.selection.strategies.support.AverageForSampleCountProvider
+import scalaadaptive.core.runtime.selection.strategies.LeastDataSelectionStrategy
 import scalaadaptive.math.PredictionConfidenceTestRunner
 
 /**
@@ -79,7 +79,7 @@ object MatrixMultiplicationTest {
 
   import scalaadaptive.api.Implicits._
 
-  val customMultiply = (
+  private val customMultiply = (
     normalMultiply _ or strassenMultiply
       by ((m1, m2) => m1.getRows)
       selectUsing Selection.InputBased

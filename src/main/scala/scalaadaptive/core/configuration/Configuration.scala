@@ -1,14 +1,15 @@
 package scalaadaptive.core.configuration
 import scalaadaptive.analytics.{AnalyticsSerializer, CsvAnalyticsSerializer}
-import scalaadaptive.core.functions.{CombinedFunctionInvoker, DefaultFunctionFactory, FunctionFactory}
+import scalaadaptive.core.functions.{DefaultFunctionFactory, FunctionFactory}
 import scalaadaptive.core.functions.adaptors.FunctionConfig
 import scalaadaptive.core.functions.analytics.{AnalyticsCollector, BasicAnalyticsCollector}
 import scalaadaptive.core.logging.Logger
 import scalaadaptive.core.functions.identifiers.CustomIdentifierValidator
-import scalaadaptive.core.runtime.AdaptiveSelector
 import scalaadaptive.core.runtime.history.evaluation.EvaluationProvider
 import scalaadaptive.core.runtime.history.historystorage.HistoryStorage
-import scalaadaptive.core.runtime.selection.SelectionStrategy
+import scalaadaptive.core.runtime.invocation.CombinedFunctionInvoker
+import scalaadaptive.core.runtime.selection.AdaptiveSelector
+import scalaadaptive.core.runtime.selection.strategies.SelectionStrategy
 
 /**
   * Created by Petr Kubat on 3/26/17.

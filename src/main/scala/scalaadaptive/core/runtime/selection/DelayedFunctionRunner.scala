@@ -1,8 +1,8 @@
-package scalaadaptive.core.runtime
+package scalaadaptive.core.runtime.selection
 
+import scalaadaptive.core.functions.RunResult
 import scalaadaptive.core.performance.PerformanceTracker
 import scalaadaptive.core.runtime.history.HistoryKey
-import scalaadaptive.core.functions.RunResult
 
 /**
   * Created by Petr Kubat on 5/21/17.

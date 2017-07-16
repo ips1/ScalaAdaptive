@@ -1,4 +1,4 @@
-package scalaadaptive.core.runtime.selection.support
+package scalaadaptive.core.runtime.selection.strategies.support
 
 /**
   * Created by Petr Kubat on 7/8/17.
@@ -6,7 +6,7 @@ package scalaadaptive.core.runtime.selection.support
 import scalaadaptive.core.logging.Logger
 import scalaadaptive.core.runtime.history.HistoryKey
 import scalaadaptive.core.runtime.history.runhistory.RunHistory
-import scalaadaptive.core.runtime.selection.SelectionStrategy
+import scalaadaptive.core.runtime.selection.strategies.SelectionStrategy
 import scalaadaptive.math.TestResult
 import scalaadaptive.math.TestResult.TestResult
 
