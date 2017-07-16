@@ -1,10 +1,12 @@
 package scalaadaptive.extensions
 
-import scala.math.Numeric.LongIsIntegral
 import scala.math.Ordering
 
 /**
   * Created by Petr Kubat on 5/1/17.
+  *
+  * Implicit member implementation of [[Averageable]] for the [[Long]] type.
+  *
   */
 
 object AverageableImplicits {

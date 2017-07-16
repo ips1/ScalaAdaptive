@@ -13,6 +13,8 @@ import scala.collection.mutable
   * (3 by default).
   */
 class SimpleTestableRegression {
+  import scalaadaptive.extensions.DoubleExtensions._
+
   val innerRegression = new SimpleRegression
   val minXCount = 3
 
@@ -74,7 +76,7 @@ class SimpleTestableRegression {
     */
   def predict(point: Double): Option[Double] = {
     val result = innerRegression.predict(point)
-    if (result.isNaN) None else Some(result)
+    result.asOption
   }
 
   /**
