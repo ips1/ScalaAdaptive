@@ -54,15 +54,18 @@ class PredictionConfidenceTestRunner(val logger: Logger) extends RegressionConfi
     }
     logger.log(s"Second interval for x = $point: $secondInterval")
 
-    if (intervalsOverlap(firstInterval, secondInterval)) {
-      logger.log(s"Intervals overlap, can't decide")
-      return Some(TestResult.CantRejectEquality)
-    }
+    for {
+      first <- firstInterval
+      second <- secondInterval
 
-    if (firstInterval._1 < secondInterval._1)
-      Some(TestResult.ExpectedLower)
-    else
-      Some(TestResult.ExpectedHigher)
+      result <- if (intervalsOverlap(first, second)) {
+        logger.log(s"Intervals overlap, can't decide")
+        Some(TestResult.CantRejectEquality)
+      } else if (first._1 < second._1)
+        Some(TestResult.ExpectedLower)
+      else
+        Some(TestResult.ExpectedHigher)
+    } yield result
   }
 
   /**

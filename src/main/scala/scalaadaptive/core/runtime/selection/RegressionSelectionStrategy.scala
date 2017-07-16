@@ -15,27 +15,31 @@ import scalaadaptive.math._
   */
 class RegressionSelectionStrategy[TMeasurement](val logger: Logger,
                                                 val testRunner: RegressionConfidenceTestRunner,
-                                                val secondarySelector: SelectionStrategy[TMeasurement],
+                                                val secondaryStrategy: SelectionStrategy[TMeasurement],
+                                                val meanBasedStrategy: SelectionStrategy[TMeasurement],
                                                 val alpha: Double)(implicit num: Numeric[TMeasurement])
   extends SelectionStrategy[TMeasurement] {
-
-  private def createRegression(runData: Seq[EvaluationData[TMeasurement]]): SimpleTestableRegression = {
-    val regression = new SimpleTestableRegression()
-    logger.log(s"Creating regression from ${runData.length} entries.")
-
-    runData.foreach(i => regression.addData(i.inputDescriptor.get, num.toDouble(i.measurement)))
-    regression
-  }
 
   override def selectOption(records: Seq[RunHistory[TMeasurement]], inputDescriptor: Option[Long]): HistoryKey = {
     logger.log("Selecting using WindowBoundRegressionSelectionStrategy")
 
     val descriptor = inputDescriptor match {
       case Some(d) => d
-      case _ => return records.head.key
+      case _ => return secondaryStrategy.selectOption(records, inputDescriptor)
     }
 
     val regressions = records.map(r => (r, r.runRegression))
+
+    // Are all of the regressions corectly built?
+    val insufficientRegressions = regressions.filter(r => !r._2.hasEnoughX)
+    if (insufficientRegressions.size == regressions.size) {
+      // All of the functions have insufficient inputs observed, falling back to mean-based strategy
+      return meanBasedStrategy.selectOption(records, inputDescriptor)
+    }
+    else if (insufficientRegressions.nonEmpty) {
+      // Some of the functions have sufficient data while others not, using secondary strategy
+      return secondaryStrategy.selectOption(records, inputDescriptor)
+    }
 
     val positiveResults = regressions
       .view
@@ -52,6 +56,6 @@ class RegressionSelectionStrategy[TMeasurement](val logger: Logger,
     positiveResults
       .find(_._2.contains(TestResult.ExpectedLower))
       .map(_._1._1.key)
-      .getOrElse(secondarySelector.selectOption(records, inputDescriptor))
+      .getOrElse(secondaryStrategy.selectOption(records, inputDescriptor))
   }
 }

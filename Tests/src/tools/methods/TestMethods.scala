@@ -69,7 +69,7 @@ class TestMethods {
 
   def linearMinConstant(x: List[Int]): List[Int] = {
     //println("linearMinConstant")
-    val sleepTime = ((x.size * minConstant + highConstant * highConstant)).toInt
+    val sleepTime = ((x.size * minConstant)).toInt
     //sleepNanos(sleepTime)
     delay(sleepTime)
 //    iterate(sleepTime)
