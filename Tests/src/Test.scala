@@ -34,12 +34,6 @@ object Test {
       //runner.runTest(l => testMethods.function(l))
 
       val testFunction = testMethods.function
-
-      val analytics = testFunction.getAnalyticsData.get
-      analytics.saveData(new File("analytics.txt"))
-      analytics.getAllRunInfo.foreach(r => {
-        if (r.overheadPercentage > 0.5) logRun(r)
-      })
     })
   }
 }
