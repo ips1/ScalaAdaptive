@@ -8,8 +8,9 @@ import scalaadaptive.api.options.Selection
 import scalaadaptive.core.configuration.BaseLongConfiguration
 import scalaadaptive.core.configuration.blocks._
 import scalaadaptive.core.configuration.blocks.logging.NoLogging
+import scalaadaptive.core.configuration.blocks.persistence.BufferedPersistence
 import scalaadaptive.core.configuration.blocks.selection.{LoessInterpolationInputBasedStrategy, TTestMeanBasedStrategy}
-import scalaadaptive.core.configuration.blocks.storage.CachedGroupStorage
+import scalaadaptive.core.configuration.blocks.history.CachedGroupHistory
 import scalaadaptive.core.functions.identifiers.ClosureIdentifier
 import scalaadaptive.core.logging.Logger
 import scalaadaptive.core.runtime.selection.strategies.LeastDataSelectionStrategy
@@ -50,9 +51,8 @@ object LoessTest {
   abstract class ComparisonConfiguration extends BaseLongConfiguration
     with RunTimeMeasurement
     with TTestMeanBasedStrategy
-    with CachedGroupStorage
-    with DefaultHistoryPath
-    with BufferedSerialization
+    with CachedGroupHistory
+    with BufferedPersistence
     with NoLogging
 
   def main(args: Array[String]): Unit = {

@@ -17,7 +17,8 @@ object Configuration {
     with NoAnalyticsCollection {
     // More detailed arguments and values (either of the original configuration or of the mixins) can be specified
     // by overriding the value
-    override val maximumNumberOfRecords = 1000
+    override val maximumNumberOfRecords = 50
+    override val lowRunLimit = 10
   }
 
   // The framework has to be initialized with the configuration

@@ -8,8 +8,9 @@ import scalaadaptive.api.Adaptive
 import scalaadaptive.api.options.Selection
 import scalaadaptive.core.configuration.BaseLongConfiguration
 import scalaadaptive.core.configuration.blocks._
+import scalaadaptive.core.configuration.blocks.persistence.BufferedPersistence
 import scalaadaptive.core.configuration.blocks.selection.{TTestMeanBasedStrategy, WindowBoundRegressionInputBasedStrategy}
-import scalaadaptive.core.configuration.blocks.storage.{CachedRegressionStorage, CachedStatisticsStorage}
+import scalaadaptive.core.configuration.blocks.history.{CachedRegressionHistory, CachedStatisticsHistory}
 import scalaadaptive.core.configuration.defaults.DefaultConfiguration
 
 /**
@@ -101,10 +102,9 @@ object MatrixMultiplicationTest {
     val config = new DefaultConfiguration
       with TTestMeanBasedStrategy
       with WindowBoundRegressionInputBasedStrategy
-      with CachedRegressionStorage
-      with CachedStatisticsStorage
-      with DefaultHistoryPath
-      with BufferedSerialization {
+      with CachedRegressionHistory
+      with CachedStatisticsHistory
+      with BufferedPersistence {
       override val lowRunLimit = 5
     }
 

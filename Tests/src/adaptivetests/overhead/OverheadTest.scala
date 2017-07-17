@@ -8,7 +8,7 @@ import scalaadaptive.api.options.Storage
 import scalaadaptive.core.configuration.defaults.DefaultConfiguration
 import scalaadaptive.api.policies.{AlwaysUseLastPolicy, StopSelectingWhenDecidedPolicy}
 import scalaadaptive.core.configuration.blocks.logging.NoLogging
-import scalaadaptive.core.configuration.blocks.storage.CachedStatisticsStorage
+import scalaadaptive.core.configuration.blocks.history.CachedStatisticsHistory
 
 /**
   * Created by Petr Kubat on 6/5/17.
@@ -46,7 +46,7 @@ object OverheadTest {
   }
 
   def main(args: Array[String]): Unit = {
-    Adaptive.initialize(new DefaultConfiguration with CachedStatisticsStorage)
+    Adaptive.initialize(new DefaultConfiguration with CachedStatisticsHistory)
     Seq.range(0, 1).foreach(i => run())
   }
 }

@@ -7,7 +7,7 @@ import scalaadaptive.api.Adaptive
 import scalaadaptive.core.configuration.defaults.DefaultConfiguration
 import scalaadaptive.api.policies.StopSelectingWhenDecidedPolicy
 import scalaadaptive.core.configuration.blocks.logging.NoLogging
-import scalaadaptive.core.configuration.blocks.storage.CachedStatisticsStorage
+import scalaadaptive.core.configuration.blocks.history.CachedStatisticsHistory
 
 /**
   * Created by Petr Kubat on 6/5/17.
@@ -20,7 +20,7 @@ object SortingOverhead {
   val utils = new OverheadUtils()
 
   def main(args: Array[String]): Unit = {
-    Adaptive.initialize(new DefaultConfiguration with CachedStatisticsStorage)
+    Adaptive.initialize(new DefaultConfiguration with CachedStatisticsHistory)
 
     val dataSize = 1000
     val data = customData(1000)

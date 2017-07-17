@@ -55,14 +55,14 @@ trait BaseConfiguration extends Configuration {
     */
   protected val maximumNumberOfRecords: Int = 50000
 
-  override def createRunHistory(key: HistoryKey): RunHistory[TMeasurement] = {
+  override def createRunHistory(log: Logger, key: HistoryKey): RunHistory[TMeasurement] = {
     val innerHistoryFactory = () =>
       new FullRunHistory[TMeasurement](key)(num)
-    new LimitedRunHistory[TMeasurement](maximumNumberOfRecords, innerHistoryFactory(), innerHistoryFactory)
+    new LimitedRunHistory[TMeasurement](log, maximumNumberOfRecords, innerHistoryFactory(), innerHistoryFactory)
   }
 
-  override def createHistoryStorage: HistoryStorage[TMeasurement] =
-    new MapHistoryStorage[TMeasurement](key => createRunHistory(key))
+  override def createHistoryStorage(log: Logger): HistoryStorage[TMeasurement] =
+    new MapHistoryStorage[TMeasurement](key => createRunHistory(log, key))
 
   override def createFunctionInvoker: CombinedFunctionInvoker =
     new PolicyBasedInvoker

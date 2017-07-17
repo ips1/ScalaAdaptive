@@ -7,7 +7,7 @@ import tools.methods.TestMethods
 
 import scalaadaptive.core.configuration.defaults.DefaultConfiguration
 import scalaadaptive.api.Adaptive
-import scalaadaptive.core.configuration.blocks.storage.CachedStatisticsStorage
+import scalaadaptive.core.configuration.blocks.history.CachedStatisticsHistory
 
 /**
   * Created by Petr Kubat on 5/8/17.
@@ -21,7 +21,7 @@ object LimitedTest {
   val runner = new TestRunner()
 
   def main(args: Array[String]): Unit = {
-    Adaptive.initialize(new DefaultConfiguration with CachedStatisticsStorage)
+    Adaptive.initialize(new DefaultConfiguration with CachedStatisticsHistory)
 
     runner.runIncrementalTest(l => limitedFunc(l))
   }

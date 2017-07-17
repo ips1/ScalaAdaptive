@@ -7,7 +7,7 @@ import adaptivetests.jsonparsing.data.PersonList
 import scala.io.Source
 import scalaadaptive.api.Adaptive
 import scalaadaptive.core.configuration.blocks.logging.NoLogging
-import scalaadaptive.core.configuration.blocks.storage.CachedStatisticsStorage
+import scalaadaptive.core.configuration.blocks.history.CachedStatisticsHistory
 import scalaadaptive.core.configuration.defaults.DefaultConfiguration
 
 /**
@@ -57,7 +57,7 @@ object ComparisonTest {
     val smallJsonString = Source.fromFile("Tests/src/adaptivetests/jsonparsing/SmallJsonData.json").mkString
     val superBigJsonString = Source.fromFile("Tests/src/adaptivetests/jsonparsing/SuperBigJsonData.json").mkString
 
-    Adaptive.initialize(new DefaultConfiguration with CachedStatisticsStorage)
+    Adaptive.initialize(new DefaultConfiguration with CachedStatisticsHistory)
 
     val smallRepeatCount = 10000
     val bigRepeatCount = 5000

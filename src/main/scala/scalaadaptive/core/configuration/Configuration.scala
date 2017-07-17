@@ -43,19 +43,21 @@ trait Configuration {
   /**
     * The [[scalaadaptive.core.runtime.history.runhistory.RunHistory]] factory method. It can be used by the
     * [[scalaadaptive.core.runtime.history.historystorage.HistoryStorage]] to create new histories.
+    * @param log Logger for the history.
     * @param key Key of the newly created history.
     * @return The empty history.
     */
-  def createRunHistory(key: HistoryKey): RunHistory[TMeasurement]
+  def createRunHistory(log: Logger, key: HistoryKey): RunHistory[TMeasurement]
 
   /**
     * The [[scalaadaptive.core.runtime.history.historystorage.HistoryStorage]] factory method - the storage created
     * by this method will be used in a global shared variant as a global storage
     * (see [[scalaadaptive.api.options.Storage.Global]]), and in local instances as a local storage
     * (see [[scalaadaptive.api.options.Storage.Local]]).
+    * @param log Logger for the history.
     * @return The storage.
     */
-  def createHistoryStorage: HistoryStorage[TMeasurement]
+  def createHistoryStorage(log: Logger): HistoryStorage[TMeasurement]
 
   /**
     * The [[scalaadaptive.core.runtime.history.historystorage.HistoryStorage]] factory method - the storage created
@@ -63,7 +65,7 @@ trait Configuration {
     * Note that the implementation might use an internal storage created using [[createHistoryStorage]].
     * @return The storage.
     */
-  def createPersistentHistoryStorage: Option[HistoryStorage[TMeasurement]]
+  def createPersistentHistoryStorage(log: Logger): Option[HistoryStorage[TMeasurement]]
 
   /**
     * The [[scalaadaptive.core.runtime.selection.strategies.SelectionStrategy]] factory method - the strategy created

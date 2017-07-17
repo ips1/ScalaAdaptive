@@ -1,5 +1,5 @@
 import scalaadaptive.api.Adaptive
-import scalaadaptive.core.configuration.blocks.storage.{CachedGroupStorage, CachedRegressionStorage, CachedStatisticsStorage}
+import scalaadaptive.core.configuration.blocks.history.{CachedGroupHistory, CachedRegressionHistory, CachedStatisticsHistory}
 import scalaadaptive.core.runtime.AdaptiveInternal
 
 /**
@@ -9,9 +9,9 @@ object ConfigurationCompositionTest {
   def main(args: Array[String]): Unit = {
     import scalaadaptive.core.configuration.defaults.DefaultConfiguration
     val config = new DefaultConfiguration
-      with CachedRegressionStorage
-      with CachedGroupStorage
-      with CachedStatisticsStorage
+      with CachedRegressionHistory
+      with CachedGroupHistory
+      with CachedStatisticsHistory
 
     Adaptive.initialize(config)
 

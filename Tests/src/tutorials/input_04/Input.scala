@@ -1,5 +1,7 @@
 package tutorials.input_04
 
+import java.io.PrintWriter
+
 import com.sun.deploy.config.DefaultConfig
 
 import scala.util.Random
@@ -40,8 +42,14 @@ object Input {
 
   def main(args: Array[String]): Unit = {
     Seq.range(0, 100).foreach(i => {
-      val n = Random.nextInt(40)
+      // Generating int between 20 and 40
+      val n = Random.nextInt(20) + 20
       println(s"$n: ${fibonacci(n)}")
     })
+
+    val analytics = fibonacci.getAnalyticsData.get
+    val runsByFunctions = analytics.getAllRunInfo.groupBy(run => run.selectedFunction)
+    val countsByFunction = runsByFunctions.mapValues(_.size)
+    countsByFunction.foreach(t => println(s"Function ${t._1} invoked ${t._2} times."))
   }
 }

@@ -11,7 +11,7 @@ import scalaadaptive.api.options.{Selection, Storage}
 import scalaadaptive.core.configuration.{BaseLongConfiguration, Configuration}
 import scalaadaptive.core.configuration.blocks._
 import scalaadaptive.core.configuration.blocks.selection._
-import scalaadaptive.core.configuration.blocks.storage.{CachedRegressionStorage, CachedStatisticsStorage}
+import scalaadaptive.core.configuration.blocks.history.{CachedRegressionHistory, CachedStatisticsHistory}
 
 /**
   * Created by Petr Kubat on 7/1/17.
@@ -68,14 +68,14 @@ object OverheadMeasure {
     val configs = List(
       (new TestConfiguration
       with TTestMeanBasedStrategy
-      with CachedStatisticsStorage, Selection.MeanBased),
+      with CachedStatisticsHistory, Selection.MeanBased),
       (new TestConfiguration
         with TTestMeanBasedStrategy, Selection.MeanBased),
       (new TestConfiguration
         with UTestMeanBasedStrategy, Selection.MeanBased),
       (new TestConfiguration
         with LinearRegressionInputBasedStrategy
-        with CachedRegressionStorage, Selection.InputBased),
+        with CachedRegressionHistory, Selection.InputBased),
       (new TestConfiguration
         with LinearRegressionInputBasedStrategy, Selection.InputBased),
       (new TestConfiguration

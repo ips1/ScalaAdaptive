@@ -2,6 +2,7 @@ package scalaadaptive.core.runtime.history.runhistory
 
 import org.apache.commons.math3.stat.descriptive.{StatisticalSummary, SummaryStatistics}
 
+import scalaadaptive.core.logging.Logger
 import scalaadaptive.core.runtime.history.HistoryKey
 import scalaadaptive.core.runtime.history.evaluation.data.{EvaluationData, GroupedEvaluationData}
 import scalaadaptive.math.SimpleTestableRegression
@@ -12,25 +13,30 @@ import scalaadaptive.math.SimpleTestableRegression
   * A wrapper for [[RunHistory]] that has a maximum number of records that can be present. After reaching that number,
   * adding a new record will cause throwing the older half of records away.
   *
+  * @param logger The logger to be used.
   * @param limit The maximum number of records.
   * @param internalHistory The internal history that the calls are delegated to.
   * @param internalHistoryFactory A factory method that can be used to create new instances of the internal history.
   */
-class LimitedRunHistory[TMeasurement](val limit: Int,
+class LimitedRunHistory[TMeasurement](val logger: Logger,
+                                      val limit: Int,
                                       private val internalHistory: RunHistory[TMeasurement],
                                       private val internalHistoryFactory: () => RunHistory[TMeasurement])
   extends RunHistory[TMeasurement] {
 
   override def applyNewRun(runResult: EvaluationData[TMeasurement]): RunHistory[TMeasurement] = {
     if (internalHistory.runCount < limit) {
-      return new LimitedRunHistory(limit, internalHistory.applyNewRun(runResult), internalHistoryFactory)
+      return new LimitedRunHistory(logger, limit, internalHistory.applyNewRun(runResult), internalHistoryFactory)
     }
 
     val keep = limit / 2
+
+    logger.log(s"Run history reached the maximum size of $limit, dropping oldest $keep records.")
+
     val toKeep = internalHistory.runItems.take(keep).toList
     val emptyHistory = internalHistoryFactory()
     val newHistory = toKeep.foldRight(emptyHistory)((data, h) => h.applyNewRun(data))
-    new LimitedRunHistory(limit, newHistory, internalHistoryFactory)
+    new LimitedRunHistory(logger, limit, newHistory, internalHistoryFactory)
   }
 
   // Delegations:

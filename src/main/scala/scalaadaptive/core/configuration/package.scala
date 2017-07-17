@@ -1,6 +1,6 @@
 package scalaadaptive.core
 
-import scalaadaptive.core.configuration.blocks.storage.CachedStatisticsStorage
+import scalaadaptive.core.configuration.blocks.history.CachedStatisticsHistory
 
 /**
   * Created by Petr Kubat on 7/17/17.
@@ -23,7 +23,7 @@ import scalaadaptive.core.configuration.blocks.storage.CachedStatisticsStorage
   * and hide the actual constructor calls, so called configuration blocks were introduced. Blocks are mixin traits
   * implementing only one (or a couple of) factory method of the [[scalaadaptive.core.configuration.Configuration]] in
   * a certain way, and an actual configuration can be composed of these mixins. Note that the mixins might use the
-  * parent implementation (see e.g. [[scalaadaptive.core.configuration.blocks.storage.CachedStatisticsStorage]]) and
+  * parent implementation (see e.g. [[scalaadaptive.core.configuration.blocks.history.CachedStatisticsHistory]]) and
   * therefore can be stacked together with different blocks - the ordering matters.
   *
   * The [[scalaadaptive.core.configuration.BaseConfiguration]] and

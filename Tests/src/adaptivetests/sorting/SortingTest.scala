@@ -11,7 +11,7 @@ import scalaadaptive.api.policies.PauseSelectionAfterStreakPolicy
 import scalaadaptive.core.configuration.BaseLongConfiguration
 import scalaadaptive.core.configuration.blocks._
 import scalaadaptive.core.configuration.blocks.selection.{LinearRegressionInputBasedStrategy, LoessInterpolationInputBasedStrategy, WindowBoundRegressionInputBasedStrategy, WindowBoundTTestInputBasedStrategy}
-import scalaadaptive.core.configuration.blocks.storage.{CachedGroupStorage, CachedRegressionStorage, CachedStatisticsStorage}
+import scalaadaptive.core.configuration.blocks.history.{CachedGroupHistory, CachedRegressionHistory, CachedStatisticsHistory}
 
 /**
   * Created by Petr Kubat on 7/3/17.
@@ -86,16 +86,16 @@ object SortingTest {
     val setups = List(
       new TestSetup("LOESS", new TestConfiguration
         with LoessInterpolationInputBasedStrategy
-        with CachedGroupStorage),
+        with CachedGroupHistory),
       new TestSetup("LR", new TestConfiguration
         with LinearRegressionInputBasedStrategy
-        with CachedRegressionStorage),
+        with CachedRegressionHistory),
       new TestSetup("WBLR", new TestConfiguration
         with WindowBoundRegressionInputBasedStrategy
-        with CachedRegressionStorage),
+        with CachedRegressionHistory),
       new TestSetup("WBTT", new TestConfiguration
         with WindowBoundTTestInputBasedStrategy
-        with CachedStatisticsStorage)
+        with CachedStatisticsHistory)
     )
 
 

@@ -1,6 +1,7 @@
-package scalaadaptive.core.configuration.blocks.storage
+package scalaadaptive.core.configuration.blocks.history
 
 import scalaadaptive.core.configuration.BaseLongConfiguration
+import scalaadaptive.core.logging.Logger
 import scalaadaptive.core.runtime.history.HistoryKey
 import scalaadaptive.core.runtime.history.runhistory.{CachedRegressionRunHistory, RunHistory}
 
@@ -13,7 +14,7 @@ import scalaadaptive.core.runtime.history.runhistory.{CachedRegressionRunHistory
   * Note that it uses inherited (super) implementation of createRunHistory, therefore, the inheritance order matters.
   *
   */
-trait CachedRegressionStorage extends BaseLongConfiguration  {
-  override def createRunHistory(key: HistoryKey): RunHistory[Long] =
-    new CachedRegressionRunHistory[Long](super.createRunHistory(key))(num)
+trait CachedRegressionHistory extends BaseLongConfiguration  {
+  override def createRunHistory(log: Logger, key: HistoryKey): RunHistory[Long] =
+    new CachedRegressionRunHistory[Long](super.createRunHistory(log, key))(num)
 }

@@ -3,8 +3,9 @@ package scalaadaptive.core.configuration.defaults
 import scalaadaptive.core.configuration.BaseLongConfiguration
 import scalaadaptive.core.configuration.blocks._
 import scalaadaptive.core.configuration.blocks.logging.NoLogging
+import scalaadaptive.core.configuration.blocks.persistence.BufferedPersistence
 import scalaadaptive.core.configuration.blocks.selection.{TTestMeanBasedStrategy, WindowBoundRegressionInputBasedStrategy}
-import scalaadaptive.core.configuration.blocks.storage.CachedStatisticsStorage
+import scalaadaptive.core.configuration.blocks.history.CachedStatisticsHistory
 
 /**
   * Created by Petr Kubat on 7/3/17.
@@ -20,8 +21,7 @@ class DefaultConfiguration extends BaseLongConfiguration
   with RunTimeMeasurement
   with TTestMeanBasedStrategy
   with WindowBoundRegressionInputBasedStrategy
-  with CachedStatisticsStorage
-  with DefaultHistoryPath
-  with BufferedSerialization
+  with CachedStatisticsHistory
+  with BufferedPersistence
   with NoLogging
 

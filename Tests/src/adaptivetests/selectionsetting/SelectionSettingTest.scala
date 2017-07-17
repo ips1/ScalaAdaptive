@@ -9,7 +9,7 @@ import scalaadaptive.core.configuration.defaults.DefaultConfiguration
 import scalaadaptive.api.options.Selection
 import scalaadaptive.api.Adaptive
 import scalaadaptive.core.configuration.blocks.selection.LoessInterpolationInputBasedStrategy
-import scalaadaptive.core.configuration.blocks.storage.CachedGroupStorage
+import scalaadaptive.core.configuration.blocks.history.CachedGroupHistory
 
 /**
   * Created by Petr Kubat on 5/8/17.
@@ -24,7 +24,7 @@ object SelectionSettingTest {
   val runner = new TestRunner()
 
   def main(args: Array[String]): Unit = {
-    Adaptive.initialize(new DefaultConfiguration with LoessInterpolationInputBasedStrategy with CachedGroupStorage)
+    Adaptive.initialize(new DefaultConfiguration with LoessInterpolationInputBasedStrategy with CachedGroupHistory)
 
     runner.runIncrementalTest(l => discreteFunc(l))
     runner.runIncrementalTest(l => continuousFunc(l))

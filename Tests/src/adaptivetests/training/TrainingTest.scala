@@ -5,7 +5,7 @@ import tools.methods.TestMethods
 
 import scalaadaptive.api.Adaptive
 import scalaadaptive.core.configuration.blocks.selection.LoessInterpolationInputBasedStrategy
-import scalaadaptive.core.configuration.blocks.storage.CachedGroupStorage
+import scalaadaptive.core.configuration.blocks.history.CachedGroupHistory
 import scalaadaptive.core.configuration.defaults.DefaultConfiguration
 
 /**
@@ -14,7 +14,7 @@ import scalaadaptive.core.configuration.defaults.DefaultConfiguration
 object TrainingTest {
   def main(args: Array[String]): Unit = {
 
-    val configurations = List(new DefaultConfiguration with LoessInterpolationInputBasedStrategy with CachedGroupStorage)
+    val configurations = List(new DefaultConfiguration with LoessInterpolationInputBasedStrategy with CachedGroupHistory)
     val runner = new TestRunner()
     val testMethods = new TestMethods()
 
