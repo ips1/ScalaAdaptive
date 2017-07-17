@@ -1,27 +1,56 @@
 package scalaadaptive.core.configuration
 
 import scalaadaptive.analytics.{AnalyticsSerializer, CsvAnalyticsSerializer}
-import scalaadaptive.core.logging.{ConsoleLogger, Logger}
-import scalaadaptive.api.options.{Selection, Storage}
-import scalaadaptive.core.functions.analytics.{AnalyticsCollector, BasicAnalyticsCollector}
-import scalaadaptive.core.functions.{DefaultFunctionFactory, FunctionConfig, FunctionFactory}
-import scalaadaptive.core.functions.identifiers.{CustomIdentifierValidator, JavaIdentifierValidator}
-import scalaadaptive.core.runtime.history.historystorage.{HistoryStorage, MapHistoryStorage}
-import scalaadaptive.core.runtime.history.runhistory.{CachedGroupedRunHistory, FullRunHistory, LimitedRunHistory}
+import scalaadaptive.api.options.Storage
 import scalaadaptive.api.policies.AlwaysSelectPolicy
+import scalaadaptive.core.functions.analytics.{AnalyticsCollector, BasicAnalyticsCollector}
+import scalaadaptive.core.functions.identifiers.{CustomIdentifierValidator, JavaIdentifierValidator}
+import scalaadaptive.core.functions.{DefaultFunctionFactory, FunctionConfig, FunctionFactory}
+import scalaadaptive.core.logging.Logger
 import scalaadaptive.core.runtime.history.evaluation.EvaluationProvider
+import scalaadaptive.core.runtime.history.historystorage.{HistoryStorage, MapHistoryStorage}
+import scalaadaptive.core.runtime.history.runhistory.{FullRunHistory, LimitedRunHistory}
 import scalaadaptive.core.runtime.invocation.{CombinedFunctionInvoker, PolicyBasedInvoker}
-import scalaadaptive.core.runtime.selection.HistoryBasedAdaptiveSelector
 import scalaadaptive.core.runtime.selection.strategies.{LeastDataSelectionStrategy, SelectionStrategy}
 import scalaadaptive.core.runtime.selection.{AdaptiveSelector, HistoryBasedAdaptiveSelector}
 import scalaadaptive.extensions.Averageable
 
 /**
   * Created by Petr Kubat on 4/22/17.
+  *
+  * A class that provides basic implementations for some of the factory methods from
+  * [[scalaadaptive.core.configuration.Configuration]]. It fixes the TMeasurement type using an
+  * [[scalaadaptive.extensions.Averageable]] typeclass in order to be able to use some implementations.
+  *
+  * In general, this extension provides construction for all the types with only one (or one main) implementation,
+  * so it does not make any sense to create configuration blocks for them (see
+  * [[scalaadaptive.core.configuration.blocks]]).
+  *
+  * It sets up the following:
+  * - [[scalaadaptive.core.runtime.history.historystorage.HistoryStorage]] to
+  * [[scalaadaptive.core.runtime.history.historystorage.MapHistoryStorage]] with run histories represented as
+  * [[scalaadaptive.core.runtime.history.runhistory.FullRunHistory]] wrapped into
+  * [[scalaadaptive.core.runtime.history.runhistory.LimitedRunHistory]]
+  * - [[scalaadaptive.core.functions.identifiers.CustomIdentifierValidator]] to
+  * [[scalaadaptive.core.functions.identifiers.JavaIdentifierValidator]]
+  * - [[scalaadaptive.core.functions.FunctionFactory]] to [[scalaadaptive.core.functions.DefaultFunctionFactory]]
+  * - [[scalaadaptive.analytics.AnalyticsSerializer]] to [[scalaadaptive.analytics.CsvAnalyticsSerializer]]
+  * - [[scalaadaptive.core.functions.analytics.AnalyticsCollector]] to
+  * [[scalaadaptive.core.functions.analytics.BasicAnalyticsCollector]]
+  * - gatherDataStrategy to [[scalaadaptive.core.runtime.selection.strategies.LeastDataSelectionStrategy]]
+  * - [[scalaadaptive.core.runtime.invocation.CombinedFunctionInvoker]] to
+  * [[scalaadaptive.core.runtime.invocation.PolicyBasedInvoker]]
+  * - multiFunctionDefaultConfig using basic values
+  * - initAdaptiveSelector composition creating a [[scalaadaptive.core.runtime.selection.HistoryBasedAdaptiveSelector]]
+  *
   */
 trait BaseConfiguration extends Configuration {
   protected val num: Averageable[TMeasurement]
 
+  /**
+    * The maximum number of historical records in history of one function for one group. Used as an argument for the
+    * [[scalaadaptive.core.runtime.history.runhistory.LimitedRunHistory]] class.
+    */
   protected val maximumNumberOfRecords: Int = 50000
 
   override def createHistoryStorage: HistoryStorage[TMeasurement] = {
@@ -31,8 +60,10 @@ trait BaseConfiguration extends Configuration {
       new LimitedRunHistory[TMeasurement](maximumNumberOfRecords, innerHistoryFactory(), innerHistoryFactory)
     })
   }
-  override def createLogger: Logger =
-    new ConsoleLogger
+
+  override def createFunctionInvoker: CombinedFunctionInvoker =
+    new PolicyBasedInvoker
+
   override def createIdentifierValidator: CustomIdentifierValidator =
     new JavaIdentifierValidator
   override def createFunctionFactory: FunctionFactory =
@@ -44,9 +75,6 @@ trait BaseConfiguration extends Configuration {
 
   override def createGatherDataStrategy(log: Logger): SelectionStrategy[TMeasurement] =
     new LeastDataSelectionStrategy[TMeasurement](log)
-
-  override def createFunctionInvoker: CombinedFunctionInvoker =
-    new PolicyBasedInvoker
 
   override def createMultiFunctionDefaultConfig: FunctionConfig =
     new FunctionConfig(None, Storage.Global, None, false, new AlwaysSelectPolicy)
