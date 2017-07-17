@@ -29,7 +29,7 @@ trait SelectionStrategy[TMeasurement] {
     *                and the group ID.
     * @param inputDescriptor Optional input descriptor for current input - we want to optimize for this input. In case
     *                        of None, we suppose that the function performances do not depend on the input.
-    * @return The [[HistoryKey]] of selected function as present in its
+    * @return The [[scalaadaptive.core.runtime.history.HistoryKey]] of selected function as present in its
     *         [[scalaadaptive.core.runtime.history.runhistory.RunHistory]]
     */
   def selectOption(records: Seq[RunHistory[TMeasurement]], inputDescriptor: Option[Long]): HistoryKey

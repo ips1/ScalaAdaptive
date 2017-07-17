@@ -22,7 +22,8 @@ trait DelayedFunctionRunner {
     * @param tracker The tracker that is used to track performance connected with the original adaptive function.
     * @tparam TArgType Tupled argument type of the executed function.
     * @tparam TReturnType Return type of the executed function.
-    * @return The [[RunResult]] of the function that gets executed containing data from the tracker.
+    * @return The [[scalaadaptive.core.functions.RunResult]] of the function that gets executed containing data from
+    *         the tracker.
     */
   def runMeasuredFunction[TArgType, TReturnType](fun: (TArgType) => TReturnType,
                                                  arguments: TArgType,

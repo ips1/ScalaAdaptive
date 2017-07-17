@@ -2,10 +2,9 @@ package scalaadaptive.core.runtime.selection
 
 import java.time.{Duration, Instant}
 
-import scalaadaptive.api.grouping.Group
 import scalaadaptive.api.options.Selection
 import scalaadaptive.api.options.Selection.Selection
-import scalaadaptive.core.functions.identifiers.{FunctionIdentifier, IdentifiedFunction}
+import scalaadaptive.core.functions.identifiers.FunctionIdentifier
 import scalaadaptive.core.functions.{RunData, RunResult}
 import scalaadaptive.core.logging.Logger
 import scalaadaptive.core.performance.{BasicPerformanceTracker, PerformanceTracker}
@@ -15,7 +14,7 @@ import scalaadaptive.core.runtime.history.evaluation.data.EvaluationData
 import scalaadaptive.core.runtime.history.historystorage.HistoryStorage
 import scalaadaptive.core.runtime.history.runhistory.RunHistory
 import scalaadaptive.core.runtime.invocationtokens.{InvocationTokenWithCallbacks, MeasuringInvocationToken}
-import scalaadaptive.core.runtime.selection.strategies.{LeastDataSelectionStrategy, SelectionStrategy}
+import scalaadaptive.core.runtime.selection.strategies.SelectionStrategy
 
 /**
   * Created by Petr Kubat on 3/19/17.
@@ -23,7 +22,8 @@ import scalaadaptive.core.runtime.selection.strategies.{LeastDataSelectionStrate
   * An [[AdaptiveSelector]] that holds a history storage ([[scalaadaptive.core.runtime.history.historystorage.]])
   * containing evaluation histories of all runs of all functions that were selected and invoked using this selector.
   *
-  * Holds three instances of [[SelectionStrategy]] that it uses to select functions:
+  * Holds three instances of [[scalaadaptive.core.runtime.selection.strategies.SelectionStrategy]] that it uses to
+  * select functions:
   * - meanBasedStrategy for selection with [[Selection.MeanBased]]
   * - inputBasedStrategy for selection with [[Selection.InputBased]]
   * - gatherDataStrategy for gather data action

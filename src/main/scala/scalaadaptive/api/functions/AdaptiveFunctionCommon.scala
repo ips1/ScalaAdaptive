@@ -21,16 +21,18 @@ trait AdaptiveFunctionCommon[TArgType, TRetType, TAdaptiveFunctionType]
   extends AdaptiveFunctionControl with AdaptiveFunctionAnalytics {
 
   /**
-    * Creates a new adaptive function with the [[scalaadaptive.api.options.Selection.Selection]] configuration updated. The corresponding [[SelectionStrategy]]
-    * from the [[scalaadaptive.core.configuration.Configuration]] will be used.
+    * Creates a new adaptive function with the [[scalaadaptive.api.options.Selection.Selection]] configuration updated.
+    * The corresponding [[scalaadaptive.core.runtime.selection.strategies.SelectionStrategy]] from the
+    * [[scalaadaptive.core.configuration.Configuration]] will be used.
     * @param newSelection The new value for the [[scalaadaptive.api.options.Selection.Selection]] configuration.
     * @return A completely new instance of [[TAdaptiveFunctionType]] with the configuration updated.
     */
   def selectUsing(newSelection: Selection): TAdaptiveFunctionType
 
   /**
-    * Creates a new adaptive function with the [[scalaadaptive.api.options.Storage.Storage]] configuration updated. The corresponding [[scalaadaptive.core.runtime.history.historystorage.HistoryStorage]]
-    * from the [[scalaadaptive.core.configuration.Configuration]] will be used.
+    * Creates a new adaptive function with the [[scalaadaptive.api.options.Storage.Storage]] configuration updated.
+    * The corresponding [[scalaadaptive.core.runtime.history.historystorage.HistoryStorage]] from the
+    * [[scalaadaptive.core.configuration.Configuration]] will be used.
     * @param newStorage The new value for the [[scalaadaptive.api.options.Storage.Storage]] configuration.
     * @return A completely new instance of [[TAdaptiveFunctionType]] with the configuration updated.
     */

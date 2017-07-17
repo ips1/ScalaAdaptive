@@ -19,7 +19,7 @@ import scalaadaptive.core.runtime.AdaptiveInternal
   *
   * If an adaptive function is created this way, it has the custom identifier included as its preferred identifier
   * instead of the method name. It will be used if not specified otherwise using the {{{asClosures}}} setting
-  * on the [[AdaptiveFunctionCommon]].
+  * on the [[scalaadaptive.api.functions.AdaptiveFunctionCommon]].
   *
   * Note that the identifier is validated using the [[scalaadaptive.core.functions.identifiers.CustomIdentifierValidator]]
   * from the [[scalaadaptive.core.configuration.Configuration]] and in case of a problem, the

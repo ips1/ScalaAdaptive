@@ -12,7 +12,8 @@ import scalaadaptive.api.policies.utilpolicies.{AlwaysDoPolicy, CyclicPolicy, Do
   * The inner representation of partially complete cyclic policy within a [[PolicyBuilder]].
   *
   * The policy steps of the loop are held in form of factories that should be invoked at the beginning of a loop
-  * to generate the policy chain for the loop. A new [[CyclicPolicy]] is generated when the builder is terminated.
+  * to generate the policy chain for the loop. A new [[scalaadaptive.api.policies.utilpolicies.CyclicPolicy]] is
+  * generated when the builder is terminated.
   *
   */
 class PolicyBuilderInner(val policyFactories: List[(Policy, StatisticDataProvider) => Policy]) {
