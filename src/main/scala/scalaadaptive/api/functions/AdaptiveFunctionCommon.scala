@@ -2,7 +2,6 @@ package scalaadaptive.api.functions
 
 import java.time.Duration
 
-import scalaadaptive.analytics.AnalyticsData
 import scalaadaptive.api.options.Selection.Selection
 import scalaadaptive.api.options.Storage.Storage
 import scalaadaptive.api.policies.Policy
@@ -22,17 +21,17 @@ trait AdaptiveFunctionCommon[TArgType, TRetType, TAdaptiveFunctionType]
   extends AdaptiveFunctionControl with AdaptiveFunctionAnalytics {
 
   /**
-    * Creates a new adaptive function with the [[Selection]] configuration updated. The corresponding [[SelectionStrategy]]
+    * Creates a new adaptive function with the [[scalaadaptive.api.options.Selection.Selection]] configuration updated. The corresponding [[SelectionStrategy]]
     * from the [[scalaadaptive.core.configuration.Configuration]] will be used.
-    * @param newSelection The new value for the [[Selection]] configuration.
+    * @param newSelection The new value for the [[scalaadaptive.api.options.Selection.Selection]] configuration.
     * @return A completely new instance of [[TAdaptiveFunctionType]] with the configuration updated.
     */
   def selectUsing(newSelection: Selection): TAdaptiveFunctionType
 
   /**
-    * Creates a new adaptive function with the [[Storage]] configuration updated. The corresponding [[scalaadaptive.core.runtime.history.historystorage.HistoryStorage]]
+    * Creates a new adaptive function with the [[scalaadaptive.api.options.Storage.Storage]] configuration updated. The corresponding [[scalaadaptive.core.runtime.history.historystorage.HistoryStorage]]
     * from the [[scalaadaptive.core.configuration.Configuration]] will be used.
-    * @param newStorage The new value for the [[Storage]] configuration.
+    * @param newStorage The new value for the [[scalaadaptive.api.options.Storage.Storage]] configuration.
     * @return A completely new instance of [[TAdaptiveFunctionType]] with the configuration updated.
     */
   def storeUsing(newStorage: Storage): TAdaptiveFunctionType
@@ -46,8 +45,8 @@ trait AdaptiveFunctionCommon[TArgType, TRetType, TAdaptiveFunctionType]
   def limitedTo(newDuration: Duration): TAdaptiveFunctionType
 
   /**
-    * Creates a new adaptive function with the new starting [[Policy]] set.
-    * @param newPolicy The new starting [[Policy]].
+    * Creates a new adaptive function with the new starting [[scalaadaptive.api.policies.Policy]] set.
+    * @param newPolicy The new starting [[scalaadaptive.api.policies.Policy]].
     * @return A completely new instance of [[TAdaptiveFunctionType]] with the configuration updated.
     */
   def withPolicy(newPolicy: Policy): TAdaptiveFunctionType

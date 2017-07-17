@@ -31,7 +31,8 @@ package scalaadaptive.api
   * The most preferred way of creating custom policies is, however, the policy builder concept (see
   * [[scalaadaptive.api.policies.builder.PolicyBuilder]]). Custom policies can be built using a simple DSL.
   *
-  * An example usage:
+  * === Usage example ===
+  *
   * {{{
   * val policy = (
   *   gatherData until (totalRunCount growsBy 50)

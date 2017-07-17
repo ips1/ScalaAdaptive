@@ -6,7 +6,7 @@ import scalaadaptive.core.functions.RunData
 /**
   * Created by Petr Kubat on 6/5/17.
   *
-  * A collector of [[AnalyticsData]].
+  * A collector of [[scalaadaptive.analytics.AnalyticsData]].
   *
   */
 trait AnalyticsCollector {

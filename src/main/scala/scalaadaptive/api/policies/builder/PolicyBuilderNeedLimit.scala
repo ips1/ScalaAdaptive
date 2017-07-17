@@ -10,8 +10,8 @@ import scalaadaptive.api.policies.builder.conditions.{Condition, SimpleCondition
   * A specific modification of [[PolicyBuilder]] in a phase when a result was specified and now a limit needs to be
   * set for the result.
   *
-  * If the limit gets set to forever, the builder phase gets terminated and a new [[scalaadaptive.api.policies.utilpolicies.CyclicPolicy]]
-  * is generated.
+  * If the limit gets set to forever, the builder phase gets terminated and a new
+  * [[scalaadaptive.api.policies.utilpolicies.CyclicPolicy]] is generated.
   *
   */
 class PolicyBuilderNeedLimit(val inner: PolicyBuilderInner, val lastResult: PolicyResult) {
@@ -28,13 +28,15 @@ class PolicyBuilderNeedLimit(val inner: PolicyBuilderInner, val lastResult: Poli
   def forever: Policy = inner.addForeverPolicy(lastResult).generateCyclic()
 
   /**
-    * Sets the result to be used repeatedly until a [[Condition]] is fulfilled.
+    * Sets the result to be used repeatedly until a [[scalaadaptive.api.policies.builder.conditions.Condition]] is
+    * fulfilled.
     * A [[scalaadaptive.api.policies.utilpolicies.repeatuntil.RepeatUntilCondition]] will be generated.
     */
   def until(cond: Condition): PolicyBuilder = new PolicyBuilder(inner.addRepeatPolicy(lastResult, cond))
 
   /**
-    * Sets the result to be used repeatedly until a [[SimpleCondition]] is fulfilled.
+    * Sets the result to be used repeatedly until a [[scalaadaptive.api.policies.builder.conditions.SimpleCondition]]
+    * is fulfilled.
     * A [[scalaadaptive.api.policies.utilpolicies.repeatuntil.RepeatUntilCondition]] will be generated.
     */
   def until(condition: (StatisticDataProvider) => Boolean): PolicyBuilder = until(new SimpleCondition(condition))

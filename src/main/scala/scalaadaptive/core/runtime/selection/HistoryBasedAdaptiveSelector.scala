@@ -20,8 +20,8 @@ import scalaadaptive.core.runtime.selection.strategies.{LeastDataSelectionStrate
 /**
   * Created by Petr Kubat on 3/19/17.
   *
-  * An [[AdaptiveSelector]] that holds a history storage ([[HistoryStorage]]) containing evaluation histories of all
-  * runs of all functions that were selected and invoked using this selector.
+  * An [[AdaptiveSelector]] that holds a history storage ([[scalaadaptive.core.runtime.history.historystorage.]])
+  * containing evaluation histories of all runs of all functions that were selected and invoked using this selector.
   *
   * Holds three instances of [[SelectionStrategy]] that it uses to select functions:
   * - meanBasedStrategy for selection with [[Selection.MeanBased]]

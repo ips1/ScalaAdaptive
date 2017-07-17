@@ -9,6 +9,7 @@ import scalaadaptive.core.functions.identifiers.IdentifiedFunction
   *
   */
 trait FunctionFactory {
-  /** Creates [[CombinedFunction]] using a single implementation [[IdentifiedFunction]]. */
+  /** Creates [[CombinedFunction]] using a single implementation
+    * [[scalaadaptive.core.functions.identifiers.IdentifiedFunction]]. */
   def createFunction[TArgType, TRetType](firstOption: IdentifiedFunction[TArgType, TRetType]): CombinedFunction[TArgType, TRetType]
 }

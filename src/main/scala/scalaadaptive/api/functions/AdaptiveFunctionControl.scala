@@ -24,13 +24,13 @@ trait AdaptiveFunctionControl {
   def flushHistory(): Unit
 
   /**
-    * Forces given [[Policy]] as the current [[Policy]] to the adaptive function.
-    * @param policy The [[Policy]] to be set as the active one.
+    * Forces given [[scalaadaptive.api.policies.Policy]] as the current [[scalaadaptive.api.policies.Policy]] to the adaptive function.
+    * @param policy The [[scalaadaptive.api.policies.Policy]] to be set as the active one.
     */
   def setPolicy(policy: Policy): Unit
 
   /**
-    * Sets the default [[Policy]] as the current [[Policy]].
+    * Sets the default [[scalaadaptive.api.policies.Policy]] as the current [[scalaadaptive.api.policies.Policy]].
     */
   def resetPolicy(): Unit
 }

@@ -85,7 +85,7 @@ trait AdaptiveCore {
   /** Retrieves the implementation of [[scalaadaptive.analytics.AnalyticsSerializer]]. */
   def getAnalyticsSerializer: AnalyticsSerializer = adaptiveImplementations.analyticsSerializer
 
-  /** Retrieves the implementation of [[CombinedFunctionInvoker]]. */
+  /** Retrieves the implementation of [[scalaadaptive.core.runtime.invocation.CombinedFunctionInvoker]]. */
   def getFunctionInvoker: CombinedFunctionInvoker = adaptiveImplementations.functionInvoker
 
   /** Retrieves the implementation of [[scalaadaptive.core.functions.analytics.AnalyticsCollector]]. */

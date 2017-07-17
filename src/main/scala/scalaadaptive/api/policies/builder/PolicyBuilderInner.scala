@@ -66,7 +66,7 @@ class PolicyBuilderInner(val policyFactories: List[(Policy, StatisticDataProvide
   /**
     * Adds a conditional transition to an external policy to the end of the builder.
     * @param conditionalPolicy [[Policy]] to be transitioned to.
-    * @param condition [[Condition]] to guard the transition.
+    * @param condition [[scalaadaptive.api.policies.builder.conditions.Condition]] to guard the transition.
     * @return New [[PolicyBuilderInner]]
     */
   def addConditionalPolicy(conditionalPolicy: Policy, condition: Condition): PolicyBuilderInner = {

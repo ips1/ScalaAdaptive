@@ -49,7 +49,7 @@ trait AdaptiveFunction0[R] extends AdaptiveFunctionCommon[Unit, R, AdaptiveFunct
 
   /**
     * Invokes the adaptive function (with the entire selection process), but delays the measurement using an
-    * [[InvocationToken]].
+    * [[scalaadaptive.api.functions.InvocationToken]].
     * @return The return value of the executed implementation.
     */
   def applyWithoutMeasuring(): (R, InvocationToken)

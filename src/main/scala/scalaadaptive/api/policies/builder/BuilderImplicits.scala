@@ -19,12 +19,13 @@ object BuilderImplicits {
     new PolicyBuilderNeedLimit(new PolicyBuilderInner(List()), result)
 
   /**
-    * Converts boolean-returning function that accepts [[StatisticDataProvider]] to a [[SimpleCondition]].
+    * Converts boolean-returning function that accepts [[StatisticDataProvider]] to a
+    * [[scalaadaptive.api.policies.builder.conditions.SimpleCondition]].
     */
   implicit def createSimpleCondition(cond: (StatisticDataProvider) => Boolean): Condition = new SimpleCondition(cond)
 
   /**
-    * Converts boolean-returning function to a [[SimpleCondition]].
+    * Converts boolean-returning function to a [[scalaadaptive.api.policies.builder.conditions.SimpleCondition]].
     */
   implicit def createIndependentCondition(cond: () => Boolean): Condition = new SimpleCondition((s) => cond())
 

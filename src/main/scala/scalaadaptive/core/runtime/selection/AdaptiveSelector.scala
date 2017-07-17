@@ -1,11 +1,7 @@
 package scalaadaptive.core.runtime.selection
 
-import java.time.Duration
-
-import scalaadaptive.api.grouping.Group
-import scalaadaptive.api.options.Selection.Selection
 import scalaadaptive.core.functions.RunResult
-import scalaadaptive.core.functions.identifiers.{FunctionIdentifier, IdentifiedFunction}
+import scalaadaptive.core.functions.identifiers.FunctionIdentifier
 import scalaadaptive.core.runtime.invocationtokens.InvocationTokenWithCallbacks
 
 /**
@@ -19,7 +15,7 @@ trait AdaptiveSelector {
     * Selects and invokes one of given function options. Evaluates its run.
     *
     * @param input The input of the selection process, see [[SelectionInput]]
-    * @return The result of the invocation containing the return value, see [[RunResult]]
+    * @return The result of the invocation containing the return value, see [[scalaadaptive.core.functions.RunResult]]
     */
   def selectAndRun[TArgType, TReturnType](input: SelectionInput[TArgType, TReturnType]): RunResult[TReturnType]
 
@@ -28,8 +24,9 @@ trait AdaptiveSelector {
     * and return an [[scalaadaptive.api.functions.InvocationToken]] with a backward link to the selection instead.
     *
     * @param input The input of the selection process, see [[SelectionInput]]
-    * @return The result of the invocation containing the return value, see [[RunResult]], and an [[scalaadaptive.api.functions.InvocationToken]]
-    *         to be used for feedback measurements of the function that was influenced by the selection.
+    * @return The result of the invocation containing the return value, see [[scalaadaptive.core.functions.RunResult]],
+    *         and an [[scalaadaptive.api.functions.InvocationToken]] to be used for feedback measurements of
+    *         the function that was influenced by the selection.
     */
   def selectAndRunWithDelayedMeasure[TArgType, TReturnType](input: SelectionInput[TArgType, TReturnType]): (TReturnType, InvocationTokenWithCallbacks)
 
@@ -37,7 +34,7 @@ trait AdaptiveSelector {
     * Invokes the function with least data records available. Evaluates its run.
     *
     * @param input The input data, only fields relevant to the gathering are used, see [[SelectionInput]]
-    * @return The result of the invocation containing the return value, see [[RunResult]]
+    * @return The result of the invocation containing the return value, see [[scalaadaptive.core.functions.RunResult]]
     */
   def gatherData[TArgType, TReturnType](input: SelectionInput[TArgType, TReturnType]): RunResult[TReturnType]
 
@@ -46,8 +43,9 @@ trait AdaptiveSelector {
     * and return an [[scalaadaptive.api.functions.InvocationToken]] with a backward link to the gathering instead.
     *
     * @param input The input data, only fields relevant to the gathering are used, see [[SelectionInput]]
-    * @return The result of the invocation containing the return value, see [[RunResult]], and an [[scalaadaptive.api.functions.InvocationToken]]
-    *         to be used for feedback measurements of the function that was influenced by the gathering.
+    * @return The result of the invocation containing the return value, see [[scalaadaptive.core.functions.RunResult]],
+    *         and an [[scalaadaptive.api.functions.InvocationToken]] to be used for feedback measurements of the
+    *         function that was influenced by the gathering.
     */
   def gatherDataWithDelayedMeasure[TArgType, TReturnType](input: SelectionInput[TArgType, TReturnType]): (TReturnType, InvocationTokenWithCallbacks)
 

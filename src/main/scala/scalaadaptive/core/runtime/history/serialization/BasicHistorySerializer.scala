@@ -16,7 +16,8 @@ import scalaadaptive.core.runtime.history.evaluation.data.EvaluationData
   *
   * @param rootPath The path of the directory where to store the data.
   * @param fileNameForKeyProvider The file name provider.
-  * @param runDataSerializer The serializer which is used to transform [[EvaluationData]] to and from strings.
+  * @param runDataSerializer The serializer which is used to transform
+  *                          [[scalaadaptive.core.runtime.history.evaluation.data.EvaluationData]] to and from strings.
   * @param logger The logger to report serialization failures.
   */
 class BasicHistorySerializer(private val rootPath: Path,

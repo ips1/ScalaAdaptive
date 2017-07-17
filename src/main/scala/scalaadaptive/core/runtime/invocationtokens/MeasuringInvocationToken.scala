@@ -12,7 +12,8 @@ import scalaadaptive.core.runtime.selection.DelayedFunctionRunner
   * [[scalaadaptive.core.runtime.selection.DelayedFunctionRunner]] method runMeasuredFunction.
   *
   *
-  * @param runner The [[DelayedFunctionRunner]] that will be used to run the measured function.
+  * @param runner The [[scalaadaptive.core.runtime.selection.DelayedFunctionRunner]] that will be used to run the
+  *               measured function.
   * @param inputDescriptor The input descriptor that was used to generate this invocation token (and will be stored
   *                        with the measured data).
   * @param key The [[scalaadaptive.core.runtime.history.HistoryKey]] of the original function that generated the

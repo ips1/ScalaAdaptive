@@ -13,7 +13,7 @@ import scalaadaptive.core.runtime.history.HistoryKey
 trait DelayedFunctionRunner {
   /**
     * Executes certain function (normal, not adapted) with given arguments, evaluates its run and stores the result
-    * to the history of the function determined by a [[HistoryKey]] key.
+    * to the history of the function determined by a [[scalaadaptive.core.runtime.history.HistoryKey]] key.
     *
     * @param fun Function to execute.
     * @param arguments Arguments of the function.
