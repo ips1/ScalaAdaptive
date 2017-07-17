@@ -1,4 +1,4 @@
- name := "ScalaAdaptive"
+name := "ScalaAdaptive"
 
 version := "1.0"
 

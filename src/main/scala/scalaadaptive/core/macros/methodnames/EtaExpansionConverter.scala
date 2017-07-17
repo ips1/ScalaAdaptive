@@ -56,9 +56,8 @@ class EtaExpansionConverter[C <: blackbox.Context](val c: C) {
     * @return The AST wrapped in a toAdaptor conversion that can contain the extracted method name.
     */
   def convertEtaExpansionTree(tree: Tree): Tree = {
-    // TODO: Validate the tree
-
     val newBlock: Option[Tree] = for {
+      // If the following extractions succeed, we consider the function to be eta-expansion and generate the conversion
       blockStatements <- extractor.extractStatements(tree)
       functionLiteral <- extractor.extractFunctionLiteral(tree)
       methodTarget <- extractor.extractMethodTarget(tree)
@@ -70,6 +69,7 @@ class EtaExpansionConverter[C <: blackbox.Context](val c: C) {
       block <- Some(reconstructBlock(blockStatements, conversion))
     } yield block
 
+    // Fallback variant in case that the eta-expansion extraction or conversion generation failed
     newBlock.getOrElse(generateConversionWithArguments(List(tree)))
   }
 }

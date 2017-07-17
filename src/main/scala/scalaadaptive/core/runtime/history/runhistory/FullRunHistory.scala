@@ -37,10 +37,9 @@ class FullRunHistory[TMeasurement] (override val key: HistoryKey)
   override def applyNewRun(runResult: EvaluationData[TMeasurement]): FullRunHistory[TMeasurement] = {
     internalRunItems.append(runResult)
     runResult.inputDescriptor match {
-      case Some(descriptor) => {
+      case Some(descriptor) =>
         if (minDesc.isEmpty || descriptor < minDesc.get) minDesc = Some(descriptor)
         if (maxDesc.isEmpty || descriptor > maxDesc.get) maxDesc = Some(descriptor)
-      }
       case None =>
     }
     this

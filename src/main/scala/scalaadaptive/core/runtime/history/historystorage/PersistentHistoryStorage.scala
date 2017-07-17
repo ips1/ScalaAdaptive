@@ -32,10 +32,9 @@ class PersistentHistoryStorage[TMeasurement](logger: Logger,
       val loaded = historySerializer.deserializeHistory(key)
 
       loaded match {
-        case Some(data) => {
+        case Some(data) =>
           logger.log(s"Succesfully deserialized history for $key")
           data.foreach(item => localHistory.applyNewRun(key, item))
-        }
         case _ => logger.log(s"History for $key not found")
       }
     }

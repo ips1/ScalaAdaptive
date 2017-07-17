@@ -23,7 +23,7 @@ class PolicyBuilderInner(val policyFactories: List[(Policy, StatisticDataProvide
     * @return New [[PolicyBuilderInner]]
     */
   def addOncePolicy(result: PolicyResult): PolicyBuilderInner = {
-    val newFactory = (policy: Policy, statistics: StatisticDataProvider) => {
+    val newFactory = (policy: Policy, _: StatisticDataProvider) => {
       new DoOncePolicy(result, policy)
     }
     new PolicyBuilderInner(newFactory :: policyFactories)
@@ -35,7 +35,7 @@ class PolicyBuilderInner(val policyFactories: List[(Policy, StatisticDataProvide
     * @return New [[PolicyBuilderInner]]
     */
   def addForeverPolicy(result: PolicyResult): PolicyBuilderInner = {
-    val newFactory = (policy: Policy, statistics: StatisticDataProvider) => {
+    val newFactory = (_: Policy, _: StatisticDataProvider) => {
       new AlwaysDoPolicy(result)
     }
     new PolicyBuilderInner(newFactory :: policyFactories)
@@ -60,7 +60,7 @@ class PolicyBuilderInner(val policyFactories: List[(Policy, StatisticDataProvide
     * @return New [[PolicyBuilderInner]]
     */
   def addPolicy(externalPolicy: Policy): PolicyBuilderInner = {
-    val newFactory = (policy: Policy, statistics: StatisticDataProvider) => externalPolicy
+    val newFactory = (_: Policy, _: StatisticDataProvider) => externalPolicy
     new PolicyBuilderInner(newFactory :: policyFactories)
   }
 

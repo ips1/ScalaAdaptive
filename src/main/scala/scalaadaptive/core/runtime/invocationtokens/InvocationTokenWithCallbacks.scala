@@ -16,7 +16,7 @@ trait InvocationTokenWithCallbacks extends InvocationToken {
   /**
     * Sets a callback on the token that will be invoked after each execution with the
     * [[scalaadaptive.core.functions.RunData]] measured.
-    * @param callback
+    * @param callback The callback to set.
     */
   def setAfterInvocationCallback(callback: (RunData) => Unit)
 }

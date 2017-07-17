@@ -4,6 +4,8 @@ import scala.language.experimental.macros
 import scala.reflect.macros.blackbox
 import scalaadaptive.api.functions._
 import scalaadaptive.core.macros.AdaptiveMacrosHelper
+import scala.language.implicitConversions
+import scala.language.existentials
 
 /**
   * Created by Petr Kubat on 3/19/17.

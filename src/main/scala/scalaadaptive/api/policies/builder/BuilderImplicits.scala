@@ -3,6 +3,7 @@ package scalaadaptive.api.policies.builder
 import scalaadaptive.api.policies.{PolicyResult, StatisticDataProvider}
 import scalaadaptive.api.policies.PolicyResult.PolicyResult
 import scalaadaptive.api.policies.builder.conditions.{Condition, SimpleCondition}
+import scala.language.implicitConversions
 
 /**
   * Created by Petr Kubat on 6/24/17.
@@ -27,7 +28,7 @@ object BuilderImplicits {
   /**
     * Converts boolean-returning function to a [[scalaadaptive.api.policies.builder.conditions.SimpleCondition]].
     */
-  implicit def createIndependentCondition(cond: () => Boolean): Condition = new SimpleCondition((s) => cond())
+  implicit def createIndependentCondition(cond: () => Boolean): Condition = new SimpleCondition((_) => cond())
 
   /**
     * Creates [[GrowsByBuilderNeedAmount]] from a simple value extractor accepting [[StatisticDataProvider]].
@@ -39,7 +40,7 @@ object BuilderImplicits {
     * Creates [[GrowsByBuilderNeedAmount]] from a simple value extractor.
     */
   implicit def createNumericConditionWithIndependentExtractor[T: Numeric](extractor: () => T): GrowsByBuilderNeedAmount[T] =
-    new GrowsByBuilderNeedAmount[T]((s) => extractor())
+    new GrowsByBuilderNeedAmount[T]((_) => extractor())
 
   /**
     * A shortcut to convert a [[PolicyResult]] to a builder producing the result. See [[produce]].

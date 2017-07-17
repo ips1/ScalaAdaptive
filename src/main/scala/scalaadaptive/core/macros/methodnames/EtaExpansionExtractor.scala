@@ -45,12 +45,12 @@ class EtaExpansionExtractor[C <: blackbox.Context](val c: C) {
   /** Extracts target of the method call in the function literal from the function wrapping block */
   def extractMethodTarget(block: Tree): Option[Tree] = extractMethodCall(block) match {
     case Some(Select(target, _)) => Some(target)
-    case res => None
+    case _ => None
   }
 
   /** Extracts name of the method call in the function literal from the function wrapping block */
   def extractMethodName(block: Tree): Option[Name] = extractMethodCall(block) match {
     case Some(Select(_, name)) => Some(name)
-    case res => None
+    case _ => None
   }
 }

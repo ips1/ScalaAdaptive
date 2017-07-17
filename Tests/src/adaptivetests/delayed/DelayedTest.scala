@@ -6,6 +6,7 @@ import scalaadaptive.core.configuration.defaults.DefaultConfiguration
 import scalaadaptive.api.options.{Selection, Storage}
 import scalaadaptive.api.Adaptive
 import scalaadaptive.core.configuration.blocks.history.CachedStatisticsHistory
+import scalaadaptive.api.policies.PauseSelectionAfterStreakPolicy
 
 /**
   * Created by Petr Kubat on 4/23/17.
@@ -16,7 +17,8 @@ object DelayedTest {
   def getSlowConfig(): DelayedConfig = SlowConfig()
   val getConfig: () => DelayedConfig = (getFastConfig _ or getSlowConfig
     selectUsing Selection.MeanBased
-    storeUsing Storage.Persistent)
+    storeUsing Storage.Global
+    withPolicy new PauseSelectionAfterStreakPolicy(30, 200))
 
   def run(config: DelayedConfig) = {
     config match {

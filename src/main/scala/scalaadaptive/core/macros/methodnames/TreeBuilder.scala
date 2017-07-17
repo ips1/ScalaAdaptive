@@ -58,7 +58,7 @@ class TreeBuilder[C <: blackbox.Context](val c: C) {
     * @return AST of the method call chain.
     */
   def buildMethodCallChain(targetTree: Tree, methods: List[String]): Tree =
-    buildMethodCallChain(targetTree, methods, methods.map(x => List()))
+    buildMethodCallChain(targetTree, methods, methods.map(_ => List()))
 
 
   /**

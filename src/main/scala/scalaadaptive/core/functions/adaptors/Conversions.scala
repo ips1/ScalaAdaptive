@@ -43,7 +43,7 @@ object Conversions {
     case _ =>
       new FunctionAdaptor0[R](
         functionFactory.createFunction[Unit, R](
-          new IdentifiedFunction[Unit, R]((Unit) => fun(), generateClosureNameIdentifier(fun), identifier)))
+          new IdentifiedFunction[Unit, R]((_) => fun(), generateClosureNameIdentifier(fun), identifier)))
   }
 
   /** Converts a function with one argument to [[scalaadaptive.core.functions.adaptors.FunctionAdaptor0]] containing one

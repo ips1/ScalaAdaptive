@@ -42,10 +42,9 @@ class WelchTTestRunner(val logger: Logger) extends TTestRunner {
     val pValue = try {
       test.tTest(sampleStats1, sampleStats2)
     } catch {
-      case e: Exception => {
+      case e: Exception =>
         logger.log(s"Exception during t-test: $e")
         return None
-      }
     }
 
     // We need to use 2 * alpha for one-sided testing

@@ -35,7 +35,7 @@ class LongEvaluationDataSerializer(private val separator: Char) extends Evaluati
       else Some(new EvaluationData[Long](inputDescriptor, Instant.parse(time), measurement))
     }
     catch {
-      case ex: NumberFormatException => None
+      case _: NumberFormatException => None
     }
   }
 }

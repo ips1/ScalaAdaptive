@@ -1,6 +1,7 @@
 package scalaadaptive.core.macros
 
 import scala.reflect.macros.blackbox
+import scala.language.existentials
 
 /**
   * Created by Petr Kubat on 6/5/17.

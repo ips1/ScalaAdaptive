@@ -59,7 +59,7 @@ class HistoryBasedAdaptiveSelector[TMeasurement](historyStorage: HistoryStorage[
 
   private def selectRecord[TArgType, TReturnType](input: SelectionInput[TArgType, TReturnType],
                                                   strategy: SelectionStrategy[TMeasurement]): HistoryKey = {
-    logger.log(s"Target group: ${input.groupId}, byValue: ${input.inputDescriptor}")
+    logger.log(s"Target group: ${input.groupId}, input descriptor: ${input.inputDescriptor}")
 
     val allHistories = input.options.map(f => historyStorage.getHistory(HistoryKey(f.identifier, input.groupId)))
 

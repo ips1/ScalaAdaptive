@@ -72,7 +72,6 @@ class BasicHistorySerializer(private val rootPath: Path,
     val file = getFilePath(key).toFile
     try {
       if (file.exists && file.canWrite) {
-
         file.delete()
       }
     } catch {

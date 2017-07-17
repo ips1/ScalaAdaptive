@@ -29,10 +29,9 @@ class MannWhitneyUTestRunner(val logger: Logger) extends UTestRunner {
     val pValue = try {
       test.mannWhitneyUTest(sample1._1.toArray, sample2._1.toArray)
     } catch {
-      case e: Exception => {
+      case e: Exception =>
         logger.log(s"Exception during t-test: $e")
         return None
-      }
     }
 
     // We need to use 2 * alpha for one-sided testing

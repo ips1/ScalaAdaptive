@@ -35,10 +35,9 @@ class RegressionSelectionStrategy[TMeasurement](val logger: Logger,
 
     val descriptor = inputDescriptor match {
       case Some(d) => d
-      case _ => {
+      case _ =>
         logger.log("Input selector undefined, using the secondary strategy")
         return secondaryStrategy.selectOption(records, inputDescriptor)
-      }
     }
 
     val regressions = records.map(r => (r, r.runRegression))

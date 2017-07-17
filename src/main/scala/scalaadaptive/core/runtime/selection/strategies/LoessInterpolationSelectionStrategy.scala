@@ -39,15 +39,13 @@ class LoessInterpolationSelectionStrategy[TMeasurement](val logger: Logger,
         )
       )
     } catch {
-      case ex: NumberIsTooSmallException => {
+      case _: NumberIsTooSmallException =>
         logger.log(s"LoessInterpolator cannot interpolate with ${sortedData.size} items")
         None
-      }
       // None of the other declared exceptions from interpolate() method should possibly occur in this case
-      case ex: Exception => {
+      case ex: Exception =>
         logger.log(s"Unknown exception while interpolating: ${ex.getMessage}")
         None
-      }
     }
   }
 
@@ -94,10 +92,9 @@ class LoessInterpolationSelectionStrategy[TMeasurement](val logger: Logger,
 
     val descriptor = inputDescriptor match {
       case Some(d) => d
-      case _ => {
+      case _ =>
         logger.log("Input selector undefined, using the secondary strategy")
         return secondaryStrategy.selectOption(records, None)
-      }
     }
 
     selectUsingInterpolation(records, descriptor)

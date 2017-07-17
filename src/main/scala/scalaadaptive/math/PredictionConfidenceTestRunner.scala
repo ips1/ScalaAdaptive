@@ -42,18 +42,16 @@ class PredictionConfidenceTestRunner(val logger: Logger) extends RegressionConfi
     logger.log(s"Comparing confidence intervals on significance level $alpha")
 
     val firstInterval = try firstRegression.predictInterval(point, alpha) catch {
-      case e: Exception => {
+      case e: Exception =>
         logger.log(s"Exception during confidence interval computation: $e")
         return None
-      }
     }
     logger.log(s"First interval for x = $point: $firstInterval")
 
     val secondInterval = try secondRegression.predictInterval(point, alpha) catch {
-      case e: Exception => {
+      case e: Exception =>
         logger.log(s"Exception during confidence interval computation: $e")
         return None
-      }
     }
     logger.log(s"Second interval for x = $point: $secondInterval")
 
