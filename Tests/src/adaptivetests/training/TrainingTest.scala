@@ -3,17 +3,17 @@ package adaptivetests.training
 import adaptivetests.TestRunner
 import tools.methods.TestMethods
 
-import scalaadaptive.core.configuration.defaults.{GroupedRunHistoryInterpolationConfiguration, ImmutableFullHistoryInterpolationConfiguration}
 import scalaadaptive.api.Adaptive
+import scalaadaptive.core.configuration.blocks.{CachedGroupStorage, LoessInterpolationInputBasedStrategy}
+import scalaadaptive.core.configuration.defaults.DefaultConfiguration
 
 /**
   * Created by Petr Kubat on 5/7/17.
   */
 object TrainingTest {
   def main(args: Array[String]): Unit = {
-    import scalaadaptive.api.Implicits._
 
-    val configurations = List(new GroupedRunHistoryInterpolationConfiguration)
+    val configurations = List(new DefaultConfiguration with LoessInterpolationInputBasedStrategy with CachedGroupStorage)
     val runner = new TestRunner()
     val testMethods = new TestMethods()
 

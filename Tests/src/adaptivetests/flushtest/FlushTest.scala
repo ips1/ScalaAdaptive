@@ -3,9 +3,10 @@ package adaptivetests.flushtest
 import adaptivetests.TestRunner
 import tools.methods.TestMethods
 
-import scalaadaptive.core.configuration.defaults.GroupedRunHistoryInterpolationConfiguration
+import scalaadaptive.core.configuration.defaults.DefaultConfiguration
 import scalaadaptive.api.options.Storage
 import scalaadaptive.api.Adaptive
+import scalaadaptive.core.configuration.blocks.{CachedGroupStorage, LoessInterpolationInputBasedStrategy}
 
 /**
   * Created by Petr Kubat on 5/14/17.
@@ -16,7 +17,7 @@ object FlushTest {
 
     val runner = new TestRunner()
     val testMethods = new TestMethods()
-    Adaptive.initialize(new GroupedRunHistoryInterpolationConfiguration)
+    Adaptive.initialize(new DefaultConfiguration with LoessInterpolationInputBasedStrategy with CachedGroupStorage)
 
     runner.runIncrementalTest(l => testMethods.function(l))
 

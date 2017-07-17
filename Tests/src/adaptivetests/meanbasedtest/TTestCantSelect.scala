@@ -5,7 +5,7 @@ import tools.methods.TestMethods
 import scalaadaptive.api.Adaptive
 import scalaadaptive.api.options.Selection
 import scalaadaptive.core.configuration.blocks.{ConsoleLogging, TTestMeanBasedStrategy}
-import scalaadaptive.core.configuration.defaults.{DefaultConfiguration, FullHistoryTTestConfiguration}
+import scalaadaptive.core.configuration.defaults.DefaultConfiguration
 
 /**
   * Created by Petr Kubat on 6/6/17.

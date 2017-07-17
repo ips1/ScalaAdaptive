@@ -5,8 +5,8 @@ import tools.methods.TestMethods
 import scalaadaptive.api.Adaptive
 import scalaadaptive.api.functions.AdaptiveFunction1
 import scalaadaptive.api.options.Storage
-import scalaadaptive.core.configuration.blocks.NoLogging
-import scalaadaptive.core.configuration.defaults.FullHistoryTTestConfiguration
+import scalaadaptive.core.configuration.blocks.{CachedStatisticsStorage, NoLogging}
+import scalaadaptive.core.configuration.defaults.DefaultConfiguration
 import scalaadaptive.api.policies.{AlwaysUseLastPolicy, StopSelectingWhenDecidedPolicy}
 
 /**
@@ -45,7 +45,7 @@ object OverheadTest {
   }
 
   def main(args: Array[String]): Unit = {
-    Adaptive.initialize(new FullHistoryTTestConfiguration() with NoLogging)
+    Adaptive.initialize(new DefaultConfiguration with CachedStatisticsStorage)
     Seq.range(0, 1).foreach(i => run())
   }
 }

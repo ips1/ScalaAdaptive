@@ -7,8 +7,8 @@ import scala.collection.mutable.ArrayBuffer
 import scalaadaptive.api.Adaptive
 import scalaadaptive.api.grouping.GroupId
 import scalaadaptive.api.options.Selection
-import scalaadaptive.core.configuration.blocks.WindowBoundRegressionInputBasedStrategy
-import scalaadaptive.core.configuration.defaults.FullHistoryTTestConfiguration
+import scalaadaptive.core.configuration.blocks.{CachedStatisticsStorage, WindowBoundRegressionInputBasedStrategy}
+import scalaadaptive.core.configuration.defaults.DefaultConfiguration
 import scalaadaptive.api.policies.PauseSelectionAfterStreakPolicy
 
 /**
@@ -31,7 +31,7 @@ object SortTest {
   )
 
   def main(args: Array[String]): Unit = {
-    Adaptive.initialize(new FullHistoryTTestConfiguration with WindowBoundRegressionInputBasedStrategy)
+    Adaptive.initialize(new DefaultConfiguration with WindowBoundRegressionInputBasedStrategy)
 
     val maxLength = 10000
     val testCount = 5000

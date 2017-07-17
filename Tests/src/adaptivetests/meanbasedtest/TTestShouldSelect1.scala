@@ -4,7 +4,8 @@ import tools.methods.TestMethods
 
 import scalaadaptive.api.Adaptive
 import scalaadaptive.api.options.Selection
-import scalaadaptive.core.configuration.defaults.FullHistoryTTestConfiguration
+import scalaadaptive.core.configuration.blocks.CachedStatisticsStorage
+import scalaadaptive.core.configuration.defaults.DefaultConfiguration
 
 
 /**
@@ -14,7 +15,7 @@ object TTestShouldSelect1 {
   def main(args: Array[String]): Unit = {
     val methods = new TestMethods
 
-    Adaptive.initialize(new FullHistoryTTestConfiguration)
+    Adaptive.initialize(new DefaultConfiguration with CachedStatisticsStorage)
 
     import scalaadaptive.api.Implicits._
     val function = methods.fastMethod _ or methods.slowMethod or methods.slowestMethod selectUsing Selection.MeanBased

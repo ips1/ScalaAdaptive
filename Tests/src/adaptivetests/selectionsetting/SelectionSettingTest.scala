@@ -5,9 +5,10 @@ import java.time.Duration
 import adaptivetests.TestRunner
 import tools.methods.TestMethods
 
-import scalaadaptive.core.configuration.defaults.{FullHistoryTTestConfiguration, GroupedRunHistoryInterpolationConfiguration}
+import scalaadaptive.core.configuration.defaults.DefaultConfiguration
 import scalaadaptive.api.options.Selection
 import scalaadaptive.api.Adaptive
+import scalaadaptive.core.configuration.blocks.{CachedGroupStorage, LoessInterpolationInputBasedStrategy}
 
 /**
   * Created by Petr Kubat on 5/8/17.
@@ -22,7 +23,7 @@ object SelectionSettingTest {
   val runner = new TestRunner()
 
   def main(args: Array[String]): Unit = {
-    Adaptive.initialize(new GroupedRunHistoryInterpolationConfiguration)
+    Adaptive.initialize(new DefaultConfiguration with LoessInterpolationInputBasedStrategy with CachedGroupStorage)
 
     runner.runIncrementalTest(l => discreteFunc(l))
     runner.runIncrementalTest(l => continuousFunc(l))

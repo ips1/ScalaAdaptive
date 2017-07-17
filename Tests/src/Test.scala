@@ -7,6 +7,7 @@ import tools.methods.TestMethods
 import scala.util.Random
 import scalaadaptive.core.configuration.defaults._
 import scalaadaptive.api.Adaptive
+import scalaadaptive.core.configuration.blocks.CachedStatisticsStorage
 
 /**
   * Created by Petr Kubat on 3/19/17.
@@ -22,7 +23,7 @@ object Test {
 
     //val configurations = List(ImmutableFullHistoryInterpolationConfiguration)
     //val configurations = List(GroupedRunHistoryInterpolationConfiguration)
-    val configurations = List(new FullHistoryTTestConfiguration)
+    val configurations = List(new DefaultConfiguration)
     configurations.foreach(cfg => {
       Adaptive.initialize(cfg)
       val sorter = new Sorter()

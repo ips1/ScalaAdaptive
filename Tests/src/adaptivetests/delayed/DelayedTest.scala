@@ -2,9 +2,10 @@ package adaptivetests.delayed
 
 import java.io.PrintWriter
 
-import scalaadaptive.core.configuration.defaults.FullHistoryTTestConfiguration
+import scalaadaptive.core.configuration.defaults.DefaultConfiguration
 import scalaadaptive.api.options.{Selection, Storage}
 import scalaadaptive.api.Adaptive
+import scalaadaptive.core.configuration.blocks.CachedStatisticsStorage
 
 /**
   * Created by Petr Kubat on 4/23/17.
@@ -32,7 +33,7 @@ object DelayedTest {
   }
 
   def main(args: Array[String]): Unit = {
-    Adaptive.initialize(new FullHistoryTTestConfiguration)
+    Adaptive.initialize(new DefaultConfiguration with CachedStatisticsStorage)
 
     for (x <- 1 to 20) {
       test()

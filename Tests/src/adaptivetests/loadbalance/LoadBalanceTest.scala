@@ -1,8 +1,8 @@
 package adaptivetests.loadbalance
 
-import scalaadaptive.core.configuration.defaults.{FullHistoryTTestConfiguration, GroupedRunHistoryInterpolationConfiguration}
+import scalaadaptive.core.configuration.defaults.DefaultConfiguration
 import scalaadaptive.api.Adaptive
-import scalaadaptive.core.configuration.blocks.{ConsoleLogging, NoLogging}
+import scalaadaptive.core.configuration.blocks.{CachedStatisticsStorage, ConsoleLogging, NoLogging}
 
 /**
   * Created by Petr Kubat on 5/14/17.
@@ -83,7 +83,7 @@ object LoadBalanceTest {
   }
 
   def main(args: Array[String]): Unit = {
-    Adaptive.initialize(new FullHistoryTTestConfiguration with ConsoleLogging)
+    Adaptive.initialize(new DefaultConfiguration with ConsoleLogging)
 
     scenario3()
   }

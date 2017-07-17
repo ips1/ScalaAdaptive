@@ -10,7 +10,7 @@ import tools.methods.TestMethods
 import scala.util.Random
 import scalaadaptive.api.Adaptive
 import scalaadaptive.core.configuration.blocks._
-import scalaadaptive.core.configuration.defaults.{FullHistoryRegressionConfiguration, FullHistoryTTestConfiguration}
+import scalaadaptive.core.configuration.defaults.DefaultConfiguration
 import scalaadaptive.core.runtime.selection.strategies.RegressionSelectionStrategy
 
 /**
@@ -18,7 +18,7 @@ import scalaadaptive.core.runtime.selection.strategies.RegressionSelectionStrate
   */
 object RegressionSelectionTest {
   def runTest(data: Seq[Array[Int]]): Unit = {
-    Adaptive.initialize(new FullHistoryRegressionConfiguration with LinearRegressionInputBasedStrategy with NoLogging)
+    Adaptive.initialize(new DefaultConfiguration with LinearRegressionInputBasedStrategy with NoLogging)
     val testMethods = new TestMethods()
     //val runner = new TestRunner()
     //runner.runIncrementalTest(l => testMethods.functionContinuous(l))
