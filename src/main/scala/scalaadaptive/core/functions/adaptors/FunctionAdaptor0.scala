@@ -6,6 +6,12 @@ import scalaadaptive.core.functions.{FunctionFactory, CombinedFunction}
 
 /**
   * Created by Petr Kubat on 3/19/17.
+  *
+  * An internal representation of [[scalaadaptive.api.functions.AdaptiveFunction0]] - works as an adaptor between the
+  * classic Scala function API (from the [[Function0]] trait extended by the
+  * [[scalaadaptive.api.functions.AdaptiveFunction0]]) and the internal
+  * [[scalaadaptive.core.functions.CombinedFunction]] representation of function with multiple implementations.
+  *
   */
 class FunctionAdaptor0[R](val function: CombinedFunction[Unit, R])
   extends FunctionAdaptorBase[Unit, R, FunctionAdaptor0[R]]

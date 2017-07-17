@@ -4,10 +4,9 @@ import scalaadaptive.analytics.AnalyticsSerializer
 import scalaadaptive.api.options.Storage
 import scalaadaptive.core.configuration.Configuration
 import scalaadaptive.core.configuration.defaults.DefaultConfiguration
-import scalaadaptive.core.functions.adaptors.FunctionConfig
 import scalaadaptive.core.functions.analytics.AnalyticsCollector
 import scalaadaptive.core.functions.identifiers.CustomIdentifierValidator
-import scalaadaptive.core.functions.FunctionFactory
+import scalaadaptive.core.functions.{FunctionConfig, FunctionFactory}
 import scalaadaptive.core.runtime.invocation.CombinedFunctionInvoker
 import scalaadaptive.core.runtime.selection.AdaptiveSelector
 
@@ -68,7 +67,7 @@ trait AdaptiveCore {
   /** Retrieves the implementation of [[scalaadaptive.core.functions.identifiers.CustomIdentifierValidator]]. */
   def getIdentifierValidator: CustomIdentifierValidator = adaptiveImplementations.identifierValidator
 
-  /** Retrieves the default [[scalaadaptive.core.functions.adaptors.FunctionConfig]]. */
+  /** Retrieves the default [[scalaadaptive.core.functions.FunctionConfig]]. */
   def getMultiFunctionDefaults: FunctionConfig = adaptiveImplementations.multiFunctionDefaults
 
   /** Retrieves the shared implementation of [[scalaadaptive.core.runtime.selection.AdaptiveSelector]] working with

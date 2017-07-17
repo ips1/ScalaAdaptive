@@ -1,7 +1,6 @@
 package scalaadaptive.core.configuration
 import scalaadaptive.analytics.{AnalyticsSerializer, CsvAnalyticsSerializer}
-import scalaadaptive.core.functions.{DefaultFunctionFactory, FunctionFactory}
-import scalaadaptive.core.functions.adaptors.FunctionConfig
+import scalaadaptive.core.functions.{DefaultFunctionFactory, FunctionConfig, FunctionFactory}
 import scalaadaptive.core.functions.analytics.{AnalyticsCollector, BasicAnalyticsCollector}
 import scalaadaptive.core.logging.Logger
 import scalaadaptive.core.functions.identifiers.CustomIdentifierValidator

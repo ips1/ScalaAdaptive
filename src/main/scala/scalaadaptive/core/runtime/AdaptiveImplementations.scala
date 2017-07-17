@@ -1,8 +1,7 @@
 package scalaadaptive.core.runtime
 
 import scalaadaptive.analytics.AnalyticsSerializer
-import scalaadaptive.core.functions.FunctionFactory
-import scalaadaptive.core.functions.adaptors.FunctionConfig
+import scalaadaptive.core.functions.{FunctionConfig, FunctionFactory}
 import scalaadaptive.core.functions.identifiers.CustomIdentifierValidator
 import scalaadaptive.core.runtime.invocation.CombinedFunctionInvoker
 import scalaadaptive.core.runtime.selection.AdaptiveSelector

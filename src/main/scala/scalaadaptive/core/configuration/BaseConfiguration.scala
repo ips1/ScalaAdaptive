@@ -2,10 +2,9 @@ package scalaadaptive.core.configuration
 
 import scalaadaptive.analytics.{AnalyticsSerializer, CsvAnalyticsSerializer}
 import scalaadaptive.core.logging.{ConsoleLogger, Logger}
-import scalaadaptive.core.functions.adaptors.FunctionConfig
 import scalaadaptive.api.options.{Selection, Storage}
 import scalaadaptive.core.functions.analytics.{AnalyticsCollector, BasicAnalyticsCollector}
-import scalaadaptive.core.functions.{DefaultFunctionFactory, FunctionFactory}
+import scalaadaptive.core.functions.{DefaultFunctionFactory, FunctionConfig, FunctionFactory}
 import scalaadaptive.core.functions.identifiers.{CustomIdentifierValidator, JavaIdentifierValidator}
 import scalaadaptive.core.runtime.history.historystorage.{HistoryStorage, MapHistoryStorage}
 import scalaadaptive.core.runtime.history.runhistory.{CachedGroupedRunHistory, FullRunHistory, LimitedRunHistory}

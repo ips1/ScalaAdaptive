@@ -6,6 +6,14 @@ import scalaadaptive.core.runtime.AdaptiveInternal
 
 /**
   * Created by Petr Kubat on 5/27/17.
+  *
+  * A default implementation of the [[scalaadaptive.core.functions.FunctionFactory]]. Creates
+  * [[scalaadaptive.core.functions.CombinedFunction]] instances directy.
+  *
+  * The input descriptor is unspecified, the group selector selects [[scalaadaptive.api.grouping.NoGroup]], the config
+  * is taken from the [[scalaadaptive.core.runtime.AdaptiveInternal]] (should be specified by
+  * [[scalaadaptive.core.configuration.Configuration]]).
+  *
   */
 class DefaultFunctionFactory extends FunctionFactory {
   override def createFunction[TArgType, TRetType](firstOption: IdentifiedFunction[TArgType, TRetType]): CombinedFunction[TArgType, TRetType] = {

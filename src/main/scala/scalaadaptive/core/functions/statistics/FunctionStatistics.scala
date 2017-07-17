@@ -10,6 +10,15 @@ import scalaadaptive.core.functions.RunData
 
 /**
   * Created by Petr Kubat on 5/20/17.
+  *
+  * An implementation of the [[StatisticsHolder]] for a [[scalaadaptive.core.functions.CombinedFunction]].
+  * Uses a resolver function to retrieve implementations for identifiers (necessary to update the functions from
+  * [[StatisticFunctionProvider]].
+  *
+  * @param defaultLast The function that will act as last selected at the beginning.
+  * @param functionResolver Resolver function that transforms function identifiers to actual functions. Provided by the
+  *                         [[scalaadaptive.core.functions.CombinedFunction]].
+  *
   */
 class FunctionStatistics[TArgType, TRetType](defaultLast: IdentifiedFunction[TArgType, TRetType],
                                              val functionResolver: (FunctionIdentifier) => Option[IdentifiedFunction[TArgType,TRetType]])

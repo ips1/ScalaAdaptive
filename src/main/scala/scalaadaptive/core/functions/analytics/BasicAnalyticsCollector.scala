@@ -8,6 +8,9 @@ import scalaadaptive.core.functions.RunData
 
 /**
   * Created by Petr Kubat on 6/5/17.
+  *
+  * Simple implementation of [[AnalyticsCollector]] that gathers the data.
+  *
   */
 class BasicAnalyticsCollector extends AnalyticsCollector {
   private val records: ArrayBuffer[AnalyticsRunRecord] = new ArrayBuffer[AnalyticsRunRecord]()

@@ -14,9 +14,25 @@ import scalaadaptive.core.runtime.invocation.CombinedFunctionInvoker
 
 /**
   * Created by Petr Kubat on 5/27/17.
+  *
+  * A base class for the function adaptor types (see [[scalaadaptive.core.functions.adaptors.FunctionAdaptor0]] and
+  * similar types). Provides implementations of methods that are independent on the actual number of arguments and
+  * therefore don't have to be replicated.
+  *
+  * Requires the extending adaptors to provide the [[scalaadaptive.core.functions.CombinedFunction]] that is wrapped
+  * inside and a factory method that rewraps a new [[scalaadaptive.core.functions.CombinedFunction]] in the same type
+  * and returns it (used for modification that create new instances).
+  *
+  * Note that all the methods provided are implementations of methods from the
+  * [[scalaadaptive.api.functions.AdaptiveFunctionCommon]] trait, even though this type does not actually extend it.
+  * We suppose that the non-abstract extending subtypes will extend the trait as well, thus providing implementations
+  * in advance (Scala allows that during the object composition).
+  *
   */
 abstract class FunctionAdaptorBase[TArgType, TRetType, TFunctionAdaptorType] {
+  /** The [[scalaadaptive.core.functions.CombinedFunction]] wrapped inside */
   protected val function: CombinedFunction[TArgType, TRetType]
+  /** The factory method for new instances of the concrete type */
   protected val createNew: (CombinedFunction[TArgType, TRetType]) => TFunctionAdaptorType
 
   protected def functionFactory: FunctionFactory = AdaptiveInternal.getFunctionFactory
