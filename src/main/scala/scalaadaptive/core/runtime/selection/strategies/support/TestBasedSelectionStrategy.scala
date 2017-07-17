@@ -78,7 +78,7 @@ trait TestBasedSelectionStrategy[TMeasurement] extends SelectionStrategy[TMeasur
       .find(_._2.contains(TestResult.ExpectedLower))
       .map(_._1.key)
       .getOrElse({
-        logger.log(s"Multiple $name can't select, falling back to secondary selector")
+        logger.log(s"Multiple $name can't select, falling back to secondary strategy")
         secondaryStrategy.selectOption(records, inputDescriptor)
       })
   }

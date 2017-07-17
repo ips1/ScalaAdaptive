@@ -19,6 +19,6 @@ class FileLogger(fileName: String) extends Logger {
     fileWriter.println(message)
     fileWriter.flush()
   }
-  // TODO: close the file?
+
   // The file will get closed by itself upon leaving the program
 }

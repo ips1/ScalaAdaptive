@@ -16,12 +16,16 @@ import scalaadaptive.core.runtime.history.runhistory.RunHistory
   * interpolation model. For more information see the original thesis text.
   *
   * @param logger Logger used to log the selection process.
+  * @param secondaryStrategy Strategy that is used to select among the functions for which it was not possible to
+  *                          generate prediction.
   *
   */
-class LoessInterpolationSelectionStrategy[TMeasurement](val logger: Logger)(implicit num: Numeric[TMeasurement])
+class LoessInterpolationSelectionStrategy[TMeasurement](val logger: Logger,
+                                                        val secondaryStrategy: SelectionStrategy[TMeasurement])
+                                                       (implicit num: Numeric[TMeasurement])
   extends SelectionStrategy[TMeasurement] {
 
-  private def getInterpolator = new LoessInterpolator(0.5, 2)
+  private def getInterpolator = new LoessInterpolator(0.6, 2)
 
   /**
     * Interpolates polynomial, returns the function in case of success, returns None if there is not enough data
@@ -35,9 +39,31 @@ class LoessInterpolationSelectionStrategy[TMeasurement](val logger: Logger)(impl
         )
       )
     } catch {
-      // TODO: Handle more exceptions
-      case ex: NumberIsTooSmallException => None
+      case ex: NumberIsTooSmallException => {
+        logger.log(s"LoessInterpolator cannot interpolate with ${sortedData.size} items")
+        None
+      }
+      // None of the other declared exceptions from interpolate() method should possibly occur in this case
+      case ex: Exception => {
+        logger.log(s"Unknown exception while interpolating: ${ex.getMessage}")
+        None
+      }
     }
+  }
+
+  private def getModelPrediction(model: Option[PolynomialSplineFunction], point: Double): Option[Double] = {
+    if (model.isEmpty) {
+      logger.log(s"The model is empty, cannot predict.")
+      return None
+    }
+    if (!model.get.isValidPoint(point)) {
+      logger.log(s"Invalid point $point in the model!")
+      return None
+    }
+
+    import scalaadaptive.extensions.DoubleExtensions._
+    val prediction = model.get.value(point)
+    prediction.asOption
   }
 
   private def selectUsingInterpolation(records: Seq[RunHistory[TMeasurement]],
@@ -48,20 +74,18 @@ class LoessInterpolationSelectionStrategy[TMeasurement](val logger: Logger)(impl
           .toList
           .sortBy(i => i._1)
         (runHistory, interpolate(sortedData))
-      })
+      }).toMap
 
-    val min = polynomials.minBy(p => if (p._2.isEmpty || !p._2.get.isValidPoint(descriptor)) {
-      // TODO: Add more logging!!!
-      logger.log("Invalid point!")
-      -1
-    } else {
-      val point = p._2.get.value(descriptor)
-      if (point.isNaN)
-        -1
-      else
-        point
-    })
-    min._1.key
+    val predictions = polynomials.mapValues(p => getModelPrediction(p, descriptor))
+
+    val failedPredictions = predictions.filter(p => p._2.isEmpty)
+
+    if (failedPredictions.nonEmpty) {
+      logger.log(s"Prediction failed for ${failedPredictions.size} functions, using the secondary strategy.")
+      return secondaryStrategy.selectOption(records, Some(descriptor))
+    }
+
+    predictions.minBy(p => p._2)._1.key
   }
 
   override def selectOption(records: Seq[RunHistory[TMeasurement]],
@@ -70,7 +94,10 @@ class LoessInterpolationSelectionStrategy[TMeasurement](val logger: Logger)(impl
 
     val descriptor = inputDescriptor match {
       case Some(d) => d
-      case _ => return records.head.key
+      case _ => {
+        logger.log("Input selector undefined, using the secondary strategy")
+        return secondaryStrategy.selectOption(records, None)
+      }
     }
 
     selectUsingInterpolation(records, descriptor)

@@ -14,7 +14,7 @@ import scalaadaptive.core.runtime.history.serialization.{BasicFileNameForKeyProv
   */
 trait DirectPersistence extends BaseLongConfiguration with BlockWithHistoryPath {
   override def createPersistentHistoryStorage(log: Logger): Option[PersistentHistoryStorage[TMeasurement]] =
-    Some(new PersistentHistoryStorage[TMeasurement](
+    Some(new PersistentHistoryStorage[TMeasurement](log,
       createHistoryStorage(log),
       new BasicHistorySerializer(
         rootHistoryPath,

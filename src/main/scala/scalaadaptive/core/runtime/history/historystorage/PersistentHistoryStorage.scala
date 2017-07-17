@@ -1,6 +1,7 @@
 package scalaadaptive.core.runtime.history.historystorage
 
 import scalaadaptive.core.functions.identifiers.FunctionIdentifier
+import scalaadaptive.core.logging.Logger
 import scalaadaptive.core.runtime.history.runhistory.RunHistory
 import scalaadaptive.core.runtime.history.serialization.HistorySerializer
 import scalaadaptive.core.runtime.history.HistoryKey
@@ -18,7 +19,8 @@ import scalaadaptive.core.runtime.history.evaluation.data.EvaluationData
   * the internal [[HistoryStorage]], which should create the record.
   *
   */
-class PersistentHistoryStorage[TMeasurement](private val localHistory: HistoryStorage[TMeasurement],
+class PersistentHistoryStorage[TMeasurement](logger: Logger,
+                                             private val localHistory: HistoryStorage[TMeasurement],
                                              private val historySerializer: HistorySerializer[TMeasurement])
   extends HistoryStorage[TMeasurement] {
 
@@ -26,13 +28,15 @@ class PersistentHistoryStorage[TMeasurement](private val localHistory: HistorySt
     val hasHistory = localHistory.hasHistory(key)
 
     if (!hasHistory) {
+      logger.log(s"Trying to deserialize history for $key")
       val loaded = historySerializer.deserializeHistory(key)
 
       loaded match {
         case Some(data) => {
+          logger.log(s"Succesfully deserialized history for $key")
           data.foreach(item => localHistory.applyNewRun(key, item))
         }
-        case _ =>
+        case _ => logger.log(s"History for $key not found")
       }
     }
 

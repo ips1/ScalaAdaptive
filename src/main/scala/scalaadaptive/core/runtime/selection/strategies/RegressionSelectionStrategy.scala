@@ -35,7 +35,10 @@ class RegressionSelectionStrategy[TMeasurement](val logger: Logger,
 
     val descriptor = inputDescriptor match {
       case Some(d) => d
-      case _ => return secondaryStrategy.selectOption(records, inputDescriptor)
+      case _ => {
+        logger.log("Input selector undefined, using the secondary strategy")
+        return secondaryStrategy.selectOption(records, inputDescriptor)
+      }
     }
 
     val regressions = records.map(r => (r, r.runRegression))
@@ -43,11 +46,12 @@ class RegressionSelectionStrategy[TMeasurement](val logger: Logger,
     // Are all of the regressions corectly built?
     val insufficientRegressions = regressions.filter(r => !r._2.hasEnoughX)
     if (insufficientRegressions.size == regressions.size) {
-      // All of the functions have insufficient inputs observed, falling back to mean-based strategy
+      logger.log("All the functions have insufficient observations, falling to the mean-based strategy")
       return meanBasedStrategy.selectOption(records, inputDescriptor)
     }
     else if (insufficientRegressions.nonEmpty) {
       // Some of the functions have sufficient data while others not, using secondary strategy
+      logger.log("Some functions have insufficient observations, falling to the secondary strategy")
       return secondaryStrategy.selectOption(records, inputDescriptor)
     }
 
@@ -66,6 +70,9 @@ class RegressionSelectionStrategy[TMeasurement](val logger: Logger,
     positiveResults
       .find(_._2.contains(TestResult.ExpectedLower))
       .map(_._1._1.key)
-      .getOrElse(secondaryStrategy.selectOption(records, inputDescriptor))
+      .getOrElse({
+        logger.log("Result of linear regression test not significant enough, falling to the secondary strategy")
+        secondaryStrategy.selectOption(records, inputDescriptor)
+      })
   }
 }

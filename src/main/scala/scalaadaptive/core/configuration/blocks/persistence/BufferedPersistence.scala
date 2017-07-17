@@ -20,7 +20,7 @@ trait BufferedPersistence extends BaseLongConfiguration with BlockWithHistoryPat
   protected val serializationBufferSize: Int = 10
 
   override def createPersistentHistoryStorage(log: Logger): Option[PersistentHistoryStorage[TMeasurement]] =
-    Some(new PersistentHistoryStorage[TMeasurement](
+    Some(new PersistentHistoryStorage[TMeasurement](log,
       createHistoryStorage(log),
       new BufferedHistorySerializer[Long](
         new BasicHistorySerializer(
