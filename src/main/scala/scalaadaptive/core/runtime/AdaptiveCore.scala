@@ -29,23 +29,23 @@ trait AdaptiveCore {
   private var currentConfiguration: Configuration = defaultConfiguration
 
   private def initAdaptiveSelector(configuration: Configuration): AdaptiveSelector = {
-    val logger = configuration.createLogger()
-    configuration.initAdaptiveSelector(configuration.createHistoryStorage(),
+    val logger = configuration.createLogger
+    configuration.initAdaptiveSelector(configuration.createHistoryStorage,
       configuration.createMeanBasedStrategy(logger),
       configuration.createInputBasedStrategy(logger),
       configuration.createGatherDataStrategy(logger),
-      configuration.createEvaluationProvider(),
+      configuration.createEvaluationProvider,
       logger)
   }
 
   private def initPersistentAdaptiveSelector(configuration: Configuration): Option[AdaptiveSelector] = {
-    val logger = configuration.createLogger()
-    configuration.createPersistentHistoryStorage().map(persistentStorage =>
+    val logger = configuration.createLogger
+    configuration.createPersistentHistoryStorage.map(persistentStorage =>
       configuration.initAdaptiveSelector(persistentStorage,
         configuration.createMeanBasedStrategy(logger),
         configuration.createInputBasedStrategy(logger),
         configuration.createGatherDataStrategy(logger),
-        configuration.createEvaluationProvider(),
+        configuration.createEvaluationProvider,
         logger)
     )
   }
@@ -53,13 +53,13 @@ trait AdaptiveCore {
   private def initImplementations(configuration: Configuration): AdaptiveImplementations = {
     val adaptiveSelector = initAdaptiveSelector(configuration)
     new AdaptiveImplementations(
-      configuration.createIdentifierValidator(),
-      configuration.createMultiFunctionDefaultConfig(),
-      configuration.createFunctionFactory(),
-      configuration.createAnalyticsSerializer(),
+      configuration.createIdentifierValidator,
+      configuration.createMultiFunctionDefaultConfig,
+      configuration.createFunctionFactory,
+      configuration.createAnalyticsSerializer,
       adaptiveSelector,
       initPersistentAdaptiveSelector(configuration).getOrElse(adaptiveSelector),
-      configuration.createFunctionInvoker())
+      configuration.createFunctionInvoker)
   }
 
   private var adaptiveImplementations: AdaptiveImplementations = initImplementations(defaultConfiguration)
@@ -89,7 +89,7 @@ trait AdaptiveCore {
   def getFunctionInvoker: CombinedFunctionInvoker = adaptiveImplementations.functionInvoker
 
   /** Retrieves the implementation of [[scalaadaptive.core.functions.analytics.AnalyticsCollector]]. */
-  def createAnalytics(): AnalyticsCollector = currentConfiguration.createAnalyticsCollector()
+  def createAnalytics(): AnalyticsCollector = currentConfiguration.createAnalyticsCollector
 
   private def createNewSelector(): AdaptiveSelector =
     initAdaptiveSelector(currentConfiguration)

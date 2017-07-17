@@ -8,7 +8,7 @@ import scalaadaptive.core.runtime.history.runhistory.{CachedStatisticsRunHistory
   * Created by Petr Kubat on 6/5/17.
   */
 trait CachedStatisticsStorage extends BaseLongConfiguration {
-  override val createHistoryStorage: () => HistoryStorage[TMeasurement] = () => {
+  override def createHistoryStorage: HistoryStorage[TMeasurement] = {
     new MapHistoryStorage[TMeasurement](key =>
       new CachedStatisticsRunHistory[Long](new FullRunHistory[Long](key)(num))(num)
     )

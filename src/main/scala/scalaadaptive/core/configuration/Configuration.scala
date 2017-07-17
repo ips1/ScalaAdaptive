@@ -15,20 +15,23 @@ import scalaadaptive.core.runtime.selection.strategies.SelectionStrategy
   */
 trait Configuration {
   type TMeasurement
-  val createFunctionInvoker: () => CombinedFunctionInvoker
-  val createHistoryStorage: () => HistoryStorage[TMeasurement]
-  val createPersistentHistoryStorage: () => Option[HistoryStorage[TMeasurement]]
-  val createMeanBasedStrategy: (Logger) => SelectionStrategy[TMeasurement]
-  val createInputBasedStrategy: (Logger) => SelectionStrategy[TMeasurement]
-  val createGatherDataStrategy: (Logger) => SelectionStrategy[TMeasurement]
-  val createEvaluationProvider: () => EvaluationProvider[TMeasurement]
-  val createLogger: () => Logger
-  val createIdentifierValidator: () => CustomIdentifierValidator
-  val createMultiFunctionDefaultConfig: () => FunctionConfig
-  val createFunctionFactory: () => FunctionFactory
-  val createAnalyticsSerializer: () => AnalyticsSerializer
-  val createAnalyticsCollector: () => AnalyticsCollector
-  val initAdaptiveSelector: (HistoryStorage[TMeasurement], SelectionStrategy[TMeasurement],
-    SelectionStrategy[TMeasurement], SelectionStrategy[TMeasurement], EvaluationProvider[TMeasurement],
-    Logger) => AdaptiveSelector
+  def createFunctionInvoker: CombinedFunctionInvoker
+  def createHistoryStorage: HistoryStorage[TMeasurement]
+  def createPersistentHistoryStorage: Option[HistoryStorage[TMeasurement]]
+  def createMeanBasedStrategy(log: Logger): SelectionStrategy[TMeasurement]
+  def createInputBasedStrategy(log: Logger): SelectionStrategy[TMeasurement]
+  def createGatherDataStrategy(log: Logger): SelectionStrategy[TMeasurement]
+  def createEvaluationProvider: EvaluationProvider[TMeasurement]
+  def createLogger: Logger
+  def createIdentifierValidator: CustomIdentifierValidator
+  def createMultiFunctionDefaultConfig: FunctionConfig
+  def createFunctionFactory: FunctionFactory
+  def createAnalyticsSerializer: AnalyticsSerializer
+  def createAnalyticsCollector: AnalyticsCollector
+  def initAdaptiveSelector(historyStorage: HistoryStorage[TMeasurement],
+                           meanBasedStrategy: SelectionStrategy[TMeasurement],
+                           inputBasedStrategy: SelectionStrategy[TMeasurement],
+                           gatherDataStrategy: SelectionStrategy[TMeasurement],
+                           evaluationProvider: EvaluationProvider[TMeasurement],
+                           logger: Logger): AdaptiveSelector
 }

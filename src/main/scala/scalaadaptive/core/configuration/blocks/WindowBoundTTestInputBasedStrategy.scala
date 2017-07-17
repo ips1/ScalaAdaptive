@@ -16,19 +16,18 @@ trait WindowBoundTTestInputBasedStrategy extends BaseLongConfiguration
   with BlockWithAlpha
   with BlockWithLowRunLimit {
 
-  override val createInputBasedStrategy: (Logger) => SelectionStrategy[Long] =
-    (log: Logger) => {
-      val tTestRunner = new WelchTTestRunner(log)
-      val leastDataSelector = new LeastDataSelectionStrategy[Long](log)
-      new LowRunAwareSelectionStrategy[Long](
+  override def createInputBasedStrategy(log: Logger): SelectionStrategy[Long] = {
+    val tTestRunner = new WelchTTestRunner(log)
+    val leastDataSelector = new LeastDataSelectionStrategy[Long](log)
+    new LowRunAwareSelectionStrategy[Long](
+      log,
+      leastDataSelector,
+      new WindowBoundSelectionStrategy[Long](
         log,
-        leastDataSelector,
-        new WindowBoundSelectionStrategy[Long](
-          log,
-          new AverageForSampleCountProvider(windowAverageSize),
-          new TTestSelectionStrategy(log, tTestRunner, leastDataSelector, alpha)
-        ),
-        lowRunLimit
-      )
-    }
+        new AverageForSampleCountProvider(windowAverageSize),
+        new TTestSelectionStrategy(log, tTestRunner, leastDataSelector, alpha)
+      ),
+      lowRunLimit
+    )
+  }
 }

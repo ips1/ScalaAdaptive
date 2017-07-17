@@ -7,5 +7,5 @@ import scalaadaptive.core.functions.analytics.{AnalyticsCollector, EmptyAnalytic
   * Created by Petr Kubat on 7/12/17.
   */
 trait NoAnalyticsCollection extends Configuration {
-  override val createAnalyticsCollector: () => AnalyticsCollector = () => new EmptyAnalyticsCollector
+  override def createAnalyticsCollector: AnalyticsCollector = new EmptyAnalyticsCollector
 }

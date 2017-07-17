@@ -24,37 +24,39 @@ trait BaseConfiguration extends Configuration {
 
   protected val maximumNumberOfRecords: Int = 50000
 
-  override val createHistoryStorage: () => HistoryStorage[TMeasurement] = () => {
+  override def createHistoryStorage: HistoryStorage[TMeasurement] = {
     new MapHistoryStorage[TMeasurement](key => {
       val innerHistoryFactory = () =>
         new FullRunHistory[TMeasurement](key)(num)
       new LimitedRunHistory[TMeasurement](maximumNumberOfRecords, innerHistoryFactory(), innerHistoryFactory)
     })
   }
-  override val createLogger: () => Logger =
-    () => new ConsoleLogger
-  override val createIdentifierValidator: () => CustomIdentifierValidator =
-    () => new JavaIdentifierValidator
-  override val createFunctionFactory: () => FunctionFactory =
-    () => new DefaultFunctionFactory
-  override val createAnalyticsCollector: () => AnalyticsCollector =
-    () => new BasicAnalyticsCollector
-  override val createAnalyticsSerializer: () => AnalyticsSerializer =
-    () => new CsvAnalyticsSerializer
+  override def createLogger: Logger =
+    new ConsoleLogger
+  override def createIdentifierValidator: CustomIdentifierValidator =
+    new JavaIdentifierValidator
+  override def createFunctionFactory: FunctionFactory =
+    new DefaultFunctionFactory
+  override def createAnalyticsCollector: AnalyticsCollector =
+    new BasicAnalyticsCollector
+  override def createAnalyticsSerializer: AnalyticsSerializer =
+    new CsvAnalyticsSerializer
 
-  override val createGatherDataStrategy: (Logger) => SelectionStrategy[TMeasurement] =
-    (logger) => new LeastDataSelectionStrategy[TMeasurement](logger)
+  override def createGatherDataStrategy(log: Logger): SelectionStrategy[TMeasurement] =
+    new LeastDataSelectionStrategy[TMeasurement](log)
 
-  override val createFunctionInvoker: () => CombinedFunctionInvoker =
-    () => new PolicyBasedInvoker
+  override def createFunctionInvoker: CombinedFunctionInvoker =
+    new PolicyBasedInvoker
 
-  override val createMultiFunctionDefaultConfig: () => FunctionConfig =
-    () => new FunctionConfig(None, Storage.Global, None, false, new AlwaysSelectPolicy)
+  override def createMultiFunctionDefaultConfig: FunctionConfig =
+    new FunctionConfig(None, Storage.Global, None, false, new AlwaysSelectPolicy)
 
-  override val initAdaptiveSelector: (HistoryStorage[TMeasurement], SelectionStrategy[TMeasurement],
-    SelectionStrategy[TMeasurement], SelectionStrategy[TMeasurement], EvaluationProvider[TMeasurement],
-    Logger) => AdaptiveSelector =
-    (historyStorage, meanBasedStrategy, inputBasedStrategy, gatherDataStrategy, evaluationProvider, logger) =>
+  override def initAdaptiveSelector(historyStorage: HistoryStorage[TMeasurement],
+                                    meanBasedStrategy: SelectionStrategy[TMeasurement],
+                                    inputBasedStrategy: SelectionStrategy[TMeasurement],
+                                    gatherDataStrategy: SelectionStrategy[TMeasurement],
+                                    evaluationProvider: EvaluationProvider[TMeasurement],
+                                    logger: Logger): AdaptiveSelector =
       new HistoryBasedAdaptiveSelector[TMeasurement](
         historyStorage,
         meanBasedStrategy,

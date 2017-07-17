@@ -13,14 +13,13 @@ import scalaadaptive.math.{MannWhitneyUTestRunner, WelchTTestRunner}
 trait UTestMeanBasedStrategy extends BaseLongConfiguration
   with BlockWithLowRunLimit
   with BlockWithAlpha {
-  override val createMeanBasedStrategy: (Logger) => SelectionStrategy[Long] =
-    (log: Logger) => {
-      val tTestRunner = new MannWhitneyUTestRunner(log)
-      val leastDataSelector = new LeastDataSelectionStrategy[Long](log)
-      new LowRunAwareSelectionStrategy[Long](
-        log,
-        leastDataSelector,
-        new UTestSelectionStrategy(log, tTestRunner, leastDataSelector, alpha),
-        lowRunLimit)
-    }
+  override def createMeanBasedStrategy(log: Logger): SelectionStrategy[Long] = {
+    val tTestRunner = new MannWhitneyUTestRunner(log)
+    val leastDataSelector = new LeastDataSelectionStrategy[Long](log)
+    new LowRunAwareSelectionStrategy[Long](
+      log,
+      leastDataSelector,
+      new UTestSelectionStrategy(log, tTestRunner, leastDataSelector, alpha),
+      lowRunLimit)
+  }
 }

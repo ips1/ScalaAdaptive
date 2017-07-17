@@ -15,17 +15,16 @@ trait LinearRegressionInputBasedStrategy extends BaseLongConfiguration
   with BlockWithAlpha
   with BlockWithLowRunLimit {
 
-  override val createInputBasedStrategy: (Logger) => SelectionStrategy[Long] =
-    (log: Logger) => {
-      val leastDataSelectionStrategy = new LeastDataSelectionStrategy[Long](log)
-      new LowRunAwareSelectionStrategy[Long](
-        log,
+  override def createInputBasedStrategy(log: Logger): SelectionStrategy[Long] = {
+    val leastDataSelectionStrategy = new LeastDataSelectionStrategy[Long](log)
+    new LowRunAwareSelectionStrategy[Long](
+      log,
+      leastDataSelectionStrategy,
+      new RegressionSelectionStrategy[Long](log,
+        new PredictionConfidenceTestRunner(log),
         leastDataSelectionStrategy,
-        new RegressionSelectionStrategy[Long](log,
-          new PredictionConfidenceTestRunner(log),
-          leastDataSelectionStrategy,
-          createInputBasedStrategy(log),
-          alpha),
-        lowRunLimit)
-    }
+        createInputBasedStrategy(log),
+        alpha),
+      lowRunLimit)
+  }
 }

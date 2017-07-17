@@ -16,13 +16,13 @@ trait BaseLongConfiguration extends BaseConfiguration {
   protected val rootPath: Path
 
   override val num = LongIsAverageable
-  override val createPersistentHistoryStorage: () => Option[PersistentHistoryStorage[TMeasurement]] = () =>
+  override def createPersistentHistoryStorage: Option[PersistentHistoryStorage[TMeasurement]] =
     Some(new PersistentHistoryStorage[TMeasurement](
-        createHistoryStorage(),
+        createHistoryStorage,
         new BasicHistorySerializer(
           rootPath,
           new BasicFileNameForKeyProvider,
           new LongEvaluationDataSerializer(','),
-          createLogger())
+          createLogger)
     ))
 }

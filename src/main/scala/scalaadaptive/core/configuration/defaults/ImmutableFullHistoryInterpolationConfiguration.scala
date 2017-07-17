@@ -15,7 +15,7 @@ class ImmutableFullHistoryInterpolationConfiguration
     with DefaultHistoryPath
     with BufferedSerialization
     with TTestMeanBasedStrategy {
-  override val createHistoryStorage: () => HistoryStorage[TMeasurement] = () => {
+  override def createHistoryStorage: HistoryStorage[TMeasurement] = {
     new MapHistoryStorage[TMeasurement](key =>
       new ImmutableFullRunHistory[TMeasurement](key)(num)
     )

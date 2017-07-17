@@ -8,7 +8,7 @@ import scalaadaptive.core.runtime.history.runhistory.{CachedGroupedRunHistory, I
   * Created by Petr Kubat on 7/1/17.
   */
 trait CachedGroupStorage extends BaseLongConfiguration {
-  override val createHistoryStorage: () => HistoryStorage[TMeasurement] = () => {
+  override val createHistoryStorage: HistoryStorage[TMeasurement] = {
     new MapHistoryStorage[TMeasurement](key =>
       new CachedGroupedRunHistory[Long](new ImmutableFullRunHistory[Long](key)(num))(num)
     )

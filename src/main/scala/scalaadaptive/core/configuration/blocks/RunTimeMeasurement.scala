@@ -7,6 +7,6 @@ import scalaadaptive.core.runtime.history.evaluation.{EvaluationProvider, RunTim
   * Created by Petr Kubat on 5/1/17.
   */
 trait RunTimeMeasurement extends BaseLongConfiguration {
-  override val createEvaluationProvider: () => EvaluationProvider[Long] =
-    () => new RunTimeProvider
+  override def createEvaluationProvider: EvaluationProvider[Long] =
+    new RunTimeProvider
 }

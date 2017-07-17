@@ -8,7 +8,7 @@ import scalaadaptive.core.logging.{ConsoleLogger, FileLogger, Logger}
   */
 trait FileLogging extends Configuration {
   protected val logFilePath: String = "./scalaadaptive.log"
-  override val createLogger: () => Logger =
-    () => new FileLogger(logFilePath)
+  override def createLogger: Logger =
+    new FileLogger(logFilePath)
 }
 

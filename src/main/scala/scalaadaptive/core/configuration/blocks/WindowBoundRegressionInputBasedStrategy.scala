@@ -15,22 +15,21 @@ trait WindowBoundRegressionInputBasedStrategy extends BaseLongConfiguration
   with BlockWithAlpha
   with BlockWithLowRunLimit {
 
-  override val createInputBasedStrategy: (Logger) => SelectionStrategy[Long] =
-    (log: Logger) => {
-      val leastDataSelectionStrategy = new LeastDataSelectionStrategy[Long](log)
-      new LowRunAwareSelectionStrategy[Long](
-        log,
-        leastDataSelectionStrategy,
-        new WindowBoundSelectionStrategy[Long](log,
-          new AverageForSampleCountProvider(windowAverageSize),
-          new RegressionSelectionStrategy[Long](log,
-            new PredictionConfidenceTestRunner(log),
-            leastDataSelectionStrategy,
-            createMeanBasedStrategy(log),
-            alpha
-          )
-        ),
-        lowRunLimit
-      )
-    }
+  override def createInputBasedStrategy(log: Logger): SelectionStrategy[Long] = {
+    val leastDataSelectionStrategy = new LeastDataSelectionStrategy[Long](log)
+    new LowRunAwareSelectionStrategy[Long](
+      log,
+      leastDataSelectionStrategy,
+      new WindowBoundSelectionStrategy[Long](log,
+        new AverageForSampleCountProvider(windowAverageSize),
+        new RegressionSelectionStrategy[Long](log,
+          new PredictionConfidenceTestRunner(log),
+          leastDataSelectionStrategy,
+          createMeanBasedStrategy(log),
+          alpha
+        )
+      ),
+      lowRunLimit
+    )
+  }
 }

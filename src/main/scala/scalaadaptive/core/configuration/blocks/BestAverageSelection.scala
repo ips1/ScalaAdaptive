@@ -9,8 +9,8 @@ import scalaadaptive.core.runtime.selection.strategies.{BestMeanSelectionStrateg
   * Created by Petr Kubat on 5/1/17.
   */
 trait BestAverageSelection extends BaseLongConfiguration {
-  override val createMeanBasedStrategy: (Logger) => SelectionStrategy[Long] =
-    (log: Logger) => new LowRunAwareSelectionStrategy[Long](
+  override def createMeanBasedStrategy(log: Logger): SelectionStrategy[Long] =
+    new LowRunAwareSelectionStrategy[Long](
       log,
       new LeastDataSelectionStrategy[Long](log),
       new BestMeanSelectionStrategy(log),

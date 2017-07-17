@@ -7,6 +7,6 @@ import scalaadaptive.core.functions.analytics.{AnalyticsCollector, BasicAnalytic
   * Created by Petr Kubat on 7/12/17.
   */
 trait AnalyticsCollection extends Configuration {
-  override val createAnalyticsCollector: () => AnalyticsCollector =
-    () => new BasicAnalyticsCollector
+  override def createAnalyticsCollector: AnalyticsCollector =
+    new BasicAnalyticsCollector
 }
