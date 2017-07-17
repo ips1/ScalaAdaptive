@@ -6,6 +6,12 @@ import scalaadaptive.core.runtime.history.runhistory.{CachedStatisticsRunHistory
 
 /**
   * Created by Petr Kubat on 6/5/17.
+  *
+  * Wraps the parent [[scalaadaptive.core.runtime.history.runhistory.RunHistory]] implementation into the
+  * [[scalaadaptive.core.runtime.history.runhistory.CachedStatisticsRunHistory]].
+  *
+  * Note that it uses inherited (super) implementation of createRunHistory, therefore, the inheritance order matters.
+  *
   */
 trait CachedStatisticsStorage extends BaseLongConfiguration {
   override def createRunHistory(key: HistoryKey): RunHistory[Long] =

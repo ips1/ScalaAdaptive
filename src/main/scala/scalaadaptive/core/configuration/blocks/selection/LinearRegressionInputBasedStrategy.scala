@@ -8,9 +8,16 @@ import scalaadaptive.math.PredictionConfidenceTestRunner
 
 /**
   * Created by Petr Kubat on 5/2/17.
+  *
+  * A block that uses the [[scalaadaptive.core.runtime.selection.strategies.RegressionSelectionStrategy]] as the
+  * input-based strategy. The argument alpha can be overriden.
+  *
+  * The strategy itself is wrapped inside a
+  * [[scalaadaptive.core.runtime.selection.strategies.LowRunAwareSelectionStrategy]]. Its argument lowRunLimit can be
+  * overriden as well.
+  *
   */
 trait LinearRegressionInputBasedStrategy extends BaseLongConfiguration
-  with BlockWithWindowAverageSize
   with BlockWithAlpha
   with BlockWithLowRunLimit {
 

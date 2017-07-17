@@ -7,6 +7,14 @@ import scalaadaptive.core.runtime.selection.strategies.{LeastDataSelectionStrate
 
 /**
   * Created by Petr Kubat on 5/1/17.
+  *
+  * A block that uses the [[scalaadaptive.core.runtime.selection.strategies.LoessInterpolationSelectionStrategy]]
+  * as the input-based strategy.
+  *
+  * The strategy itself is wrapped inside a
+  * [[scalaadaptive.core.runtime.selection.strategies.LowRunAwareSelectionStrategy]]. Its argument lowRunLimit can be
+  * overriden.
+  *
   */
 trait LoessInterpolationInputBasedStrategy extends BaseLongConfiguration
   with BlockWithLowRunLimit {

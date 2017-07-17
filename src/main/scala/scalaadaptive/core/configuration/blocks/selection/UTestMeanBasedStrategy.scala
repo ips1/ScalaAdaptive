@@ -8,6 +8,14 @@ import scalaadaptive.math.MannWhitneyUTestRunner
 
 /**
   * Created by Petr Kubat on 5/2/17.
+  *
+  * A block that uses the [[scalaadaptive.core.runtime.selection.strategies.UTestSelectionStrategy]] as the
+  * mean-based strategy. The argument alpha can be overriden.
+  *
+  * The strategy itself is wrapped inside a
+  * [[scalaadaptive.core.runtime.selection.strategies.LowRunAwareSelectionStrategy]]. Its argument lowRunLimit can be
+  * overriden as well.
+  *
   */
 trait UTestMeanBasedStrategy extends BaseLongConfiguration
   with BlockWithLowRunLimit
