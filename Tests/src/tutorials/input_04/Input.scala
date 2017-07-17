@@ -4,7 +4,7 @@ import com.sun.deploy.config.DefaultConfig
 
 import scala.util.Random
 import scalaadaptive.api.Adaptive
-import scalaadaptive.core.configuration.blocks.ConsoleLogging
+import scalaadaptive.core.configuration.blocks.logging.ConsoleLogging
 import scalaadaptive.core.configuration.defaults.DefaultConfiguration
 
 /**

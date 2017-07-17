@@ -7,6 +7,9 @@ import scalaadaptive.api.Adaptive
 import scalaadaptive.api.options.Selection
 import scalaadaptive.core.configuration.BaseLongConfiguration
 import scalaadaptive.core.configuration.blocks._
+import scalaadaptive.core.configuration.blocks.logging.NoLogging
+import scalaadaptive.core.configuration.blocks.selection.{LoessInterpolationInputBasedStrategy, TTestMeanBasedStrategy}
+import scalaadaptive.core.configuration.blocks.storage.CachedGroupStorage
 import scalaadaptive.core.functions.identifiers.ClosureIdentifier
 import scalaadaptive.core.logging.Logger
 import scalaadaptive.core.runtime.selection.strategies.LeastDataSelectionStrategy

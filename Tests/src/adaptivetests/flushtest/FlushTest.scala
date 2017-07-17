@@ -6,7 +6,8 @@ import tools.methods.TestMethods
 import scalaadaptive.core.configuration.defaults.DefaultConfiguration
 import scalaadaptive.api.options.Storage
 import scalaadaptive.api.Adaptive
-import scalaadaptive.core.configuration.blocks.{CachedGroupStorage, LoessInterpolationInputBasedStrategy}
+import scalaadaptive.core.configuration.blocks.selection.LoessInterpolationInputBasedStrategy
+import scalaadaptive.core.configuration.blocks.storage.CachedGroupStorage
 
 /**
   * Created by Petr Kubat on 5/14/17.

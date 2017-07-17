@@ -1,4 +1,4 @@
-package scalaadaptive.core.configuration.blocks
+package scalaadaptive.core.configuration.blocks.analytics
 
 import scalaadaptive.core.configuration.Configuration
 import scalaadaptive.core.functions.analytics.{AnalyticsCollector, EmptyAnalyticsCollector}

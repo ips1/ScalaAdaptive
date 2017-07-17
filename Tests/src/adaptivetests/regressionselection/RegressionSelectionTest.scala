@@ -10,6 +10,8 @@ import tools.methods.TestMethods
 import scala.util.Random
 import scalaadaptive.api.Adaptive
 import scalaadaptive.core.configuration.blocks._
+import scalaadaptive.core.configuration.blocks.logging.NoLogging
+import scalaadaptive.core.configuration.blocks.selection.LinearRegressionInputBasedStrategy
 import scalaadaptive.core.configuration.defaults.DefaultConfiguration
 import scalaadaptive.core.runtime.selection.strategies.RegressionSelectionStrategy
 

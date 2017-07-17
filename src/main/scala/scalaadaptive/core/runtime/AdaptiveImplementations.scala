@@ -16,6 +16,6 @@ class AdaptiveImplementations(val identifierValidator: CustomIdentifierValidator
                               val multiFunctionDefaults: FunctionConfig,
                               val functionFactory: FunctionFactory,
                               val analyticsSerializer: AnalyticsSerializer,
-                              val runner: AdaptiveSelector,
-                              val persistentRunner: AdaptiveSelector,
+                              val selector: AdaptiveSelector,
+                              val persistentSelector: AdaptiveSelector,
                               val functionInvoker: CombinedFunctionInvoker)

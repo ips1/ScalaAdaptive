@@ -5,9 +5,10 @@ import tools.methods.TestMethods
 import scalaadaptive.api.Adaptive
 import scalaadaptive.api.functions.AdaptiveFunction1
 import scalaadaptive.api.options.Storage
-import scalaadaptive.core.configuration.blocks.{CachedStatisticsStorage, NoLogging}
 import scalaadaptive.core.configuration.defaults.DefaultConfiguration
 import scalaadaptive.api.policies.{AlwaysUseLastPolicy, StopSelectingWhenDecidedPolicy}
+import scalaadaptive.core.configuration.blocks.logging.NoLogging
+import scalaadaptive.core.configuration.blocks.storage.CachedStatisticsStorage
 
 /**
   * Created by Petr Kubat on 6/5/17.

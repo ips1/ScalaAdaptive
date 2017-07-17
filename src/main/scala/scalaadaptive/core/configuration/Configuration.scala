@@ -4,8 +4,10 @@ import scalaadaptive.core.functions.analytics.AnalyticsCollector
 import scalaadaptive.core.functions.identifiers.CustomIdentifierValidator
 import scalaadaptive.core.functions.{FunctionConfig, FunctionFactory}
 import scalaadaptive.core.logging.Logger
+import scalaadaptive.core.runtime.history.HistoryKey
 import scalaadaptive.core.runtime.history.evaluation.EvaluationProvider
 import scalaadaptive.core.runtime.history.historystorage.HistoryStorage
+import scalaadaptive.core.runtime.history.runhistory.RunHistory
 import scalaadaptive.core.runtime.invocation.CombinedFunctionInvoker
 import scalaadaptive.core.runtime.selection.AdaptiveSelector
 import scalaadaptive.core.runtime.selection.strategies.SelectionStrategy
@@ -37,6 +39,14 @@ trait Configuration {
     * @return The function invoker.
     */
   def createFunctionInvoker: CombinedFunctionInvoker
+
+  /**
+    * The [[scalaadaptive.core.runtime.history.runhistory.RunHistory]] factory method. It can be used by the
+    * [[scalaadaptive.core.runtime.history.historystorage.HistoryStorage]] to create new histories.
+    * @param key Key of the newly created history.
+    * @return The empty history.
+    */
+  def createRunHistory(key: HistoryKey): RunHistory[TMeasurement]
 
   /**
     * The [[scalaadaptive.core.runtime.history.historystorage.HistoryStorage]] factory method - the storage created

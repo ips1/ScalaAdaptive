@@ -1,6 +1,9 @@
 import scalaadaptive.api.Adaptive
 import scalaadaptive.core.configuration.BaseLongConfiguration
 import scalaadaptive.core.configuration.blocks._
+import scalaadaptive.core.configuration.blocks.logging.{ConsoleLogging, FileLogging, NoLogging}
+import scalaadaptive.core.configuration.blocks.selection.{TTestMeanBasedStrategy, UTestMeanBasedStrategy, WindowBoundRegressionInputBasedStrategy}
+import scalaadaptive.core.configuration.blocks.storage.{CachedRegressionStorage, CachedStatisticsStorage}
 import scalaadaptive.core.configuration.defaults.DefaultConfiguration
 
 /**
@@ -24,7 +27,8 @@ object ConfigurationTest {
       with RunTimeMeasurement
       with WindowBoundRegressionInputBasedStrategy
       with UTestMeanBasedStrategy
-      with CachedRegressionAndStatisticsStorage
+      with CachedRegressionStorage
+      with CachedStatisticsStorage
       with FileLogging {
       override val maximumNumberOfRecords = 20000
       override val alpha = 0.25

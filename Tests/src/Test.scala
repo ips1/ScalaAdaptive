@@ -7,7 +7,7 @@ import tools.methods.TestMethods
 import scala.util.Random
 import scalaadaptive.core.configuration.defaults._
 import scalaadaptive.api.Adaptive
-import scalaadaptive.core.configuration.blocks.CachedStatisticsStorage
+import scalaadaptive.core.configuration.blocks.storage.CachedStatisticsStorage
 
 /**
   * Created by Petr Kubat on 3/19/17.

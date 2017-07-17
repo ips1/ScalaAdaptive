@@ -7,7 +7,7 @@ import scala.util.Random
 import scalaadaptive.api.Adaptive
 import scalaadaptive.api.options.Storage
 import scalaadaptive.core.configuration.Configuration
-import scalaadaptive.core.configuration.blocks.{CachedStatisticsStorage, LoessInterpolationInputBasedStrategy, WindowBoundRegressionInputBasedStrategy}
+import scalaadaptive.core.configuration.blocks.selection.LoessInterpolationInputBasedStrategy
 import scalaadaptive.core.configuration.defaults.DefaultConfiguration
 
 /**

@@ -1,7 +1,7 @@
-package scalaadaptive.core.configuration.blocks
+package scalaadaptive.core.configuration.blocks.logging
 
 import scalaadaptive.core.configuration.Configuration
-import scalaadaptive.core.logging.{ConsoleLogger, FileLogger, Logger}
+import scalaadaptive.core.logging.{FileLogger, Logger}
 
 /**
   * Created by Petr Kubat on 7/10/17.

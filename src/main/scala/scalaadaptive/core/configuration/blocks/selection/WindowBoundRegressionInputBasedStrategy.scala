@@ -1,31 +1,33 @@
-package scalaadaptive.core.configuration.blocks
+package scalaadaptive.core.configuration.blocks.selection
 
 import scalaadaptive.core.configuration.BaseLongConfiguration
 import scalaadaptive.core.configuration.blocks.helper.{BlockWithAlpha, BlockWithLowRunLimit, BlockWithWindowAverageSize}
 import scalaadaptive.core.logging.Logger
-import scalaadaptive.core.runtime.selection._
 import scalaadaptive.core.runtime.selection.strategies._
 import scalaadaptive.core.runtime.selection.strategies.support.AverageForSampleCountProvider
-import scalaadaptive.math.WelchTTestRunner
+import scalaadaptive.math.PredictionConfidenceTestRunner
 
 /**
-  * Created by Petr Kubat on 7/8/17.
+  * Created by Petr Kubat on 6/7/17.
   */
-trait WindowBoundTTestInputBasedStrategy extends BaseLongConfiguration
+trait WindowBoundRegressionInputBasedStrategy extends BaseLongConfiguration
   with BlockWithWindowAverageSize
   with BlockWithAlpha
   with BlockWithLowRunLimit {
 
   override def createInputBasedStrategy(log: Logger): SelectionStrategy[Long] = {
-    val tTestRunner = new WelchTTestRunner(log)
-    val leastDataSelector = new LeastDataSelectionStrategy[Long](log)
+    val leastDataSelectionStrategy = new LeastDataSelectionStrategy[Long](log)
     new LowRunAwareSelectionStrategy[Long](
       log,
-      leastDataSelector,
-      new WindowBoundSelectionStrategy[Long](
-        log,
+      leastDataSelectionStrategy,
+      new WindowBoundSelectionStrategy[Long](log,
         new AverageForSampleCountProvider(windowAverageSize),
-        new TTestSelectionStrategy(log, tTestRunner, leastDataSelector, alpha)
+        new RegressionSelectionStrategy[Long](log,
+          new PredictionConfidenceTestRunner(log),
+          leastDataSelectionStrategy,
+          createMeanBasedStrategy(log),
+          alpha
+        )
       ),
       lowRunLimit
     )

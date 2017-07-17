@@ -4,7 +4,7 @@ import tools.methods.TestMethods
 
 import scalaadaptive.api.Adaptive
 import scalaadaptive.api.options.Selection
-import scalaadaptive.core.configuration.blocks.CachedStatisticsStorage
+import scalaadaptive.core.configuration.blocks.storage.CachedStatisticsStorage
 import scalaadaptive.core.configuration.defaults.DefaultConfiguration
 
 /**

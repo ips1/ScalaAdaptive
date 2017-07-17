@@ -2,7 +2,7 @@ package adaptivetests.loadbalance
 
 import scalaadaptive.core.configuration.defaults.DefaultConfiguration
 import scalaadaptive.api.Adaptive
-import scalaadaptive.core.configuration.blocks.{CachedStatisticsStorage, ConsoleLogging, NoLogging}
+import scalaadaptive.core.configuration.blocks.logging.ConsoleLogging
 
 /**
   * Created by Petr Kubat on 5/14/17.

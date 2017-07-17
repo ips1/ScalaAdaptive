@@ -72,12 +72,12 @@ trait AdaptiveCore {
 
   /** Retrieves the shared implementation of [[scalaadaptive.core.runtime.selection.AdaptiveSelector]] working with
     * global storage. */
-  def getSharedSelector: AdaptiveSelector = adaptiveImplementations.runner
+  def getSharedSelector: AdaptiveSelector = adaptiveImplementations.selector
 
   /** Retrieves the shared implementation of [[scalaadaptive.core.runtime.selection.AdaptiveSelector]] working with
     * persistent storage (note that it returns the same instance as [[getSharedSelector]] if persistent storage is not
     * supported by the configuration). */
-  def getSharedPersistentSelector: AdaptiveSelector = adaptiveImplementations.persistentRunner
+  def getSharedPersistentSelector: AdaptiveSelector = adaptiveImplementations.persistentSelector
 
   /** Retrieves the implementation of [[scalaadaptive.core.functions.FunctionFactory]]. */
   def getFunctionFactory: FunctionFactory = adaptiveImplementations.functionFactory

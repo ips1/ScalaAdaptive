@@ -6,7 +6,8 @@ import adaptivetests.jsonparsing.data.PersonList
 
 import scala.io.Source
 import scalaadaptive.api.Adaptive
-import scalaadaptive.core.configuration.blocks.{CachedStatisticsStorage, NoLogging}
+import scalaadaptive.core.configuration.blocks.logging.NoLogging
+import scalaadaptive.core.configuration.blocks.storage.CachedStatisticsStorage
 import scalaadaptive.core.configuration.defaults.DefaultConfiguration
 
 /**

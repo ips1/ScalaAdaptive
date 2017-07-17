@@ -1,5 +1,7 @@
 package scalaadaptive
 
+import scalaadaptive.core.configuration.blocks.analytics.NoAnalyticsCollection
+
 /**
   * Created by Petr Kubat on 7/16/17.
   *
@@ -11,8 +13,9 @@ package scalaadaptive
   * function traits.
   *
   * The analytics collection is done by the type [[scalaadaptive.core.functions.analytics.AnalyticsCollector]], which
-  * is part of the [[scalaadaptive.core.configuration.Configuration]]. Beware that using the [[scalaadaptive.core.configuration.blocks.NoAnalyticsCollection]]
-  * configuration block will replace the collector with an empty collector and no analytics data will be collected.
+  * is part of the [[scalaadaptive.core.configuration.Configuration]]. Beware that using the
+  * [[scalaadaptive.core.configuration.blocks.analytics.NoAnalyticsCollection]] configuration block will replace
+  * the collector with an empty collector and no analytics data will be collected.
   *
   * === Usage example ===
   *

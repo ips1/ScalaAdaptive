@@ -4,9 +4,10 @@ import adaptivetests.sorting.Sorter
 
 import scala.util.Random
 import scalaadaptive.api.Adaptive
-import scalaadaptive.core.configuration.blocks.{CachedStatisticsStorage, NoLogging}
 import scalaadaptive.core.configuration.defaults.DefaultConfiguration
 import scalaadaptive.api.policies.StopSelectingWhenDecidedPolicy
+import scalaadaptive.core.configuration.blocks.logging.NoLogging
+import scalaadaptive.core.configuration.blocks.storage.CachedStatisticsStorage
 
 /**
   * Created by Petr Kubat on 6/5/17.

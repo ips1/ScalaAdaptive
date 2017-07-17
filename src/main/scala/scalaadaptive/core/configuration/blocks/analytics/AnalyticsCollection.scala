@@ -1,7 +1,7 @@
-package scalaadaptive.core.configuration.blocks
+package scalaadaptive.core.configuration.blocks.analytics
 
 import scalaadaptive.core.configuration.Configuration
-import scalaadaptive.core.functions.analytics.{AnalyticsCollector, BasicAnalyticsCollector, EmptyAnalyticsCollector}
+import scalaadaptive.core.functions.analytics.{AnalyticsCollector, BasicAnalyticsCollector}
 
 /**
   * Created by Petr Kubat on 7/12/17.

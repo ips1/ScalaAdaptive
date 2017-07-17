@@ -7,9 +7,10 @@ import scalaadaptive.core.functions.analytics.{AnalyticsCollector, BasicAnalytic
 import scalaadaptive.core.functions.identifiers.{CustomIdentifierValidator, JavaIdentifierValidator}
 import scalaadaptive.core.functions.{DefaultFunctionFactory, FunctionConfig, FunctionFactory}
 import scalaadaptive.core.logging.Logger
+import scalaadaptive.core.runtime.history.HistoryKey
 import scalaadaptive.core.runtime.history.evaluation.EvaluationProvider
 import scalaadaptive.core.runtime.history.historystorage.{HistoryStorage, MapHistoryStorage}
-import scalaadaptive.core.runtime.history.runhistory.{FullRunHistory, LimitedRunHistory}
+import scalaadaptive.core.runtime.history.runhistory.{FullRunHistory, LimitedRunHistory, RunHistory}
 import scalaadaptive.core.runtime.invocation.{CombinedFunctionInvoker, PolicyBasedInvoker}
 import scalaadaptive.core.runtime.selection.strategies.{LeastDataSelectionStrategy, SelectionStrategy}
 import scalaadaptive.core.runtime.selection.{AdaptiveSelector, HistoryBasedAdaptiveSelector}
@@ -28,7 +29,8 @@ import scalaadaptive.extensions.Averageable
   *
   * It sets up the following:
   * - [[scalaadaptive.core.runtime.history.historystorage.HistoryStorage]] to
-  * [[scalaadaptive.core.runtime.history.historystorage.MapHistoryStorage]] with run histories represented as
+  * [[scalaadaptive.core.runtime.history.historystorage.MapHistoryStorage]]
+  * - [[scalaadaptive.core.runtime.history.runhistory.RunHistory]] as
   * [[scalaadaptive.core.runtime.history.runhistory.FullRunHistory]] wrapped into
   * [[scalaadaptive.core.runtime.history.runhistory.LimitedRunHistory]]
   * - [[scalaadaptive.core.functions.identifiers.CustomIdentifierValidator]] to
@@ -53,13 +55,14 @@ trait BaseConfiguration extends Configuration {
     */
   protected val maximumNumberOfRecords: Int = 50000
 
-  override def createHistoryStorage: HistoryStorage[TMeasurement] = {
-    new MapHistoryStorage[TMeasurement](key => {
-      val innerHistoryFactory = () =>
-        new FullRunHistory[TMeasurement](key)(num)
-      new LimitedRunHistory[TMeasurement](maximumNumberOfRecords, innerHistoryFactory(), innerHistoryFactory)
-    })
+  override def createRunHistory(key: HistoryKey): RunHistory[TMeasurement] = {
+    val innerHistoryFactory = () =>
+      new FullRunHistory[TMeasurement](key)(num)
+    new LimitedRunHistory[TMeasurement](maximumNumberOfRecords, innerHistoryFactory(), innerHistoryFactory)
   }
+
+  override def createHistoryStorage: HistoryStorage[TMeasurement] =
+    new MapHistoryStorage[TMeasurement](key => createRunHistory(key))
 
   override def createFunctionInvoker: CombinedFunctionInvoker =
     new PolicyBasedInvoker

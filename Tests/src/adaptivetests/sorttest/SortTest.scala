@@ -7,9 +7,9 @@ import scala.collection.mutable.ArrayBuffer
 import scalaadaptive.api.Adaptive
 import scalaadaptive.api.grouping.GroupId
 import scalaadaptive.api.options.Selection
-import scalaadaptive.core.configuration.blocks.{CachedStatisticsStorage, WindowBoundRegressionInputBasedStrategy}
 import scalaadaptive.core.configuration.defaults.DefaultConfiguration
 import scalaadaptive.api.policies.PauseSelectionAfterStreakPolicy
+import scalaadaptive.core.configuration.blocks.selection.WindowBoundRegressionInputBasedStrategy
 
 /**
   * Created with IntelliJ IDEA.

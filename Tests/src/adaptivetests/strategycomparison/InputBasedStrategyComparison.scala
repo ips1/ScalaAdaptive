@@ -6,6 +6,7 @@ import scala.util.Random
 import scalaadaptive.api.Adaptive
 import scalaadaptive.api.options.Selection
 import scalaadaptive.core.configuration.blocks._
+import scalaadaptive.core.configuration.blocks.selection.{LinearRegressionInputBasedStrategy, LoessInterpolationInputBasedStrategy, WindowBoundRegressionInputBasedStrategy, WindowBoundTTestInputBasedStrategy}
 import scalaadaptive.core.functions.identifiers.ClosureIdentifier
 
 /**

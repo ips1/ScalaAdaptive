@@ -1,9 +1,8 @@
-package scalaadaptive.core.configuration.blocks
+package scalaadaptive.core.configuration.blocks.selection
 
 import scalaadaptive.core.configuration.BaseLongConfiguration
 import scalaadaptive.core.configuration.blocks.helper.{BlockWithAlpha, BlockWithLowRunLimit, BlockWithWindowAverageSize}
 import scalaadaptive.core.logging.Logger
-import scalaadaptive.core.runtime.selection._
 import scalaadaptive.core.runtime.selection.strategies.{LeastDataSelectionStrategy, LowRunAwareSelectionStrategy, RegressionSelectionStrategy, SelectionStrategy}
 import scalaadaptive.math.PredictionConfidenceTestRunner
 

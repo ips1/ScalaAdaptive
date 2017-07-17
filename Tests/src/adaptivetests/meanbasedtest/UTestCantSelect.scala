@@ -4,7 +4,8 @@ import tools.methods.TestMethods
 
 import scalaadaptive.api.Adaptive
 import scalaadaptive.api.options.Selection
-import scalaadaptive.core.configuration.blocks.{ConsoleLogging, TTestMeanBasedStrategy, UTestMeanBasedStrategy}
+import scalaadaptive.core.configuration.blocks.logging.ConsoleLogging
+import scalaadaptive.core.configuration.blocks.selection.UTestMeanBasedStrategy
 import scalaadaptive.core.configuration.defaults.DefaultConfiguration
 
 /**
