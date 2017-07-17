@@ -24,8 +24,8 @@ import scalaadaptive.core.runtime.selection.strategies.SelectionStrategy
   *
   * Holds three instances of [[scalaadaptive.core.runtime.selection.strategies.SelectionStrategy]] that it uses to
   * select functions:
-  * - meanBasedStrategy for selection with [[Selection.MeanBased]]
-  * - inputBasedStrategy for selection with [[Selection.InputBased]]
+  * - meanBasedStrategy for selection with [[scalaadaptive.api.options.Selection.MeanBased]]
+  * - inputBasedStrategy for selection with [[scalaadaptive.api.options.Selection.InputBased]]
   * - gatherDataStrategy for gather data action
   *
   * The evaluation represented by the [[TMeasurement]] type is provided by an [[EvaluationProvider]] instance.
