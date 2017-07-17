@@ -8,6 +8,10 @@ import scalaadaptive.core.functions.identifiers.MethodNameIdentifier
 
 /**
   * Created by Petr Kubat on 4/30/17.
+  *
+  * Main class that performs the wrapping of the function literal into the conversion call along with attempted
+  * eta-expasion method name extraction.
+  *
   */
 class EtaExpansionConverter[C <: blackbox.Context](val c: C) {
   import c.universe._
@@ -45,6 +49,12 @@ class EtaExpansionConverter[C <: blackbox.Context](val c: C) {
   private def reconstructBlock(statements: List[Tree], expression: Tree): Tree =
     Block(statements, expression)
 
+  /**
+    * Wraps the function tree into a toAdaptor conversion. Attempts to extract the method name in case of eta-expansion
+    * function litral. If succeeds in the extraction, the method name is passed into the conversion.
+    * @param tree The function AST.
+    * @return The AST wrapped in a toAdaptor conversion that can contain the extracted method name.
+    */
   def convertEtaExpansionTree(tree: Tree): Tree = {
     // TODO: Validate the tree
 

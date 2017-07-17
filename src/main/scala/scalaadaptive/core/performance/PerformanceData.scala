@@ -2,6 +2,9 @@ package scalaadaptive.core.performance
 
 /**
   * Created by Petr Kubat on 6/6/17.
+  *
+  * Simple implementation of [[PerformanceProvider]].
+  *
   */
 class PerformanceData(val functionTime: Long,
                       val selectionTime: Long,

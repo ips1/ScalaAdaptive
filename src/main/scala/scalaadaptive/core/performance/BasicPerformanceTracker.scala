@@ -2,6 +2,9 @@ package scalaadaptive.core.performance
 
 /**
   * Created by Petr Kubat on 5/1/17.
+  *
+  * Simple implementation of the [[PerformanceTracker]]
+  *
   */
 class BasicPerformanceTracker extends PerformanceTracker {
   private var selectionTimeTotal: Long = 0
