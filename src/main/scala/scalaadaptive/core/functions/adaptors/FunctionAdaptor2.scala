@@ -32,6 +32,6 @@ class FunctionAdaptor2[T1, T2, R](val function: CombinedFunction[(T1, T2), R])
   override def applyWithoutMeasuring(arg1: T1, arg2: T2): (R, InvocationToken) =
     invokeWithDelayedMeasure((arg1, arg2))
 
-  override def orMultiFunction(otherFun: AdaptiveFunction2[T1, T2, R]): FunctionAdaptor2[T1, T2, R] =
+  override def orAdaptiveFunction(otherFun: AdaptiveFunction2[T1, T2, R]): FunctionAdaptor2[T1, T2, R] =
     createNew(function.mergeFunctions(Conversions.toAdaptor(otherFun).function))
 }

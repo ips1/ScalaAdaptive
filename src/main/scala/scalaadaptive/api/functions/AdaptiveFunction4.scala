@@ -26,5 +26,5 @@ trait AdaptiveFunction4[T1, T2, T3, T4, R]
   def applyWithoutMeasuring(arg1: T1, arg2: T2, arg3: T3, arg4: T4): (R, InvocationToken)
   def ^(arg1: T1, arg2: T2, arg3: T3, arg4: T4): (R, InvocationToken) = applyWithoutMeasuring(arg1, arg2, arg3, arg4)
 
-  def orMultiFunction(fun: AdaptiveFunction4[T1, T2, T3, T4, R]): AdaptiveFunction4[T1, T2, T3, T4, R]
+  def orAdaptiveFunction(fun: AdaptiveFunction4[T1, T2, T3, T4, R]): AdaptiveFunction4[T1, T2, T3, T4, R]
 }

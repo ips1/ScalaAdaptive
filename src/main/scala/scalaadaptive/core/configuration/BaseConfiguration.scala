@@ -42,7 +42,7 @@ import scalaadaptive.extensions.Averageable
   * - gatherDataStrategy to [[scalaadaptive.core.runtime.selection.strategies.LeastDataSelectionStrategy]]
   * - [[scalaadaptive.core.runtime.invocation.CombinedFunctionInvoker]] to
   * [[scalaadaptive.core.runtime.invocation.PolicyBasedInvoker]]
-  * - multiFunctionDefaultConfig using basic values
+  * - defaultFunctionConfig using basic values
   * - initAdaptiveSelector composition creating a [[scalaadaptive.core.runtime.selection.HistoryBasedAdaptiveSelector]]
   *
   */
@@ -79,7 +79,7 @@ trait BaseConfiguration extends Configuration {
   override def createGatherDataStrategy(log: Logger): SelectionStrategy[TMeasurement] =
     new LeastDataSelectionStrategy[TMeasurement](log)
 
-  override def createMultiFunctionDefaultConfig: FunctionConfig =
+  override def createDefaultFunctionConfig: FunctionConfig =
     new FunctionConfig(None, Storage.Global, None, false, new AlwaysSelectPolicy)
 
   override def initAdaptiveSelector(historyStorage: HistoryStorage[TMeasurement],

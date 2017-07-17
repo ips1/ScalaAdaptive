@@ -14,7 +14,7 @@ object Adaptive {
 
   /**
     * Initializes the ScalaAdaptive framework with new configuration
-    * Note that some parts of the configuration (e.g. the default configuration of the MultiFunctions) will have effect
+    * Note that some parts of the configuration (e.g. the default configuration of the AdaptiveFunctions) will have effect
     * only on AdaptiveFunction instances created after this call.
     * Note that all the run history data that were stored using Storage.Global will be lost.
     * @param configuration The configuration that will be used in the framework.

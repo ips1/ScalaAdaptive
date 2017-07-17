@@ -13,7 +13,7 @@ import scalaadaptive.core.runtime.selection.AdaptiveSelector
   *
   */
 class AdaptiveImplementations(val identifierValidator: CustomIdentifierValidator,
-                              val multiFunctionDefaults: FunctionConfig,
+                              val adaptiveFunctionDefaults: FunctionConfig,
                               val functionFactory: FunctionFactory,
                               val analyticsSerializer: AnalyticsSerializer,
                               val selector: AdaptiveSelector,

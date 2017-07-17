@@ -114,7 +114,7 @@ trait Configuration {
     * depends on the [[scalaadaptive.core.functions.FunctionFactory]] implementation).
     * @return The config.
     */
-  def createMultiFunctionDefaultConfig: FunctionConfig
+  def createDefaultFunctionConfig: FunctionConfig
 
   /**
     * The [[scalaadaptive.core.functions.FunctionFactory]] factory method. Creates a factory that will be used

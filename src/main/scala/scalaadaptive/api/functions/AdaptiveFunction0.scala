@@ -64,5 +64,5 @@ trait AdaptiveFunction0[R] extends AdaptiveFunctionCommon[Unit, R, AdaptiveFunct
     * @param fun The other adaptive function to combine it with.
     * @return A completely new instance of [[AdaptiveFunction0]] containing all the implementations.
     */
-  def orMultiFunction(fun: AdaptiveFunction0[R]): AdaptiveFunction0[R]
+  def orAdaptiveFunction(fun: AdaptiveFunction0[R]): AdaptiveFunction0[R]
 }

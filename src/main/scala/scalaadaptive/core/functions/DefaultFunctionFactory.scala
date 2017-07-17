@@ -17,7 +17,7 @@ import scalaadaptive.core.runtime.AdaptiveInternal
   */
 class DefaultFunctionFactory extends FunctionFactory {
   override def createFunction[TArgType, TRetType](firstOption: IdentifiedFunction[TArgType, TRetType]): CombinedFunction[TArgType, TRetType] = {
-    val newConfig = AdaptiveInternal.getMultiFunctionDefaults
+    val newConfig = AdaptiveInternal.getAdaptiveFunctionDefaults
     new CombinedFunction[TArgType, TRetType](List(firstOption.changeUseClosures(newConfig.closureIdentifier)),
       None,
       (_) => NoGroup(),

@@ -22,5 +22,5 @@ trait AdaptiveFunction1[T1, R] extends AdaptiveFunctionCommon[T1, R, AdaptiveFun
   def applyWithoutMeasuring(arg1: T1): (R, InvocationToken)
   def ^(arg1: T1): (R, InvocationToken) = applyWithoutMeasuring(arg1)
 
-  def orMultiFunction(fun: AdaptiveFunction1[T1, R]): AdaptiveFunction1[T1, R]
+  def orAdaptiveFunction(fun: AdaptiveFunction1[T1, R]): AdaptiveFunction1[T1, R]
 }

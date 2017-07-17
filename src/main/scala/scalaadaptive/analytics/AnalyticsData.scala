@@ -11,7 +11,7 @@ import java.io.{File, FileOutputStream, PrintWriter}
   */
 trait AnalyticsData {
   /**
-    * Retrieves collection of analytic records of all runs of the MultiFunction that this data come from.
+    * Retrieves collection of analytic records of all runs of the AdaptiveFunction that this data come from.
     * @return Collection of AnalyticRecords
     */
   def getAllRunInfo: Seq[AnalyticsRunRecord]

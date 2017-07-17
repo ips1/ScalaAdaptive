@@ -30,18 +30,18 @@ class AdaptiveMacrosHelper[C <: blackbox.Context](val c: C) {
 
   /**
     * Wraps the tree into a conversion like [[wrapTreeInAdapterConversion]] and applies it as an argument of a
-    * orMultiFunction call.
+    * orAdaptiveFunction call.
     *
     * Used from the or method in [[scalaadaptive.api.functions.AdaptiveFunction0]] and corresponding types.
     *
     * @param funTree The function tree.
-    * @return The function tree wrapped in the conversion and orMultiFunction call.
+    * @return The function tree wrapped in the conversion and orAdaptiveFunction call.
     */
   def wrapTreeInAdapterConversionAndOrCall(funTree: c.Tree): c.Tree = {
     val convertedTree = wrapTreeInAdapterConversion(funTree)
 
     Apply(
-      Select(c.prefix.tree, TermName("orMultiFunction")),
+      Select(c.prefix.tree, TermName("orAdaptiveFunction")),
       List(convertedTree)
     )
   }

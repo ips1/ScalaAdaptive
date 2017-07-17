@@ -54,7 +54,7 @@ trait AdaptiveCore {
     val adaptiveSelector = initAdaptiveSelector(configuration)
     new AdaptiveImplementations(
       configuration.createIdentifierValidator,
-      configuration.createMultiFunctionDefaultConfig,
+      configuration.createDefaultFunctionConfig,
       configuration.createFunctionFactory,
       configuration.createAnalyticsSerializer,
       adaptiveSelector,
@@ -68,7 +68,7 @@ trait AdaptiveCore {
   def getIdentifierValidator: CustomIdentifierValidator = adaptiveImplementations.identifierValidator
 
   /** Retrieves the default [[scalaadaptive.core.functions.FunctionConfig]]. */
-  def getMultiFunctionDefaults: FunctionConfig = adaptiveImplementations.multiFunctionDefaults
+  def getAdaptiveFunctionDefaults: FunctionConfig = adaptiveImplementations.adaptiveFunctionDefaults
 
   /** Retrieves the shared implementation of [[scalaadaptive.core.runtime.selection.AdaptiveSelector]] working with
     * global storage. */
