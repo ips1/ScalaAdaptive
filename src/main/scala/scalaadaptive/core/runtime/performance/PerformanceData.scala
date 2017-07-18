@@ -1,4 +1,4 @@
-package scalaadaptive.core.performance
+package scalaadaptive.core.runtime.performance
 
 /**
   * Created by Petr Kubat on 6/6/17.

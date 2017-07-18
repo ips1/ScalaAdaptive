@@ -1,7 +1,7 @@
 package scalaadaptive.core.runtime.invocationtokens
 
 import scalaadaptive.api.functions.InvocationToken
-import scalaadaptive.core.performance.PerformanceProvider
+import scalaadaptive.core.runtime.performance.PerformanceProvider
 import scalaadaptive.core.functions.RunData
 
 /**

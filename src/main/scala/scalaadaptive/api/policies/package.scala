@@ -3,7 +3,7 @@ package scalaadaptive.api
 /**
   * Created by Petr Kubat on 7/16/17.
   *
-  * This package contains everything related to the concept of policies.
+  * Package containing everything related to the concept of policies.
   *
   * The policies are a concept introduced to ScalaAdaptive in order to limit the overhead caused by selecting function
   * implementations to run. Policies allow skipping that process and using cached shortcuts.

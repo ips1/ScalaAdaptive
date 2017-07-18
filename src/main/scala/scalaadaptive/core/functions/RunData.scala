@@ -1,7 +1,7 @@
 package scalaadaptive.core.functions
 
 import scalaadaptive.api.grouping.Group
-import scalaadaptive.core.performance.PerformanceProvider
+import scalaadaptive.core.runtime.performance.PerformanceProvider
 import scalaadaptive.core.functions.identifiers.FunctionIdentifier
 
 /**

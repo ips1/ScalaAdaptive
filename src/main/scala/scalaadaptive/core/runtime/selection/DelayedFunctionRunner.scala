@@ -1,7 +1,7 @@
 package scalaadaptive.core.runtime.selection
 
 import scalaadaptive.core.functions.RunResult
-import scalaadaptive.core.performance.PerformanceTracker
+import scalaadaptive.core.runtime.performance.PerformanceTracker
 import scalaadaptive.core.runtime.history.HistoryKey
 
 /**
