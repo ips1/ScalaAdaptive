@@ -37,22 +37,22 @@ object Grouping {
   val fibonacci = fibonacciRecursive _ or fibonacciIterative groupBy (i => GroupId(i))
 
   def main(args: Array[String]): Unit = {
-    Seq.range(0, 100).foreach(i => {
+    for (i <- 0 until 100) {
       val n = 5
       println(s"$n: ${fibonacci(n)}")
       println(fibonacci.getAnalyticsData.get.getAllRunInfo.last.selectedFunction)
-    })
+    }
 
-    Seq.range(0, 100).foreach(i => {
+    for (i <- 0 until 100) {
       val n = 35
       println(s"$n: ${fibonacci(n)}")
       println(fibonacci.getAnalyticsData.get.getAllRunInfo.last.selectedFunction)
-    })
+    }
 
-    Seq.range(0, 100).foreach(i => {
+    for (i <- 0 until 100) {
       val n = 5
       println(s"$n: ${fibonacci(n)}")
       println(fibonacci.getAnalyticsData.get.getAllRunInfo.last.selectedFunction)
-    })
+    }
   }
 }

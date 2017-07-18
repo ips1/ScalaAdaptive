@@ -41,11 +41,11 @@ object Input {
   val fibonacci = fibonacciRecursive _ or fibonacciIterative by (i => i)
 
   def main(args: Array[String]): Unit = {
-    Seq.range(0, 100).foreach(i => {
+    for (i <- 0 until 100) {
       // Generating int between 20 and 40
       val n = Random.nextInt(20) + 20
       println(s"$n: ${fibonacci(n)}")
-    })
+    }
 
     val analytics = fibonacci.getAnalyticsData.get
     val runsByFunctions = analytics.getAllRunInfo.groupBy(run => run.selectedFunction)

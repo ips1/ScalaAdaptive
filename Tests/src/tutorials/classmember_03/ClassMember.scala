@@ -13,16 +13,15 @@ object ClassMember {
       println("Sloooooow Hello World!")
     }
 
-    val helloFun = fastHello _ or slowHello
-
+    private val helloFun = fastHello _ or slowHello
     def hello(): Unit = helloFun()
   }
 
   def main(args: Array[String]): Unit = {
-    Seq.range(0, 100).foreach(i => {
+    for (i <- 0 until 100) {
       // Note that the function run history survives the new instance creation
       val h = new Hello
       h.hello()
-    })
+    }
   }
 }

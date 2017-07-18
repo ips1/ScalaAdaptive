@@ -1,9 +1,9 @@
-package tutorials.methods_02
+package tutorials.sharing_history
 
 /**
-  * Created by Petr Kubat on 7/16/17.
+  * Created by Petr Kubat on 7/18/17.
   */
-object Methods {
+object History {
   import scalaadaptive.api.Implicits._
 
   class Hello {
@@ -12,14 +12,19 @@ object Methods {
       Thread.sleep(10)
       println("Sloooooow Hello World!")
     }
+    def superSlowHello(): Unit = {
+      Thread.sleep(100)
+      println("Suuuuupeeeeeer sloooooooo....")
+    }
   }
 
   val helloInstance = new Hello
-
-  // The _ operator is necessary to convert the method to a function
   val hello = helloInstance.fastHello _ or helloInstance.slowHello
+  val differentHelloInstance = new Hello
+  val slowHello = differentHelloInstance.slowHello _ or helloInstance.superSlowHello
 
   def main(args: Array[String]): Unit = {
     for (i <- 0 until 100) { hello() }
+    for (i <- 0 until 100) { slowHello() }
   }
 }

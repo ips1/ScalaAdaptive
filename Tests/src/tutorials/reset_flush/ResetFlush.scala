@@ -17,20 +17,20 @@ object ResetFlush {
   val hello = fastHello or slowHello
 
   def main(args: Array[String]): Unit = {
-    Seq.range(0, 100).foreach(i => hello())
+    for (i <- 0 until 100) { hello() }
 
     // Resetting the whole framework
     println("Resetting")
     Adaptive.reset()
-    Seq.range(0, 100).foreach(i => hello())
+    for (i <- 0 until 100) { hello() }
 
     // Flushing function history
     println("Flushing slowHello")
     slowHello.flushHistory()
-    Seq.range(0, 100).foreach(i => hello())
+    for (i <- 0 until 100) { hello() }
 
     println("Flushing fastHello")
     fastHello.flushHistory()
-    Seq.range(0, 100).foreach(i => hello())
+    for (i <- 0 until 100) { hello() }
   }
 }

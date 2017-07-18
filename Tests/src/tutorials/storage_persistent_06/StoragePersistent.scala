@@ -26,8 +26,8 @@ object StoragePersistent {
     // The run history gets stored to the HDD
     // -> try running the program twice in a row
     // (to reset the behavior, just delete the adaptive_history folder in the root directory of the project)
-    Seq.range(0, 100).foreach(i => {
+    for (i <- 0 until 100) {
       (new Hello).helloPersistent()
-    })
+    }
   }
 }

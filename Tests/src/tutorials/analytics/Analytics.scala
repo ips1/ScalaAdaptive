@@ -17,7 +17,7 @@ object Analytics {
   val hello = fastHello _ or slowHello
 
   def main(args: Array[String]): Unit = {
-    Seq.range(0, 100).foreach(i => hello())
+    for (i <- 0 until 100) { hello() }
 
     // Note that the analytics data collection might be turned off using the configuration, in such a case, None would
     // be returned and exception would be raised when unwrapping Optional

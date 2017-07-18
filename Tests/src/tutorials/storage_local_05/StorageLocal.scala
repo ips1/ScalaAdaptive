@@ -21,8 +21,8 @@ object StorageLocal {
   def main(args: Array[String]): Unit = {
     // Notice that for each call, new and clean history is used, so the first (slow) function is used
     // WARNING: This is an example of a wrong usage of the framework!
-    Seq.range(0, 100).foreach(i => {
+    for (i <- 0 until 100) {
       (new Hello).helloLocal()
-    })
+    }
   }
 }
