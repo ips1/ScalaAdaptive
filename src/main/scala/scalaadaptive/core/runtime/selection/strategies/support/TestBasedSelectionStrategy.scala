@@ -55,9 +55,6 @@ trait TestBasedSelectionStrategy[TMeasurement] extends SelectionStrategy[TMeasur
     if (records.size == 2)
       return selectFromTwo(records.head, records.last, inputDescriptor)
 
-    // Applying Bonferroni correction
-    val oneTestAlpha = alpha / records.size
-
     // We test every function against all the others, waiting for an ExpectedLower result
     // Using Scala's view for lazy mapping and filtering - we need just the first result
     val positiveResults = records
@@ -66,7 +63,7 @@ trait TestBasedSelectionStrategy[TMeasurement] extends SelectionStrategy[TMeasur
         val remaining = records
           .filter(r => r != elem)
 
-        val result = runTestMultiple(elem, remaining, oneTestAlpha)
+        val result = runTestMultiple(elem, remaining, alpha)
 
         (elem, result)
       })
