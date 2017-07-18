@@ -13,6 +13,14 @@ package scalaadaptive
   * The [[scalaadaptive.api.policies]] package contains a variety of policies for the user to apply to the adaptive
   * function, as well as a DSL to build his own (see [[scalaadaptive.api.policies.builder]]).
   *
+  * === Usage example ===
+  *
+  * {{{
+  *   import scalaadaptive.api.Implicits._
+  *   val adaptiveFunction = function1 or function2 by (_.size) withPolicy myPolicy storeUsing Storage.Persistent
+  *   adaptiveFunction(data)
+  * }}}
+  *
   */
 package object api {
 

@@ -7,10 +7,10 @@ package scalaadaptive.api.functions
   * Internally holds an information about previously selected function.
   *
   * The lifecycle is following:
-  * - a combined function is created ([[AdaptiveFunction0]] or corresponding types)
-  * - an adaptive function is invoked using the special {{{^()}}} operator - one implementation is selected and the result
+  *  - a combined function is created ([[AdaptiveFunction0]] or corresponding types)
+  *  - an adaptive function is invoked using the special invocation operator - one implementation is selected and the result
   * is returned along with the [[InvocationToken]] instance
-  * - user repeatedly invokes the function that was affected by the decision and should be measured using the {{{()}}}
+  *  - user repeatedly invokes the function that was affected by the decision and should be measured using the `()`
   * operator on the [[InvocationToken]]
   *
   * A usage example:

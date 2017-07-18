@@ -15,18 +15,24 @@ package scalaadaptive.api
   * and a new [[scalaadaptive.api.policies.Policy]] that replaces the old one, thus representing transition between
   * states.
   *
-  * Policies can be chained together. There are some predefined implementations available (see [[scalaadaptive.api.policies.AlwaysSelectPolicy]],
-  * [[scalaadaptive.api.policies.AlwaysUseLastPolicy]], [[scalaadaptive.api.policies.StartPolicy]], [[scalaadaptive.api.policies.LimitedGatherTimePolicy]],
-  * [[scalaadaptive.api.policies.LimitedOverheadPolicy]] and others). A custom policies can be built using building
-  * block policies (see [[scalaadaptive.api.policies.utilpolicies.repeatuntil.RepeatUntilCondition]],
-  * [[scalaadaptive.api.policies.utilpolicies.repeatuntil.RepeatUntilGatherTimePolicy]],
-  * [[scalaadaptive.api.policies.utilpolicies.repeatuntil.RepeatUntilOverheadPolicy]],
-  * [[scalaadaptive.api.policies.utilpolicies.repeatuntil.RepeatUntilResetTimePolicy]],
-  * [[scalaadaptive.api.policies.utilpolicies.repeatuntil.RepeatUntilRunCountPolicy]],
-  * [[scalaadaptive.api.policies.utilpolicies.repeatuntil.RepeatUntilTotalTimePolicy]],
-  * [[scalaadaptive.api.policies.utilpolicies.AlwaysDoPolicy]],
-  * [[scalaadaptive.api.policies.utilpolicies.DoOncePolicy]],
-  * [[scalaadaptive.api.policies.utilpolicies.IfPolicy]]).
+  * Policies can be chained together. There are some predefined implementations available, see:
+  *  - [[scalaadaptive.api.policies.AlwaysSelectPolicy]]
+  *  - [[scalaadaptive.api.policies.AlwaysUseLastPolicy]]
+  *  - [[scalaadaptive.api.policies.StartPolicy]]
+  *  - [[scalaadaptive.api.policies.LimitedGatherTimePolicy]]
+  *  - [[scalaadaptive.api.policies.LimitedOverheadPolicy]]
+  *
+  *
+  * Custom policies can be built using building block policies, see:
+  *  - [[scalaadaptive.api.policies.utilpolicies.repeatuntil.RepeatUntilCondition]]
+  *  - [[scalaadaptive.api.policies.utilpolicies.repeatuntil.RepeatUntilGatherTimePolicy]]
+  *  - [[scalaadaptive.api.policies.utilpolicies.repeatuntil.RepeatUntilOverheadPolicy]]
+  *  - [[scalaadaptive.api.policies.utilpolicies.repeatuntil.RepeatUntilResetTimePolicy]]
+  *  - [[scalaadaptive.api.policies.utilpolicies.repeatuntil.RepeatUntilRunCountPolicy]]
+  *  - [[scalaadaptive.api.policies.utilpolicies.repeatuntil.RepeatUntilTotalTimePolicy]]
+  *  - [[scalaadaptive.api.policies.utilpolicies.AlwaysDoPolicy]]
+  *  - [[scalaadaptive.api.policies.utilpolicies.DoOncePolicy]]
+  *  - [[scalaadaptive.api.policies.utilpolicies.IfPolicy]])
   *
   * The most preferred way of creating custom policies is, however, the policy builder concept (see
   * [[scalaadaptive.api.policies.builder.PolicyBuilder]]). Custom policies can be built using a simple DSL.
