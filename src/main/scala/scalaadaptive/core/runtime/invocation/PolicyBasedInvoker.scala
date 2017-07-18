@@ -5,6 +5,7 @@ import scalaadaptive.api.grouping.Group
 import scalaadaptive.api.options.Storage
 import scalaadaptive.api.policies.PolicyResult
 import scalaadaptive.core.functions.{CombinedFunction, RunData}
+import scalaadaptive.core.logging.Logger
 import scalaadaptive.core.runtime.invocationtokens.SimpleInvocationToken
 import scalaadaptive.core.runtime.AdaptiveInternal
 import scalaadaptive.core.runtime.selection.{AdaptiveSelector, SelectionInput}
@@ -12,7 +13,7 @@ import scalaadaptive.core.runtime.selection.{AdaptiveSelector, SelectionInput}
 /**
   * Created by Petr Kubat on 6/29/17.
   */
-class PolicyBasedInvoker extends CombinedFunctionInvoker {
+class PolicyBasedInvoker(val logger: Logger) extends CombinedFunctionInvoker {
   private def getSelector[TArgType, TRetType](function: CombinedFunction[TArgType, TRetType]): AdaptiveSelector = {
     if (function.localSelector.isDefined)
       function.localSelector.get
@@ -83,6 +84,7 @@ class PolicyBasedInvoker extends CombinedFunctionInvoker {
     val groupId = function.getGroup(arguments)
     val data = function.getData(groupId)
     val (result, newPolicy) = data.currentPolicy.decide(data.statistics)
+    logger.log(s"Policy evaluation result: $result")
     data.currentPolicy = newPolicy
     data.statistics.markRun()
     result match {
@@ -102,6 +104,7 @@ class PolicyBasedInvoker extends CombinedFunctionInvoker {
     val groupId = function.getGroup(arguments)
     val data = function.getData(groupId)
     val (result, newPolicy) = data.currentPolicy.decide(data.statistics)
+    logger.log(s"Policy evaluation result: $result")
     data.currentPolicy = newPolicy
     data.statistics.markRun()
     result match {

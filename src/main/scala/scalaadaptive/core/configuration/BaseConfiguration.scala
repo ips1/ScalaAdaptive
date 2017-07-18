@@ -64,8 +64,8 @@ trait BaseConfiguration extends Configuration {
   override def createHistoryStorage(log: Logger): HistoryStorage[TMeasurement] =
     new MapHistoryStorage[TMeasurement](key => createRunHistory(log, key))
 
-  override def createFunctionInvoker: CombinedFunctionInvoker =
-    new PolicyBasedInvoker
+  override def createFunctionInvoker(log: Logger): CombinedFunctionInvoker =
+    new PolicyBasedInvoker(log)
 
   override def createIdentifierValidator: CustomIdentifierValidator =
     new JavaIdentifierValidator

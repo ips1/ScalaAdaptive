@@ -38,7 +38,7 @@ trait Configuration {
     * The [[scalaadaptive.core.runtime.invocation.CombinedFunctionInvoker]] factory method.
     * @return The function invoker.
     */
-  def createFunctionInvoker: CombinedFunctionInvoker
+  def createFunctionInvoker(log: Logger): CombinedFunctionInvoker
 
   /**
     * The [[scalaadaptive.core.runtime.history.runhistory.RunHistory]] factory method. It can be used by the
