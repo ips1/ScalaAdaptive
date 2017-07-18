@@ -29,7 +29,7 @@ trait LinearRegressionInputBasedStrategy extends BaseLongConfiguration
       new RegressionSelectionStrategy[Long](log,
         new PredictionConfidenceTestRunner(log),
         leastDataSelectionStrategy,
-        createInputBasedStrategy(log),
+        createMeanBasedStrategy(log),
         alpha),
       lowRunLimit)
   }
